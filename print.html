@@ -679,7 +679,56 @@ https://github.com/TNOTawa/wordgameworld-black-magic-extract
     }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="如何将变量代入参数"><a class="header" href="#如何将变量代入参数">如何将变量代入参数</a></h1>
-<p>待办</p>
+<blockquote>
+<p>由 Qwen3 优化了语法和格式，内容已经过验证。</p>
+</blockquote>
+<p>在《文字游戏世界》中，开发者可以通过<strong>变量代入语法</strong>将游戏运行时的动态数据（如变量值、开关状态等）嵌入到事件参数中，从而实现内容的动态化与交互性。本文档详细说明变量与开关的代入方法、适用范围及注意事项。</p>
+<hr />
+<h2 id="1-基本语法"><a class="header" href="#1-基本语法">1. 基本语法</a></h2>
+<p>《文字游戏世界》使用前缀标识符来区分不同类型的动态数据：</p>
+<ul>
+<li><strong>变量（Variable）</strong>：使用 <code>v:变量名</code></li>
+<li><strong>开关（Switch）</strong>：使用 <code>s:开关名</code></li>
+</ul>
+<p>这些标识符可直接作为参数值写入事件配置中，引擎将在运行时自动解析并替换为实际值。</p>
+<blockquote>
+<p><strong>注意</strong>：变量名与开关名需与项目中定义的名称<strong>完全一致</strong>（包括大小写与空格）。</p>
+</blockquote>
+<hr />
+<h2 id="2-应用示例"><a class="header" href="#2-应用示例">2. 应用示例</a></h2>
+<h3 id="21-修改位置参数pos"><a class="header" href="#21-修改位置参数pos">2.1 修改位置参数（<code>pos</code>）</a></h3>
+<p>假设已定义一个名为 <code>变量X</code> 的数值变量，希望打字机事件的 X 坐标动态跟随该变量值：</p>
+<pre><code class="language-json">"pos": [
+  "v:变量X",
+  0
+]
+</code></pre>
+<p>此时，打字机文本的水平位置将实时反映 <code>变量X</code> 的当前数值。</p>
+<h3 id="22-控制遮挡逻辑is_on_top_of_player"><a class="header" href="#22-控制遮挡逻辑is_on_top_of_player">2.2 控制遮挡逻辑（<code>is_on_top_of_player</code>）</a></h3>
+<p>若希望打字机是否遮挡玩家由名为 <code>开关Y</code> 的布尔开关控制：</p>
+<pre><code class="language-json">"is_on_top_of_player": "s:开关Y"
+</code></pre>
+<p>当 <code>开关Y</code> 为 <strong>开启（true）</strong> 时，打字机文本将显示在角色上方；关闭（false）时则不会遮挡。</p>
+<h3 id="23-动态显示文本内容texts"><a class="header" href="#23-动态显示文本内容texts">2.3 动态显示文本内容（<code>texts</code>）</a></h3>
+<p><strong>重要限制</strong>：打字机的 <code>texts</code> 字段<strong>不支持字符串拼接</strong>。若要显示变量或开关的值，<code>texts</code> 必须<strong>完全等于</strong>一个变量或开关的引用，不能包含其他静态文本。</p>
+<p>✅ 正确用法：</p>
+<pre><code class="language-json">"texts": "v:变量X"
+</code></pre>
+<p>或</p>
+<pre><code class="language-json">"texts": "s:开关Y"
+</code></pre>
+<p>❌ 错误用法（不会按预期工作）：</p>
+<pre><code class="language-json">"texts": "当前分数：v:变量X"  // 静态文本 + 变量 → 只显示变量
+</code></pre>
+<blockquote>
+<p><strong>替代方案</strong>：如需组合静态文本与动态值，建议使用多个打字事件；或是与固定物件拼接而成。</p>
+</blockquote>
+<hr />
+<h2 id="相关文档"><a class="header" href="#相关文档">相关文档</a></h2>
+<ul>
+<li><a href="special/../events/%E6%89%93%E5%AD%97%E6%9C%BA.html">打字机</a></li>
+<li><a href="special/../events/%E6%89%93%E5%AD%97%E6%9C%BA.html">代数</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="打字机的高级用法"><a class="header" href="#打字机的高级用法">打字机的高级用法</a></h1>
 <p>待办</p>
 
