@@ -30,3 +30,7 @@ https://github.com/TNOTawa/wordgameworld-black-magic-extract
 - [备注](events/备注.md)
 #### 原版不可添加事件
 - [特殊指令](events/特殊指令.md)
+
+### 特殊写法
+- [如何将变量代入参数](special/如何将变量代入参数.md)
+- [打字机的高级用法](special/打字机的高级用法.md)
