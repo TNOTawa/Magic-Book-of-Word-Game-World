@@ -1,0 +1,7 @@
+[book]
+title = "wgw-magic-book"
+description = "《文字游戏世界》魔法书"
+authors = ["TNOT"]
+
+[output.html]
+default-theme = "dark"
