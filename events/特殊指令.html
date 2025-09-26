@@ -177,15 +177,95 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="特殊事件"><a class="header" href="#特殊事件">特殊事件</a></h1>
-<p><em>本条目下的事件均来自官方地图中已使用了的黑魔法</em>
-<em>名称为非官方命名，请以官方为准</em></p>
-<h2 id="添加到组"><a class="header" href="#添加到组">添加到组</a></h2>
-<p>目前只见到了设置繁简的用法</p>
-<pre><code>@[add_to_group] {
-    "target":"繁体中文",
-    "group":"cn_text:繁简"
-    }
+<p><em>名称为非官方命名，请以官方为准</em>
+<em>大多事件通过分析关卡 JSON 文件得来</em></p>
+<h2 id="无操作指令"><a class="header" href="#无操作指令">无操作指令</a></h2>
+<p>类似编程语言中的<code>// do nothing</code>或<code>pass</code>，会被解析成<code>## ignore command</code>。
+传入的任何参数都会被忽略，可以当作注释使用。</p>
+<pre><code>@[#ignore_command] 
 </code></pre>
+<h2 id="设置事件参数"><a class="header" href="#设置事件参数">设置事件参数</a></h2>
+<pre><code>@[set_event_params] {
+    
+    "target": "物件名称",
+    "需要更改的参数": 更改后的参数
+
+}
+</code></pre>
+<p>可以设置指定物件的参数。以下是部分参数的列表。</p>
+<div class="table-wrapper"><table><thead><tr><th>属性名（英文）</th><th>中文说明</th><th>类型</th><th>示例值</th></tr></thead><tbody>
+<tr><td><code>text</code></td><td>显示的文字内容</td><td>字符串</td><td><code>"新文字"</code></td></tr>
+<tr><td><code>hasBackground</code></td><td>是否有背景框</td><td>布尔值</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>opacity</code></td><td>透明度（0~1）</td><td>数字</td><td><code>0.5</code></td></tr>
+<tr><td><code>eventTriggerAction</code></td><td>触发方式</td><td>字符串</td><td>游戏开始后<code>"auto"</code> / 玩家调查后<code>"press"</code> / 玩家触碰后<code>"touch"</code> / 被物件触发<code>"trigger"</code></td></tr>
+<tr><td><code>existCondition</code></td><td>触发条件</td><td>字符串</td><td><code>"s:switch_name_触发物件==true"</code></td></tr>
+<tr><td><code>isOnTopOfPlayer</code></td><td>是否显示在角色上方</td><td>布尔值</td><td><code>true</code></td></tr>
+</tbody></table>
+</div>
+<p>存在的问题：</p>
+<ul>
+<li>更改字面后物件会移动至背景，修改层级参数无效。</li>
+<li>无法修改位置，可以用传送器代替。</li>
+<li>无法修改物件是否可以被推删拆组。</li>
+</ul>
+<h2 id="添加到组"><a class="header" href="#添加到组">添加到组</a></h2>
+<pre><code>@[add_to_group] {
+
+    "target":"物件名称",
+    "group":"cn_text:繁简"
+
+}
+</code></pre>
+<p>补充说明：
+<code>"group"</code>|<code>string</code>|<code>cn_text:</code>后接着的第一个字是物件字面中要替换的字，第二个字是简体字下的字。</p>
+<p>目前只见到了设置繁简的用法。</p>
+<h2 id="取消物件成句规则"><a class="header" href="#取消物件成句规则">取消物件成句规则</a></h2>
+<pre><code>@[delete_sentence_rule:property] {
+
+    "target":"物件名称",
+
+}
+</code></pre>
+<p>取消特定物件的成句规则，相较于<code>@[delete_sentence_rule]</code>，它需要传入的是物件名称。</p>
+<h2 id="便捷储存物件位置"><a class="header" href="#便捷储存物件位置">便捷储存物件位置</a></h2>
+<pre><code>@[save_event_pos:property] {
+  
+    "target": "物件名称",
+    "x": "变量X",
+    "y": "变量Y"
+  
+}
+</code></pre>
+<p>用于保存目标物件的位置到指定两个变量。不同于<code>@[save_event_pos]</code>，在这里可以指定变量名，而不是变量Id，更为便捷。</p>
+<h2 id="移动"><a class="header" href="#移动">移动</a></h2>
+<h3 id="开始移动"><a class="header" href="#开始移动">开始移动</a></h3>
+<pre><code>@[move_route] {
+
+    "target": "物件名称",
+    "wait": true
+
+}
+</code></pre>
+<p>补充说明：
+<code>"wait"</code>|<code>boolean</code>|是否阻塞式执行。若为<code>true</code>，则脚本会暂停，直到移动动作完成。</p>
+<p>为指定角色执行一个或多个移动/控制指令，并可选择是否阻塞后续脚本执行。需要与<code>@[end_move_route]</code>配合使用。
+<code>@[move_route]</code>本身不直接执行动作，而是包裹一组移动指令。</p>
+<h3 id="停止移动"><a class="header" href="#停止移动">停止移动</a></h3>
+<pre><code>@[end_move_route]
+</code></pre>
+<p>示例：用黑魔法来让物件<code>↑↑↓↓←→←→</code>。</p>
+<pre><code>@[move_route] {"target": "物件A","wait": true}
+@[move_up]
+@[move_up]
+@[move_down]
+@[move_down]
+@[move_left]
+@[move_right]
+@[move_left]
+@[move_right]
+@[end_move_route]
+</code></pre>
+<p>通过这个能让黑魔法编辑移动更为便捷，不需要为每个移动指令都单独指定物件。</p>
 
                     </main>
 
