@@ -177,31 +177,29 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="代数"><a class="header" href="#代数">代数</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
-<p><strong>注：这些黑魔法不建议单独使用，最好用<a href="https://tnotawa.github.io/wordgameworld-black-magic-extract/">黑魔法提取器</a>提取再使用</strong>
-<strong>代数似乎无法代入变量，希望有高人能解决！</strong></p>
+<p><strong>注：需要代入ID的指令不建议单独使用，最好用<a href="https://tnotawa.github.io/wordgameworld-black-magic-extract/">黑魔法提取器</a>提取再使用</strong></p>
 <h2 id="设定开关"><a class="header" href="#设定开关">设定开关</a></h2>
-<pre><code>@[set_switch] {
-  
-    "switchId": null,
-    "switchValue": false
-  
-}
+<pre><code>@[set_switch] [
+
+    "name",
+    "value"
+
+]
 </code></pre>
 <h2 id="反转开关"><a class="header" href="#反转开关">反转开关</a></h2>
 <pre><code>@[toggle_switch] {
-  
-    "switchId": null
-  
+
+	"switchId": null
+
 }
 </code></pre>
 <h2 id="设定变量"><a class="header" href="#设定变量">设定变量</a></h2>
-<pre><code>@[set_variable] {
-  
-    "varId": null,
-    "varValue": 0
-  
-}
+<pre><code>@[set_variable] [
+
+    "name",
+    "value"
+
+]
 </code></pre>
 <h2 id="増减変量"><a class="header" href="#増减変量">増减変量</a></h2>
 <pre><code>@[add_variable] {
@@ -217,6 +215,15 @@
     "target": null,
     "xId": null,
     "yId": null
+  
+}
+</code></pre>
+<p>名称版：</p>
+<pre><code>@[save_event_pos:property] {
+  
+    "target": null,
+    "x": null,
+    "y": null
   
 }
 </code></pre>

@@ -320,28 +320,21 @@
 }
 </code></pre>
 <h2 id="改变玩家字面"><a class="header" href="#改变玩家字面">改变玩家字面</a></h2>
-<pre><code>@[set_player_text] {
-  
-    "text": "我"
-  
-}
+<pre><code>
+@[set_player_text] "我"
+
 </code></pre>
 <h2 id="改变玩家颜色"><a class="header" href="#改变玩家颜色">改变玩家颜色</a></h2>
-<pre><code>@[set_player_color] {
-  
-    "color": "#ffffff"
-  
-}
+<pre><code>
+@[set_player_color] "#ffffff"
+
 </code></pre>
 <h2 id="改变玩家不透明度"><a class="header" href="#改变玩家不透明度">改变玩家不透明度</a></h2>
-<pre><code>@[set_player_opacity] {
-  
-    "opacity": 0.5
-  
-}
+<pre><code>
+@[set_player_opacity] 0.5
+
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="打字机"><a class="header" href="#打字机">打字机</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="打字"><a class="header" href="#打字">打字</a></h2>
 <pre><code>@[type_parallel] {
   
@@ -368,21 +361,38 @@
 </code></pre>
 <p>缩写:<code>@[type]</code></p>
 <h2 id="清除"><a class="header" href="#清除">清除</a></h2>
-<pre><code>@[clear_typed] { "" }
+<pre><code>
+@[clear_typed] { "" }
+
+</code></pre>
+<p>名称版：</p>
+<pre><code>@[clear_typed:property] {
+
+    "target":"物件名称",
+
+}
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="能力设定"><a class="header" href="#能力设定">能力设定</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="拆组字"><a class="header" href="#拆组字">拆组字</a></h2>
-<pre><code>@[set_split_power] { true }
+<pre><code>
+@[set_split_power] true
+
 </code></pre>
 <h2 id="删字"><a class="header" href="#删字">删字</a></h2>
-<pre><code>@[set_backspace_power] { true }
+<pre><code>
+@[set_backspace_power] true
+
 </code></pre>
 <h2 id="推字"><a class="header" href="#推字">推字</a></h2>
-<pre><code>@[set_push_power] { true }
+<pre><code>
+@[set_push_power] true
+
 </code></pre>
 <h2 id="复原地图"><a class="header" href="#复原地图">复原地图</a></h2>
-<pre><code>@[set_ctrl_z_power] { true }
+<pre><code>
+@[set_ctrl_z_power] true
+
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
@@ -427,6 +437,13 @@
   
 }
 </code></pre>
+<p>名称版：</p>
+<pre><code>@[#clear_typed:property] {
+
+    "target":"物件名称",
+
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="点唱机"><a class="header" href="#点唱机">点唱机</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="播放背景音乐"><a class="header" href="#播放背景音乐">播放背景音乐</a></h2>
@@ -437,7 +454,9 @@
 }
 </code></pre>
 <h2 id="停止背景音乐"><a class="header" href="#停止背景音乐">停止背景音乐</a></h2>
-<pre><code>@[editor_stop_bgm]
+<pre><code>
+@[editor_stop_bgm]
+
 </code></pre>
 <h2 id="播放音效"><a class="header" href="#播放音效">播放音效</a></h2>
 <pre><code>@[editor_play_se] {
@@ -484,7 +503,9 @@
 }
 </code></pre>
 <h2 id="停止震动"><a class="header" href="#停止震动">停止震动</a></h2>
-<pre><code>@[stop_constant_shake]
+<pre><code>
+@[stop_constant_shake]
+
 </code></pre>
 <h2 id="画面渐变至颜色"><a class="header" href="#画面渐变至颜色">画面渐变至颜色</a></h2>
 <pre><code>@[fade_screen] {
@@ -498,7 +519,9 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="提示"><a class="header" href="#提示">提示</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="叮"><a class="header" href="#叮">叮！</a></h2>
-<pre><code>@[event_end_hint]
+<pre><code>
+@[event_end_hint]
+
 </code></pre>
 <h2 id="物件呼吸灯"><a class="header" href="#物件呼吸灯">物件呼吸灯</a></h2>
 <pre><code>@[add_loop_light] {
@@ -540,8 +563,11 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="系统"><a class="header" href="#系统">系统</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="延迟固定时间"><a class="header" href="#延迟固定时间">延迟固定时间</a></h2>
-<pre><code>@[wait] { 10 }
+<pre><code>
+@[wait] 50
+
 </code></pre>
+<p>注：单位为 0.02s</p>
 <h2 id="延迟随机时间"><a class="header" href="#延迟随机时间">延迟随机时间</a></h2>
 <pre><code>@[wait_random_in_range] {
   
@@ -609,31 +635,29 @@
 </code></pre>
 <p>你真的有必要用这个吗？</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="代数"><a class="header" href="#代数">代数</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
-<p><strong>注：这些黑魔法不建议单独使用，最好用<a href="https://tnotawa.github.io/wordgameworld-black-magic-extract/">黑魔法提取器</a>提取再使用</strong>
-<strong>代数似乎无法代入变量，希望有高人能解决！</strong></p>
+<p><strong>注：需要代入ID的指令不建议单独使用，最好用<a href="https://tnotawa.github.io/wordgameworld-black-magic-extract/">黑魔法提取器</a>提取再使用</strong></p>
 <h2 id="设定开关"><a class="header" href="#设定开关">设定开关</a></h2>
-<pre><code>@[set_switch] {
-  
-    "switchId": null,
-    "switchValue": false
-  
-}
+<pre><code>@[set_switch] [
+
+    "name",
+    "value"
+
+]
 </code></pre>
 <h2 id="反转开关"><a class="header" href="#反转开关">反转开关</a></h2>
 <pre><code>@[toggle_switch] {
-  
-    "switchId": null
-  
+
+	"switchId": null
+
 }
 </code></pre>
 <h2 id="设定变量"><a class="header" href="#设定变量">设定变量</a></h2>
-<pre><code>@[set_variable] {
-  
-    "varId": null,
-    "varValue": 0
-  
-}
+<pre><code>@[set_variable] [
+
+    "name",
+    "value"
+
+]
 </code></pre>
 <h2 id="増减変量"><a class="header" href="#増减変量">増减変量</a></h2>
 <pre><code>@[add_variable] {
@@ -649,6 +673,15 @@
     "target": null,
     "xId": null,
     "yId": null
+  
+}
+</code></pre>
+<p>名称版：</p>
+<pre><code>@[save_event_pos:property] {
+  
+    "target": null,
+    "x": null,
+    "y": null
   
 }
 </code></pre>
@@ -672,17 +705,21 @@
 }
 </code></pre>
 <h2 id="否则执行"><a class="header" href="#否则执行">否则执行</a></h2>
-<pre><code>@[else]
+<pre><code>
+@[else]
+
 </code></pre>
 <h2 id="结束条件"><a class="header" href="#结束条件">结束条件</a></h2>
-<pre><code>@[end_if]
+<pre><code>
+@[end_if]
+
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="备注"><a class="header" href="#备注">备注</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="注释"><a class="header" href="#注释">注释</a></h2>
-<pre><code>@[comment] { "" }
+<pre><code>
+@[comment] { "" }
+
 </code></pre>
-<p>这个功能完全可以仅使用原版。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="特殊事件"><a class="header" href="#特殊事件">特殊事件</a></h1>
 <p><em>名称为非官方命名，请以官方为准</em>
 <em>大多事件通过分析关卡 JSON 文件得来</em></p>
@@ -726,24 +763,6 @@
 <p>补充说明：
 <code>"group"</code>|<code>string</code>|<code>cn_text:</code>后接着的第一个字是物件字面中要替换的字，第二个字是简体字下的字。</p>
 <p>目前只见到了设置繁简的用法。</p>
-<h2 id="取消物件成句规则"><a class="header" href="#取消物件成句规则">取消物件成句规则</a></h2>
-<pre><code>@[delete_sentence_rule:property] {
-
-    "target":"物件名称",
-
-}
-</code></pre>
-<p>取消特定物件的成句规则，相较于<code>@[delete_sentence_rule]</code>，它需要传入的是物件名称。</p>
-<h2 id="便捷储存物件位置"><a class="header" href="#便捷储存物件位置">便捷储存物件位置</a></h2>
-<pre><code>@[save_event_pos:property] {
-  
-    "target": "物件名称",
-    "x": "变量X",
-    "y": "变量Y"
-  
-}
-</code></pre>
-<p>用于保存目标物件的位置到指定两个变量。不同于<code>@[save_event_pos]</code>，在这里可以指定变量名，而不是变量Id，更为便捷。</p>
 <h2 id="移动"><a class="header" href="#移动">移动</a></h2>
 <h3 id="开始移动"><a class="header" href="#开始移动">开始移动</a></h3>
 <pre><code>@[move_route] {
@@ -758,7 +777,9 @@
 <p>为指定角色执行一个或多个移动/控制指令，并可选择是否阻塞后续脚本执行。需要与<code>@[end_move_route]</code>配合使用。
 <code>@[move_route]</code>本身不直接执行动作，而是包裹一组移动指令。</p>
 <h3 id="停止移动"><a class="header" href="#停止移动">停止移动</a></h3>
-<pre><code>@[end_move_route]
+<pre><code>
+@[end_move_route]
+
 </code></pre>
 <p>示例：用黑魔法来让物件<code>↑↑↓↓←→←→</code>。</p>
 <pre><code>@[move_route] {"target": "物件A","wait": true}

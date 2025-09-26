@@ -219,24 +219,6 @@
 <p>补充说明：
 <code>"group"</code>|<code>string</code>|<code>cn_text:</code>后接着的第一个字是物件字面中要替换的字，第二个字是简体字下的字。</p>
 <p>目前只见到了设置繁简的用法。</p>
-<h2 id="取消物件成句规则"><a class="header" href="#取消物件成句规则">取消物件成句规则</a></h2>
-<pre><code>@[delete_sentence_rule:property] {
-
-    "target":"物件名称",
-
-}
-</code></pre>
-<p>取消特定物件的成句规则，相较于<code>@[delete_sentence_rule]</code>，它需要传入的是物件名称。</p>
-<h2 id="便捷储存物件位置"><a class="header" href="#便捷储存物件位置">便捷储存物件位置</a></h2>
-<pre><code>@[save_event_pos:property] {
-  
-    "target": "物件名称",
-    "x": "变量X",
-    "y": "变量Y"
-  
-}
-</code></pre>
-<p>用于保存目标物件的位置到指定两个变量。不同于<code>@[save_event_pos]</code>，在这里可以指定变量名，而不是变量Id，更为便捷。</p>
 <h2 id="移动"><a class="header" href="#移动">移动</a></h2>
 <h3 id="开始移动"><a class="header" href="#开始移动">开始移动</a></h3>
 <pre><code>@[move_route] {
@@ -251,7 +233,9 @@
 <p>为指定角色执行一个或多个移动/控制指令，并可选择是否阻塞后续脚本执行。需要与<code>@[end_move_route]</code>配合使用。
 <code>@[move_route]</code>本身不直接执行动作，而是包裹一组移动指令。</p>
 <h3 id="停止移动"><a class="header" href="#停止移动">停止移动</a></h3>
-<pre><code>@[end_move_route]
+<pre><code>
+@[end_move_route]
+
 </code></pre>
 <p>示例：用黑魔法来让物件<code>↑↑↓↓←→←→</code>。</p>
 <pre><code>@[move_route] {"target": "物件A","wait": true}

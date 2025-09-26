@@ -177,7 +177,6 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="打字机"><a class="header" href="#打字机">打字机</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="打字"><a class="header" href="#打字">打字</a></h2>
 <pre><code>@[type_parallel] {
   
@@ -204,7 +203,16 @@
 </code></pre>
 <p>缩写:<code>@[type]</code></p>
 <h2 id="清除"><a class="header" href="#清除">清除</a></h2>
-<pre><code>@[clear_typed] { "" }
+<pre><code>
+@[clear_typed] { "" }
+
+</code></pre>
+<p>名称版：</p>
+<pre><code>@[clear_typed:property] {
+
+    "target":"物件名称",
+
+}
 </code></pre>
 
                     </main>
