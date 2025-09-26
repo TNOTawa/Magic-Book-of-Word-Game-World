@@ -1,11 +1,11 @@
 @font-face {
-  font-family: ZpixReviewOnline;
-  src: url(https://zpix.now.sh/zpix.woff2?v2021-03-21);
+  font-family: zpix;
+  src: url("https://cdn.jsdelivr.net/gh/viscose3977/zpix_for_obs@main/zpix.woff2");
 }
 
 /* 应用到整个页面 */
 :root {
-  --main-font: "ZpixReviewOnline", sans-serif;
+  --main-font: "zpix", sans-serif;
 }
 
 body {
