@@ -1,18 +1,15 @@
 @font-face {
-  font-family: 'zpix';
-  src: url('https://zpix.now.sh/zpix.woff2?v2021-03-21') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap; /* 提升加载性能 */
+  font-family: ZpixReviewOnline;
+  src: url(https://zpix.now.sh/zpix.woff2?v2021-03-21);
 }
 
 /* 应用到整个页面 */
 :root {
-  --main-font: "zpix", "Microsoft YaHei", sans-serif;
+  --main-font: "ZpixReviewOnline", sans-serif;
 }
 
 body {
   font-family: var(--main-font) !important;
-  font-size: 18px; /* 可调整字号，比如 16px / 18px */
+  font-size: 18px;
   line-height: 1.6;
 }
