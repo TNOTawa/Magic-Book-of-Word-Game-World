@@ -268,34 +268,27 @@
 }
 </code></pre>
 <h2 id="向上下左右走一格"><a class="header" href="#向上下左右走一格">向上/下/左/右走一格</a></h2>
-<pre><code>@[move_up] {
-  
-    "target": null
-  
-}
+<p><em>此类 move 指令只能通过<code>@[move_route]</code>调用，具体使用方法见<code>特殊指令</code>中的移动部分。</em></p>
+<pre><code>
+@[move_up]
+
 </code></pre>
-<pre><code>@[move_down] {
-  
-    "target": null
-  
-}
+<pre><code>
+@[move_down]
+
 </code></pre>
-<pre><code>@[move_left] {
-  
-    "target": null
-  
-}
+<pre><code>
+@[move_left]
+
 </code></pre>
-<pre><code>@[move_right] {
-  
-    "target": null
-  
-}
+<pre><code>
+@[move_right]
+
 </code></pre>
 <h2 id="走到目标位置"><a class="header" href="#走到目标位置">走到目标位置</a></h2>
+<p><em>此类 move 指令只能通过<code>@[move_route]</code>调用，具体使用方法见<code>特殊指令</code>中的移动部分。</em></p>
 <pre><code>@[move_to_point] {
   
-    "target": null,
     "pos": [
       0,
       0
@@ -304,9 +297,9 @@
 }
 </code></pre>
 <h2 id="走到目标物件"><a class="header" href="#走到目标物件">走到目标物件</a></h2>
+<p><em>此类 move 指令只能通过<code>@[move_route]</code>调用，具体使用方法见<code>特殊指令</code>中的移动部分。</em></p>
 <pre><code>@[move_to_event] {
   
-    "target": null,
     "toTarget": null
   
 }
@@ -400,10 +393,12 @@
 <pre><code>@[append_split_rule] {
   
     "from": [
-      null,
       null
     ],
-    "to": null
+    "to": [
+      null,
+      null
+    ]
   
 }
 </code></pre>
