@@ -21,3 +21,10 @@
 
 - [如何将变量代入参数](special/如何将变量代入参数.md)
 - [打字机的高级用法](special/打字机的高级用法.md)
+
+---
+
+# 🔧 实用工具
+
+- [黑魔法提取器](tools/command_extractor.html)
+- [黑魔法打字机编辑器](tools/typer_editor.html)
