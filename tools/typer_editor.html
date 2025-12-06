@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑魔法打字机编辑器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "zpix", sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h1 {
+            color: #8a2be2;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+        
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .editor-section, .preview-section {
+            flex: 1;
+            min-width: 500px;
+            background-color: rgba(30, 30, 40, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-title {
+            color: #7b68ee;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #9370db;
+        }
+        
+        .field-group {
+            margin-bottom: 20px;
+        }
+        
+        .field-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b19cd9;
+            font-weight: 500;
+        }
+        
+        .field-input {
+            width: 100%;
+            padding: 10px 12px;
+            background-color: rgba(20, 20, 30, 0.8);
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        
+        .field-input:focus {
+            outline: none;
+            border-color: #7b68ee;
+            box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.2);
+        }
+        
+        .checkbox-group, .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .checkbox-label, .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input, .radio-label input {
+            cursor: pointer;
+        }
+        
+        .edit-btn {
+            background-color: #5d4a9e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .edit-btn:hover {
+            background-color: #7b68ee;
+        }
+        
+        .effects-container {
+            background-color: rgba(20, 20, 30, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .effects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .add-effect-btn {
+            background-color: #5d4a9e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .add-effect-btn:hover {
+            background-color: #7b68ee;
+        }
+        
+        .effects-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .effect-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .effect-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .effect-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #444;
+        }
+        
+        .effect-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .effect-action-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 2px;
+        }
+        
+        .effect-action-btn:hover {
+            color: white;
+        }
+        
+        .texts-input {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            background-color: rgba(20, 20, 30, 0.8);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            resize: vertical;
+        }
+        
+        .texts-input:focus {
+            outline: none;
+            border-color: #7b68ee;
+        }
+        
+        .preview-area {
+            background-color: rgba(20, 20, 30, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 300px;
+            border: 1px solid #444;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .json-output {
+            width: 100%;
+            min-height: 300px;
+            background-color: rgba(20, 20, 30, 0.8);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 15px;
+            color: #e0e0e0;
+            font-family: "zpix", sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            gap: 15px;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #5d4a9e 0%, #7b68ee 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.4);
+        }
+        
+        .color-picker-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .color-picker-content {
+            background-color: rgba(30, 30, 40, 0.95);
+            border-radius: 10px;
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .color-picker-title {
+            color: #7b68ee;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .color-input-group {
+            margin-bottom: 20px;
+        }
+        
+        .color-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+        }
+        
+        .color-picker-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .modal-confirm {
+            background-color: #5d4a9e;
+            color: white;
+        }
+        
+        .modal-cancel {
+            background-color: #444;
+            color: #ddd;
+        }
+        
+        .color-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .color-hex-input {
+            flex: 1;
+            padding: 10px;
+            background-color: rgba(20, 20, 30, 0.8);
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #e0e0e0;
+        }
+        
+        .color-wheel {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+            margin: 0 auto 20px;
+            position: relative;
+            cursor: crosshair;
+        }
+        
+        .color-wheel-selector {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        
+        .tag-example {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #5d4a9e;
+            color: white;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        @media (max-width: 1100px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .editor-section, .preview-section {
+                min-width: 100%;
+            }
+        }
+        
+        .effect-tag-btn {
+            background-color: transparent;
+            border: 1px solid #5d4a9e;
+            color: #b19cd9;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .effect-tag-btn:hover {
+            background-color: rgba(93, 74, 158, 0.2);
+        }
+        
+        .effects-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-hat-wizard"></i> 黑魔法打字机编辑器</h1>
+            <p class="subtitle">为文字游戏辅助创建自定义黑魔法打字机事件，实时预览文字效果，一键复制到游戏中使用</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="editor-section">
+                <h2 class="section-title"><i class="fas fa-sliders-h"></i> 指令配置</h2>
+                
+                <div class="effects-container">
+                    <div class="effects-header">
+                        <h3><i class="fas fa-palette"></i> 文字效果</h3>
+                        <button class="add-effect-btn" id="addEffectBtn">
+                            <i class="fas fa-plus"></i> 添加效果
+                        </button>
+                    </div>
+                    
+                    <div class="effects-buttons" id="effectButtons">
+                        <!-- 效果按钮将在这里动态生成 -->
+                    </div>
+                    
+                    <div class="effects-tags" id="effectsTags">
+                        <!-- 效果标签将在这里动态生成 -->
+                    </div>
+                    
+                    <div class="field-group">
+                        <label class="field-label">文本内容 (texts)</label>
+                        <textarea class="texts-input" id="textsInput" placeholder="在此输入您的文本内容...">欢迎来到黑魔法世界，在这里你可以施展强大的咒语。</textarea>
+                        <div class="tag-example">点击上方的效果按钮，将在光标位置插入效果标签，如：&lt;c&gt;红色文字&lt;/c&gt;</div>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">固定于画面 (fixed)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="fixedCheckbox">
+                            <span>启用</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">位置坐标 (pos)</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="posX" class="field-input" placeholder="X坐标" style="flex: 1;">
+                        <input type="number" id="posY" class="field-input" placeholder="Y坐标" style="flex: 1;">
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">标签 (tags)</label>
+                    <input type="text" id="tagsInput" class="field-input" placeholder='输入标签，多个用逗号分隔，如："label #1", "tag2"'>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">打字音效 (has_se)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="hasSeCheckbox" checked>
+                            <span>启用</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">音效类型 (char_type)</label>
+                    <select id="charTypeSelect" class="field-input">
+                        <option value="null">null (默认)</option>
+                        <option value="princess">princess (轻巧)</option>
+                        <option value="dragon">dragon (沉重)</option>
+                        <option value="snake">snake (高亢)</option>
+                        <option value="poet">poet (老旧)</option>
+                        <option value="giant_l">giant_l (干燥)</option>
+                        <option value="giant_r">giant_r (机械)</option>
+                    </select>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">打字动画 (has_animation)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="hasAnimationCheckbox" checked>
+                            <span>启用</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">层级 (layer)</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="layer" value="front" checked>
+                            <span>前景 (front)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="layer" value="mid">
+                            <span>主景 (mid)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="layer" value="back">
+                            <span>背景 (back)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">可以跳过 (can_skip)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="canSkipCheckbox" checked>
+                            <span>启用</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">需要确认 (need_accept)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="needAcceptCheckbox" checked>
+                            <span>启用</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">玩家需要等待 (wait)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="waitCheckbox" checked>
+                            <span>启用</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="field-group">
+                    <label class="field-label">文字会遮住玩家 (is_on_top_of_player)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="onTopCheckbox" checked>
+                            <span>启用</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <h2 class="section-title"><i class="fas fa-eye"></i> 文本预览</h2>
+                <div class="preview-area" id="textPreview">
+                    <!-- 预览内容将在这里动态生成 -->
+                </div>
+                
+                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-code"></i> 完整JSON指令</h2>
+                <div class="json-output" id="jsonOutput">
+                    <!-- JSON输出将在这里动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="copy-btn" id="copyBtn">
+                <i class="fas fa-copy"></i> 复制黑魔法指令
+            </button>
+        </div>
+    </div>
+    
+    <!-- 颜色选择器模态框 -->
+    <div class="color-picker-modal" id="colorPickerModal">
+        <div class="color-picker-content">
+            <h3 class="color-picker-title" id="colorPickerTitle">添加文字效果</h3>
+            
+            <div class="field-group">
+                <label class="field-label">效果名称 (仅支持英文)</label>
+                <input type="text" id="effectNameInput" class="field-input" placeholder="例如: c, glow, shadow">
+            </div>
+            
+            <div class="field-group">
+                <label class="field-label">颜色选择</label>
+                <div class="color-preview" id="colorPreview"></div>
+                <div class="color-input-wrapper">
+                    <input type="text" id="colorHexInput" class="color-hex-input" placeholder="#FFFFFF" value="#FFFFFF">
+                    <input type="color" id="colorPicker" value="#FFFFFF" style="width: 50px; height: 40px;">
+                </div>
+                <div class="tag-example">点击色块或直接输入颜色代码，如：#FF0000 为红色</div>
+            </div>
+            
+            <div class="color-picker-actions">
+                <button class="modal-btn modal-cancel" id="cancelColorBtn">取消</button>
+                <button class="modal-btn modal-confirm" id="confirmColorBtn">确认</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 通知 -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">已复制到剪贴板！</span>
+    </div>
+    
+    <script>
+        // 初始数据
+        let config = {
+            texts: "欢迎来到黑魔法世界，在这里你可以施展强大的咒语。",
+            fixed: false,
+            pos: [0, 0],
+            tags: ["label #1"],
+            has_se: true,
+            char_type: null,
+            has_animation: true,
+            layer: "mid",
+            can_skip: true,
+            need_accept: true,
+            wait: true,
+            refTexts: [],
+            is_on_top_of_player: true,
+            label_settings: {
+                c: {
+                    text_color: "#00ffffff"
+                }
+            }
+        };
+        
+        // 当前编辑的效果
+        let currentEffect = null;
+        let effects = { ...config.label_settings };
+        
+        // DOM元素
+        const textsInput = document.getElementById('textsInput');
+        const fixedCheckbox = document.getElementById('fixedCheckbox');
+        const posXInput = document.getElementById('posX');
+        const posYInput = document.getElementById('posY');
+        const tagsInput = document.getElementById('tagsInput');
+        const hasSeCheckbox = document.getElementById('hasSeCheckbox');
+        const charTypeSelect = document.getElementById('charTypeSelect');
+        const hasAnimationCheckbox = document.getElementById('hasAnimationCheckbox');
+        const layerRadios = document.querySelectorAll('input[name="layer"]');
+        const canSkipCheckbox = document.getElementById('canSkipCheckbox');
+        const needAcceptCheckbox = document.getElementById('needAcceptCheckbox');
+        const waitCheckbox = document.getElementById('waitCheckbox');
+        const onTopCheckbox = document.getElementById('onTopCheckbox');
+        
+        const textPreview = document.getElementById('textPreview');
+        const jsonOutput = document.getElementById('jsonOutput');
+        
+        const effectsTags = document.getElementById('effectsTags');
+        const effectButtons = document.getElementById('effectButtons');
+        
+        const colorPickerModal = document.getElementById('colorPickerModal');
+        const colorPickerTitle = document.getElementById('colorPickerTitle');
+        const effectNameInput = document.getElementById('effectNameInput');
+        const colorHexInput = document.getElementById('colorHexInput');
+        const colorPicker = document.getElementById('colorPicker');
+        const colorPreview = document.getElementById('colorPreview');
+        
+        const addEffectBtn = document.getElementById('addEffectBtn');
+        const cancelColorBtn = document.getElementById('cancelColorBtn');
+        const confirmColorBtn = document.getElementById('confirmColorBtn');
+        
+        const copyBtn = document.getElementById('copyBtn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        // 初始化UI
+        function initUI() {
+            // 设置输入框初始值
+            textsInput.value = config.texts;
+            fixedCheckbox.checked = config.fixed;
+            posXInput.value = config.pos[0];
+            posYInput.value = config.pos[1];
+            tagsInput.value = config.tags.map(tag => `"${tag}"`).join(', ');
+            hasSeCheckbox.checked = config.has_se;
+            charTypeSelect.value = config.char_type === null ? "null" : config.char_type;
+            hasAnimationCheckbox.checked = config.has_animation;
+            
+            // 设置层级单选按钮
+            document.querySelector(`input[name="layer"][value="${config.layer}"]`).checked = true;
+            
+            canSkipCheckbox.checked = config.can_skip;
+            needAcceptCheckbox.checked = config.need_accept;
+            waitCheckbox.checked = config.wait;
+            onTopCheckbox.checked = config.is_on_top_of_player;
+            
+            // 渲染效果标签
+            renderEffectTags();
+            
+            // 更新预览
+            updatePreview();
+            updateJSONOutput();
+        }
+        
+        // 渲染效果标签
+        function renderEffectTags() {
+            effectsTags.innerHTML = '';
+            effectButtons.innerHTML = '';
+            
+            Object.keys(effects).forEach(effectName => {
+                const effect = effects[effectName];
+                const color = effect.text_color || '#FFFFFF';
+                
+                // 创建效果标签
+                const tagElement = document.createElement('div');
+                tagElement.className = 'effect-tag';
+                tagElement.style.backgroundColor = color + '20';
+                tagElement.style.border = `1px solid ${color}`;
+                tagElement.dataset.effect = effectName;
+                
+                tagElement.innerHTML = `
+                    <div class="effect-color" style="background-color: ${color};"></div>
+                    <span>${effectName}: ${color}</span>
+                    <div class="effect-actions">
+                        <button class="effect-action-btn edit-effect" data-effect="${effectName}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="effect-action-btn delete-effect" data-effect="${effectName}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                effectsTags.appendChild(tagElement);
+                
+                // 创建效果按钮
+                const buttonElement = document.createElement('button');
+                buttonElement.className = 'effect-tag-btn';
+                buttonElement.innerHTML = `<${effectName}></${effectName}>`;
+                buttonElement.style.borderColor = color;
+                buttonElement.style.color = color;
+                buttonElement.dataset.effect = effectName;
+                
+                buttonElement.addEventListener('click', function() {
+                    insertEffectTag(effectName);
+                });
+                
+                effectButtons.appendChild(buttonElement);
+            });
+            
+            // 为编辑和删除按钮添加事件监听（使用事件委托）
+            effectsTags.addEventListener('click', function(e) {
+                const target = e.target;
+                const editBtn = target.closest('.edit-effect');
+                const deleteBtn = target.closest('.delete-effect');
+                
+                if (editBtn) {
+                    e.stopPropagation();
+                    const effectName = editBtn.dataset.effect;
+                    openColorPicker(effectName);
+                }
+                
+                if (deleteBtn) {
+                    e.stopPropagation();
+                    const effectName = deleteBtn.dataset.effect;
+                    deleteEffect(effectName);
+                }
+            });
+        }
+        
+        // 插入效果标签到文本
+        function insertEffectTag(effectName) {
+            const textarea = textsInput;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            const tag = `<${effectName}>${selectedText}</${effectName}>`;
+            
+            // 插入标签
+            textarea.value = textarea.value.substring(0, start) + tag + textarea.value.substring(end);
+            
+            // 更新配置和预览
+            config.texts = textarea.value;
+            updatePreview();
+            updateJSONOutput();
+            
+            // 聚焦到文本区域
+            textarea.focus();
+            // 设置光标位置在标签后
+            const newCursorPos = start + tag.length;
+            textarea.setSelectionRange(newCursorPos, newCursorPos);
+        }
+        
+        // 打开颜色选择器
+        function openColorPicker(effectName = null) {
+            currentEffect = effectName;
+            
+            if (effectName) {
+                colorPickerTitle.textContent = '编辑文字效果';
+                effectNameInput.value = effectName;
+                const color = effects[effectName].text_color || '#FFFFFF';
+                colorHexInput.value = color;
+                colorPicker.value = color;
+            } else {
+                colorPickerTitle.textContent = '添加文字效果';
+                effectNameInput.value = '';
+                colorHexInput.value = '#FFFFFF';
+                colorPicker.value = '#FFFFFF';
+            }
+            
+            updateColorPreview();
+            colorPickerModal.style.display = 'flex';
+        }
+        
+        // 关闭颜色选择器
+        function closeColorPicker() {
+            colorPickerModal.style.display = 'none';
+            currentEffect = null;
+        }
+        
+        // 添加/更新效果
+        function saveEffect() {
+            const effectName = effectNameInput.value.trim();
+            let color = colorHexInput.value.trim();
+            
+            if (!effectName) {
+                showNotification('效果名称不能为空', 'error');
+                return;
+            }
+            
+            // 验证效果名称（仅允许英文）
+            if (!/^[a-zA-Z]+$/.test(effectName)) {
+                showNotification('效果名称只能包含英文字母', 'error');
+                return;
+            }
+            
+            // 如果颜色代码无效，使用白色
+            if (!color || !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+                color = '#FFFFFF';
+                colorHexInput.value = color;
+            }
+            
+            // 更新效果
+            effects[effectName] = {
+                text_color: color
+            };
+            
+            // 更新配置
+            config.label_settings = effects;
+            
+            // 重新渲染效果标签
+            renderEffectTags();
+            updateJSONOutput();
+            
+            closeColorPicker();
+            showNotification(`效果 "${effectName}" 已保存`);
+        }
+        
+        // 删除效果
+        function deleteEffect(effectName) {
+            delete effects[effectName];
+            config.label_settings = effects;
+            renderEffectTags();
+            updateJSONOutput();
+            showNotification(`效果 "${effectName}" 已删除`);
+        }
+        
+        // 更新颜色预览
+        function updateColorPreview() {
+            colorPreview.style.backgroundColor = colorHexInput.value;
+        }
+        
+        // 更新文本预览
+        function updatePreview() {
+            let html = config.texts;
+            
+            // 将效果标签替换为带样式的span
+            Object.keys(effects).forEach(effectName => {
+                const color = effects[effectName].text_color;
+                const regex = new RegExp(`<${effectName}>([\\s\\S]*?)<\/${effectName}>`, 'g');
+                html = html.replace(regex, `<span style="color: ${color};">$1</span>`);
+            });
+            
+            // 将换行符转换为HTML换行标签
+            html = html.replace(/\n/g, '<br>');
+            
+            textPreview.innerHTML = html;
+        }
+        
+        // 更新JSON输出
+        function updateJSONOutput() {
+            // 创建config的副本，将texts中的换行符替换为"&"
+            const jsonConfig = { ...config };
+            
+            // 将texts中的换行符替换为"&"
+            if (jsonConfig.texts) {
+                jsonConfig.texts = jsonConfig.texts.replace(/\n/g, '&');
+            }
+            
+            // 构建完整的JSON字符串
+            const jsonStr = JSON.stringify(jsonConfig, null, 2);
+            jsonOutput.textContent = `@[type_parallel] ${jsonStr}`;
+        }
+        
+        // 复制JSON到剪贴板
+        function copyToClipboard() {
+            // 创建config的副本，将texts中的换行符替换为"&"
+            const jsonConfig = { ...config };
+            
+            // 将texts中的换行符替换为"&"
+            if (jsonConfig.texts) {
+                jsonConfig.texts = jsonConfig.texts.replace(/\n/g, '&');
+            }
+            
+            const jsonStr = `@[type_parallel] ${JSON.stringify(jsonConfig, null, 2)}`;
+            
+            navigator.clipboard.writeText(jsonStr)
+                .then(() => {
+                    showNotification('黑魔法指令已复制到剪贴板！');
+                })
+                .catch(err => {
+                    console.error('复制失败: ', err);
+                    showNotification('复制失败，请手动复制', 'error');
+                });
+        }
+        
+        // 显示通知
+        function showNotification(message, type = 'success') {
+            notificationText.textContent = message;
+            notification.className = 'notification';
+            
+            if (type === 'error') {
+                notification.style.backgroundColor = '#c0392b';
+            } else {
+                notification.style.backgroundColor = '#5d4a9e';
+            }
+            
+            // 显示通知
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // 3秒后隐藏
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 解析标签字符串
+        function parseTags(tagsStr) {
+            const tags = tagsStr.split(',')
+                .map(tag => tag.trim())
+                .filter(tag => tag)
+                .map(tag => {
+                    // 移除引号
+                    return tag.replace(/^["']|["']$/g, '');
+                });
+            
+            return tags.length > 0 ? tags : ["label #1"];
+        }
+        
+        // 事件监听
+        // 文本内容变化
+        textsInput.addEventListener('input', function() {
+            config.texts = this.value;
+            updatePreview();
+            updateJSONOutput();
+        });
+        
+        // 固定于画面
+        fixedCheckbox.addEventListener('change', function() {
+            config.fixed = this.checked;
+            updateJSONOutput();
+        });
+        
+        // 位置坐标变化
+        posXInput.addEventListener('input', function() {
+            const x = parseInt(posXInput.value) || 0;
+            const y = parseInt(posYInput.value) || 0;
+            config.pos = [x, y];
+            updateJSONOutput();
+        });
+        
+        posYInput.addEventListener('input', function() {
+            const x = parseInt(posXInput.value) || 0;
+            const y = parseInt(posYInput.value) || 0;
+            config.pos = [x, y];
+            updateJSONOutput();
+        });
+        
+        // 标签变化
+        tagsInput.addEventListener('input', function() {
+            config.tags = parseTags(this.value);
+            updateJSONOutput();
+        });
+        
+        // 打字音效
+        hasSeCheckbox.addEventListener('change', function() {
+            config.has_se = this.checked;
+            updateJSONOutput();
+        });
+        
+        // 音效类型变化
+        charTypeSelect.addEventListener('change', function() {
+            const charType = charTypeSelect.value === "null" ? null : charTypeSelect.value;
+            config.char_type = charType;
+            updateJSONOutput();
+        });
+        
+        // 打字动画
+        hasAnimationCheckbox.addEventListener('change', function() {
+            config.has_animation = this.checked;
+            updateJSONOutput();
+        });
+        
+        // 层级
+        layerRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    config.layer = this.value;
+                    updateJSONOutput();
+                }
+            });
+        });
+        
+        // 可以跳过
+        canSkipCheckbox.addEventListener('change', function() {
+            config.can_skip = this.checked;
+            updateJSONOutput();
+        });
+        
+        // 需要确认
+        needAcceptCheckbox.addEventListener('change', function() {
+            config.need_accept = this.checked;
+            updateJSONOutput();
+        });
+        
+        // 玩家需要等待
+        waitCheckbox.addEventListener('change', function() {
+            config.wait = this.checked;
+            updateJSONOutput();
+        });
+        
+        // 文字会遮住玩家
+        onTopCheckbox.addEventListener('change', function() {
+            config.is_on_top_of_player = this.checked;
+            updateJSONOutput();
+        });
+        
+        // 颜色选择器事件
+        addEffectBtn.addEventListener('click', () => openColorPicker());
+        cancelColorBtn.addEventListener('click', closeColorPicker);
+        confirmColorBtn.addEventListener('click', saveEffect);
+        
+        // 颜色输入变化
+        colorHexInput.addEventListener('input', function() {
+            colorPicker.value = this.value;
+            updateColorPreview();
+        });
+        
+        colorPicker.addEventListener('input', function() {
+            colorHexInput.value = this.value;
+            updateColorPreview();
+        });
+        
+        // 复制按钮
+        copyBtn.addEventListener('click', copyToClipboard);
+        
+        // 点击模态框外部关闭
+        colorPickerModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeColorPicker();
+            }
+        });
+        
+        // 按ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && colorPickerModal.style.display === 'flex') {
+                closeColorPicker();
+            }
+        });
+        
+        // 初始化
+        initUI();
+    </script>
+</body>
+</html>

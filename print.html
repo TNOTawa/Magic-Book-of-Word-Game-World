@@ -13,24 +13,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="src/css/custom.css">
+        <link rel="stylesheet" href="src/css/custom-4523c2bd.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -38,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "searchindex-34b7b385.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-b230d170.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -55,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div id="body-container">
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -84,12 +83,12 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -104,39 +103,39 @@
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -144,38 +143,38 @@
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
                         <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
                             </div>
                         </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="magic-book-of-word-game-world"><a class="header" href="#magic-book-of-word-game-world">Magic Book of Word Game World</a></h1>
 <h2 id="文字游戏世界魔法书"><a class="header" href="#文字游戏世界魔法书">《文字游戏世界》魔法书</a></h2>
@@ -184,48 +183,59 @@
 <p><em>注：本文档所有指令是通过关卡源文件推测的，并非 100% 经过测试！！！</em></p>
 <p><strong>感谢 “文字游戏世界” QQ 群的大伙查缺补漏，以及挖掘机制，谢谢！</strong></p>
 <p><strong>本文档并不针对零基础用户编写，默认您已经了解编辑器的基本逻辑</strong></p>
-<hr />
+<hr>
 <h2 id="目录"><a class="header" href="#目录">目录：</a></h2>
 <h3 id="事件"><a class="header" href="#事件">事件</a></h3>
 <h4 id="原版可添加事件"><a class="header" href="#原版可添加事件">原版可添加事件</a></h4>
 <ul>
-<li><a href="events/%E7%89%A9%E4%BB%B6%E6%93%8D%E4%BD%9C.html">物件操作</a></li>
-<li><a href="events/%E6%89%93%E5%AD%97%E6%9C%BA.html">打字机</a></li>
-<li><a href="events/%E8%83%BD%E5%8A%9B%E8%AE%BE%E5%AE%9A.html">能力设定</a></li>
-<li><a href="events/%E6%B8%B8%E6%88%8F%E6%9C%BA%E5%88%B6.html">游戏机制</a></li>
-<li><a href="events/%E7%82%B9%E5%94%B1%E6%9C%BA.html">点唱机</a></li>
-<li><a href="events/%E9%95%9C%E5%A4%B4.html">镜头</a></li>
-<li><a href="events/%E6%8F%90%E7%A4%BA.html">提示</a></li>
-<li><a href="events/%E7%B3%BB%E7%BB%9F.html">系统</a></li>
-<li><a href="events/%E4%BB%A3%E6%95%B0.html">代数</a></li>
-<li><a href="events/%E6%9D%A1%E4%BB%B6.html">条件</a></li>
-<li><a href="events/%E5%A4%87%E6%B3%A8.html">备注</a></li>
+<li><a href="#物件操作">物件操作</a></li>
+<li><a href="#打字机">打字机</a></li>
+<li><a href="#能力设定">能力设定</a></li>
+<li><a href="#游戏机制">游戏机制</a></li>
+<li><a href="#点唱机">点唱机</a></li>
+<li><a href="#镜头">镜头</a></li>
+<li><a href="#提示">提示</a></li>
+<li><a href="#系统">系统</a></li>
+<li><a href="#代数">代数</a></li>
+<li><a href="#条件">条件</a></li>
+<li><a href="#备注">备注</a></li>
 </ul>
 <h4 id="原版不可添加事件"><a class="header" href="#原版不可添加事件">原版不可添加事件</a></h4>
 <ul>
-<li><a href="events/%E7%89%B9%E6%AE%8A%E6%8C%87%E4%BB%A4.html">特殊指令</a></li>
+<li><a href="#特殊事件">特殊指令</a></li>
 </ul>
 <h3 id="特殊写法"><a class="header" href="#特殊写法">特殊写法</a></h3>
 <ul>
-<li><a href="special/%E5%A6%82%E4%BD%95%E5%B0%86%E5%8F%98%E9%87%8F%E4%BB%A3%E5%85%A5%E5%8F%82%E6%95%B0.html">如何将变量代入参数</a></li>
-<li><a href="special/%E6%89%93%E5%AD%97%E6%9C%BA%E7%9A%84%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html">打字机的高级用法</a></li>
+<li><a href="#如何将变量代入参数">如何将变量代入参数</a></li>
+<li><a href="#打字机的高级用法">打字机的高级用法</a></li>
 </ul>
-<hr />
+<h3 id="实用工具"><a class="header" href="#实用工具"><em><strong>实用工具</strong></em></a></h3>
+<ul>
+<li>
+<p><a href="#黑魔法提取器">黑魔法提取器</a></p>
+<p>by TNOT</p>
+</li>
+<li>
+<p><a href="#黑魔法打字机编辑器">黑魔法打字机编辑器</a></p>
+<p>by 艺素馒头</p>
+</li>
+</ul>
+<hr>
 <p>友情链接：</p>
 <ul>
 <li><a href="https://team9.co/">页面：Team9 的官方网站</a></li>
-<li><a href="https://store.steampowered.com/app/3114370/">页面：文字游戏世界's STEAM页面</a></li>
+<li><a href="https://store.steampowered.com/app/3114370/">页面：文字游戏世界’s STEAM页面</a></li>
 <li><a href="https://wordgameworld.wiki.gg/zh-hant/">教程：繁中wiki</a></li>
 <li><a href="https://docs.qq.com/doc/DUWlCYXVBbWtpaFR2">教程：简中文档</a></li>
 <li><a href="https://www.bilibili.com/video/BV14vn8zYEM7/">视频：官方视频教程</a></li>
-<li><a href="https://github.com/TNOTawa/wordgameworld-black-magic-extract">工具：黑魔法提取器</a></li>
 </ul>
-<p>...（待补充）</p>
-<hr />
+<p>…（待补充）</p>
+<hr>
 <p>主要编写者：TNOT（tnot123@outlook.com）</p>
 <p>如有问题或意见可以联系我，或在官方Q群<code>@</code>我。</p>
 <p>当然也欢迎提交pr进行修改/编写！</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="物件操作"><a class="header" href="#物件操作">物件操作</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="物件操作"><a class="header" href="#物件操作">物件操作</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="传送器"><a class="header" href="#传送器">传送器</a></h2>
 <pre><code>@[transport_event] {
@@ -328,7 +338,8 @@
 @[set_player_opacity] 0.5
 
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="打字机"><a class="header" href="#打字机">打字机</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="打字机"><a class="header" href="#打字机">打字机</a></h1>
 <h2 id="打字"><a class="header" href="#打字">打字</a></h2>
 <pre><code>@[type_parallel] {
   
@@ -372,7 +383,8 @@
 
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="能力设定"><a class="header" href="#能力设定">能力设定</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="能力设定"><a class="header" href="#能力设定">能力设定</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="拆组字"><a class="header" href="#拆组字">拆组字</a></h2>
 <pre><code>
@@ -394,7 +406,8 @@
 @[set_ctrl_z_power] true
 
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="宣告拆字规则"><a class="header" href="#宣告拆字规则">宣告拆字规则</a></h2>
 <pre><code>@[append_split_rule] {
@@ -441,7 +454,8 @@
   
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="点唱机"><a class="header" href="#点唱机">点唱机</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="点唱机"><a class="header" href="#点唱机">点唱机</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="播放背景音乐"><a class="header" href="#播放背景音乐">播放背景音乐</a></h2>
 <pre><code>@[editor_play_bgm] {
@@ -462,7 +476,8 @@
   
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="镜头"><a class="header" href="#镜头">镜头</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="镜头"><a class="header" href="#镜头">镜头</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="跟随玩家"><a class="header" href="#跟随玩家">跟随玩家</a></h2>
 <pre><code>@[set_camera_follow_player] { true }
@@ -513,7 +528,8 @@
   
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="提示"><a class="header" href="#提示">提示</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="提示"><a class="header" href="#提示">提示</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="叮"><a class="header" href="#叮">叮！</a></h2>
 <pre><code>
@@ -557,7 +573,8 @@
   
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="系统"><a class="header" href="#系统">系统</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="系统"><a class="header" href="#系统">系统</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="延迟固定时间"><a class="header" href="#延迟固定时间">延迟固定时间</a></h2>
 <pre><code>
@@ -565,7 +582,7 @@
 
 </code></pre>
 <p>注：单位为 0.02s</p>
-<p>如需要无阻塞延迟，参见<a href="events/../special/%E6%89%93%E5%AD%97%E6%9C%BA%E7%9A%84%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html">打字机的高级用法</a>中的<code>利用延迟符号实现无阻塞延迟</code></p>
+<p>如需要无阻塞延迟，参见<a href="#打字机的高级用法">打字机的高级用法</a>中的<code>利用延迟符号实现无阻塞延迟</code></p>
 <h2 id="延迟随机时间"><a class="header" href="#延迟随机时间">延迟随机时间</a></h2>
 <pre><code>@[wait_random_in_range] {
   
@@ -632,7 +649,8 @@
 }
 </code></pre>
 <p>你真的有必要用这个吗？</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="代数"><a class="header" href="#代数">代数</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="代数"><a class="header" href="#代数">代数</a></h1>
 <p><strong>注：需要代入ID的指令不建议单独使用，最好用<a href="https://tnotawa.github.io/wordgameworld-black-magic-extract/">黑魔法提取器</a>提取再使用</strong></p>
 <h2 id="设定开关"><a class="header" href="#设定开关">设定开关</a></h2>
 <pre><code>@[set_switch] [
@@ -683,7 +701,8 @@
   
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="条件"><a class="header" href="#条件">条件</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="条件"><a class="header" href="#条件">条件</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="符合时执行"><a class="header" href="#符合时执行">符合时执行</a></h2>
 <pre><code>@[if] {
@@ -712,13 +731,15 @@
 @[end_if]
 
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="备注"><a class="header" href="#备注">备注</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="备注"><a class="header" href="#备注">备注</a></h1>
 <h2 id="注释"><a class="header" href="#注释">注释</a></h2>
 <pre><code>
 @[comment] { "" }
 
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="特殊事件"><a class="header" href="#特殊事件">特殊事件</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="特殊事件"><a class="header" href="#特殊事件">特殊事件</a></h1>
 <p><em>名称为非官方命名，请以官方为准</em>
 <em>大多事件通过分析关卡 JSON 文件得来</em></p>
 <h2 id="无操作指令"><a class="header" href="#无操作指令">无操作指令</a></h2>
@@ -735,14 +756,20 @@
 }
 </code></pre>
 <p>可以设置指定物件的参数。以下是部分参数的列表。</p>
-<div class="table-wrapper"><table><thead><tr><th>属性名（英文）</th><th>中文说明</th><th>类型</th><th>示例值</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>属性名（英文）</th><th>中文说明</th><th>类型</th><th>示例值</th></tr>
+</thead>
+<tbody>
 <tr><td><code>text</code></td><td>显示的文字内容</td><td>字符串</td><td><code>"新文字"</code></td></tr>
 <tr><td><code>hasBackground</code></td><td>是否有背景框</td><td>布尔值</td><td><code>true</code> / <code>false</code></td></tr>
 <tr><td><code>opacity</code></td><td>透明度（0~1）</td><td>数字</td><td><code>0.5</code></td></tr>
 <tr><td><code>eventTriggerAction</code></td><td>触发方式</td><td>字符串</td><td>游戏开始后<code>"auto"</code> / 玩家调查后<code>"press"</code> / 玩家触碰后<code>"touch"</code> / 被物件触发<code>"trigger"</code></td></tr>
 <tr><td><code>existCondition</code></td><td>触发条件</td><td>字符串</td><td><code>"s:switch_name_触发物件==true"</code></td></tr>
 <tr><td><code>isOnTopOfPlayer</code></td><td>是否显示在角色上方</td><td>布尔值</td><td><code>true</code></td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <p>存在的问题：</p>
 <ul>
@@ -792,12 +819,13 @@
 @[end_move_route]
 </code></pre>
 <p>通过这个能让黑魔法编辑移动更为便捷，不需要为每个移动指令都单独指定物件。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="如何将变量代入参数"><a class="header" href="#如何将变量代入参数">如何将变量代入参数</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="如何将变量代入参数"><a class="header" href="#如何将变量代入参数">如何将变量代入参数</a></h1>
 <blockquote>
 <p>由 Qwen3 优化了语法和格式，内容已经过验证。</p>
 </blockquote>
 <p>在《文字游戏世界》中，开发者可以通过<strong>变量代入语法</strong>将游戏运行时的动态数据（如变量值、开关状态等）嵌入到事件参数中，从而实现内容的动态化与交互性。本文档详细说明变量与开关的代入方法、适用范围及注意事项。</p>
-<hr />
+<hr>
 <h2 id="1-基本语法"><a class="header" href="#1-基本语法">1. 基本语法</a></h2>
 <p>《文字游戏世界》使用前缀标识符来区分不同类型的动态数据：</p>
 <ul>
@@ -808,7 +836,7 @@
 <blockquote>
 <p><strong>注意</strong>：变量名与开关名需与项目中定义的名称<strong>完全一致</strong>（包括大小写与空格）。</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="2-应用示例"><a class="header" href="#2-应用示例">2. 应用示例</a></h2>
 <h3 id="21-修改位置参数pos"><a class="header" href="#21-修改位置参数pos">2.1 修改位置参数（<code>pos</code>）</a></h3>
 <p>假设已定义一个名为 <code>变量X</code> 的数值变量，希望打字机事件的 X 坐标动态跟随该变量值：</p>
@@ -837,19 +865,19 @@
 <blockquote>
 <p><strong>替代方案</strong>：如需组合静态文本与动态值，建议使用多个打字事件；或是与固定物件拼接而成。</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="相关文档"><a class="header" href="#相关文档">相关文档</a></h2>
 <ul>
-<li><a href="special/../events/%E6%89%93%E5%AD%97%E6%9C%BA.html">打字机</a></li>
-<li><a href="special/../events/%E6%89%93%E5%AD%97%E6%9C%BA.html">代数</a></li>
+<li><a href="#打字机">打字机</a></li>
+<li><a href="#打字机">代数</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="打字机的高级用法"><a class="header" href="#打字机的高级用法">打字机的高级用法</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="打字机的高级用法"><a class="header" href="#打字机的高级用法">打字机的高级用法</a></h1>
 <h2 id="1-利用延迟符号实现无阻塞延迟"><a class="header" href="#1-利用延迟符号实现无阻塞延迟">1. 利用延迟符号实现无阻塞延迟</a></h2>
 <blockquote>
 <p>来自「艺素馒头」</p>
 </blockquote>
-<p>在打字机中，符号「|」具有延迟效果（每个「|」约产生 0.1 秒的停顿）。<br />
-你可以利用这一特性，实现<strong>无阻塞的延迟效果</strong>——即在不强制玩家等待或确认的情况下，让文本按节奏自动呈现。</p>
+<p>在打字机中，符号「|」具有延迟效果（每个「|」约产生 0.1 秒的停顿）。<br>你可以利用这一特性，实现<strong>无阻塞的延迟效果</strong>——即在不强制玩家等待或确认的情况下，让文本按节奏自动呈现。</p>
 <p><strong>实现方法如下：</strong></p>
 <ol>
 <li>
@@ -862,12 +890,1790 @@
 </li>
 </ol>
 <p>这样，系统会在延迟结束后自动识别整句成立，从而触发后续逻辑，而玩家无需确认或等待。</p>
-<hr />
+<hr>
 <h2 id="相关文档-1"><a class="header" href="#相关文档-1">相关文档</a></h2>
 <ul>
-<li><a href="special/../events/%E6%89%93%E5%AD%97%E6%9C%BA.html">打字机</a></li>
+<li><a href="#打字机">打字机</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="黑魔法提取器"><a href="#黑魔法提取器" class="header">黑魔法提取器</a></h1>
 
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>黑魔法提取器</title>
+  <style>
+    body {
+      font-family: "zpix", sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+      margin: 0;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .upload-area, .mode-toggle {
+      text-align: center;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .tab {
+      padding: 8px 16px;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .tab.active {
+      background: #3498db;
+      color: white;
+    }
+    .map-content {
+      display: none;
+    }
+    .map-content.active {
+      display: block;
+    }
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .event-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .event-header {
+      padding: 12px 15px;
+      background: #f5f5f5;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .event-title {
+      font-weight: bold;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+    }
+    .event-text {
+      color: #e67e22;
+      font-size: 0.95em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toggle-icon {
+      font-size: 16px;
+      margin-left: 10px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .command-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: white;
+    }
+    .command-list.expanded {
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 0 15px 15px;
+    }
+    .command-item {
+      background: #fafafa;
+      padding: 12px;
+      margin-top: 10px;
+      border-left: 3px solid #3498db;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      border-radius: 0 4px 4px 0;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .command-item:hover {
+      background: #eef7ff;
+    }
+    .logic-block {
+      border-left: 3px solid #9b59b6;
+      background: #f8f4ff !important;
+    }
+    .logic-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed #dcdcdc;
+    }
+    .logic-block-title {
+      font-weight: bold;
+      color: #8e44ad;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .logic-copy-options {
+      display: flex;
+      gap: 8px;
+      font-size: 0.85em;
+    }
+    .copy-btn {
+      background: #e0e0e0;
+      border: none;
+      border-radius: 4px;
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover {
+      background: #d0d0d0;
+    }
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #2ecc71;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+    }
+    .notification.show {
+      opacity: 1;
+    }
+    .no-events {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+    label.switch {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .switch input {
+      margin: 0;
+    }
+    .indent-guide {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #9b59b6;
+      opacity: 0.3;
+    }
+    .var-name {
+      color: #c0392b;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  
+<h1>《文字游戏世界》黑魔法提取器</h1>
+
+  
+<div class="controls">
+    
+<div class="upload-area">
+      <input type="file" id="fileInput" accept=".world,.json" />
+    </div>
+
+    
+<div class="mode-toggle">
+      <label class="switch">
+        <input type="checkbox" id="modeSwitch" />
+        显示黑魔法版本
+      </label>
+    </div>
+
+  </div>
+
+  
+<div id="tabsContainer" class="tabs"></div>
+
+  
+<div id="mapsContainer"></div>
+
+  
+<div id="notification" class="notification">已复制！</div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const modeSwitch = document.getElementById('modeSwitch');
+    const tabsContainer = document.getElementById('tabsContainer');
+    const mapsContainer = document.getElementById('mapsContainer');
+    const notification = document.getElementById('notification');
+
+    let currentMapIndex = 0;
+    let mapsData = [];
+    let showProcessed = false;
+    let variableMap = {};
+
+    modeSwitch.addEventListener('change', () => {
+      showProcessed = modeSwitch.checked;
+      if (mapsData.length > 0) {
+        renderTabsAndMaps();
+      }
+    });
+
+    fileInput.addEventListener('change', handleFile);
+
+    function handleFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        try {
+          const data = JSON.parse(event.target.result);
+          if (!data.maps || !Array.isArray(data.maps)) {
+            alert('文件中未包含有效的地图数据。');
+            return;
+          }
+          
+          // 提取所有变量映射
+          variableMap = {};
+          data.maps.forEach(map => {
+            if (map.variants && Array.isArray(map.variants)) {
+              map.variants.forEach(variant => {
+                if (variant.id && variant.name) {
+                  variableMap[variant.id] = variant.name;
+                }
+              });
+            }
+          });
+          
+          mapsData = data.maps;
+          renderTabsAndMaps();
+        } catch (err) {
+          alert('文件解析失败，请确保是有效的 .world 关卡文件。');
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function renderTabsAndMaps() {
+      tabsContainer.innerHTML = '';
+      mapsContainer.innerHTML = '';
+
+      mapsData.forEach((map, index) => {
+        const tabBtn = document.createElement('button');
+        tabBtn.className = 'tab';
+        tabBtn.textContent = map.title || `地图 ${index + 1}`;
+        tabBtn.dataset.index = index;
+        tabBtn.addEventListener('click', () => switchMap(index));
+        if (index === 0) tabBtn.classList.add('active');
+        tabsContainer.appendChild(tabBtn);
+
+        const mapDiv = document.createElement('div');
+        mapDiv.className = 'map-content';
+        if (index === 0) mapDiv.classList.add('active');
+
+        const eventList = document.createElement('div');
+        eventList.className = 'event-list';
+
+        const events = map.events || [];
+        let hasCommands = false;
+
+        events.forEach(event => {
+          if (!event.property || !Array.isArray(event.property.commands) || event.property.commands.length === 0) {
+            return;
+          }
+          hasCommands = true;
+          const card = createEventCard(event);
+          eventList.appendChild(card);
+        });
+
+        if (!hasCommands) {
+          eventList.innerHTML = '<div class="no-events">该地图中没有包含指令的物件。</div>';
+        }
+
+        mapDiv.appendChild(eventList);
+        mapsContainer.appendChild(mapDiv);
+      });
+
+      currentMapIndex = 0;
+    }
+
+    function switchMap(index) {
+      document.querySelectorAll('.tab').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.map-content').forEach((div, i) => {
+        div.classList.toggle('active', i === index);
+      });
+      currentMapIndex = index;
+    }
+
+    function transformCommand(cmd) {
+      const indentLevel = cmd.indent || 0;
+      const indentPrefix = '  '.repeat(indentLevel);
+
+      // 跳过 @[#raw_command] 类型
+      if (cmd.type === "@[#raw_command]") {
+        return (indentPrefix + (cmd.value || '')).trim();
+      }
+
+      // 提取类型名
+      const typeName = cmd.type.startsWith('#') ? cmd.type.slice(1) : cmd.type;
+
+      // 处理空值指令
+      if (cmd.value === null || cmd.value === undefined) {
+        return indentPrefix + `@[${typeName}]`;
+      }
+
+      // 处理基本类型值
+      if (typeof cmd.value !== 'object') {
+        const valueStr = JSON.stringify(cmd.value);
+        return indentPrefix + `@[${typeName}] { ${valueStr} }`;
+      }
+
+      // 格式化对象/数组值
+      const valueStr = JSON.stringify(cmd.value, null, 2);
+      let inner = valueStr;
+      
+      if (valueStr.startsWith('{') && valueStr.endsWith('}')) {
+        inner = valueStr
+          .slice(1, -1)
+          .split('\n')
+          .map(line => '  ' + line)
+          .join('\n');
+        return indentPrefix + `@[${typeName}] {\n${inner}\n}`;
+      } else if (valueStr.startsWith('[') && valueStr.endsWith(']')) {
+        inner = valueStr
+          .slice(1, -1)
+          .split('\n')
+          .map(line => '  ' + line)
+          .join('\n');
+        return indentPrefix + `@[${typeName}] [\n${inner}\n]`;
+      } else {
+        return indentPrefix + `@[${typeName}] { ${valueStr} }`;
+      }
+    }
+
+    function createEventCard(event) {
+      const card = document.createElement('div');
+      card.className = 'event-card';
+
+      const header = document.createElement('div');
+      header.className = 'event-header';
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'event-title';
+      titleSpan.textContent = event.name || event.id;
+
+      if (event.attribute && event.attribute.text) {
+        const textSpan = document.createElement('span');
+        textSpan.className = 'event-text';
+        textSpan.textContent = event.attribute.text;
+        titleSpan.appendChild(document.createTextNode(' '));
+        titleSpan.appendChild(textSpan);
+      }
+
+      const toggleIcon = document.createElement('span');
+      toggleIcon.className = 'toggle-icon';
+      toggleIcon.textContent = '▶';
+
+      header.appendChild(titleSpan);
+      header.appendChild(toggleIcon);
+      card.appendChild(header);
+
+      const commandList = document.createElement('div');
+      commandList.className = 'command-list';
+
+      // 处理逻辑块分组
+      const logicBlocks = groupLogicBlocks(event.property.commands);
+      
+      logicBlocks.forEach(block => {
+        if (block.type === 'command') {
+          // 普通指令
+          const cmdEl = createCommandItem(block.command);
+          commandList.appendChild(cmdEl);
+        } else {
+          // 逻辑块
+          const logicBlock = document.createElement('div');
+          logicBlock.className = 'command-item logic-block';
+          
+          // 添加缩进引导线
+          const indentGuide = document.createElement('div');
+          indentGuide.className = 'indent-guide';
+          indentGuide.style.left = `${(block.indent + 1) * 16}px`;
+          logicBlock.appendChild(indentGuide);
+          
+          // 逻辑块标题
+          const blockHeader = document.createElement('div');
+          blockHeader.className = 'logic-block-header';
+          
+          const blockTitle = document.createElement('div');
+          blockTitle.className = 'logic-block-title';
+          
+          // 使用变量名替代varId
+          const conditionText = getConditionText(block.condition);
+          blockTitle.innerHTML = conditionText;
+          
+          const copyOptions = document.createElement('div');
+          copyOptions.className = 'logic-copy-options';
+          
+          const copyFullBtn = document.createElement('button');
+          copyFullBtn.className = 'copy-btn';
+          copyFullBtn.textContent = '复制完整逻辑块';
+          copyFullBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            copyLogicBlock(block, true);
+          });
+          
+          const copyInnerBtn = document.createElement('button');
+          copyInnerBtn.className = 'copy-btn';
+          copyInnerBtn.textContent = '仅复制内部指令';
+          copyInnerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            copyLogicBlock(block, false);
+          });
+          
+          copyOptions.appendChild(copyFullBtn);
+          copyOptions.appendChild(copyInnerBtn);
+          blockHeader.appendChild(blockTitle);
+          blockHeader.appendChild(copyOptions);
+          logicBlock.appendChild(blockHeader);
+          
+          // 内部指令
+          const innerCommands = document.createElement('div');
+          innerCommands.style.paddingLeft = '20px';
+          
+          block.commands.forEach(cmd => {
+            const cmdEl = createCommandItem(cmd);
+            innerCommands.appendChild(cmdEl);
+          });
+          
+          logicBlock.appendChild(innerCommands);
+          commandList.appendChild(logicBlock);
+        }
+      });
+
+      card.appendChild(commandList);
+
+      header.addEventListener('click', () => {
+        const isExpanded = commandList.classList.contains('expanded');
+        if (isExpanded) {
+          commandList.classList.remove('expanded');
+          toggleIcon.textContent = '▶';
+        } else {
+          commandList.classList.add('expanded');
+          toggleIcon.textContent = '▼';
+        }
+      });
+
+      return card;
+    }
+
+    function createCommandItem(cmd) {
+      const cmdEl = document.createElement('div');
+      cmdEl.className = 'command-item';
+      
+      let displayText = '';
+      if (showProcessed) {
+        displayText = transformCommand(cmd);
+      } else {
+        displayText = JSON.stringify(cmd, null, 2);
+      }
+      
+      cmdEl.textContent = displayText;
+      
+      cmdEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        copyToClipboard(displayText);
+      });
+      
+      return cmdEl;
+    }
+
+    function groupLogicBlocks(commands) {
+      const blocks = [];
+      const stack = [];
+      
+      for (let i = 0; i < commands.length; i++) {
+        const cmd = commands[i];
+        
+        // 处理逻辑块开始
+        if (cmd.type === '#if') {
+          const block = {
+            type: 'logic',
+            indent: cmd.indent,
+            condition: cmd.value,
+            commands: [],
+          };
+          stack.push({ block, startIndex: i });
+        } 
+        // 处理逻辑块结束
+        else if (cmd.type === '#end_if' && stack.length > 0) {
+          const { block, startIndex } = stack.pop();
+          
+          // 添加块到结果
+          blocks.push(block);
+          
+          // 跳过已处理的指令
+          i = startIndex + block.commands.length + 1;
+        }
+        // 处理逻辑块内部
+        else if (stack.length > 0) {
+          const currentBlock = stack[stack.length - 1].block;
+          currentBlock.commands.push(cmd);
+        }
+        // 普通指令
+        else {
+          blocks.push({
+            type: 'command',
+            command: cmd
+          });
+        }
+      }
+      
+      // 处理未闭合的逻辑块
+      while (stack.length > 0) {
+        const { block } = stack.pop();
+        blocks.push(block);
+      }
+      
+      return blocks;
+    }
+
+    function getConditionText(condition) {
+      if (!condition || !condition.varOption) return '条件判断';
+      
+      const { varId, operation, varValue } = condition.varOption;
+      const varName = variableMap[varId] || varId; // 使用变量名，如果没有则用id
+      
+      // 用红色突出显示变量名
+      return `当变量 <span class="var-name">${varName}</span> ${operation} ${varValue} 时`;
+    }
+
+    function copyLogicBlock(block, includeCondition) {
+      let textToCopy = '';
+      
+      if (includeCondition) {
+        // 复制完整逻辑块
+        textToCopy += transformCommand({
+          type: '#if',
+          value: block.condition,
+          indent: block.indent
+        }) + '\n';
+        
+        block.commands.forEach(cmd => {
+          textToCopy += transformCommand(cmd) + '\n';
+        });
+        
+        textToCopy += transformCommand({
+          type: '#end_if',
+          value: null,
+          indent: block.indent
+        });
+      } else {
+        // 仅复制内部指令
+        block.commands.forEach(cmd => {
+          textToCopy += transformCommand(cmd) + '\n';
+        });
+      }
+      
+      copyToClipboard(textToCopy.trim());
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        notification.classList.add('show');
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 1500);
+      }).catch(err => {
+        console.error('复制失败:', err);
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          notification.classList.add('show');
+          setTimeout(() => notification.classList.remove('show'), 1500);
+        } catch (e) {
+          alert('复制失败，请手动复制。');
+        }
+        document.body.removeChild(textarea);
+      });
+    }
+  </script>
+</body>
+</html>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="黑魔法打字机编辑器"><a href="#黑魔法打字机编辑器" class="header">黑魔法打字机编辑器</a></h1>
+
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑魔法打字机编辑器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "zpix", sans-serif;
+        }
+<pre><code>    body {
+        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+        color: #e0e0e0;
+        min-height: 100vh;
+        padding: 20px;
+    }
+    
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    header {
+        text-align: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #333;
+    }
+    
+    h1 {
+        color: #8a2be2;
+        font-size: 2.5rem;
+        margin-bottom: 8px;
+        text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    }
+    
+    .subtitle {
+        color: #aaa;
+        font-size: 1.1rem;
+    }
+    
+    .main-content {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+    
+    .editor-section, .preview-section {
+        flex: 1;
+        min-width: 500px;
+        background-color: rgba(30, 30, 40, 0.8);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .section-title {
+        color: #7b68ee;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #444;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .section-title i {
+        color: #9370db;
+    }
+    
+    .field-group {
+        margin-bottom: 20px;
+    }
+    
+    .field-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #b19cd9;
+        font-weight: 500;
+    }
+    
+    .field-input {
+        width: 100%;
+        padding: 10px 12px;
+        background-color: rgba(20, 20, 30, 0.8);
+        border: 1px solid #444;
+        border-radius: 6px;
+        color: #e0e0e0;
+        font-size: 1rem;
+    }
+    
+    .field-input:focus {
+        outline: none;
+        border-color: #7b68ee;
+        box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.2);
+    }
+    
+    .checkbox-group, .radio-group {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .checkbox-label, .radio-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+    
+    .checkbox-label input, .radio-label input {
+        cursor: pointer;
+    }
+    
+    .edit-btn {
+        background-color: #5d4a9e;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin-top: 8px;
+        transition: background-color 0.2s;
+    }
+    
+    .edit-btn:hover {
+        background-color: #7b68ee;
+    }
+    
+    .effects-container {
+        background-color: rgba(20, 20, 30, 0.8);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .effects-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .add-effect-btn {
+        background-color: #5d4a9e;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.2s;
+    }
+    
+    .add-effect-btn:hover {
+        background-color: #7b68ee;
+    }
+    
+    .effects-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .effect-tag {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .effect-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .effect-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 1px solid #444;
+    }
+    
+    .effect-actions {
+        display: flex;
+        gap: 5px;
+    }
+    
+    .effect-action-btn {
+        background: none;
+        border: none;
+        color: #aaa;
+        cursor: pointer;
+        font-size: 0.8rem;
+        padding: 2px;
+    }
+    
+    .effect-action-btn:hover {
+        color: white;
+    }
+    
+    .texts-input {
+        width: 100%;
+        min-height: 150px;
+        padding: 15px;
+        background-color: rgba(20, 20, 30, 0.8);
+        border: 1px solid #444;
+        border-radius: 8px;
+        color: #e0e0e0;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        resize: vertical;
+    }
+    
+    .texts-input:focus {
+        outline: none;
+        border-color: #7b68ee;
+    }
+    
+    .preview-area {
+        background-color: rgba(20, 20, 30, 0.8);
+        border-radius: 8px;
+        padding: 20px;
+        min-height: 300px;
+        border: 1px solid #444;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    
+    .json-output {
+        width: 100%;
+        min-height: 300px;
+        background-color: rgba(20, 20, 30, 0.8);
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 15px;
+        color: #e0e0e0;
+        font-family: "zpix", sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        white-space: pre;
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+    
+    .controls {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+        gap: 15px;
+    }
+    
+    .copy-btn {
+        background: linear-gradient(135deg, #5d4a9e 0%, #7b68ee 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .copy-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(123, 104, 238, 0.4);
+    }
+    
+    .color-picker-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        display: none;
+    }
+    
+    .color-picker-content {
+        background-color: rgba(30, 30, 40, 0.95);
+        border-radius: 10px;
+        padding: 25px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .color-picker-title {
+        color: #7b68ee;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+    }
+    
+    .color-input-group {
+        margin-bottom: 20px;
+    }
+    
+    .color-preview {
+        width: 100%;
+        height: 60px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #444;
+    }
+    
+    .color-picker-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .modal-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+    }
+    
+    .modal-confirm {
+        background-color: #5d4a9e;
+        color: white;
+    }
+    
+    .modal-cancel {
+        background-color: #444;
+        color: #ddd;
+    }
+    
+    .color-input-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .color-hex-input {
+        flex: 1;
+        padding: 10px;
+        background-color: rgba(20, 20, 30, 0.8);
+        border: 1px solid #444;
+        border-radius: 6px;
+        color: #e0e0e0;
+    }
+    
+    .color-wheel {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+        margin: 0 auto 20px;
+        position: relative;
+        cursor: crosshair;
+    }
+    
+    .color-wheel-selector {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+    
+    .tag-example {
+        font-size: 0.9rem;
+        color: #aaa;
+        margin-top: 5px;
+    }
+    
+    .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background-color: #5d4a9e;
+        color: white;
+        border-radius: 6px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1001;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    
+    .notification.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    @media (max-width: 1100px) {
+        .main-content {
+            flex-direction: column;
+        }
+        
+        .editor-section, .preview-section {
+            min-width: 100%;
+        }
+    }
+    
+    .effect-tag-btn {
+        background-color: transparent;
+        border: 1px solid #5d4a9e;
+        color: #b19cd9;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+    
+    .effect-tag-btn:hover {
+        background-color: rgba(93, 74, 158, 0.2);
+    }
+    
+    .effects-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+&lt;/style&gt;
+</code></pre>
+
+<body>
+    
+<div class="container">
+        <header>
+            
+<h1><span class="fa-svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M64 416L168.6 180.7c15.3-34.4 40.3-63.5 72-83.7l146.9-94c3-1.9 6.5-2.9 10-2.9C407.7 0 416 8.3 416 18.6v1.6c0 2.6-.5 5.1-1.4 7.5L354.8 176.9c-1.9 4.7-2.8 9.7-2.8 14.7c0 5.5 1.2 11 3.4 16.1L448 416H240.9l11.8-35.4 40.4-13.5c6.5-2.2 10.9-8.3 10.9-15.2s-4.4-13-10.9-15.2l-40.4-13.5-13.5-40.4C237 276.4 230.9 272 224 272s-13 4.4-15.2 10.9l-13.5 40.4-40.4 13.5C148.4 339 144 345.1 144 352s4.4 13 10.9 15.2l40.4 13.5L207.1 416H64zM279.6 141.5c-1.1-3.3-4.1-5.5-7.6-5.5s-6.5 2.2-7.6 5.5l-6.7 20.2-20.2 6.7c-3.3 1.1-5.5 4.1-5.5 7.6s2.2 6.5 5.5 7.6l20.2 6.7 6.7 20.2c1.1 3.3 4.1 5.5 7.6 5.5s6.5-2.2 7.6-5.5l6.7-20.2 20.2-6.7c3.3-1.1 5.5-4.1 5.5-7.6s-2.2-6.5-5.5-7.6l-20.2-6.7-6.7-20.2zM32 448H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg></span> 黑魔法打字机编辑器</h1>
+
+            
+<p class="subtitle">为文字游戏辅助创建自定义黑魔法打字机事件，实时预览文字效果，一键复制到游戏中使用</p>
+
+        </header>
+<pre><code>    &lt;div class="main-content"&gt;
+        &lt;div class="editor-section"&gt;
+            &lt;h2 class="section-title"&gt;&lt;i class="fas fa-sliders-h"&gt;&lt;/i&gt; 指令配置&lt;/h2&gt;
+            
+            &lt;div class="effects-container"&gt;
+                &lt;div class="effects-header"&gt;
+                    &lt;h3&gt;&lt;i class="fas fa-palette"&gt;&lt;/i&gt; 文字效果&lt;/h3&gt;
+                    &lt;button class="add-effect-btn" id="addEffectBtn"&gt;
+                        &lt;i class="fas fa-plus"&gt;&lt;/i&gt; 添加效果
+                    &lt;/button&gt;
+                &lt;/div&gt;
+                
+                &lt;div class="effects-buttons" id="effectButtons"&gt;
+                    &lt;!-- 效果按钮将在这里动态生成 --&gt;
+                &lt;/div&gt;
+                
+                &lt;div class="effects-tags" id="effectsTags"&gt;
+                    &lt;!-- 效果标签将在这里动态生成 --&gt;
+                &lt;/div&gt;
+                
+                &lt;div class="field-group"&gt;
+                    &lt;label class="field-label"&gt;文本内容 (texts)&lt;/label&gt;
+                    &lt;textarea class="texts-input" id="textsInput" placeholder="在此输入您的文本内容..."&gt;欢迎来到黑魔法世界，在这里你可以施展强大的咒语。&lt;/textarea&gt;
+                    &lt;div class="tag-example"&gt;点击上方的效果按钮，将在光标位置插入效果标签，如：&amp;lt;c&amp;gt;红色文字&amp;lt;/c&amp;gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;固定于画面 (fixed)&lt;/label&gt;
+                &lt;div class="checkbox-group"&gt;
+                    &lt;label class="checkbox-label"&gt;
+                        &lt;input type="checkbox" id="fixedCheckbox"&gt;
+                        &lt;span&gt;启用&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;位置坐标 (pos)&lt;/label&gt;
+                &lt;div style="display: flex; gap: 10px;"&gt;
+                    &lt;input type="number" id="posX" class="field-input" placeholder="X坐标" style="flex: 1;"&gt;
+                    &lt;input type="number" id="posY" class="field-input" placeholder="Y坐标" style="flex: 1;"&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;标签 (tags)&lt;/label&gt;
+                &lt;input type="text" id="tagsInput" class="field-input" placeholder='输入标签，多个用逗号分隔，如："label #1", "tag2"'&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;打字音效 (has_se)&lt;/label&gt;
+                &lt;div class="checkbox-group"&gt;
+                    &lt;label class="checkbox-label"&gt;
+                        &lt;input type="checkbox" id="hasSeCheckbox" checked&gt;
+                        &lt;span&gt;启用&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;音效类型 (char_type)&lt;/label&gt;
+                &lt;select id="charTypeSelect" class="field-input"&gt;
+                    &lt;option value="null"&gt;null (默认)&lt;/option&gt;
+                    &lt;option value="princess"&gt;princess (轻巧)&lt;/option&gt;
+                    &lt;option value="dragon"&gt;dragon (沉重)&lt;/option&gt;
+                    &lt;option value="snake"&gt;snake (高亢)&lt;/option&gt;
+                    &lt;option value="poet"&gt;poet (老旧)&lt;/option&gt;
+                    &lt;option value="giant_l"&gt;giant_l (干燥)&lt;/option&gt;
+                    &lt;option value="giant_r"&gt;giant_r (机械)&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;打字动画 (has_animation)&lt;/label&gt;
+                &lt;div class="checkbox-group"&gt;
+                    &lt;label class="checkbox-label"&gt;
+                        &lt;input type="checkbox" id="hasAnimationCheckbox" checked&gt;
+                        &lt;span&gt;启用&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;层级 (layer)&lt;/label&gt;
+                &lt;div class="radio-group"&gt;
+                    &lt;label class="radio-label"&gt;
+                        &lt;input type="radio" name="layer" value="front" checked&gt;
+                        &lt;span&gt;前景 (front)&lt;/span&gt;
+                    &lt;/label&gt;
+                    &lt;label class="radio-label"&gt;
+                        &lt;input type="radio" name="layer" value="mid"&gt;
+                        &lt;span&gt;主景 (mid)&lt;/span&gt;
+                    &lt;/label&gt;
+                    &lt;label class="radio-label"&gt;
+                        &lt;input type="radio" name="layer" value="back"&gt;
+                        &lt;span&gt;背景 (back)&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;可以跳过 (can_skip)&lt;/label&gt;
+                &lt;div class="checkbox-group"&gt;
+                    &lt;label class="checkbox-label"&gt;
+                        &lt;input type="checkbox" id="canSkipCheckbox" checked&gt;
+                        &lt;span&gt;启用&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;需要确认 (need_accept)&lt;/label&gt;
+                &lt;div class="checkbox-group"&gt;
+                    &lt;label class="checkbox-label"&gt;
+                        &lt;input type="checkbox" id="needAcceptCheckbox" checked&gt;
+                        &lt;span&gt;启用&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;玩家需要等待 (wait)&lt;/label&gt;
+                &lt;div class="checkbox-group"&gt;
+                    &lt;label class="checkbox-label"&gt;
+                        &lt;input type="checkbox" id="waitCheckbox" checked&gt;
+                        &lt;span&gt;启用&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="field-group"&gt;
+                &lt;label class="field-label"&gt;文字会遮住玩家 (is_on_top_of_player)&lt;/label&gt;
+                &lt;div class="checkbox-group"&gt;
+                    &lt;label class="checkbox-label"&gt;
+                        &lt;input type="checkbox" id="onTopCheckbox" checked&gt;
+                        &lt;span&gt;启用&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="preview-section"&gt;
+            &lt;h2 class="section-title"&gt;&lt;i class="fas fa-eye"&gt;&lt;/i&gt; 文本预览&lt;/h2&gt;
+            &lt;div class="preview-area" id="textPreview"&gt;
+                &lt;!-- 预览内容将在这里动态生成 --&gt;
+            &lt;/div&gt;
+            
+            &lt;h2 class="section-title" style="margin-top: 30px;"&gt;&lt;i class="fas fa-code"&gt;&lt;/i&gt; 完整JSON指令&lt;/h2&gt;
+            &lt;div class="json-output" id="jsonOutput"&gt;
+                &lt;!-- JSON输出将在这里动态生成 --&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="controls"&gt;
+        &lt;button class="copy-btn" id="copyBtn"&gt;
+            &lt;i class="fas fa-copy"&gt;&lt;/i&gt; 复制黑魔法指令
+        &lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 颜色选择器模态框 --&gt;
+&lt;div class="color-picker-modal" id="colorPickerModal"&gt;
+    &lt;div class="color-picker-content"&gt;
+        &lt;h3 class="color-picker-title" id="colorPickerTitle"&gt;添加文字效果&lt;/h3&gt;
+        
+        &lt;div class="field-group"&gt;
+            &lt;label class="field-label"&gt;效果名称 (仅支持英文)&lt;/label&gt;
+            &lt;input type="text" id="effectNameInput" class="field-input" placeholder="例如: c, glow, shadow"&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="field-group"&gt;
+            &lt;label class="field-label"&gt;颜色选择&lt;/label&gt;
+            &lt;div class="color-preview" id="colorPreview"&gt;&lt;/div&gt;
+            &lt;div class="color-input-wrapper"&gt;
+                &lt;input type="text" id="colorHexInput" class="color-hex-input" placeholder="#FFFFFF" value="#FFFFFF"&gt;
+                &lt;input type="color" id="colorPicker" value="#FFFFFF" style="width: 50px; height: 40px;"&gt;
+            &lt;/div&gt;
+            &lt;div class="tag-example"&gt;点击色块或直接输入颜色代码，如：#FF0000 为红色&lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="color-picker-actions"&gt;
+            &lt;button class="modal-btn modal-cancel" id="cancelColorBtn"&gt;取消&lt;/button&gt;
+            &lt;button class="modal-btn modal-confirm" id="confirmColorBtn"&gt;确认&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 通知 --&gt;
+&lt;div class="notification" id="notification"&gt;
+    &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+    &lt;span id="notificationText"&gt;已复制到剪贴板！&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    // 初始数据
+    let config = {
+        texts: "欢迎来到黑魔法世界，在这里你可以施展强大的咒语。",
+        fixed: false,
+        pos: [0, 0],
+        tags: ["label #1"],
+        has_se: true,
+        char_type: null,
+        has_animation: true,
+        layer: "mid",
+        can_skip: true,
+        need_accept: true,
+        wait: true,
+        refTexts: [],
+        is_on_top_of_player: true,
+        label_settings: {
+            c: {
+                text_color: "#00ffffff"
+            }
+        }
+    };
+    
+    // 当前编辑的效果
+    let currentEffect = null;
+    let effects = { ...config.label_settings };
+    
+    // DOM元素
+    const textsInput = document.getElementById('textsInput');
+    const fixedCheckbox = document.getElementById('fixedCheckbox');
+    const posXInput = document.getElementById('posX');
+    const posYInput = document.getElementById('posY');
+    const tagsInput = document.getElementById('tagsInput');
+    const hasSeCheckbox = document.getElementById('hasSeCheckbox');
+    const charTypeSelect = document.getElementById('charTypeSelect');
+    const hasAnimationCheckbox = document.getElementById('hasAnimationCheckbox');
+    const layerRadios = document.querySelectorAll('input[name="layer"]');
+    const canSkipCheckbox = document.getElementById('canSkipCheckbox');
+    const needAcceptCheckbox = document.getElementById('needAcceptCheckbox');
+    const waitCheckbox = document.getElementById('waitCheckbox');
+    const onTopCheckbox = document.getElementById('onTopCheckbox');
+    
+    const textPreview = document.getElementById('textPreview');
+    const jsonOutput = document.getElementById('jsonOutput');
+    
+    const effectsTags = document.getElementById('effectsTags');
+    const effectButtons = document.getElementById('effectButtons');
+    
+    const colorPickerModal = document.getElementById('colorPickerModal');
+    const colorPickerTitle = document.getElementById('colorPickerTitle');
+    const effectNameInput = document.getElementById('effectNameInput');
+    const colorHexInput = document.getElementById('colorHexInput');
+    const colorPicker = document.getElementById('colorPicker');
+    const colorPreview = document.getElementById('colorPreview');
+    
+    const addEffectBtn = document.getElementById('addEffectBtn');
+    const cancelColorBtn = document.getElementById('cancelColorBtn');
+    const confirmColorBtn = document.getElementById('confirmColorBtn');
+    
+    const copyBtn = document.getElementById('copyBtn');
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notificationText');
+    
+    // 初始化UI
+    function initUI() {
+        // 设置输入框初始值
+        textsInput.value = config.texts;
+        fixedCheckbox.checked = config.fixed;
+        posXInput.value = config.pos[0];
+        posYInput.value = config.pos[1];
+        tagsInput.value = config.tags.map(tag =&gt; `"${tag}"`).join(', ');
+        hasSeCheckbox.checked = config.has_se;
+        charTypeSelect.value = config.char_type === null ? "null" : config.char_type;
+        hasAnimationCheckbox.checked = config.has_animation;
+        
+        // 设置层级单选按钮
+        document.querySelector(`input[name="layer"][value="${config.layer}"]`).checked = true;
+        
+        canSkipCheckbox.checked = config.can_skip;
+        needAcceptCheckbox.checked = config.need_accept;
+        waitCheckbox.checked = config.wait;
+        onTopCheckbox.checked = config.is_on_top_of_player;
+        
+        // 渲染效果标签
+        renderEffectTags();
+        
+        // 更新预览
+        updatePreview();
+        updateJSONOutput();
+    }
+    
+    // 渲染效果标签
+    function renderEffectTags() {
+        effectsTags.innerHTML = '';
+        effectButtons.innerHTML = '';
+        
+        Object.keys(effects).forEach(effectName =&gt; {
+            const effect = effects[effectName];
+            const color = effect.text_color || '#FFFFFF';
+            
+            // 创建效果标签
+            const tagElement = document.createElement('div');
+            tagElement.className = 'effect-tag';
+            tagElement.style.backgroundColor = color + '20';
+            tagElement.style.border = `1px solid ${color}`;
+            tagElement.dataset.effect = effectName;
+            
+            tagElement.innerHTML = `
+                &lt;div class="effect-color" style="background-color: ${color};"&gt;&lt;/div&gt;
+                &lt;span&gt;${effectName}: ${color}&lt;/span&gt;
+                &lt;div class="effect-actions"&gt;
+                    &lt;button class="effect-action-btn edit-effect" data-effect="${effectName}"&gt;
+                        &lt;i class="fas fa-edit"&gt;&lt;/i&gt;
+                    &lt;/button&gt;
+                    &lt;button class="effect-action-btn delete-effect" data-effect="${effectName}"&gt;
+                        &lt;i class="fas fa-trash"&gt;&lt;/i&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            `;
+            
+            effectsTags.appendChild(tagElement);
+            
+            // 创建效果按钮
+            const buttonElement = document.createElement('button');
+            buttonElement.className = 'effect-tag-btn';
+            buttonElement.innerHTML = `&lt;${effectName}&gt;&lt;/${effectName}&gt;`;
+            buttonElement.style.borderColor = color;
+            buttonElement.style.color = color;
+            buttonElement.dataset.effect = effectName;
+            
+            buttonElement.addEventListener('click', function() {
+                insertEffectTag(effectName);
+            });
+            
+            effectButtons.appendChild(buttonElement);
+        });
+        
+        // 为编辑和删除按钮添加事件监听（使用事件委托）
+        effectsTags.addEventListener('click', function(e) {
+            const target = e.target;
+            const editBtn = target.closest('.edit-effect');
+            const deleteBtn = target.closest('.delete-effect');
+            
+            if (editBtn) {
+                e.stopPropagation();
+                const effectName = editBtn.dataset.effect;
+                openColorPicker(effectName);
+            }
+            
+            if (deleteBtn) {
+                e.stopPropagation();
+                const effectName = deleteBtn.dataset.effect;
+                deleteEffect(effectName);
+            }
+        });
+    }
+    
+    // 插入效果标签到文本
+    function insertEffectTag(effectName) {
+        const textarea = textsInput;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = textarea.value.substring(start, end);
+        const tag = `&lt;${effectName}&gt;${selectedText}&lt;/${effectName}&gt;`;
+        
+        // 插入标签
+        textarea.value = textarea.value.substring(0, start) + tag + textarea.value.substring(end);
+        
+        // 更新配置和预览
+        config.texts = textarea.value;
+        updatePreview();
+        updateJSONOutput();
+        
+        // 聚焦到文本区域
+        textarea.focus();
+        // 设置光标位置在标签后
+        const newCursorPos = start + tag.length;
+        textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }
+    
+    // 打开颜色选择器
+    function openColorPicker(effectName = null) {
+        currentEffect = effectName;
+        
+        if (effectName) {
+            colorPickerTitle.textContent = '编辑文字效果';
+            effectNameInput.value = effectName;
+            const color = effects[effectName].text_color || '#FFFFFF';
+            colorHexInput.value = color;
+            colorPicker.value = color;
+        } else {
+            colorPickerTitle.textContent = '添加文字效果';
+            effectNameInput.value = '';
+            colorHexInput.value = '#FFFFFF';
+            colorPicker.value = '#FFFFFF';
+        }
+        
+        updateColorPreview();
+        colorPickerModal.style.display = 'flex';
+    }
+    
+    // 关闭颜色选择器
+    function closeColorPicker() {
+        colorPickerModal.style.display = 'none';
+        currentEffect = null;
+    }
+    
+    // 添加/更新效果
+    function saveEffect() {
+        const effectName = effectNameInput.value.trim();
+        let color = colorHexInput.value.trim();
+        
+        if (!effectName) {
+            showNotification('效果名称不能为空', 'error');
+            return;
+        }
+        
+        // 验证效果名称（仅允许英文）
+        if (!/^[a-zA-Z]+$/.test(effectName)) {
+            showNotification('效果名称只能包含英文字母', 'error');
+            return;
+        }
+        
+        // 如果颜色代码无效，使用白色
+        if (!color || !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+            color = '#FFFFFF';
+            colorHexInput.value = color;
+        }
+        
+        // 更新效果
+        effects[effectName] = {
+            text_color: color
+        };
+        
+        // 更新配置
+        config.label_settings = effects;
+        
+        // 重新渲染效果标签
+        renderEffectTags();
+        updateJSONOutput();
+        
+        closeColorPicker();
+        showNotification(`效果 "${effectName}" 已保存`);
+    }
+    
+    // 删除效果
+    function deleteEffect(effectName) {
+        delete effects[effectName];
+        config.label_settings = effects;
+        renderEffectTags();
+        updateJSONOutput();
+        showNotification(`效果 "${effectName}" 已删除`);
+    }
+    
+    // 更新颜色预览
+    function updateColorPreview() {
+        colorPreview.style.backgroundColor = colorHexInput.value;
+    }
+    
+    // 更新文本预览
+    function updatePreview() {
+        let html = config.texts;
+        
+        // 将效果标签替换为带样式的span
+        Object.keys(effects).forEach(effectName =&gt; {
+            const color = effects[effectName].text_color;
+            const regex = new RegExp(`&lt;${effectName}&gt;([\\s\\S]*?)&lt;\/${effectName}&gt;`, 'g');
+            html = html.replace(regex, `&lt;span style="color: ${color};"&gt;$1&lt;/span&gt;`);
+        });
+        
+        // 将换行符转换为HTML换行标签
+        html = html.replace(/\n/g, '&lt;br&gt;');
+        
+        textPreview.innerHTML = html;
+    }
+    
+    // 更新JSON输出
+    function updateJSONOutput() {
+        // 创建config的副本，将texts中的换行符替换为"&amp;"
+        const jsonConfig = { ...config };
+        
+        // 将texts中的换行符替换为"&amp;"
+        if (jsonConfig.texts) {
+            jsonConfig.texts = jsonConfig.texts.replace(/\n/g, '&amp;');
+        }
+        
+        // 构建完整的JSON字符串
+        const jsonStr = JSON.stringify(jsonConfig, null, 2);
+        jsonOutput.textContent = `@[type_parallel] ${jsonStr}`;
+    }
+    
+    // 复制JSON到剪贴板
+    function copyToClipboard() {
+        // 创建config的副本，将texts中的换行符替换为"&amp;"
+        const jsonConfig = { ...config };
+        
+        // 将texts中的换行符替换为"&amp;"
+        if (jsonConfig.texts) {
+            jsonConfig.texts = jsonConfig.texts.replace(/\n/g, '&amp;');
+        }
+        
+        const jsonStr = `@[type_parallel] ${JSON.stringify(jsonConfig, null, 2)}`;
+        
+        navigator.clipboard.writeText(jsonStr)
+            .then(() =&gt; {
+                showNotification('黑魔法指令已复制到剪贴板！');
+            })
+            .catch(err =&gt; {
+                console.error('复制失败: ', err);
+                showNotification('复制失败，请手动复制', 'error');
+            });
+    }
+    
+    // 显示通知
+    function showNotification(message, type = 'success') {
+        notificationText.textContent = message;
+        notification.className = 'notification';
+        
+        if (type === 'error') {
+            notification.style.backgroundColor = '#c0392b';
+        } else {
+            notification.style.backgroundColor = '#5d4a9e';
+        }
+        
+        // 显示通知
+        setTimeout(() =&gt; {
+            notification.classList.add('show');
+        }, 10);
+        
+        // 3秒后隐藏
+        setTimeout(() =&gt; {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+    
+    // 解析标签字符串
+    function parseTags(tagsStr) {
+        const tags = tagsStr.split(',')
+            .map(tag =&gt; tag.trim())
+            .filter(tag =&gt; tag)
+            .map(tag =&gt; {
+                // 移除引号
+                return tag.replace(/^["']|["']$/g, '');
+            });
+        
+        return tags.length &gt; 0 ? tags : ["label #1"];
+    }
+    
+    // 事件监听
+    // 文本内容变化
+    textsInput.addEventListener('input', function() {
+        config.texts = this.value;
+        updatePreview();
+        updateJSONOutput();
+    });
+    
+    // 固定于画面
+    fixedCheckbox.addEventListener('change', function() {
+        config.fixed = this.checked;
+        updateJSONOutput();
+    });
+    
+    // 位置坐标变化
+    posXInput.addEventListener('input', function() {
+        const x = parseInt(posXInput.value) || 0;
+        const y = parseInt(posYInput.value) || 0;
+        config.pos = [x, y];
+        updateJSONOutput();
+    });
+    
+    posYInput.addEventListener('input', function() {
+        const x = parseInt(posXInput.value) || 0;
+        const y = parseInt(posYInput.value) || 0;
+        config.pos = [x, y];
+        updateJSONOutput();
+    });
+    
+    // 标签变化
+    tagsInput.addEventListener('input', function() {
+        config.tags = parseTags(this.value);
+        updateJSONOutput();
+    });
+    
+    // 打字音效
+    hasSeCheckbox.addEventListener('change', function() {
+        config.has_se = this.checked;
+        updateJSONOutput();
+    });
+    
+    // 音效类型变化
+    charTypeSelect.addEventListener('change', function() {
+        const charType = charTypeSelect.value === "null" ? null : charTypeSelect.value;
+        config.char_type = charType;
+        updateJSONOutput();
+    });
+    
+    // 打字动画
+    hasAnimationCheckbox.addEventListener('change', function() {
+        config.has_animation = this.checked;
+        updateJSONOutput();
+    });
+    
+    // 层级
+    layerRadios.forEach(radio =&gt; {
+        radio.addEventListener('change', function() {
+            if (this.checked) {
+                config.layer = this.value;
+                updateJSONOutput();
+            }
+        });
+    });
+    
+    // 可以跳过
+    canSkipCheckbox.addEventListener('change', function() {
+        config.can_skip = this.checked;
+        updateJSONOutput();
+    });
+    
+    // 需要确认
+    needAcceptCheckbox.addEventListener('change', function() {
+        config.need_accept = this.checked;
+        updateJSONOutput();
+    });
+    
+    // 玩家需要等待
+    waitCheckbox.addEventListener('change', function() {
+        config.wait = this.checked;
+        updateJSONOutput();
+    });
+    
+    // 文字会遮住玩家
+    onTopCheckbox.addEventListener('change', function() {
+        config.is_on_top_of_player = this.checked;
+        updateJSONOutput();
+    });
+    
+    // 颜色选择器事件
+    addEffectBtn.addEventListener('click', () =&gt; openColorPicker());
+    cancelColorBtn.addEventListener('click', closeColorPicker);
+    confirmColorBtn.addEventListener('click', saveEffect);
+    
+    // 颜色输入变化
+    colorHexInput.addEventListener('input', function() {
+        colorPicker.value = this.value;
+        updateColorPreview();
+    });
+    
+    colorPicker.addEventListener('input', function() {
+        colorHexInput.value = this.value;
+        updateColorPreview();
+    });
+    
+    // 复制按钮
+    copyBtn.addEventListener('click', copyToClipboard);
+    
+    // 点击模态框外部关闭
+    colorPickerModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeColorPicker();
+        }
+    });
+    
+    // 按ESC键关闭模态框
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' &amp;&amp; colorPickerModal.style.display === 'flex') {
+            closeColorPicker();
+        }
+    });
+    
+    // 初始化
+    initUI();
+&lt;/script&gt;
+</code></pre>
+
+
+</div>
+</body></style></head></html>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -885,6 +2691,11 @@
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -893,13 +2704,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 
