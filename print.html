@@ -1563,7 +1563,7 @@
     }
     
     .container {
-        max-width: 1400px;
+        max-width: 1800px;
         margin: 0 auto;
     }
     
@@ -1588,7 +1588,7 @@
     
     .main-content {
         display: flex;
-        gap: 25px;
+        gap: 30px;
         flex-wrap: wrap;
     }
     
@@ -1773,16 +1773,105 @@
         border-color: #7b68ee;
     }
     
+    /* 重新设计预览区域 - 网格布局 */
     .preview-area {
         background-color: rgba(20, 20, 30, 0.8);
         border-radius: 8px;
-        padding: 20px;
-        min-height: 300px;
+        padding: 10px;
+        min-height: 400px;
         border: 1px solid #444;
-        font-size: 1.2rem;
-        line-height: 1.6;
-        white-space: pre-wrap;
-        word-wrap: break-word;
+        overflow: auto;
+        position: relative;
+    }
+    
+    .grid-container {
+        display: inline-block;
+        position: relative;
+        border: 1px solid #2a4a5a;
+        background-color: rgba(10, 20, 30, 0.9);
+    }
+    
+    .grid-content {
+        display: grid;
+        position: relative;
+    }
+    
+    .grid-cell {
+        width: 20px;
+        height: 20px;
+        border: 1px solid rgba(42, 74, 90, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        position: relative;
+        color: #ffffff;
+    }
+    
+    .grid-cell.highlight {
+        background-color: rgba(255, 255, 0, 0.2);
+        border: 1px solid #ff0;
+    }
+    
+    .cell-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .row-numbers {
+        position: absolute;
+        left: 0;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .row-number {
+        width: 30px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: #7b68ee;
+        background-color: rgba(20, 20, 30, 0.9);
+        border-right: 1px solid #444;
+    }
+    
+    .column-numbers {
+        position: absolute;
+        left: 30px;
+        top: 0;
+        display: flex;
+    }
+    
+    .column-number {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: #7b68ee;
+        background-color: rgba(20, 20, 30, 0.9);
+        border-bottom: 1px solid #444;
+    }
+    
+    .preview-info {
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #7b68ee;
+        display: flex;
+        gap: 20px;
+    }
+    
+    .grid-overlay {
+        position: absolute;
+        left: 30px;
+        top: 20px;
     }
     
     .json-output {
@@ -1793,7 +1882,7 @@
         border-radius: 8px;
         padding: 15px;
         color: #e0e0e0;
-        font-family: "zpix", sans-serif;
+        font-family: 'Courier New', monospace;
         font-size: 0.95rem;
         line-height: 1.5;
         white-space: pre;
@@ -1958,7 +2047,7 @@
         opacity: 1;
     }
     
-    @media (max-width: 1100px) {
+    @media (max-width: 1200px) {
         .main-content {
             flex-direction: column;
         }
@@ -2025,7 +2114,7 @@
                 
                 &lt;div class="field-group"&gt;
                     &lt;label class="field-label"&gt;文本内容 (texts)&lt;/label&gt;
-                    &lt;textarea class="texts-input" id="textsInput" placeholder="在此输入您的文本内容..."&gt;欢迎来到黑魔法世界，在这里你可以施展强大的咒语。&lt;/textarea&gt;
+                    &lt;textarea class="texts-input" id="textsInput" placeholder="在此输入您的文本内容..."&gt;欢迎来到&lt;c&gt;黑魔法&lt;/c&gt;世界,在这里你可以施展强大的咒语。&lt;/textarea&gt;
                     &lt;div class="tag-example"&gt;点击上方的效果按钮，将在光标位置插入效果标签，如：&amp;lt;c&amp;gt;红色文字&amp;lt;/c&amp;gt;&lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -2043,8 +2132,8 @@
             &lt;div class="field-group"&gt;
                 &lt;label class="field-label"&gt;位置坐标 (pos)&lt;/label&gt;
                 &lt;div style="display: flex; gap: 10px;"&gt;
-                    &lt;input type="number" id="posX" class="field-input" placeholder="X坐标" style="flex: 1;"&gt;
-                    &lt;input type="number" id="posY" class="field-input" placeholder="Y坐标" style="flex: 1;"&gt;
+                    &lt;input type="number" id="posX" class="field-input" placeholder="X坐标" style="flex: 1;" value="0"&gt;
+                    &lt;input type="number" id="posY" class="field-input" placeholder="Y坐标" style="flex: 1;" value="0"&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
             
@@ -2146,9 +2235,13 @@
         &lt;/div&gt;
         
         &lt;div class="preview-section"&gt;
-            &lt;h2 class="section-title"&gt;&lt;i class="fas fa-eye"&gt;&lt;/i&gt; 文本预览&lt;/h2&gt;
+            &lt;h2 class="section-title"&gt;&lt;i class="fas fa-eye"&gt;&lt;/i&gt; 舞台预览 (&lt;span id="gridSizeInfo"&gt;32×18&lt;/span&gt;)&lt;/h2&gt;
             &lt;div class="preview-area" id="textPreview"&gt;
-                &lt;!-- 预览内容将在这里动态生成 --&gt;
+                &lt;!-- 网格内容将在这里动态生成 --&gt;
+            &lt;/div&gt;
+            &lt;div class="preview-info"&gt;
+                &lt;span id="gridSizeInfo2"&gt;网格尺寸: 32列 × 18行&lt;/span&gt;
+                &lt;span id="characterCountInfo"&gt;字符数: 0&lt;/span&gt;
             &lt;/div&gt;
             
             &lt;h2 class="section-title" style="margin-top: 30px;"&gt;&lt;i class="fas fa-code"&gt;&lt;/i&gt; 完整JSON指令&lt;/h2&gt;
@@ -2201,7 +2294,7 @@
 &lt;script&gt;
     // 初始数据
     let config = {
-        texts: "欢迎来到黑魔法世界，在这里你可以施展强大的咒语。",
+        texts: "欢迎来到&lt;c&gt;黑魔法&lt;/c&gt;世界,在这里你可以施展强大的咒语。",
         fixed: false,
         pos: [0, 0],
         tags: ["label #1"],
@@ -2216,7 +2309,7 @@
         is_on_top_of_player: true,
         label_settings: {
             c: {
-                text_color: "#00ffffff"
+                text_color: "#FF0000"
             }
         }
     };
@@ -2242,6 +2335,9 @@
     
     const textPreview = document.getElementById('textPreview');
     const jsonOutput = document.getElementById('jsonOutput');
+    const gridSizeInfo = document.getElementById('gridSizeInfo');
+    const gridSizeInfo2 = document.getElementById('gridSizeInfo2');
+    const characterCountInfo = document.getElementById('characterCountInfo');
     
     const effectsTags = document.getElementById('effectsTags');
     const effectButtons = document.getElementById('effectButtons');
@@ -2437,6 +2533,7 @@
         
         // 重新渲染效果标签
         renderEffectTags();
+        updatePreview();
         updateJSONOutput();
         
         closeColorPicker();
@@ -2448,6 +2545,7 @@
         delete effects[effectName];
         config.label_settings = effects;
         renderEffectTags();
+        updatePreview();
         updateJSONOutput();
         showNotification(`效果 "${effectName}" 已删除`);
     }
@@ -2457,21 +2555,238 @@
         colorPreview.style.backgroundColor = colorHexInput.value;
     }
     
+    // 解析文本，处理标签和特殊字符
+    function parseTextForGrid(text) {
+        const posX = parseInt(posXInput.value) || 0;
+        const posY = parseInt(posYInput.value) || 0;
+        
+        // 结果网格，使用Map来存储位置信息
+        const grid = new Map();
+        let maxRow = 0;
+        let maxCol = 0;
+        let charCount = 0;
+        
+        // 当前行和列（相对于文本起始位置）
+        let currentRow = 0;
+        let currentCol = 0;
+        
+        // 颜色栈，用于处理嵌套标签
+        const colorStack = ['#ffffff']; // 默认白色
+        
+        // 未闭合的标签栈
+        const openTagStack = [];
+        
+        let i = 0;
+        while (i &lt; text.length) {
+            // 检查是否遇到标签开始
+            if (text[i] === '&lt;') {
+                // 查找标签结束
+                const tagEnd = text.indexOf('&gt;', i);
+                if (tagEnd === -1) {
+                    // 没有找到闭合的&gt;，跳过
+                    i++;
+                    continue;
+                }
+                
+                const fullTag = text.substring(i, tagEnd + 1);
+                
+                // 检查是开标签还是闭标签
+                if (text[i + 1] === '/') {
+                    // 闭标签
+                    const tagName = fullTag.substring(2, fullTag.length - 1);
+                    
+                    // 从栈中移除对应的开标签
+                    const tagIndex = openTagStack.lastIndexOf(tagName);
+                    if (tagIndex !== -1) {
+                        // 移除这个标签及其之后的所有标签
+                        openTagStack.splice(tagIndex);
+                        colorStack.splice(tagIndex + 1, 1);
+                    }
+                } else {
+                    // 开标签
+                    const tagName = fullTag.substring(1, fullTag.length - 1);
+                    
+                    // 检查是否是有效的效果标签
+                    if (effects[tagName]) {
+                        // 将标签入栈
+                        openTagStack.push(tagName);
+                        colorStack.push(effects[tagName].text_color || '#ffffff');
+                    }
+                }
+                
+                i = tagEnd + 1;
+                continue;
+            }
+            
+            // 处理普通字符
+            const char = text[i];
+            
+            if (char === '\n') {
+                // 换行符
+                currentRow++;
+                currentCol = 0;
+            } else if (char === '|') {
+                // 忽略"|"符号
+                // 不增加字符计数
+            } else if (char === '＿') {
+                // 全角"＿"显示为空白但占位
+                const gridRow = posY + currentRow;
+                const gridCol = posX + currentCol;
+                
+                // 记录最大行列
+                if (gridRow &gt; maxRow) maxRow = gridRow;
+                if (gridCol &gt; maxCol) maxCol = gridCol;
+                
+                // 当前颜色
+                const currentColor = colorStack[colorStack.length - 1];
+                
+                // 存储到网格
+                const key = `${gridRow},${gridCol}`;
+                grid.set(key, {
+                    char: ' ', // 空格占位
+                    color: currentColor,
+                    isSpace: true
+                });
+                
+                charCount++;
+                currentCol++;
+            } else {
+                // 普通字符
+                const gridRow = posY + currentRow;
+                const gridCol = posX + currentCol;
+                
+                // 记录最大行列
+                if (gridRow &gt; maxRow) maxRow = gridRow;
+                if (gridCol &gt; maxCol) maxCol = gridCol;
+                
+                // 当前颜色
+                const currentColor = colorStack[colorStack.length - 1];
+                
+                // 存储到网格
+                const key = `${gridRow},${gridCol}`;
+                grid.set(key, {
+                    char: char,
+                    color: currentColor
+                });
+                
+                charCount++;
+                currentCol++;
+            }
+            
+            i++;
+        }
+        
+        return {
+            grid: grid,
+            maxRow: maxRow,
+            maxCol: maxCol,
+            charCount: charCount
+        };
+    }
+    
     // 更新文本预览
     function updatePreview() {
-        let html = config.texts;
+        const text = config.texts;
+        const posX = parseInt(posXInput.value) || 0;
+        const posY = parseInt(posYInput.value) || 0;
         
-        // 将效果标签替换为带样式的span
-        Object.keys(effects).forEach(effectName =&gt; {
-            const color = effects[effectName].text_color;
-            const regex = new RegExp(`&lt;${effectName}&gt;([\\s\\S]*?)&lt;\/${effectName}&gt;`, 'g');
-            html = html.replace(regex, `&lt;span style="color: ${color};"&gt;$1&lt;/span&gt;`);
-        });
+        // 解析文本
+        const { grid, maxRow, maxCol, charCount } = parseTextForGrid(text);
         
-        // 将换行符转换为HTML换行标签
-        html = html.replace(/\n/g, '&lt;br&gt;');
+        // 计算网格尺寸（最小32x18，根据内容自动扩展）
+        const cols = Math.max(32, maxCol + 1);
+        const rows = Math.max(18, maxRow + 1);
         
-        textPreview.innerHTML = html;
+        // 更新网格信息显示
+        gridSizeInfo.textContent = `${cols}×${rows}`;
+        gridSizeInfo2.textContent = `网格尺寸: ${cols}列 × ${rows}行`;
+        characterCountInfo.textContent = `字符数: ${charCount}`;
+        
+        // 清空预览区域
+        textPreview.innerHTML = '';
+        
+        // 创建网格容器
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'grid-container';
+        
+        // 设置网格容器尺寸
+        const cellWidth = 20;
+        const cellHeight = 20;
+        const rowNumbersWidth = 30;
+        const colNumbersHeight = 20;
+        
+        gridContainer.style.width = `${rowNumbersWidth + cols * cellWidth + 1}px`;
+        gridContainer.style.height = `${colNumbersHeight + rows * cellHeight + 1}px`;
+        
+        // 创建行号
+        const rowNumbers = document.createElement('div');
+        rowNumbers.className = 'row-numbers';
+        rowNumbers.style.width = `${rowNumbersWidth}px`;
+        rowNumbers.style.height = `${colNumbersHeight + rows * cellHeight}px`;
+        
+        for (let r = 0; r &lt; rows; r++) {
+            const rowNumber = document.createElement('div');
+            rowNumber.className = 'row-number';
+            rowNumber.textContent = r;
+            rowNumber.style.height = `${cellHeight}px`;
+            rowNumbers.appendChild(rowNumber);
+        }
+        
+        // 创建列号
+        const columnNumbers = document.createElement('div');
+        columnNumbers.className = 'column-numbers';
+        columnNumbers.style.width = `${cols * cellWidth}px`;
+        columnNumbers.style.height = `${colNumbersHeight}px`;
+        columnNumbers.style.left = `${rowNumbersWidth}px`;
+        
+        for (let c = 0; c &lt; cols; c++) {
+            const columnNumber = document.createElement('div');
+            columnNumber.className = 'column-number';
+            columnNumber.textContent = c;
+            columnNumber.style.width = `${cellWidth}px`;
+            columnNumbers.appendChild(columnNumber);
+        }
+        
+        // 创建网格内容
+        const gridContent = document.createElement('div');
+        gridContent.className = 'grid-content';
+        gridContent.style.display = 'grid';
+        gridContent.style.gridTemplateColumns = `repeat(${cols}, ${cellWidth}px)`;
+        gridContent.style.gridTemplateRows = `repeat(${rows}, ${cellHeight}px)`;
+        gridContent.style.left = `${rowNumbersWidth}px`;
+        gridContent.style.top = `${colNumbersHeight}px`;
+        gridContent.style.position = 'absolute';
+        
+        // 填充网格
+        for (let r = 0; r &lt; rows; r++) {
+            for (let c = 0; c &lt; cols; c++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                
+                const key = `${r},${c}`;
+                if (grid.has(key)) {
+                    const cellData = grid.get(key);
+                    cell.innerHTML = `&lt;div class="cell-content" style="color: ${cellData.color};"&gt;${cellData.isSpace ? '&amp;nbsp;' : cellData.char}&lt;/div&gt;`;
+                    
+                    // 高亮显示有内容的位置
+                    if (!cellData.isSpace) {
+                        cell.style.backgroundColor = 'rgba(0, 100, 255, 0.1)';
+                    }
+                } else {
+                    cell.innerHTML = '&lt;div class="cell-content"&gt;&amp;nbsp;&lt;/div&gt;';
+                }
+                
+                gridContent.appendChild(cell);
+            }
+        }
+        
+        // 将元素添加到网格容器
+        gridContainer.appendChild(rowNumbers);
+        gridContainer.appendChild(columnNumbers);
+        gridContainer.appendChild(gridContent);
+        
+        // 添加到预览区域
+        textPreview.appendChild(gridContainer);
     }
     
     // 更新JSON输出
@@ -2565,6 +2880,7 @@
         const x = parseInt(posXInput.value) || 0;
         const y = parseInt(posYInput.value) || 0;
         config.pos = [x, y];
+        updatePreview();
         updateJSONOutput();
     });
     
@@ -2572,6 +2888,7 @@
         const x = parseInt(posXInput.value) || 0;
         const y = parseInt(posYInput.value) || 0;
         config.pos = [x, y];
+        updatePreview();
         updateJSONOutput();
     });
     
@@ -2671,7 +2988,6 @@
     initUI();
 &lt;/script&gt;
 </code></pre>
-
 
 </div>
 </body></style></head></html>
