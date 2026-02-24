@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-e9f3173a.js";
+            window.path_to_searchindex_js = "../searchindex-dc53e9ea.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b230d170.js"></script>
+        <script src="../toc-335dde93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -177,27 +177,42 @@
                     <main>
                         <h1 id="打字机"><a class="header" href="#打字机">打字机</a></h1>
 <h2 id="打字"><a class="header" href="#打字">打字</a></h2>
+<p>全参数默认模板（纯 JSON）：</p>
 <pre><code>@[type_parallel] {
-  
-    "texts": "哈啰，世界。",
+    "texts": "你好，世界！",
     "fixed": false,
-    "pos": [
-      0,
-      0
-    ],
-    "tags": [
-      "label #1"
-    ],
+    "pos": [0, 0],
+    "tags": [],
     "has_se": true,
     "char_type": null,
     "has_animation": true,
-    "layer": "mid",
+    "layer": 1,
     "can_skip": true,
     "need_accept": true,
     "wait": true,
     "refTexts": [],
-    "is_on_top_of_player": true
-  
+    "is_on_top_of_player": true,
+    "offset": [0, 0],
+    "label_settings": {}
+}
+</code></pre>
+<p>带注释的版本：</p>
+<pre><code>@[type_parallel] {
+    "texts": "你好，世界！",    # 打字内容
+    "fixed": false,    # 是否使用屏幕坐标（false为地图坐标）
+    "pos": [0, 0],    # 打字位置 [x, y]
+    "tags": [],    # 标签列表
+    "has_se": true,    # 是否播放打字音效
+    "char_type": null,    # 打字机音效类型（null为默认）
+    "has_animation": true,    # 是否显示打字动画
+    "layer": 1,    # 图层：0=背景，1=主要，2=前景
+    "can_skip": true,    # 是否可以跳过
+    "need_accept": true,    # 是否需要确认
+    "wait": true,    # 是否等待打字结束
+    "refTexts": [],    # 参考文本列表（用于成句检测）
+    "is_on_top_of_player": true,    # 主要图层时是否显示在玩家上方
+    "offset": [0, 0],    # 位置微调偏移 [x, y]
+    "label_settings": {}    # 标签独立样式设置
 }
 </code></pre>
 <p>缩写:<code>@[type]</code>
@@ -207,18 +222,69 @@
 <li><code>"s:开关名"</code>：输出指定开关的值</li>
 <li><code>"转移[物件名称]到这个地方。"</code>：转移物件</li>
 </ul>
-<h2 id="清除"><a class="header" href="#清除">清除</a></h2>
-<pre><code>
-@[clear_typed] { "" }
-
-</code></pre>
-<p>名称版：</p>
-<pre><code>@[clear_typed:property] {
-
-    "target":"物件名称",
-
+<p><code>type_parallel</code> 还支持以下高级参数：</p>
+<ul>
+<li>
+<p><strong><code>offset</code></strong>：<code>[x, y]</code>，对打字位置进行微调（像素偏移），可搭配变量使用。</p>
+</li>
+<li>
+<p><strong><code>label_settings</code></strong>：对象，用于为文本中的特定标签设置独立的样式与音效。
+在 <code>texts</code> 中使用 <code>&lt;标签名&gt;...&lt;/标签名&gt;</code> 包裹需要独立设置的片段，然后在 <code>label_settings</code> 中定义同名标签的属性。
+每个标签可设置：</p>
+<ul>
+<li><code>text_color</code>：文字颜色（十六进制 RGBA，如 <code>"#ffff00ff"</code>）</li>
+<li><code>tags</code>：该片段独有的标签列表</li>
+<li><code>char_type</code>：该片段使用的打字机音效（见下方 <code>char_type</code> 可选值）</li>
+</ul>
+<p>示例：</p>
+<pre><code class="language-json">"label_settings": {
+  "letter_1": {
+    "text_color": "#ffff00ff",
+    "tags": ["letter_1"],
+    "char_type": "poet"
+  }
 }
 </code></pre>
+</li>
+<li>
+<p><strong><code>char_type</code></strong>：指定打字机音效，可选值：</p>
+<ul>
+<li><code>"princess"</code>（公主）</li>
+<li><code>"dragon"</code>（龙）</li>
+<li><code>"snake"</code>（蛇）</li>
+<li><code>"poet"</code>（诗人）</li>
+<li><code>"giant_l"</code>（巨人左）</li>
+<li><code>"giant_r"</code>（巨人右）</li>
+<li><code>"none"</code>（无音效）</li>
+<li><code>null</code>（使用默认音效）</li>
+</ul>
+</li>
+<li>
+<p><strong><code>layer</code></strong>：图层，可用数字表示：</p>
+<ul>
+<li><code>0</code>：背景层</li>
+<li><code>1</code>：主要层（默认）</li>
+<li><code>2</code>：前景层
+亦可用字符串 <code>"mid"</code> 表示主要层。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>is_on_top_of_player</code></strong>：当 <code>layer</code> 为主要层时，若为 <code>true</code> 则文本显示在玩家上方。</p>
+</li>
+<li>
+<p><strong><code>wait</code></strong>：若为 <code>true</code>，事件将等待打字结束后才继续执行后续逻辑。</p>
+</li>
+</ul>
+<blockquote>
+<p>在此推荐由 <code>艺素馒头</code> 制作的黑魔法打字机编辑器，其拥有强大的可视化打字机黑魔法指令编辑功能。
+<a href="tools/typer_editor.html">黑魔法打字机编辑器</a></p>
+</blockquote>
+<h2 id="清除"><a class="header" href="#清除">清除</a></h2>
+<pre><code>
+@[clear_typed] ""
+
+</code></pre>
+<p>若标签为空，则默认为清除本物件触发的打字机事件。</p>
 
                     </main>
 

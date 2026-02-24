@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e9f3173a.js";
+            window.path_to_searchindex_js = "searchindex-dc53e9ea.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-b230d170.js"></script>
+        <script src="toc-335dde93.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,6 +178,9 @@
                     <main>
                         <h1 id="magic-book-of-word-game-world"><a class="header" href="#magic-book-of-word-game-world">Magic Book of Word Game World</a></h1>
 <h2 id="文字游戏世界魔法书"><a class="header" href="#文字游戏世界魔法书">《文字游戏世界》魔法书</a></h2>
+<blockquote>
+<p>最新更新日期：2026/2/24；游戏版本：v1.9.01</p>
+</blockquote>
 <p>《文字游戏世界》中黑魔法（原始指令）的wiki*（非官方！非官方！非官方！）*</p>
 <p>旨在官方出之前提供一个简单的查询文档，以便开发关卡！</p>
 <p><em>注：本文档所有指令是通过关卡源文件推测的，并非 100% 经过测试！！！</em></p>
@@ -247,6 +250,12 @@
       0
     ]
   
+}
+</code></pre>
+<p>官方示例（标靶传送魔法）：</p>
+<pre><code>@[transport_event] {
+"target": "魔法傀儡", 
+"pos": ["v:目标x","v:目标y"]
 }
 </code></pre>
 <h2 id="溶解器"><a class="header" href="#溶解器">溶解器</a></h2>
@@ -342,27 +351,42 @@
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="打字机"><a class="header" href="#打字机">打字机</a></h1>
 <h2 id="打字"><a class="header" href="#打字">打字</a></h2>
+<p>全参数默认模板（纯 JSON）：</p>
 <pre><code>@[type_parallel] {
-  
-    "texts": "哈啰，世界。",
+    "texts": "你好，世界！",
     "fixed": false,
-    "pos": [
-      0,
-      0
-    ],
-    "tags": [
-      "label #1"
-    ],
+    "pos": [0, 0],
+    "tags": [],
     "has_se": true,
     "char_type": null,
     "has_animation": true,
-    "layer": "mid",
+    "layer": 1,
     "can_skip": true,
     "need_accept": true,
     "wait": true,
     "refTexts": [],
-    "is_on_top_of_player": true
-  
+    "is_on_top_of_player": true,
+    "offset": [0, 0],
+    "label_settings": {}
+}
+</code></pre>
+<p>带注释的版本：</p>
+<pre><code>@[type_parallel] {
+    "texts": "你好，世界！",    # 打字内容
+    "fixed": false,    # 是否使用屏幕坐标（false为地图坐标）
+    "pos": [0, 0],    # 打字位置 [x, y]
+    "tags": [],    # 标签列表
+    "has_se": true,    # 是否播放打字音效
+    "char_type": null,    # 打字机音效类型（null为默认）
+    "has_animation": true,    # 是否显示打字动画
+    "layer": 1,    # 图层：0=背景，1=主要，2=前景
+    "can_skip": true,    # 是否可以跳过
+    "need_accept": true,    # 是否需要确认
+    "wait": true,    # 是否等待打字结束
+    "refTexts": [],    # 参考文本列表（用于成句检测）
+    "is_on_top_of_player": true,    # 主要图层时是否显示在玩家上方
+    "offset": [0, 0],    # 位置微调偏移 [x, y]
+    "label_settings": {}    # 标签独立样式设置
 }
 </code></pre>
 <p>缩写:<code>@[type]</code>
@@ -372,18 +396,69 @@
 <li><code>"s:开关名"</code>：输出指定开关的值</li>
 <li><code>"转移[物件名称]到这个地方。"</code>：转移物件</li>
 </ul>
-<h2 id="清除"><a class="header" href="#清除">清除</a></h2>
-<pre><code>
-@[clear_typed] { "" }
-
-</code></pre>
-<p>名称版：</p>
-<pre><code>@[clear_typed:property] {
-
-    "target":"物件名称",
-
+<p><code>type_parallel</code> 还支持以下高级参数：</p>
+<ul>
+<li>
+<p><strong><code>offset</code></strong>：<code>[x, y]</code>，对打字位置进行微调（像素偏移），可搭配变量使用。</p>
+</li>
+<li>
+<p><strong><code>label_settings</code></strong>：对象，用于为文本中的特定标签设置独立的样式与音效。
+在 <code>texts</code> 中使用 <code>&lt;标签名&gt;...&lt;/标签名&gt;</code> 包裹需要独立设置的片段，然后在 <code>label_settings</code> 中定义同名标签的属性。
+每个标签可设置：</p>
+<ul>
+<li><code>text_color</code>：文字颜色（十六进制 RGBA，如 <code>"#ffff00ff"</code>）</li>
+<li><code>tags</code>：该片段独有的标签列表</li>
+<li><code>char_type</code>：该片段使用的打字机音效（见下方 <code>char_type</code> 可选值）</li>
+</ul>
+<p>示例：</p>
+<pre><code class="language-json">"label_settings": {
+  "letter_1": {
+    "text_color": "#ffff00ff",
+    "tags": ["letter_1"],
+    "char_type": "poet"
+  }
 }
 </code></pre>
+</li>
+<li>
+<p><strong><code>char_type</code></strong>：指定打字机音效，可选值：</p>
+<ul>
+<li><code>"princess"</code>（公主）</li>
+<li><code>"dragon"</code>（龙）</li>
+<li><code>"snake"</code>（蛇）</li>
+<li><code>"poet"</code>（诗人）</li>
+<li><code>"giant_l"</code>（巨人左）</li>
+<li><code>"giant_r"</code>（巨人右）</li>
+<li><code>"none"</code>（无音效）</li>
+<li><code>null</code>（使用默认音效）</li>
+</ul>
+</li>
+<li>
+<p><strong><code>layer</code></strong>：图层，可用数字表示：</p>
+<ul>
+<li><code>0</code>：背景层</li>
+<li><code>1</code>：主要层（默认）</li>
+<li><code>2</code>：前景层
+亦可用字符串 <code>"mid"</code> 表示主要层。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>is_on_top_of_player</code></strong>：当 <code>layer</code> 为主要层时，若为 <code>true</code> 则文本显示在玩家上方。</p>
+</li>
+<li>
+<p><strong><code>wait</code></strong>：若为 <code>true</code>，事件将等待打字结束后才继续执行后续逻辑。</p>
+</li>
+</ul>
+<blockquote>
+<p>在此推荐由 <code>艺素馒头</code> 制作的黑魔法打字机编辑器，其拥有强大的可视化打字机黑魔法指令编辑功能。
+<a href="events/tools/typer_editor.html">黑魔法打字机编辑器</a></p>
+</blockquote>
+<h2 id="清除"><a class="header" href="#清除">清除</a></h2>
+<pre><code>
+@[clear_typed] ""
+
+</code></pre>
+<p>若标签为空，则默认为清除本物件触发的打字机事件。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="能力设定"><a class="header" href="#能力设定">能力设定</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
@@ -688,18 +763,16 @@
 <pre><code>@[save_event_pos] {
   
     "target": null,
-    "xId": null,
-    "yId": null
-  
-}
-</code></pre>
-<p>名称版：</p>
-<pre><code>@[save_event_pos:property] {
-  
-    "target": null,
     "x": null,
     "y": null
   
+}
+</code></pre>
+<p>官方示例：</p>
+<pre><code>@[save_event_pos] {
+"target":"魔法傀儡",
+"x":"傀儡x",
+"y":"傀儡y"
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -722,6 +795,12 @@
   
 }
 </code></pre>
+<p>省略写法：</p>
+<pre><code>@[if] *TODO*
+</code></pre>
+<p>官方示例：</p>
+<pre><code>@[if] "v:傀儡x&gt;16&amp;&amp;v:傀儡y&lt;9"
+</code></pre>
 <h2 id="否则执行"><a class="header" href="#否则执行">否则执行</a></h2>
 <pre><code>
 @[else]
@@ -741,8 +820,9 @@
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="特殊事件"><a class="header" href="#特殊事件">特殊事件</a></h1>
-<p><em>名称为非官方命名，请以官方为准</em>
-<em>大多事件通过分析关卡 JSON 文件得来</em></p>
+<p><em>名称为非官方命名，请以官方为准</em></p>
+<p><em>大多事件通过分析关卡 JSON 文件得来</em></p>
+<p><em>2026/02/24：通过官方发布的黑魔法教学关卡获得了更多指令</em></p>
 <h2 id="无操作指令"><a class="header" href="#无操作指令">无操作指令</a></h2>
 <p>类似编程语言中的<code>// do nothing</code>或<code>pass</code>，会被解析成<code>## ignore command</code>。
 传入的任何参数都会被忽略，可以当作注释使用。</p>
@@ -757,6 +837,7 @@
 }
 </code></pre>
 <p>可以设置指定物件的参数。以下是部分参数的列表。</p>
+<p><strong>target 取值</strong>：可以是 <code>"self"</code>（该物件本身）、<code>"player"</code>（玩家）或具体的物件名称。</p>
 <div class="table-wrapper">
 <table>
 <thead>
@@ -769,10 +850,16 @@
 <tr><td><code>eventTriggerAction</code></td><td>触发方式</td><td>字符串</td><td>游戏开始后<code>"auto"</code> / 玩家调查后<code>"press"</code> / 玩家触碰后<code>"touch"</code> / 被物件触发<code>"trigger"</code></td></tr>
 <tr><td><code>existCondition</code></td><td>触发条件</td><td>字符串</td><td><code>"s:switch_name_触发物件==true"</code></td></tr>
 <tr><td><code>isOnTopOfPlayer</code></td><td>是否显示在角色上方</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>visible</code></td><td>是否可见</td><td>布尔值</td><td><code>true</code> / <code>false</code></td></tr>
 </tbody>
 </table>
 </div>
-<p>存在的问题：</p>
+<p><strong>备注</strong>：</p>
+<ul>
+<li><code>text</code> 参数仅适用于单个字符（一个字）的情况。</li>
+<li><code>visible</code> 设置为 <code>false</code> 可以让物件消失。</li>
+</ul>
+<p>存在的问题（暂不清楚是否修复）：</p>
 <ul>
 <li>更改字面后物件会移动至背景，修改层级参数无效。</li>
 <li>无法修改位置，可以用传送器代替。</li>
@@ -789,6 +876,21 @@
 <p>补充说明：
 <code>"group"</code>|<code>string</code>|<code>cn_text:</code>后接着的第一个字是物件字面中要替换的字，第二个字是简体字下的字。</p>
 <p>目前只见到了设置繁简的用法。</p>
+<h2 id="强制删字"><a class="header" href="#强制删字">强制删字</a></h2>
+<h3 id="播放删字动画"><a class="header" href="#播放删字动画">播放删字动画</a></h3>
+<pre><code>@[play_backspace_fail_animation]
+</code></pre>
+<p>播放删字的动画效果。</p>
+<h3 id="删字事件"><a class="header" href="#删字事件">删字事件</a></h3>
+<pre><code>@[backspace_event] {"target": "self"}
+</code></pre>
+<p>对指定物件执行删字。</p>
+<p><strong>示例序列</strong>：</p>
+<pre><code>@[play_backspace_fail_animation]
+@[wait] 60
+@[backspace_event] {"target": "self"}
+</code></pre>
+<p>这段脚本会先播放删字动画，等待 1.2 秒，然后对自身执行删字操作。</p>
 <h2 id="移动"><a class="header" href="#移动">移动</a></h2>
 <h3 id="开始移动"><a class="header" href="#开始移动">开始移动</a></h3>
 <pre><code>@[move_route] {
@@ -807,6 +909,29 @@
 @[end_move_route]
 
 </code></pre>
+<h3 id="移动控制指令"><a class="header" href="#移动控制指令">移动控制指令</a></h3>
+<p>以下指令可以在 <code>@[move_route]</code> 和 <code>@[end_move_route]</code> 之间使用，控制物件的移动行为。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>指令</th><th>参数</th><th>说明</th><th>示例</th></tr>
+</thead>
+<tbody>
+<tr><td><code>@[set_through]</code></td><td><code>true</code> / <code>false</code></td><td>设置穿透状态，当为 <code>true</code> 时物件移动不会产生碰撞</td><td><code>@[set_through] true</code></td></tr>
+<tr><td><code>@[move_up]</code></td><td>无</td><td>向上移动一格</td><td><code>@[move_up]</code></td></tr>
+<tr><td><code>@[move_down]</code></td><td>无</td><td>向下移动一格</td><td><code>@[move_down]</code></td></tr>
+<tr><td><code>@[move_left]</code></td><td>无</td><td>向左移动一格</td><td><code>@[move_left]</code></td></tr>
+<tr><td><code>@[move_right]</code></td><td>无</td><td>向右移动一格</td><td><code>@[move_right]</code></td></tr>
+<tr><td><code>@[move_random]</code></td><td>无</td><td>随机方向移动一格</td><td><code>@[move_random]</code></td></tr>
+<tr><td><code>@[move_toward_player]</code></td><td>无</td><td>向玩家方向移动一格</td><td><code>@[move_toward_player]</code></td></tr>
+<tr><td><code>@[move_toward_event]</code></td><td><code>"目标物件名称"</code></td><td>向指定物件移动一格</td><td><code>@[move_toward_event] "目标"</code></td></tr>
+<tr><td><code>@[jump]</code></td><td><code>[x, y]</code>（相对坐标）</td><td>向相对坐标跳跃，<code>x</code> 和 <code>y</code> 为整数</td><td><code>@[jump] [1,0]</code>（向右一格）</td></tr>
+<tr><td><code>@[jump_random]</code></td><td>无</td><td>随机跳跃到上下左右一格</td><td><code>@[jump_random]</code></td></tr>
+<tr><td><code>@[move_to_event]</code></td><td><code>"目标物件名称"</code></td><td>直接移动到指定物件的位置</td><td><code>@[move_to_event] "目标"</code></td></tr>
+<tr><td><code>@[move_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>移动到地图上的指定坐标</td><td><code>@[move_to_point] [15,8]</code></td></tr>
+</tbody>
+</table>
+</div>
 <p>示例：用黑魔法来让物件<code>↑↑↓↓←→←→</code>。</p>
 <pre><code>@[move_route] {"target": "物件A","wait": true}
 @[move_up]
@@ -820,6 +945,173 @@
 @[end_move_route]
 </code></pre>
 <p>通过这个能让黑魔法编辑移动更为便捷，不需要为每个移动指令都单独指定物件。</p>
+<h3 id="循环移动路径"><a class="header" href="#循环移动路径">循环移动路径</a></h3>
+<p>用于为物件设置一个循环执行的移动路线，物件会自动重复执行指定的移动指令序列。</p>
+<pre><code>@[set_event_loop_move_route] {
+
+    "target": "物件名称",
+    "loop_move_route": "[...]"
+
+}
+</code></pre>
+<p>参数说明：</p>
+<ul>
+<li><code>target</code>：目标物件的名称。</li>
+<li><code>loop_move_route</code>：一个 JSON 数组，包含一系列移动指令对象。每个指令对象格式为 <code>{"command":"指令名称", "parameters":[参数]}</code>。</li>
+</ul>
+<p>支持的指令与“移动控制指令”相同，例如 <code>move_up</code>、<code>move_random</code> 等，还可以使用 <code>set_move_zone</code> 来限定移动范围。</p>
+<p>示例：</p>
+<ol>
+<li><strong>简单矩形循环</strong>：让物件按上→右→下→左的顺序循环移动。</li>
+</ol>
+<pre><code>@[set_event_loop_move_route] {
+
+    "target": "物件A",
+    "loop_move_route": "[
+{\"command\":\"move_up\"},
+{\"command\":\"move_right\"},
+{\"command\":\"move_down\"},
+{\"command\":\"move_left\"}
+]"
+
+}
+</code></pre>
+<ol start="2">
+<li><strong>范围内随机移动</strong>：将物件的移动范围限定在指定矩形区域内，然后执行随机移动。</li>
+</ol>
+<pre><code>@[set_event_loop_move_route] {
+
+    "target": "物件A",
+    "loop_move_route": "[
+{\"command\":\"set_move_zone\", \"parameters\":[14, 7, 17, 10]},
+{\"command\":\"move_random\"}
+]"
+
+}
+</code></pre>
+<p>其中 <code>set_move_zone</code> 的参数为 <code>[左上角x, 左上角y, 右下角x, 右下角y]</code>，坐标单位为格子。</p>
+<ol start="3">
+<li><strong>停止循环路径</strong>：将移动范围设置为全地图（或足够大的区域），使物件可以自由移动（实际上相当于取消限定范围）。</li>
+</ol>
+<pre><code>@[set_event_loop_move_route] {
+
+    "target": "物件A",
+    "loop_move_route": "[{\"command\":\"set_move_zone\", \"parameters\":[0,0,31,17]}]"
+
+}
+</code></pre>
+<p>注意：</p>
+<ul>
+<li>循环移动路径会一直重复执行，直到被新的 <code>set_event_loop_move_route</code> 覆盖或物件被移除。</li>
+<li>该指令不需要放在 <code>@[move_route]</code> 和 <code>@[end_move_route]</code> 之间，它是一个独立的事件。</li>
+</ul>
+<h2 id="位移补间动画"><a class="header" href="#位移补间动画">位移补间动画</a></h2>
+<p>用于平滑过渡物件参数的动画指令，可以控制位置、透明度、缩放等属性的变化。</p>
+<pre><code class="language-json">@[tween_parameter] {
+    "target": "物件名称",
+    "parameter": "参数路径",
+    "add": 0,
+    "time_sec": 1,
+    "transition_type": "TRANS_LINEAR",
+    "ease_type": "EASE_IN",
+    "wait": false
+}
+</code></pre>
+<h3 id="参数说明"><a class="header" href="#参数说明">参数说明</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>参数名</th><th>类型</th><th>说明</th><th>可选值</th><th>示例</th></tr>
+</thead>
+<tbody>
+<tr><td><code>target</code></td><td>字符串</td><td>目标物件的名称</td><td>任意有效物件名</td><td><code>"物件A"</code></td></tr>
+<tr><td><code>parameter</code></td><td>字符串</td><td>要补间的参数路径，支持 <code>position:x</code>、<code>position:y</code>、<code>opacity</code>、<code>scale:x</code>、<code>scale:y</code> 等</td><td>取决于物件支持的参数</td><td><code>"position:y"</code></td></tr>
+<tr><td><code>add</code></td><td>数字</td><td><strong>相对</strong>增加值，与当前值相加得到目标值。与 <code>value</code> 二选一。</td><td>任意数字</td><td><code>-120</code></td></tr>
+<tr><td><code>value</code></td><td>数字</td><td><strong>绝对</strong>目标值，直接设置参数到该值。与 <code>add</code> 二选一。</td><td>任意数字</td><td><code>300</code></td></tr>
+<tr><td><code>time_sec</code></td><td>数字</td><td>动画持续时间（秒）</td><td>正数</td><td><code>0.5</code></td></tr>
+<tr><td><code>transition_type</code></td><td>字符串</td><td>过渡曲线类型</td><td><code>TRANS_LINEAR</code>、<code>TRANS_SINE</code>、<code>TRANS_QUINT</code> 等</td><td><code>"TRANS_SINE"</code></td></tr>
+<tr><td><code>ease_type</code></td><td>字符串</td><td>缓动方向</td><td><code>EASE_IN</code>、<code>EASE_OUT</code>、<code>EASE_IN_OUT</code>、<code>EASE_OUT_IN</code></td><td><code>"EASE_OUT"</code></td></tr>
+<tr><td><code>wait</code></td><td>布尔值</td><td>是否阻塞式执行（等待动画完成才继续执行后续指令）</td><td><code>true</code> / <code>false</code></td><td><code>true</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="注意事项"><a class="header" href="#注意事项">注意事项</a></h3>
+<ul>
+<li>若同时指定 <code>add</code> 和 <code>value</code>，优先使用 <code>value</code>。</li>
+<li><code>transition_type</code> 与 <code>ease_type</code> 组合可产生丰富的动画效果，具体效果需在游戏中实测。</li>
+<li><code>wait: true</code> 时，脚本会暂停直到动画完成；<code>wait: false</code> 时，动画在后台播放，脚本继续执行。</li>
+</ul>
+<h3 id="示例"><a class="header" href="#示例">示例</a></h3>
+<h4 id="上下弹跳效果"><a class="header" href="#上下弹跳效果">上下弹跳效果</a></h4>
+<pre><code class="language-json">@[tween_parameter] {
+    "target": "物件A",
+    "parameter": "position:y",
+    "add": -120,
+    "time_sec": 0.5,
+    "transition_type": "TRANS_SINE",
+    "ease_type": "EASE_OUT",
+    "wait": true
+}
+
+@[tween_parameter] {
+    "target": "物件A",
+    "parameter": "position:y",
+    "add": 120,
+    "time_sec": 0.5,
+    "transition_type": "TRANS_SINE",
+    "ease_type": "EASE_IN",
+    "wait": true
+}
+</code></pre>
+<p>这两个指令先后执行，会让物件先向上移动 120 像素（缓出），再向下移动 120 像素（缓入），形成弹跳感。</p>
+<h4 id="淡出并缩小"><a class="header" href="#淡出并缩小">淡出并缩小</a></h4>
+<pre><code class="language-json">@[tween_parameter] {
+    "target": "物件B",
+    "parameter": "opacity",
+    "value": 0,
+    "time_sec": 1,
+    "transition_type": "TRANS_QUINT",
+    "ease_type": "EASE_OUT",
+    "wait": false
+}
+@[tween_parameter] {
+    "target": "物件B",
+    "parameter": "scale:x",
+    "value": 0.5,
+    "time_sec": 1,
+    "transition_type": "TRANS_QUINT",
+    "ease_type": "EASE_OUT",
+    "wait": false
+}
+</code></pre>
+<p>同时淡出并横向缩小，不阻塞脚本。</p>
+<h2 id="成句动画"><a class="header" href="#成句动画">成句动画</a></h2>
+<p>用于播放成句判定动画的事件。</p>
+<pre><code>@[sentence_legal_animation] {
+    "pos": [15,8], ## 动画起始位置坐标 [x, y]
+    "text_count": 3, ## 共几个字
+    "is_h": false, ## 是否为横向
+    "sectence_width": 2, ## 断句长度
+    "progress": -1, ## 0~5，不同音效，0代表完成，-1为错误，-2为彩蛋
+    "level": 5 ## 5的时候会全屏幕闪
+}
+</code></pre>
+<h3 id="参数说明-1"><a class="header" href="#参数说明-1">参数说明</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>参数名</th><th>类型</th><th>说明</th><th>示例值</th></tr>
+</thead>
+<tbody>
+<tr><td><code>pos</code></td><td>数组</td><td>动画起始位置坐标 [x, y]</td><td><code>[15,8]</code></td></tr>
+<tr><td><code>text_count</code></td><td>整数</td><td>句子中的字数</td><td><code>3</code></td></tr>
+<tr><td><code>is_h</code></td><td>布尔值</td><td>是否为横向排列</td><td><code>false</code></td></tr>
+<tr><td><code>sectence_width</code></td><td>整数</td><td>断句长度（每行字数）</td><td><code>2</code></td></tr>
+<tr><td><code>progress</code></td><td>整数</td><td>进度等级：0~5 对应不同音效，0 表示完成，-1 表示错误，-2 表示彩蛋</td><td><code>-1</code></td></tr>
+<tr><td><code>level</code></td><td>整数</td><td>动画强度级别，5 时全屏幕闪烁</td><td><code>5</code></td></tr>
+</tbody>
+</table>
+</div>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="如何将变量代入参数"><a class="header" href="#如何将变量代入参数">如何将变量代入参数</a></h1>
 <blockquote>
