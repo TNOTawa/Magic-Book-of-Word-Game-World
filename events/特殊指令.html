@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-dc53e9ea.js";
+            window.path_to_searchindex_js = "../searchindex-1f2e4ac7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-335dde93.js"></script>
@@ -396,6 +396,7 @@
 <li>若同时指定 <code>add</code> 和 <code>value</code>，优先使用 <code>value</code>。</li>
 <li><code>transition_type</code> 与 <code>ease_type</code> 组合可产生丰富的动画效果，具体效果需在游戏中实测。</li>
 <li><code>wait: true</code> 时，脚本会暂停直到动画完成；<code>wait: false</code> 时，动画在后台播放，脚本继续执行。</li>
+<li>如果补间类型不是线性，千万不要把时间填0，不然游戏就会一直除以0卡死。</li>
 </ul>
 <h3 id="示例"><a class="header" href="#示例">示例</a></h3>
 <h4 id="上下弹跳效果"><a class="header" href="#上下弹跳效果">上下弹跳效果</a></h4>
