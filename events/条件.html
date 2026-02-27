@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-8f946699.js";
+            window.path_to_searchindex_js = "../searchindex-6a15ec9d.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-335dde93.js"></script>
@@ -177,38 +177,134 @@
                     <main>
                         <h1 id="条件"><a class="header" href="#条件">条件</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
-<h2 id="符合时执行"><a class="header" href="#符合时执行">符合时执行</a></h2>
-<pre><code>@[if] {
-  
-    "type": "switch",
-    "varOption": {
-      "varId": null,
-      "operation": "==",
-      "varValue": 0
-    },
-    "switchOption": {
-      "varId": null,
-      "operation": "==",
-      "varValue": false
-    }
-  
+<h2 id="条件判断-if"><a class="header" href="#条件判断-if">条件判断 <code>#if</code></a></h2>
+<p>根据条件表达式的结果决定是否执行内部的指令序列。</p>
+<h3 id="类型一变量条件-type-var"><a class="header" href="#类型一变量条件-type-var">类型一：变量条件 <code>type: "var"</code></a></h3>
+<p>对变量的数值进行比较判断。</p>
+<pre><code class="language-json">@[if] {
+  "type": "var",
+  "varOption": {
+    "varId": "变量ID",
+    "operation": "==",
+    "varValue": 0
+  }
 }
 </code></pre>
-<p>省略写法：</p>
-<pre><code>@[if] *TODO*
+<p><strong>参数说明：</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>参数</th><th>说明</th><th>可选值</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code></td><td>条件类型</td><td><code>"var"</code></td></tr>
+<tr><td><code>varOption.varId</code></td><td>变量ID</td><td>字符串形式的ID</td></tr>
+<tr><td><code>varOption.operation</code></td><td>比较操作符</td><td><code>==</code>（等于）、<code>!=</code>（不等于）、<code>&gt;</code>（大于）、<code>&lt;</code>（小于）、<code>&gt;=</code>（大于等于）、<code>&lt;=</code>（小于等于）</td></tr>
+<tr><td><code>varOption.varValue</code></td><td>比较的数值</td><td>数字</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>示例：</strong></p>
+<pre><code class="language-json">@[if] {
+  "type": "var",
+  "varOption": {
+    "varId": "score",
+    "operation": "&gt;=",
+    "varValue": 100
+  }
+}
 </code></pre>
-<p>官方示例：</p>
+<h3 id="类型二开关条件-type-switch"><a class="header" href="#类型二开关条件-type-switch">类型二：开关条件 <code>type: "switch"</code></a></h3>
+<p>对开关（布尔）变量进行判断。</p>
+<pre><code class="language-json">@[if] {
+  "type": "switch",
+  "switchOption": {
+    "varId": "开关ID",
+    "operation": "==",
+    "varValue": false
+  }
+}
+</code></pre>
+<p><strong>参数说明：</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>参数</th><th>说明</th><th>可选值</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code></td><td>条件类型</td><td><code>"switch"</code></td></tr>
+<tr><td><code>switchOption.varId</code></td><td>开关ID</td><td>字符串形式的ID</td></tr>
+<tr><td><code>switchOption.operation</code></td><td>比较操作符</td><td><code>==</code>（等于）、<code>!=</code>（不等于）</td></tr>
+<tr><td><code>switchOption.varValue</code></td><td>比较的布尔值</td><td><code>true</code> / <code>false</code></td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>示例：</strong></p>
+<pre><code class="language-json">@[if] {
+  "type": "switch",
+  "switchOption": {
+    "varId": "door_open",
+    "operation": "==",
+    "varValue": true
+  }
+}
+</code></pre>
+<h3 id="省略写法待补充"><a class="header" href="#省略写法待补充">省略写法（待补充）</a></h3>
+<p>使用简短的表达式语法，直接在双引号内写条件表达式：</p>
+<pre><code>@[if] "条件表达式"
+</code></pre>
+<p><strong>表达式语法（已验证）：</strong></p>
+<ul>
+<li>变量引用：<code>v:变量名</code></li>
+<li>比较操作符：已验证支持 <code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>、<code>==</code></li>
+<li>逻辑运算符：<code>&amp;&amp;</code>（并且）在部分情况下可用</li>
+<li>逻辑运算符：<code>||</code>（或者）在部分情况下可用</li>
+</ul>
+<p><strong>表达式语法（未验证/存在问题）：</strong></p>
+<ul>
+<li>比较操作符：<code>!=</code>（不等于）- 测试无输出</li>
+<li>括号：<code>(</code>、<code>)</code> 用于分组 - 测试时同时输出 true 和 false（存在问题）</li>
+</ul>
+<p><strong>官方示例：</strong></p>
 <pre><code>@[if] "v:傀儡x&gt;16&amp;&amp;v:傀儡y&lt;9"
 </code></pre>
-<h2 id="否则执行"><a class="header" href="#否则执行">否则执行</a></h2>
-<pre><code>
-@[else]
+<p><strong>已验证的示例：</strong></p>
+<pre><code>@[if] "v:变量A&gt;0"
 
+@[if] "v:变量A&gt;=3"
+
+@[if] "v:变量A==3"
+
+// 部分场景有效
+@[if] "v:变量A&gt;0&amp;&amp;v:变量B&lt;10"
+
+// 部分场景有效
+@[if] "v:变量A&gt;5||v:变量B&gt;10"
 </code></pre>
-<h2 id="结束条件"><a class="header" href="#结束条件">结束条件</a></h2>
-<pre><code>
-@[end_if]
+<p><strong>未验证/存在问题的示例：</strong></p>
+<pre><code>// 不等于
+@[if] "v:变量A!=3"
 
+// 括号分组
+@[if] "(v:变量A&gt;0&amp;&amp;v:变量A&lt;10)||(v:变量B&gt;0&amp;&amp;v:变量B&lt;10)"
+</code></pre>
+<p>希望有大佬测试并补充。</p>
+<h2 id="随机条件-if_random"><a class="header" href="#随机条件-if_random">随机条件 <code>#if_random</code></a></h2>
+<p>随机决定是否执行后续指令。</p>
+<pre><code>@[if_random]
+</code></pre>
+<p><strong>使用示例：</strong></p>
+<pre><code>@[if_random]
+  // 概率执行的指令
+@[end_if]
+</code></pre>
+<h2 id="否则执行-else"><a class="header" href="#否则执行-else">否则执行 <code>#else</code></a></h2>
+<p>当 <code>#if</code> 条件不满足时执行的指令序列。</p>
+<pre><code>@[else]
+</code></pre>
+<h2 id="结束条件-end_if"><a class="header" href="#结束条件-end_if">结束条件 <code>#end_if</code></a></h2>
+<p>标记条件判断块的结束。</p>
+<pre><code>@[end_if]
 </code></pre>
 
                     </main>
