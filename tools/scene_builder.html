@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字游戏世界场景制作工具</title>
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #2d4059;
+        }
+        
+        h1 {
+            color: #4cc9f0;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #a0a0c0;
+            font-size: 1.1rem;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tool-panel {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(25, 25, 40, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .canvas-container {
+            flex: 3;
+            min-width: 600px;
+            background: rgba(20, 20, 35, 0.9);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        
+        .panel-title {
+            color: #4cc9f0;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2d4059;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0a0c0;
+            font-weight: 500;
+        }
+        
+        .text-input {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(10, 10, 20, 0.7);
+            border: 2px solid #2d4059;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            padding: 12px;
+            padding-right: 100px;
+            resize: vertical;
+            white-space: pre;
+            line-height: 1.4;
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: #4cc9f0;
+        }
+        
+        .confirm-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #7209b7, #3a0ca3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(to right, #f72585, #b5179e);
+        }
+        
+        .btn-success {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(to right, #ff9800, #f57c00);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .button-group .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .canvas-area {
+            width: 100%;
+            height: 600px;
+            background-color: #0d1021;
+            overflow: auto;
+            position: relative;
+        }
+        
+        .canvas-grid {
+            position: relative;
+            background-color: #0d1021;
+        }
+        
+        .grid-cell {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444466;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            user-select: none;
+            z-index: 1;
+        }
+        
+        .grid-cell.highlight {
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        .object {
+            position: absolute;
+            cursor: move;
+            z-index: 10;
+        }
+        
+        .object.selected {
+            z-index: 20;
+        }
+        
+        .object.selected::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border: 2px solid #4cc9f0;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .char-cell {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 11;
+        }
+        
+        .selection-rect {
+            position: absolute;
+            border: 2px dashed #4cc9f0;
+            background-color: rgba(76, 201, 240, 0.1);
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .canvas-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 50;
+        }
+        
+        .canvas-controls .btn {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .coordinates {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            z-index: 50;
+        }
+        
+        .objects-list {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .objects-list ul {
+            list-style-type: none;
+        }
+        
+        .objects-list li {
+            padding: 10px;
+            background: rgba(40, 40, 60, 0.6);
+            margin-bottom: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .objects-list li:hover {
+            background: rgba(60, 60, 100, 0.6);
+        }
+        
+        .objects-list li.selected {
+            background: rgba(67, 97, 238, 0.3);
+            border-left: 4px solid #4cc9f0;
+        }
+        
+        .obj-id {
+            font-weight: bold;
+            color: #4cc9f0;
+        }
+        
+        .obj-size {
+            font-size: 0.9rem;
+            color: #a0a0c0;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(30, 30, 50, 0.6);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .instructions h3 {
+            color: #4cc9f0;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .export-area {
+            margin-top: 20px;
+        }
+        
+        .export-text {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(10, 10, 20, 0.7);
+            border: 2px solid #2d4059;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            padding: 12px;
+            white-space: pre;
+            resize: vertical;
+        }
+        
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: rgba(76, 201, 240, 0.9);
+            color: white;
+            border-radius: 8px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .status-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 2px solid #2d4059;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+        
+        .shortcut-hint {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .history-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .history-controls .btn {
+            flex: 1;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .canvas-container, .tool-panel {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-message" id="status-message"></div>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-object-group"></i> 文字游戏世界场景制作工具</h1>
+            <p class="subtitle">传统做场景敲下划线敲到手抽筋,而且那么小的框也看不懂,做大场景尤为难受,有了这个工具,妈妈再也不怕我敲下划线累死了</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="tool-panel">
+                <h2 class="panel-title"><i class="fas fa-tools"></i> 物件管理</h2>
+                
+                <div class="form-group">
+                    <label for="object-input"><i class="fas fa-edit"></i> 创建/编辑物件 (物件中的"＿"将透明显示)</label>
+                    <textarea id="object-input" class="text-input" placeholder="输入物件内容，例如：&#10;＿顶顶顶&#10;顶顶顶顶顶&#10;＿墙墙墙&#10;＿墙门墙"></textarea>
+                    <div class="confirm-container" id="confirm-container" style="display: none;">
+                        <button id="confirm-btn" class="btn btn-success">
+                            <i class="fas fa-check"></i> 确定更改
+                        </button>
+                        <span class="shortcut-hint">或按 Enter 键</span>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="create-btn" class="btn">
+                        <i class="fas fa-plus-circle"></i> 创建物件
+                    </button>
+                    <button id="delete-btn" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> 删除选中
+                    </button>
+                </div>
+                
+                <div class="button-group">
+                    <button id="copy-btn" class="btn">
+                        <i class="fas fa-copy"></i> 复制
+                    </button>
+                    <button id="cut-btn" class="btn">
+                        <i class="fas fa-cut"></i> 剪切
+                    </button>
+                    <button id="paste-btn" class="btn">
+                        <i class="fas fa-paste"></i> 粘贴
+                    </button>
+                </div>
+                
+                <div class="history-controls">
+                    <button id="undo-btn" class="btn btn-warning" disabled>
+                        <i class="fas fa-undo"></i> 撤销 (Ctrl+Z)
+                    </button>
+                    <button id="redo-btn" class="btn btn-warning" disabled>
+                        <i class="fas fa-redo"></i> 重做 (Ctrl+Y)
+                    </button>
+                </div>
+                
+                <div class="button-group">
+                    <button id="combine-btn" class="btn">
+                        <i class="fas fa-layer-group"></i> 组合选中物件
+                    </button>
+                    <button id="clear-btn" class="btn btn-danger">
+                        <i class="fas fa-broom"></i> 清空场景
+                    </button>
+                </div>
+                
+                <div class="objects-list">
+                    <h3><i class="fas fa-th-list"></i> 场景物件列表</h3>
+                    <ul id="objects-list">
+                        <!-- 物件列表将在这里动态生成 -->
+                    </ul>
+                </div>
+                
+                <div class="export-area">
+                    <h3><i class="fas fa-file-export"></i> 导出场景</h3>
+                    <button id="export-btn" class="btn" style="width: 100%; margin-bottom: 10px;">
+                        <i class="fas fa-download"></i> 生成场景字符串
+                    </button>
+                    <textarea id="export-output" class="export-text" readonly></textarea>
+                </div>
+            </div>
+            
+            <div class="canvas-container">
+                <h2 class="panel-title"><i class="fas fa-paint-brush"></i> 场景画布 (坐标: 左上角为0,0)</h2>
+                
+                <div class="canvas-area" id="canvas-area">
+                    <div class="canvas-grid" id="canvas-grid">
+                        <!-- 网格和物件将在这里动态生成 -->
+                    </div>
+                    <div class="selection-rect" id="selection-rect" style="display: none;"></div>
+                </div>
+                
+                <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
+                
+                <div class="canvas-controls">
+                    <button id="reset-view-btn" class="btn">
+                        <i class="fas fa-expand-arrows-alt"></i> 重置视图
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> 使用说明</h3>
+            <ul>
+                <li><strong>新增功能</strong>: 支持撤销(Ctrl+Z)和重做(Ctrl+Y)操作</li>
+                <li><strong>框选优化</strong>: 框选时即使鼠标移出画布范围也不会卡住</li>
+                <li><strong>选择逻辑改进</strong>: 框选时只要碰到物件任何部分就会选中（原需完全框住）</li>
+                <li><strong>合并优化</strong>: 合并物件后自动删除旧物件</li>
+                <li><strong>网格对齐</strong>: 所有物件严格对齐20×20像素网格，确保字符位置精确</li>
+                <li><strong>字符覆盖规则</strong>: 物件非"＿"字符会覆盖背景字符，物件"＿"字符透明显示背景</li>
+                <li><strong>选择与取消选择</strong>: 点击物件进行选择，只有点击背景空白处才会取消选择</li>
+                <li><strong>编辑确认</strong>: 编辑物件内容后，点击"确定更改"按钮或按Enter键确认修改</li>
+                <li><strong>创建物件</strong>: 在左侧文本框中输入物件内容，点击"创建物件"按钮</li>
+                <li><strong>移动物件</strong>: 选中物件后，拖动物件到新位置</li>
+                <li><strong>组合物件</strong>: 选中多个物件，点击"组合选中物件"将它们合并为一个新物件</li>
+                <li><strong>复制/剪切/粘贴</strong>: 使用相应按钮或快捷键(Ctrl+C, Ctrl+X, Ctrl+V)</li>
+                <li><strong>导出场景</strong>: 点击"生成场景字符串"获取包含所有物件的完整场景字符串</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>文字游戏世界场景制作工具,帮你摆脱手敲下划线</p>
+        </footer>
+    </div>
+
+    <script>
+        // 全局变量
+        const canvasArea = document.getElementById('canvas-area');
+        const canvasGrid = document.getElementById('canvas-grid');
+        const selectionRect = document.getElementById('selection-rect');
+        const objectInput = document.getElementById('object-input');
+        const exportOutput = document.getElementById('export-output');
+        const objectsList = document.getElementById('objects-list');
+        const coordinates = document.getElementById('coordinates');
+        const statusMessage = document.getElementById('status-message');
+        const confirmContainer = document.getElementById('confirm-container');
+        const confirmBtn = document.getElementById('confirm-btn');
+        const undoBtn = document.getElementById('undo-btn');
+        const redoBtn = document.getElementById('redo-btn');
+        
+        // 场景状态
+        let scene = {
+            width: 32,
+            height: 18,
+            objects: [],
+            selectedObjectIds: new Set(),
+            nextObjectId: 1,
+            clipboard: null,
+            isSelecting: false,
+            selectionStart: {x: 0, y: 0},
+            selectionEnd: {x: 0, y: 0},
+            originalInputContent: '', // 用于跟踪编辑状态
+            isEditing: false,
+            // 新增：历史记录
+            history: [],
+            historyIndex: -1,
+            maxHistorySize: 50
+        };
+        
+        // 状态消息显示
+        function showStatusMessage(text, duration = 2000) {
+            statusMessage.textContent = text;
+            statusMessage.classList.add('show');
+            
+            setTimeout(() => {
+                statusMessage.classList.remove('show');
+            }, duration);
+        }
+        
+        // 保存场景状态到历史记录
+        function saveToHistory() {
+            // 如果当前不在历史记录的末尾，清除后面的记录
+            if (scene.historyIndex < scene.history.length - 1) {
+                scene.history = scene.history.slice(0, scene.historyIndex + 1);
+            }
+            
+            // 创建深拷贝的场景状态
+            const state = {
+                objects: JSON.parse(JSON.stringify(scene.objects)),
+                nextObjectId: scene.nextObjectId,
+                width: scene.width,
+                height: scene.height
+            };
+            
+            // 添加到历史记录
+            scene.history.push(state);
+            scene.historyIndex++;
+            
+            // 限制历史记录大小
+            if (scene.history.length > scene.maxHistorySize) {
+                scene.history.shift();
+                scene.historyIndex--;
+            }
+            
+            // 更新撤销/重做按钮状态
+            updateHistoryButtons();
+            
+            console.log(`已保存历史状态，当前历史记录数: ${scene.history.length}, 索引: ${scene.historyIndex}`);
+        }
+        
+        // 撤销操作
+        function undo() {
+            if (scene.historyIndex <= 0) {
+                return;
+            }
+            
+            scene.historyIndex--;
+            const state = scene.history[scene.historyIndex];
+            
+            // 恢复场景状态
+            scene.objects = JSON.parse(JSON.stringify(state.objects));
+            scene.nextObjectId = state.nextObjectId;
+            scene.width = state.width;
+            scene.height = state.height;
+            
+            // 清除当前选择
+            clearSelection();
+            
+            // 重新创建网格和渲染物件
+            createGrid();
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 更新撤销/重做按钮状态
+            updateHistoryButtons();
+            
+            showStatusMessage('已撤销操作');
+        }
+        
+        // 重做操作
+        function redo() {
+            if (scene.historyIndex >= scene.history.length - 1) {
+                return;
+            }
+            
+            scene.historyIndex++;
+            const state = scene.history[scene.historyIndex];
+            
+            // 恢复场景状态
+            scene.objects = JSON.parse(JSON.stringify(state.objects));
+            scene.nextObjectId = state.nextObjectId;
+            scene.width = state.width;
+            scene.height = state.height;
+            
+            // 清除当前选择
+            clearSelection();
+            
+            // 重新创建网格和渲染物件
+            createGrid();
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 更新撤销/重做按钮状态
+            updateHistoryButtons();
+            
+            showStatusMessage('已重做操作');
+        }
+        
+        // 更新撤销/重做按钮状态
+        function updateHistoryButtons() {
+            undoBtn.disabled = scene.historyIndex <= 0;
+            redoBtn.disabled = scene.historyIndex >= scene.history.length - 1;
+        }
+        
+        // 初始化场景
+        function initScene() {
+            // 创建初始网格
+            createGrid();
+            
+            // 添加事件监听器
+            setupEventListeners();
+            
+            // 添加示例物件
+            addExampleObjects();
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 保存初始状态到历史记录
+            saveToHistory();
+        }
+        
+        // 创建网格
+        function createGrid() {
+            canvasGrid.innerHTML = '';
+            canvasGrid.style.width = `${scene.width * 20}px`;
+            canvasGrid.style.height = `${scene.height * 20}px`;
+            
+            // 创建背景网格单元格
+            for (let y = 0; y < scene.height; y++) {
+                for (let x = 0; x < scene.width; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.textContent = '＿';
+                    cell.style.left = `${x * 20}px`;
+                    cell.style.top = `${y * 20}px`;
+                    cell.style.width = '20px';
+                    cell.style.height = '20px';
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    cell.dataset.type = 'background';
+                    
+                    // 显示坐标
+                    cell.addEventListener('mouseenter', () => {
+                        coordinates.textContent = `X: ${x}, Y: ${y}`;
+                        cell.classList.add('highlight');
+                    });
+                    
+                    cell.addEventListener('mouseleave', () => {
+                        cell.classList.remove('highlight');
+                    });
+                    
+                    // 点击背景空白处取消选择
+                    cell.addEventListener('mousedown', (e) => {
+                        // 只有点击背景单元格且没有点击到物件字符时才取消选择
+                        if (e.target === cell && !e.target.closest('.char-cell')) {
+                            clearSelection();
+                        }
+                    });
+                    
+                    canvasGrid.appendChild(cell);
+                }
+            }
+            
+            // 渲染所有物件
+            renderObjects();
+        }
+        
+        // 添加示例物件
+        function addExampleObjects() {
+            // 房子示例
+            addObject(2, 2, [
+                '＿顶顶顶',
+                '顶顶顶顶顶',
+                '＿墙墙墙',
+                '＿墙门墙'
+            ]);
+            
+            // 石头示例
+            addObject(15, 4, [
+                '＿石头',
+                '石头石头'
+            ]);
+        }
+        
+        // 添加物件到场景
+        function addObject(x, y, content, skipHistory = false) {
+            // 标准化内容：确保所有行长度相同
+            const maxLength = Math.max(...content.map(line => line.length));
+            const normalizedContent = content.map(line => {
+                if (line.length < maxLength) {
+                    return line + '＿'.repeat(maxLength - line.length);
+                }
+                return line;
+            });
+            
+            const object = {
+                id: scene.nextObjectId++,
+                x: x,
+                y: y,
+                content: normalizedContent,
+                width: maxLength,
+                height: normalizedContent.length,
+                originalContent: [...normalizedContent] // 保存原始内容
+            };
+            
+            scene.objects.push(object);
+            
+            // 扩展场景大小如果物件超出边界
+            extendSceneIfNeeded(object);
+            
+            // 渲染物件
+            renderObject(object);
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 保存到历史记录（除非明确跳过）
+            if (!skipHistory) {
+                saveToHistory();
+            }
+            
+            return object;
+        }
+        
+        // 扩展场景大小如果物件超出边界
+        function extendSceneIfNeeded(object) {
+            const right = object.x + object.width;
+            const bottom = object.y + object.height;
+            
+            let needExtend = false;
+            
+            if (right > scene.width) {
+                scene.width = right + 5; // 扩展一些额外空间
+                needExtend = true;
+            }
+            
+            if (bottom > scene.height) {
+                scene.height = bottom + 5;
+                needExtend = true;
+            }
+            
+            if (needExtend) {
+                createGrid();
+            }
+        }
+        
+        // 渲染单个物件
+        function renderObject(object) {
+            // 移除旧渲染（如果存在）
+            const oldElement = document.getElementById(`object-${object.id}`);
+            if (oldElement) {
+                oldElement.remove();
+            }
+            
+            // 创建物件容器
+            const objElement = document.createElement('div');
+            objElement.id = `object-${object.id}`;
+            objElement.className = 'object';
+            if (scene.selectedObjectIds.has(object.id)) {
+                objElement.classList.add('selected');
+            }
+            
+            // 设置位置和大小
+            objElement.style.left = `${object.x * 20}px`;
+            objElement.style.top = `${object.y * 20}px`;
+            objElement.style.width = `${object.width * 20}px`;
+            objElement.style.height = `${object.height * 20}px`;
+            
+            // 创建字符单元格
+            for (let y = 0; y < object.height; y++) {
+                for (let x = 0; x < object.width; x++) {
+                    const char = object.content[y][x];
+                    
+                    // 只渲染非"＿"字符
+                    if (char !== '＿') {
+                        const charCell = document.createElement('div');
+                        charCell.className = 'char-cell';
+                        charCell.textContent = char;
+                        charCell.style.left = `${x * 20}px`;
+                        charCell.style.top = `${y * 20}px`;
+                        charCell.style.width = '20px';
+                        charCell.style.height = '20px';
+                        objElement.appendChild(charCell);
+                    }
+                }
+            }
+            
+            canvasGrid.appendChild(objElement);
+            
+            // 添加事件监听器
+            objElement.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                
+                // 处理选择
+                if (!e.ctrlKey && !e.metaKey) {
+                    // 如果没按Ctrl键，清除之前的选择
+                    clearSelection();
+                }
+                
+                // 切换选中状态
+                toggleObjectSelection(object.id);
+                
+                // 开始拖拽
+                startDragging(object, e);
+            });
+            
+            // 双击编辑物件
+            objElement.addEventListener('dblclick', () => {
+                editObject(object);
+            });
+        }
+        
+        // 渲染所有物件
+        function renderObjects() {
+            scene.objects.forEach(object => renderObject(object));
+        }
+        
+        // 开始拖拽物件
+        function startDragging(object, e) {
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startLeft = object.x;
+            const startTop = object.y;
+            
+            // 保存拖拽前的状态到历史记录
+            saveToHistory();
+            
+            // 鼠标移动事件
+            const onMouseMove = (moveEvent) => {
+                const deltaX = moveEvent.clientX - startX;
+                const deltaY = moveEvent.clientY - startY;
+                
+                // 计算新的网格位置
+                const gridDeltaX = Math.round(deltaX / 20);
+                const gridDeltaY = Math.round(deltaY / 20);
+                
+                // 更新物件位置
+                object.x = Math.max(0, startLeft + gridDeltaX);
+                object.y = Math.max(0, startTop + gridDeltaY);
+                
+                // 重新渲染
+                renderObjects();
+            };
+            
+            // 鼠标释放事件
+            const onMouseUp = () => {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                
+                // 扩展场景大小如果物件被拖到边界外
+                extendSceneIfNeeded(object);
+                
+                // 更新物件列表
+                updateObjectsList();
+                
+                // 拖拽完成后再保存一次历史记录
+                saveToHistory();
+            };
+            
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+        
+        // 选择物件
+        function selectObject(objectId, addToSelection = false) {
+            if (!addToSelection) {
+                clearSelection();
+            }
+            
+            scene.selectedObjectIds.add(objectId);
+            
+            // 更新物件渲染
+            scene.objects.forEach(obj => {
+                if (scene.selectedObjectIds.has(obj.id)) {
+                    const element = document.getElementById(`object-${obj.id}`);
+                    if (element) {
+                        element.classList.add('selected');
+                    }
+                }
+            });
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 显示选中物件内容
+            const selectedObject = scene.objects.find(obj => obj.id === objectId);
+            if (selectedObject) {
+                objectInput.value = selectedObject.content.join('\n');
+                scene.originalInputContent = objectInput.value;
+                hideConfirmButton(); // 隐藏确认按钮
+            }
+        }
+        
+        // 切换物件选择状态
+        function toggleObjectSelection(objectId) {
+            if (scene.selectedObjectIds.has(objectId)) {
+                scene.selectedObjectIds.delete(objectId);
+            } else {
+                scene.selectedObjectIds.add(objectId);
+            }
+            
+            // 更新物件渲染
+            const element = document.getElementById(`object-${objectId}`);
+            if (element) {
+                if (scene.selectedObjectIds.has(objectId)) {
+                    element.classList.add('selected');
+                } else {
+                    element.classList.remove('selected');
+                }
+            }
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 如果没有选中任何物件，清空输入框
+            if (scene.selectedObjectIds.size === 0) {
+                objectInput.value = '';
+                scene.originalInputContent = '';
+                hideConfirmButton();
+            } else if (scene.selectedObjectIds.size === 1) {
+                // 如果只选中一个物件，显示其内容
+                const selectedObject = scene.objects.find(obj => obj.id === Array.from(scene.selectedObjectIds)[0]);
+                if (selectedObject) {
+                    objectInput.value = selectedObject.content.join('\n');
+                    scene.originalInputContent = objectInput.value;
+                    hideConfirmButton();
+                }
+            }
+        }
+        
+        // 清除选择
+        function clearSelection() {
+            scene.selectedObjectIds.forEach(objectId => {
+                const element = document.getElementById(`object-${objectId}`);
+                if (element) {
+                    element.classList.remove('selected');
+                }
+            });
+            
+            scene.selectedObjectIds.clear();
+            updateObjectsList();
+            objectInput.value = '';
+            scene.originalInputContent = '';
+            hideConfirmButton();
+        }
+        
+        // 编辑物件
+        function editObject(object) {
+            if (!object) return;
+            
+            // 将物件内容显示在输入框中
+            objectInput.value = object.content.join('\n');
+            scene.originalInputContent = objectInput.value;
+            
+            // 选中该物件
+            clearSelection();
+            selectObject(object.id);
+            
+            // 聚焦输入框
+            objectInput.focus();
+        }
+        
+        // 显示确认按钮
+        function showConfirmButton() {
+            confirmContainer.style.display = 'flex';
+        }
+        
+        // 隐藏确认按钮
+        function hideConfirmButton() {
+            confirmContainer.style.display = 'none';
+        }
+        
+        // 检查是否需要显示确认按钮
+        function checkForChanges() {
+            if (scene.selectedObjectIds.size === 1) {
+                const currentContent = objectInput.value;
+                if (currentContent !== scene.originalInputContent) {
+                    showConfirmButton();
+                } else {
+                    hideConfirmButton();
+                }
+            } else {
+                hideConfirmButton();
+            }
+        }
+        
+        // 更新选中物件
+        function updateSelectedObject() {
+            if (scene.selectedObjectIds.size !== 1) {
+                return;
+            }
+            
+            // 保存到历史记录
+            saveToHistory();
+            
+            const objectId = Array.from(scene.selectedObjectIds)[0];
+            const object = scene.objects.find(obj => obj.id === objectId);
+            
+            if (!object) return;
+            
+            // 获取新内容
+            const newContent = objectInput.value.split('\n').filter(line => line.trim() !== '');
+            if (newContent.length === 0) {
+                return;
+            }
+            
+            // 更新物件
+            const maxLength = Math.max(...newContent.map(line => line.length));
+            object.content = newContent.map(line => {
+                if (line.length < maxLength) {
+                    return line + '＿'.repeat(maxLength - line.length);
+                }
+                return line;
+            });
+            object.width = maxLength;
+            object.height = newContent.length;
+            object.originalContent = [...object.content];
+            
+            // 重新渲染
+            renderObject(object);
+            
+            // 扩展场景大小如果物件超出边界
+            extendSceneIfNeeded(object);
+            
+            // 更新原始内容记录
+            scene.originalInputContent = objectInput.value;
+            
+            // 隐藏确认按钮
+            hideConfirmButton();
+            
+            // 显示状态消息
+            showStatusMessage('物件已更新');
+        }
+        
+        // 删除选中物件
+        function deleteSelectedObjects() {
+            if (scene.selectedObjectIds.size === 0) {
+                return;
+            }
+            
+            // 保存到历史记录
+            saveToHistory();
+            
+            // 从场景中移除物件
+            scene.objects = scene.objects.filter(obj => !scene.selectedObjectIds.has(obj.id));
+            
+            // 从DOM中移除物件元素
+            scene.selectedObjectIds.forEach(objectId => {
+                const element = document.getElementById(`object-${objectId}`);
+                if (element) {
+                    element.remove();
+                }
+            });
+            
+            // 清除选择
+            clearSelection();
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 显示状态消息
+            showStatusMessage(`已删除 ${scene.selectedObjectIds.size} 个物件`);
+        }
+        
+        // 组合选中物件（修复：合并后删除旧物件）
+        function combineSelectedObjects() {
+            if (scene.selectedObjectIds.size < 2) {
+                return;
+            }
+            
+            // 保存到历史记录
+            saveToHistory();
+            
+            // 获取选中的物件
+            const selectedObjects = scene.objects.filter(obj => scene.selectedObjectIds.has(obj.id));
+            
+            // 计算组合后的边界
+            let minX = Infinity, minY = Infinity;
+            let maxX = -Infinity, maxY = -Infinity;
+            
+            selectedObjects.forEach(obj => {
+                minX = Math.min(minX, obj.x);
+                minY = Math.min(minY, obj.y);
+                maxX = Math.max(maxX, obj.x + obj.width);
+                maxY = Math.max(maxY, obj.y + obj.height);
+            });
+            
+            const combinedWidth = maxX - minX;
+            const combinedHeight = maxY - minY;
+            
+            // 创建组合后的内容
+            const combinedContent = [];
+            
+            // 初始化全角下划线填充的数组
+            for (let y = 0; y < combinedHeight; y++) {
+                combinedContent.push('＿'.repeat(combinedWidth));
+            }
+            
+            // 按添加顺序（后面的覆盖前面的）将物件内容合并
+            scene.objects.forEach(obj => {
+                if (scene.selectedObjectIds.has(obj.id)) {
+                    for (let y = 0; y < obj.height; y++) {
+                        const targetY = obj.y - minY + y;
+                        if (targetY >= 0 && targetY < combinedHeight) {
+                            const row = combinedContent[targetY].split('');
+                            for (let x = 0; x < obj.width; x++) {
+                                const targetX = obj.x - minX + x;
+                                if (targetX >= 0 && targetX < combinedWidth) {
+                                    const char = obj.content[y][x];
+                                    if (char !== '＿') {
+                                        row[targetX] = char;
+                                    }
+                                }
+                            }
+                            combinedContent[targetY] = row.join('');
+                        }
+                    }
+                }
+            });
+            
+            // 删除原来的物件（修复：合并后删除旧物件）
+            const selectedIds = [...scene.selectedObjectIds];
+            scene.objects = scene.objects.filter(obj => !scene.selectedObjectIds.has(obj.id));
+            
+            // 从DOM中移除旧物件
+            selectedIds.forEach(objectId => {
+                const element = document.getElementById(`object-${objectId}`);
+                if (element) {
+                    element.remove();
+                }
+            });
+            
+            // 清除选择
+            clearSelection();
+            
+            // 添加组合后的新物件
+            const newObject = addObject(minX, minY, combinedContent, true); // 跳过历史记录，因为我们已经保存过了
+            
+            // 选中新物件
+            selectObject(newObject.id);
+            
+            // 显示状态消息
+            showStatusMessage(`成功组合 ${selectedObjects.length} 个物件，旧物件已删除`);
+        }
+        
+        // 复制选中物件
+        function copySelectedObjects() {
+            if (scene.selectedObjectIds.size === 0) {
+                return;
+            }
+            
+            const selectedObjects = scene.objects.filter(obj => scene.selectedObjectIds.has(obj.id));
+            scene.clipboard = {
+                type: 'copy',
+                objects: selectedObjects.map(obj => ({
+                    content: [...obj.content],
+                    x: obj.x,
+                    y: obj.y,
+                    width: obj.width,
+                    height: obj.height
+                }))
+            };
+            
+            // 显示状态消息
+            showStatusMessage(`已复制 ${selectedObjects.length} 个物件到剪贴板`);
+        }
+        
+        // 剪切选中物件
+        function cutSelectedObjects() {
+            if (scene.selectedObjectIds.size === 0) {
+                return;
+            }
+            
+            // 保存到历史记录
+            saveToHistory();
+            
+            const selectedObjects = scene.objects.filter(obj => scene.selectedObjectIds.has(obj.id));
+            scene.clipboard = {
+                type: 'cut',
+                objects: selectedObjects.map(obj => ({
+                    content: [...obj.content],
+                    x: obj.x,
+                    y: obj.y,
+                    width: obj.width,
+                    height: obj.height
+                }))
+            };
+            
+            // 如果是剪切，从场景中移除
+            if (scene.clipboard.type === 'cut') {
+                scene.objects = scene.objects.filter(obj => !scene.selectedObjectIds.has(obj.id));
+                clearSelection();
+                renderObjects();
+                updateObjectsList();
+            }
+            
+            // 显示状态消息
+            showStatusMessage(`已剪切 ${selectedObjects.length} 个物件到剪贴板`);
+        }
+        
+        // 粘贴物件
+        function pasteObjects() {
+            if (!scene.clipboard || !scene.clipboard.objects) {
+                return;
+            }
+            
+            // 保存到历史记录
+            saveToHistory();
+            
+            // 计算偏移量，使粘贴的物件不会完全重叠
+            const offsetX = 3;
+            const offsetY = 2;
+            
+            // 清除当前选择
+            clearSelection();
+            
+            // 添加复制的物件
+            scene.clipboard.objects.forEach(objData => {
+                const newObject = addObject(
+                    objData.x + offsetX,
+                    objData.y + offsetY,
+                    objData.content,
+                    true // 跳过历史记录，因为我们已经保存过了
+                );
+                
+                // 选中新添加的物件
+                selectObject(newObject.id, true);
+            });
+            
+            // 显示状态消息
+            showStatusMessage(`已粘贴 ${scene.clipboard.objects.length} 个物件`);
+        }
+        
+        // 导出场景
+        function exportScene() {
+            if (scene.objects.length === 0) {
+                exportOutput.value = '场景为空';
+                return;
+            }
+            
+            // 计算场景边界
+            let minX = Infinity, minY = Infinity;
+            let maxX = 0, maxY = 0;
+            
+            scene.objects.forEach(obj => {
+                minX = Math.min(minX, obj.x);
+                minY = Math.min(minY, obj.y);
+                maxX = Math.max(maxX, obj.x + obj.width);
+                maxY = Math.max(maxY, obj.y + obj.height);
+            });
+            
+            const exportWidth = maxX - minX;
+            const exportHeight = maxY - minY;
+            
+            // 创建全角下划线填充的数组
+            const exportContent = [];
+            for (let y = 0; y < exportHeight; y++) {
+                exportContent.push('＿'.repeat(exportWidth));
+            }
+            
+            // 按添加顺序（后面的覆盖前面的）将所有物件合并
+            scene.objects.forEach(obj => {
+                for (let y = 0; y < obj.height; y++) {
+                    const targetY = obj.y - minY + y;
+                    if (targetY >= 0 && targetY < exportHeight) {
+                        const row = exportContent[targetY].split('');
+                        for (let x = 0; x < obj.width; x++) {
+                            const targetX = obj.x - minX + x;
+                            if (targetX >= 0 && targetX < exportWidth) {
+                                const char = obj.content[y][x];
+                                if (char !== '＿') {
+                                    row[targetX] = char;
+                                }
+                            }
+                        }
+                        exportContent[targetY] = row.join('');
+                    }
+                }
+            });
+            
+            // 设置导出文本
+            exportOutput.value = exportContent.join('\n');
+            
+            // 显示状态消息
+            showStatusMessage('场景已导出');
+        }
+        
+        // 清空场景
+        function clearScene() {
+            if (scene.objects.length === 0) {
+                return;
+            }
+            
+            // 保存到历史记录
+            saveToHistory();
+            
+            // 移除所有物件
+            scene.objects = [];
+            scene.selectedObjectIds.clear();
+            
+            // 重置物件ID计数器
+            scene.nextObjectId = 1;
+            
+            // 重置场景大小
+            scene.width = 32;
+            scene.height = 18;
+            
+            // 重新创建网格
+            createGrid();
+            
+            // 更新物件列表
+            updateObjectsList();
+            
+            // 清空输入框和导出框
+            objectInput.value = '';
+            scene.originalInputContent = '';
+            exportOutput.value = '';
+            hideConfirmButton();
+            
+            // 显示状态消息
+            showStatusMessage('场景已清空');
+        }
+        
+        // 更新物件列表
+        function updateObjectsList() {
+            objectsList.innerHTML = '';
+            
+            scene.objects.forEach(object => {
+                const li = document.createElement('li');
+                li.dataset.id = object.id;
+                
+                if (scene.selectedObjectIds.has(object.id)) {
+                    li.classList.add('selected');
+                }
+                
+                li.innerHTML = `
+                    <div>
+                        <span class="obj-id">物件 #${object.id}</span>
+                        <span class="obj-size">(${object.width}×${object.height})</span>
+                    </div>
+                    <div>位置: (${object.x}, ${object.y})</div>
+                `;
+                
+                li.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    
+                    if (e.ctrlKey || e.metaKey) {
+                        toggleObjectSelection(object.id);
+                    } else {
+                        clearSelection();
+                        selectObject(object.id);
+                    }
+                });
+                
+                objectsList.appendChild(li);
+            });
+            
+            // 如果没有物件，显示提示
+            if (scene.objects.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = '暂无物件，请创建新物件';
+                li.style.textAlign = 'center';
+                li.style.color = '#888';
+                objectsList.appendChild(li);
+            }
+        }
+        
+        // 设置事件监听器
+        function setupEventListeners() {
+            // 创建物件按钮
+            document.getElementById('create-btn').addEventListener('click', () => {
+                const content = objectInput.value.split('\n').filter(line => line.trim() !== '');
+                if (content.length === 0) {
+                    return;
+                }
+                
+                // 保存到历史记录
+                saveToHistory();
+                
+                addObject(5, 5, content, true); // 跳过历史记录，因为我们已经保存过了
+                objectInput.value = '';
+                scene.originalInputContent = '';
+                hideConfirmButton();
+                
+                // 显示状态消息
+                showStatusMessage('物件已创建');
+            });
+            
+            // 确认更改按钮
+            confirmBtn.addEventListener('click', updateSelectedObject);
+            
+            // 输入框内容变化监听
+            objectInput.addEventListener('input', checkForChanges);
+            
+            // 输入框键盘事件
+            objectInput.addEventListener('keydown', (e) => {
+                // Enter键确认更改
+                if (e.key === 'Enter' && !e.shiftKey && confirmContainer.style.display === 'flex') {
+                    e.preventDefault();
+                    updateSelectedObject();
+                }
+                
+                // Esc键取消更改
+                if (e.key === 'Escape' && confirmContainer.style.display === 'flex') {
+                    e.preventDefault();
+                    // 恢复原始内容
+                    const objectId = Array.from(scene.selectedObjectIds)[0];
+                    const object = scene.objects.find(obj => obj.id === objectId);
+                    if (object) {
+                        objectInput.value = scene.originalInputContent;
+                        hideConfirmButton();
+                    }
+                }
+            });
+            
+            // 删除物件按钮
+            document.getElementById('delete-btn').addEventListener('click', deleteSelectedObjects);
+            
+            // 组合物件按钮
+            document.getElementById('combine-btn').addEventListener('click', combineSelectedObjects);
+            
+            // 复制按钮
+            document.getElementById('copy-btn').addEventListener('click', copySelectedObjects);
+            
+            // 剪切按钮
+            document.getElementById('cut-btn').addEventListener('click', cutSelectedObjects);
+            
+            // 粘贴按钮
+            document.getElementById('paste-btn').addEventListener('click', pasteObjects);
+            
+            // 撤销按钮
+            document.getElementById('undo-btn').addEventListener('click', undo);
+            
+            // 重做按钮
+            document.getElementById('redo-btn').addEventListener('click', redo);
+            
+            // 导出按钮
+            document.getElementById('export-btn').addEventListener('click', exportScene);
+            
+            // 清空场景按钮
+            document.getElementById('clear-btn').addEventListener('click', clearScene);
+            
+            // 重置视图按钮
+            document.getElementById('reset-view-btn').addEventListener('click', () => {
+                createGrid();
+                canvasArea.scrollTo(0, 0);
+            });
+            
+            // 画布选择功能（修复：框选超出画布范围不会卡住）
+            let isSelecting = false;
+            let selectionStart = {x: 0, y: 0};
+            let selectionMouseMoveHandler = null;
+            let selectionMouseUpHandler = null;
+            
+            canvasArea.addEventListener('mousedown', (e) => {
+                // 只在点击背景网格且没有点击到物件时触发框选
+                if (e.target.classList.contains('grid-cell') && !e.target.closest('.char-cell')) {
+                    if (!e.ctrlKey && !e.metaKey) {
+                        clearSelection();
+                    }
+                    
+                    isSelecting = true;
+                    const rect = canvasArea.getBoundingClientRect();
+                    selectionStart = {
+                        x: e.clientX - rect.left + canvasArea.scrollLeft,
+                        y: e.clientY - rect.top + canvasArea.scrollTop
+                    };
+                    
+                    selectionRect.style.left = `${selectionStart.x}px`;
+                    selectionRect.style.top = `${selectionStart.y}px`;
+                    selectionRect.style.width = '0px';
+                    selectionRect.style.height = '0px';
+                    selectionRect.style.display = 'block';
+                    
+                    // 修复：将事件监听器绑定到document，而不是canvasArea
+                    selectionMouseMoveHandler = (moveEvent) => {
+                        if (!isSelecting) return;
+                        
+                        const rect = canvasArea.getBoundingClientRect();
+                        let currentX = moveEvent.clientX - rect.left + canvasArea.scrollLeft;
+                        let currentY = moveEvent.clientY - rect.top + canvasArea.scrollTop;
+                        
+                        // 限制坐标在画布范围内
+                        currentX = Math.max(0, Math.min(currentX, canvasGrid.offsetWidth));
+                        currentY = Math.max(0, Math.min(currentY, canvasGrid.offsetHeight));
+                        
+                        const left = Math.min(selectionStart.x, currentX);
+                        const top = Math.min(selectionStart.y, currentY);
+                        const width = Math.abs(currentX - selectionStart.x);
+                        const height = Math.abs(currentY - selectionStart.y);
+                        
+                        selectionRect.style.left = `${left}px`;
+                        selectionRect.style.top = `${top}px`;
+                        selectionRect.style.width = `${width}px`;
+                        selectionRect.style.height = `${height}px`;
+                    };
+                    
+                    selectionMouseUpHandler = (upEvent) => {
+                        if (!isSelecting) return;
+                        
+                        isSelecting = false;
+                        selectionRect.style.display = 'none';
+                        
+                        const rect = canvasArea.getBoundingClientRect();
+                        let selectionEndX = upEvent.clientX - rect.left + canvasArea.scrollLeft;
+                        let selectionEndY = upEvent.clientY - rect.top + canvasArea.scrollTop;
+                        
+                        // 限制坐标在画布范围内
+                        selectionEndX = Math.max(0, Math.min(selectionEndX, canvasGrid.offsetWidth));
+                        selectionEndY = Math.max(0, Math.min(selectionEndY, canvasGrid.offsetHeight));
+                        
+                        // 计算选择框的边界
+                        const left = Math.min(selectionStart.x, selectionEndX);
+                        const right = Math.max(selectionStart.x, selectionEndX);
+                        const top = Math.min(selectionStart.y, selectionEndY);
+                        const bottom = Math.max(selectionStart.y, selectionEndY);
+                        
+                        // 选择与选择框有交集的物件（修复：触碰即选中，而不是完全包含）
+                        scene.objects.forEach(obj => {
+                            const objLeft = obj.x * 20;
+                            const objRight = (obj.x + obj.width) * 20;
+                            const objTop = obj.y * 20;
+                            const objBottom = (obj.y + obj.height) * 20;
+                            
+                            // 检查物件是否与选择框有交集（触碰即选中）
+                            const isIntersecting = !(objLeft > right || objRight < left || objTop > bottom || objBottom < top);
+                            
+                            if (isIntersecting) {
+                                selectObject(obj.id, true);
+                            }
+                        });
+                        
+                        // 移除事件监听器
+                        document.removeEventListener('mousemove', selectionMouseMoveHandler);
+                        document.removeEventListener('mouseup', selectionMouseUpHandler);
+                    };
+                    
+                    // 绑定事件到document而不是canvasArea
+                    document.addEventListener('mousemove', selectionMouseMoveHandler);
+                    document.addEventListener('mouseup', selectionMouseUpHandler);
+                }
+            });
+            
+            // 键盘快捷键
+            document.addEventListener('keydown', (e) => {
+                // 获取焦点元素
+                const activeElement = document.activeElement;
+                const isInputFocused = activeElement === objectInput || activeElement === exportOutput;
+                
+                // Ctrl+Z: 撤销
+                if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+                    // 如果在输入框中，使用默认行为
+                    if (isInputFocused) {
+                        return;
+                    }
+                    e.preventDefault();
+                    undo();
+                }
+                
+                // Ctrl+Y 或 Ctrl+Shift+Z: 重做
+                if (((e.ctrlKey || e.metaKey) && e.key === 'y') || 
+                    ((e.ctrlKey || e.metaKey) && e.key === 'z' && e.shiftKey)) {
+                    // 如果在输入框中，使用默认行为
+                    if (isInputFocused) {
+                        return;
+                    }
+                    e.preventDefault();
+                    redo();
+                }
+                
+                // Ctrl+C: 复制
+                if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                    // 如果在输入框中，使用默认行为
+                    if (isInputFocused) {
+                        return;
+                    }
+                    e.preventDefault();
+                    copySelectedObjects();
+                }
+                
+                // Ctrl+X: 剪切
+                if ((e.ctrlKey || e.metaKey) && e.key === 'x') {
+                    // 如果在输入框中，使用默认行为
+                    if (isInputFocused) {
+                        return;
+                    }
+                    e.preventDefault();
+                    cutSelectedObjects();
+                }
+                
+                // Ctrl+V: 粘贴
+                if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
+                    // 如果在输入框中，使用默认行为
+                    if (isInputFocused) {
+                        return;
+                    }
+                    e.preventDefault();
+                    pasteObjects();
+                }
+                
+                // Delete: 删除
+                if (e.key === 'Delete' && !isInputFocused) {
+                    e.preventDefault();
+                    deleteSelectedObjects();
+                }
+            });
+            
+            // 防止输入框的点击事件冒泡到画布
+            objectInput.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
+        }
+        
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', initScene);
+    </script>
+</body>
+</html>
