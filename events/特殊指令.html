@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-6ed82143.js";
+            window.path_to_searchindex_js = "../searchindex-0ec3f387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-5172f131.js"></script>
@@ -739,13 +739,29 @@
 <p>更改当前地图的地板材质。</p>
 <pre><code>@[change_floor_type] {"type": "default"}
 </code></pre>
-<p><strong>type 取值</strong>：</p>
+<p><strong>type 取值</strong>（以下均已测试）：</p>
 <ul>
-<li><code>"wood"</code>：木头</li>
-<li><code>"dirt"</code>：泥土</li>
-<li><code>"road"</code>：道路</li>
-<li><code>"stone"</code>：石头</li>
-<li><code>"default"</code>：默认</li>
+<li><code>"default"</code>：默认。</li>
+<li><code>"wood"</code>：木材（常见于房间内，听感偏闷，像在牛皮上行走）。</li>
+<li><code>"dirt"</code>：泥土（常见于家外户外区域，偶尔会混入键盘或木头的脚步声）。</li>
+<li><code>"pavement"</code>：铺路石（集市常见，普通石质脚步声）。</li>
+<li><code>"cave"</code>：洞穴（清脆并带少量回音）。</li>
+<li><code>"grass"</code>：草地。</li>
+<li><code>"pavement2"</code>：铺路石第二版（较 <code>pavement</code> 更轻）。</li>
+<li><code>"ruin"</code>：废墟（听感像在淤泥中行走）。</li>
+<li><code>"marble"</code>：大理石（实际听感更接近闷木头声）。</li>
+<li><code>"snow"</code>：雪地。</li>
+<li><code>"riverside"</code>：河边（沙子混水感）。</li>
+<li><code>"goose"</code>：鹅（类似鹅脚蹼走路的声音）。</li>
+<li><code>"swim"</code>：水中移动音效。</li>
+<li><code>"ruin2"</code>：废墟第二版（像踩在砂砾上）。</li>
+<li><code>"abstract"</code>：抽象（像纸张混合沙粒摩擦）。</li>
+<li><code>"snow_thick"</code>：厚雪（更重、更拖长的雪地脚步声）。</li>
+<li><code>"stone_stair"</code>：石阶（最接近典型石头脚步声）。</li>
+<li><code>"carpet"</code>：地毯（很轻的脚步声）。</li>
+<li><code>"garden"</code>：花园（类似草地但更柔和）。</li>
+<li><code>"dragon_back"</code>：龙背（偏金属质感）。</li>
+<li><code>"no_word"</code>：无文字（像踩乐高积木）。</li>
 </ul>
 <h3 id="自动保存"><a class="header" href="#自动保存">自动保存</a></h3>
 <p>在指定位置创建存档点并保存游戏状态。</p>
