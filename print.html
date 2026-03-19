@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0ec3f387.js";
+            window.path_to_searchindex_js = "searchindex-18295c39.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-5172f131.js"></script>
+        <script src="toc-9e0db1c9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -179,7 +179,8 @@
                         <h1 id="magic-book-of-word-game-world"><a class="header" href="#magic-book-of-word-game-world">Magic Book of Word Game World</a></h1>
 <h2 id="文字游戏世界魔法书"><a class="header" href="#文字游戏世界魔法书">《文字游戏世界》魔法书</a></h2>
 <blockquote>
-<p>最新更新日期：2026/2/27；游戏版本：v1.9.01</p>
+<p>最新更新日期：2026/3/19；游戏版本：v1.9.82
+正式版已在 Steam 推出，详见：<a href="https://store.steampowered.com/app/3114370/_/">《文字游戏世界》-Steam</a></p>
 </blockquote>
 <p>《文字游戏世界》中黑魔法（原始指令）的wiki*（非官方！非官方！非官方！）*</p>
 <p>旨在官方出之前提供一个简单的查询文档，以便开发关卡！</p>
@@ -205,12 +206,13 @@
 </ul>
 <h4 id="原版不可添加事件"><a class="header" href="#原版不可添加事件">原版不可添加事件</a></h4>
 <ul>
-<li><a href="#特殊事件">特殊指令</a></li>
+<li><a href="events/特殊指令/README.html">特殊指令</a></li>
 </ul>
 <h3 id="特殊写法"><a class="header" href="#特殊写法">特殊写法</a></h3>
 <ul>
 <li><a href="#如何将变量代入参数">如何将变量代入参数</a></li>
 <li><a href="#打字机的高级用法">打字机的高级用法</a></li>
+<li><a href="#实用指令集">实用指令集</a></li>
 </ul>
 <h3 id="实用工具"><a class="header" href="#实用工具"><em><strong>实用工具</strong></em></a></h3>
 <ul>
@@ -286,12 +288,18 @@
 <h2 id="淡入淡出"><a class="header" href="#淡入淡出">淡入淡出</a></h2>
 <pre><code>@[event_fade_to] {
   
-    "target": null,
+    "target": "Player",
     "opacity": 0,
     "time_sec": 1
   
 }
 </code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>target</code>：目标物件名称，必填。</li>
+<li><code>opacity</code>：目标不透明度，可选。</li>
+<li><code>time_sec</code>：淡入/淡出持续时间（秒），可选。</li>
+</ul>
 <h2 id="向上下左右走一格"><a class="header" href="#向上下左右走一格">向上/下/左/右走一格</a></h2>
 <p><em>此类 move 指令只能通过<code>@[move_route]</code>调用，具体使用方法见<code>特殊指令</code>中的移动部分。</em></p>
 <pre><code>
@@ -368,6 +376,7 @@
     "can_skip": true,
     "need_accept": true,
     "wait": true,
+    "is_dialog_end": false,
     "refTexts": [],
     "is_on_top_of_player": true,
     "offset": [0, 0],
@@ -376,10 +385,10 @@
 </code></pre>
 <p>带注释的版本：</p>
 <pre><code>@[type_parallel] {
-    "texts": "你好，世界！",    # 打字内容
+    "texts": "你好，世界！",    # 打字内容（支持 &lt;标签&gt;文本&lt;/标签&gt; 与 字{参数对象} 写法）
     "fixed": false,    # 是否使用屏幕坐标（false为地图坐标）
     "pos": [0, 0],    # 打字位置 [x, y]
-    "tags": [],    # 标签列表
+    "tags": [],    # 标签/组列表（可用于后续 fade_group、dissolve_group 等组操作）
     "has_se": true,    # 是否播放打字音效
     "char_type": null,    # 打字机音效类型（null为默认）
     "has_animation": true,    # 是否显示打字动画
@@ -387,6 +396,7 @@
     "can_skip": true,    # 是否可以跳过
     "need_accept": true,    # 是否需要确认
     "wait": true,    # 是否等待打字结束
+    "is_dialog_end": false,    # 是否启用实心游标（常用于对话结束前的最后一句）
     "refTexts": [],    # 参考文本列表（用于成句检测）
     "is_on_top_of_player": true,    # 主要图层时是否显示在玩家上方
     "offset": [0, 0],    # 位置微调偏移 [x, y]
@@ -403,7 +413,22 @@
 <p><code>type_parallel</code> 还支持以下高级参数：</p>
 <ul>
 <li>
+<p><strong><code>tags</code></strong>：标签/组列表。打字字符会加入这些组，可配合 <code>fade_group</code>、<code>dissolve_group</code> 做统一处理；<code>dissolve_group</code> 是溶解组内物件，不是解散组。
+示例：<code>@[type] {"texts":"我马上要消失喽!","tags":["b"]} @[fade_group] {"group": "b","opacity": 0,"time_sec": 1.0}</code></p>
+</li>
+<li>
 <p><strong><code>offset</code></strong>：<code>[x, y]</code>，对打字位置进行微调（像素偏移），可搭配变量使用。</p>
+</li>
+<li>
+<p><strong><code>texts</code></strong>：打字文本，除普通文本外，还支持以下扩展写法：</p>
+<ul>
+<li><strong>标签样式片段</strong>：<code>&lt;标签名&gt;...&lt;/标签名&gt;</code>，并在 <code>label_settings</code> 中定义同名标签参数。
+示例：<code>"正常说话||&lt;p&gt;诗人说话&lt;/p&gt;||&lt;s&gt;蛇妖说话&lt;/s&gt;"</code></li>
+<li><strong>逐字独立参数</strong>：在某个字后追加 <code>{...}</code>，可将该字独立并指定参数。
+示例：<code>"老{'name':'教学词1','opacity':0}||繁{'tags':['cn_text:繁简']}"</code></li>
+<li><strong>插入物件参数</strong>：<code>[物件{'tags':['标签']}]</code>。
+可用于“删整句但保留该物件”等场景。</li>
+</ul>
 </li>
 <li>
 <p><strong><code>label_settings</code></strong>：对象，用于为文本中的特定标签设置独立的样式与音效。
@@ -416,13 +441,26 @@
 </ul>
 <p>示例：</p>
 <pre><code class="language-json">"label_settings": {
-  "letter_1": {
-    "text_color": "#ffff00ff",
-    "tags": ["letter_1"],
+  "p": {
     "char_type": "poet"
+  },
+  "s": {
+    "char_type": "snake"
   }
 }
 </code></pre>
+</li>
+<li>
+<p><strong><code>texts</code> 中逐字参数可更改项</strong>：</p>
+<ul>
+<li><code>{'name':'名称'}</code></li>
+<li><code>{'text':'字面'}</code></li>
+<li><code>{'opacity':1}</code></li>
+<li><code>{'tags':['cn_text:繁简']}</code></li>
+<li><code>{'tags':['label #1']}</code></li>
+<li><code>{'layer':'back'}</code></li>
+</ul>
+<p>注意：在插入物件场景下，上述参数通常只有 <code>tags</code> 能生效，其它参数不生效。</p>
 </li>
 <li>
 <p><strong><code>char_type</code></strong>：指定打字机音效，可选值：</p>
@@ -451,6 +489,9 @@
 </li>
 <li>
 <p><strong><code>wait</code></strong>：若为 <code>true</code>，事件将等待打字结束后才继续执行后续逻辑。</p>
+</li>
+<li>
+<p><strong><code>is_dialog_end</code></strong>：若为 <code>true</code>，启用实心游标，通常用于一段对话结束前的最后一句。</p>
 </li>
 </ul>
 <blockquote>
@@ -924,16 +965,42 @@
 <p><em>大多事件通过分析关卡 JSON 文件得来</em></p>
 <p><em>2026/02/24：通过官方发布的黑魔法教学关卡获得了更多指令</em></p>
 <p><em>2026/02/27：新增大量黑魔法指令，包括物件操作、组操作、精灵动画、音效音乐、地图操作等（感谢 艺素馒头）</em></p>
+<p><em>2026/03/19：通过解包《文字游戏》一代得到大量官方的黑魔法补充（感谢 艺素馒头）</em></p>
+<h2 id="章节目录"><a class="header" href="#章节目录">章节目录</a></h2>
+<ul>
+<li><a href="#无操作指令-1">无操作指令</a></li>
+<li><a href="#调试指令-1">调试指令</a></li>
+<li><a href="#设置事件参数-1">设置事件参数</a></li>
+<li><a href="#添加到组-1">添加到组</a></li>
+<li><a href="#组操作-1">组操作</a></li>
+<li><a href="#物件操作-2">物件操作</a></li>
+<li><a href="#强制删字-1">强制删字</a></li>
+<li><a href="#移动-1">移动</a></li>
+<li><a href="#位移补间动画-1">位移补间动画</a></li>
+<li><a href="#成句动画-1">成句动画</a></li>
+<li><a href="#精灵动画-1">精灵动画</a></li>
+<li><a href="#音效-1">音效</a></li>
+<li><a href="#音乐-1">音乐</a></li>
+<li><a href="#环境音-1">环境音</a></li>
+<li><a href="#地图操作-1">地图操作</a></li>
+<li><a href="#一代限定-1">一代限定</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="无操作指令-1"><a href="#无操作指令-1" class="header">无操作指令</a></h1>
 <h2 id="无操作指令"><a class="header" href="#无操作指令">无操作指令</a></h2>
 <p>类似编程语言中的<code>// do nothing</code>或<code>pass</code>，会被解析成<code>## ignore_command</code>。
 传入的任何参数都会被忽略，可以当作注释使用。</p>
 <pre><code>@[#ignore_command] 
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="调试指令-1"><a href="#调试指令-1" class="header">调试指令</a></h1>
 <h2 id="调试指令"><a class="header" href="#调试指令">调试指令</a></h2>
 <h3 id="打印调试"><a class="header" href="#打印调试">打印调试</a></h3>
 <pre><code>@[print] "字符串"
 </code></pre>
 <p>打印指定字符串到控制台，仅用于调试 purposes。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="设置事件参数-1"><a href="#设置事件参数-1" class="header">设置事件参数</a></h1>
 <h2 id="设置事件参数"><a class="header" href="#设置事件参数">设置事件参数</a></h2>
 <pre><code>@[set_event_params] {
     
@@ -971,6 +1038,8 @@
 <li>无法修改位置，可以用传送器代替。</li>
 <li>无法修改物件是否可以被推删拆组。</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="添加到组-1"><a href="#添加到组-1" class="header">添加到组</a></h1>
 <h2 id="添加到组"><a class="header" href="#添加到组">添加到组</a></h2>
 <pre><code>@[add_to_group] {
 
@@ -981,6 +1050,8 @@
 </code></pre>
 <p>补充说明：
 <code>"group"</code>|<code>string</code>| 特殊组名：<code>cn_text:</code>后接着的第一个字是物件字面中要替换的字，第二个字是简体字下的字。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="组操作-1"><a href="#组操作-1" class="header">组操作</a></h1>
 <h2 id="组操作"><a class="header" href="#组操作">组操作</a></h2>
 <h3 id="组内淡入淡出"><a class="header" href="#组内淡入淡出">组内淡入淡出</a></h3>
 <p>配合“添加到组“功能使用，让组内所有物件淡入淡出。</p>
@@ -996,8 +1067,8 @@
 <li><code>opacity</code>：目标透明度（0~1）。</li>
 <li><code>time_sec</code>：动画持续时间（秒）。</li>
 </ul>
-<h3 id="解散组"><a class="header" href="#解散组">解散组</a></h3>
-<p>解散指定的组，释放组内所有物件。</p>
+<h3 id="溶解组"><a class="header" href="#溶解组">溶解组</a></h3>
+<p>溶解组内的所有物件，配合打字机 tags。</p>
 <pre><code>@[dissolve_group] {"group": "组名"}
 </code></pre>
 <h3 id="从组中删除"><a class="header" href="#从组中删除">从组中删除</a></h3>
@@ -1007,6 +1078,8 @@
     "group": "组名"
 }
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="物件操作-2"><a href="#物件操作-2" class="header">物件操作</a></h1>
 <h2 id="物件操作-1"><a class="header" href="#物件操作-1">物件操作</a></h2>
 <h3 id="删除物件"><a class="header" href="#删除物件">删除物件</a></h3>
 <p>从关卡内直接删除指定的物件。</p>
@@ -1043,6 +1116,8 @@
 <li><code>position</code>：克隆后的位置坐标，可选。</li>
 <li><code>text</code>：克隆后显示的文字内容，可选。</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="强制删字-1"><a href="#强制删字-1" class="header">强制删字</a></h1>
 <h2 id="强制删字"><a class="header" href="#强制删字">强制删字</a></h2>
 <h3 id="播放删字动画"><a class="header" href="#播放删字动画">播放删字动画</a></h3>
 <pre><code>@[play_backspace_fail_animation]
@@ -1058,6 +1133,8 @@
 @[backspace_event] {"target": "self"}
 </code></pre>
 <p>这段脚本会先播放删字动画，等待 1.2 秒，然后对自身执行删字操作。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="移动-1"><a href="#移动-1" class="header">移动</a></h1>
 <h2 id="移动"><a class="header" href="#移动">移动</a></h2>
 <h3 id="开始移动"><a class="header" href="#开始移动">开始移动</a></h3>
 <pre><code>@[move_route] {
@@ -1172,6 +1249,8 @@
 <li>循环移动路径会一直重复执行，直到被新的 <code>set_event_loop_move_route</code> 覆盖或物件被移除。</li>
 <li>该指令不需要放在 <code>@[move_route]</code> 和 <code>@[end_move_route]</code> 之间，它是一个独立的事件。</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="位移补间动画-1"><a href="#位移补间动画-1" class="header">位移补间动画</a></h1>
 <h2 id="位移补间动画"><a class="header" href="#位移补间动画">位移补间动画</a></h2>
 <p>用于平滑过渡物件参数的动画指令，可以控制位置、透明度、缩放等属性的变化。</p>
 <pre><code class="language-json">@[tween_parameter] {
@@ -1253,6 +1332,8 @@
 }
 </code></pre>
 <p>同时淡出并横向缩小，不阻塞脚本。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="成句动画-1"><a href="#成句动画-1" class="header">成句动画</a></h1>
 <h2 id="成句动画"><a class="header" href="#成句动画">成句动画</a></h2>
 <p>用于播放成句判定动画的事件。</p>
 <pre><code>@[sentence_legal_animation] {
@@ -1280,6 +1361,8 @@
 </tbody>
 </table>
 </div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="精灵动画-1"><a href="#精灵动画-1" class="header">精灵动画</a></h1>
 <h2 id="精灵动画"><a class="header" href="#精灵动画">精灵动画</a></h2>
 <h3 id="播放一次性动画"><a class="header" href="#播放一次性动画">播放一次性动画</a></h3>
 <p>播放指定物件的一次性动画，播放完成后自动停止。</p>
@@ -1341,37 +1424,41 @@
 <li><code>rotation</code>：旋转角度，可选。</li>
 <li><code>time_sec</code>：动画持续时间（秒）。</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="音效-1"><a href="#音效-1" class="header">音效</a></h1>
 <h2 id="音效"><a class="header" href="#音效">音效</a></h2>
 <h3 id="播放音效-1"><a class="header" href="#播放音效-1">播放音效</a></h3>
 <p>在当前位置播放指定的音效文件。</p>
 <pre><code>@[play_se] {
-    "path": "音效路径",
+    "path": "res://Sounds/...",
     "db": 0,
     "pan": 0
 }
 </code></pre>
 <p><strong>参数说明</strong>：</p>
 <ul>
-<li><code>path</code>：音效文件路径。</li>
+<li><code>path</code>：音效文件路径（对应一代，如开门音效：<code>res://Sounds/se/door_open_1.wav</code>，参考：<a href="#隐藏音频路径索引">隐藏音频路径索引</a>）。</li>
 <li><code>db</code>：音量大小，可选，默认值为 0。</li>
 <li><code>pan</code>：声道平衡，负数为左声道，正数为右声道，可选，默认值为 0。</li>
 </ul>
 <h3 id="在目标位置播放音效"><a class="header" href="#在目标位置播放音效">在目标位置播放音效</a></h3>
 <p>在指定物件的位置播放音效，适合用于 3D 空间音效效果。</p>
 <pre><code>@[play_se_with_position] {
-    "target": "物件名称",
-    "path": "音效路径",
-    "loop": false,
-    "max_dist": 5
+	"target": "物件名称", 
+	"path": "res://Sounds/se/sword_swing_fail_1.wav",
+	"loop": false,
+	"max_dist": 800
 }
 </code></pre>
 <p><strong>参数说明</strong>：</p>
 <ul>
 <li><code>target</code>：目标物件名称，音效将从该物件位置播放。</li>
-<li><code>path</code>：音效文件路径。</li>
-<li><code>loop</code>：是否循环播放，可选，默认值为 <code>false</code>。</li>
-<li><code>max_dist</code>：最大距离，可选。</li>
+<li><code>path</code>：音频路径（参考：<a href="#隐藏音频路径索引">隐藏音频路径索引</a>）。</li>
+<li><code>loop</code>：是否保持循环，<code>true</code> 为循环，否则只播放一次。</li>
+<li><code>max_dist</code>：声音传播距离。</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="音乐-1"><a href="#音乐-1" class="header">音乐</a></h1>
 <h2 id="音乐"><a class="header" href="#音乐">音乐</a></h2>
 <h3 id="播放音乐"><a class="header" href="#播放音乐">播放音乐</a></h3>
 <p>播放指定的背景音乐。</p>
@@ -1383,7 +1470,7 @@
 </code></pre>
 <p><strong>参数说明</strong>：</p>
 <ul>
-<li><code>path</code>：音频文件路径。</li>
+<li><code>path</code>：音频文件路径（参考：<a href="#隐藏音频路径索引">隐藏音频路径索引</a>）。</li>
 <li><code>db</code>：音量大小，可选，默认值为 0。</li>
 <li><code>pan</code>：声道平衡，负数为左声道，正数为右声道，可选，默认值为 0。</li>
 </ul>
@@ -1397,7 +1484,7 @@
 <p><strong>参数说明</strong>：</p>
 <ul>
 <li><code>has_bgm</code>：是否有背景音乐，设为 <code>false</code> 可停止当前音乐。</li>
-<li><code>path</code>：音频文件路径，可选。</li>
+<li><code>path</code>：音频文件路径，可选（参考：<a href="#隐藏音频路径索引">隐藏音频路径索引</a>）。</li>
 </ul>
 <h3 id="音乐淡入"><a class="header" href="#音乐淡入">音乐淡入</a></h3>
 <p>音乐淡入播放。</p>
@@ -1413,6 +1500,8 @@
 <p>停止当前播放的背景音乐。</p>
 <pre><code>@[stop_bgm]
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="环境音-1"><a href="#环境音-1" class="header">环境音</a></h1>
 <h2 id="环境音"><a class="header" href="#环境音">环境音</a></h2>
 <h3 id="播放环境音"><a class="header" href="#播放环境音">播放环境音</a></h3>
 <p>播放指定的环境音效。</p>
@@ -1424,7 +1513,7 @@
 </code></pre>
 <p><strong>参数说明</strong>：</p>
 <ul>
-<li><code>path</code>：环境音文件路径。</li>
+<li><code>path</code>：环境音文件路径（参考：<a href="#隐藏音频路径索引">隐藏音频路径索引</a>）。</li>
 <li><code>db</code>：音量大小，可选，默认值为 0。</li>
 <li><code>pan</code>：声道平衡，负数为左声道，正数为右声道，可选，默认值为 0。</li>
 </ul>
@@ -1438,7 +1527,7 @@
 <p><strong>参数说明</strong>：</p>
 <ul>
 <li><code>has_bgm</code>：是否有环境音，设为 <code>false</code> 可停止当前环境音。</li>
-<li><code>path</code>：音频文件路径，可选。</li>
+<li><code>path</code>：音频文件路径，可选（参考：<a href="#隐藏音频路径索引">隐藏音频路径索引</a>）。</li>
 </ul>
 <h3 id="环境音淡入"><a class="header" href="#环境音淡入">环境音淡入</a></h3>
 <p>环境音淡入播放。</p>
@@ -1454,6 +1543,8 @@
 <p>停止当前播放的环境音。</p>
 <pre><code>@[stop_env]
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="地图操作-1"><a href="#地图操作-1" class="header">地图操作</a></h1>
 <h2 id="地图操作"><a class="header" href="#地图操作">地图操作</a></h2>
 <h3 id="更换地图"><a class="header" href="#更换地图">更换地图</a></h3>
 <p>切换到指定的地图。</p>
@@ -1507,17 +1598,45 @@
 <li><code>"dragon_back"</code>：龙背（偏金属质感）。</li>
 <li><code>"no_word"</code>：无文字（像踩乐高积木）。</li>
 </ul>
-<h3 id="自动保存"><a class="header" href="#自动保存">自动保存</a></h3>
-<p>在指定位置创建存档点并保存游戏状态。</p>
+<h3 id="区域功能"><a class="header" href="#区域功能">区域功能</a></h3>
+<p>将当前阶段名称改为参数中的区域名，并可自动保存。
+在一代中主要用于阶段标记，方便确认当前属于哪个阶段。</p>
 <pre><code>@[enter_section] {
-    "section_name": "地图名称",
-    "need_save": true
+  "section_name": "区域名称",
+  "need_save": false
 }
 </code></pre>
 <p><strong>参数说明</strong>：</p>
 <ul>
-<li><code>section_name</code>：存档点/地图名称。</li>
-<li><code>need_save</code>：是否保存游戏状态，可选，默认值为 <code>true</code>。</li>
+<li><code>section_name</code>：区域/阶段名称，可使用 <code>1-11-0</code> 等格式进行区分。</li>
+<li><code>need_save</code>：是否自动保存，可选，默认值为 <code>true</code>。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="一代限定-1"><a href="#一代限定-1" class="header">一代限定</a></h1>
+<h2 id="一代限定"><a class="header" href="#一代限定">一代限定</a></h2>
+<p><em>本章收录主要在一代使用、在二代中基本无效或无实际用途的指令。</em></p>
+<h2 id="设置物件自开关"><a class="header" href="#设置物件自开关">设置物件自开关</a></h2>
+<p>在关卡文件里，每个物件都有一个 <code>existCondition</code> 属性。这个属性用于检测条件是否成立，成立后才会允许该物件执行。</p>
+<p><code>existCondition</code> 示例：</p>
+<pre><code class="language-json">"existCondition": "s:开关==true &amp;&amp; self:auto==false"
+</code></pre>
+<p>其中 <code>self</code> 指自开关，后面接开关名称。</p>
+<pre><code class="language-txt">@[set_self_switch] ["开关名称", true]
+</code></pre>
+<p>一代中，这个魔法通常用于“开始时执行”的物件；很多开始时执行物件会带上 <code>self:auto==false</code>，避免重复触发。</p>
+<p>二代中经测试似乎没有效果，建议按需自行验证。</p>
+<h2 id="调用全局方法"><a class="header" href="#调用全局方法">调用全局方法</a></h2>
+<pre><code class="language-txt">@[call_method] {
+    "target": "Global",
+    "target_type": "path",
+    "method": "set_chapter_progress",
+    "arg_array": [1]
+}
+</code></pre>
+<p>这个写法在一代中主要用于调用引擎侧的全局方法。以上示例的含义是：调用 <code>Global.set_chapter_progress(1)</code>，将章节进度设置为 <code>1</code>。</p>
+<p>注意事项：</p>
+<ul>
+<li>该指令属于一代引擎通信用途，通常只在一代有效。二代绝大多数情况下不会产生实际效果。</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="如何将变量代入参数"><a class="header" href="#如何将变量代入参数">如何将变量代入参数</a></h1>
@@ -1595,6 +1714,482 @@
 <ul>
 <li><a href="#打字机">打字机</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="实用指令集"><a class="header" href="#实用指令集">实用指令集</a></h1>
+<blockquote>
+<p>感谢：艺素馒头
+（由解包《文字游戏》一代而得）</p>
+</blockquote>
+<h2 id="目录-1"><a class="header" href="#目录-1">目录</a></h2>
+<ul>
+<li><a href="#模板一开门无需额外动画物件">模板一：开门（无需额外动画物件）</a></li>
+<li><a href="#模板二无需玩家操控的推字">模板二：无需玩家操控的推字</a></li>
+</ul>
+<h2 id="模板一开门无需额外动画物件"><a class="header" href="#模板一开门无需额外动画物件">模板一：开门（无需额外动画物件）</a></h2>
+<h3 id="用途"><a class="header" href="#用途">用途</a></h3>
+<p>用于门物件的开门过场。该写法不需要单独放置动画物件。</p>
+<h3 id="前提"><a class="header" href="#前提">前提</a></h3>
+<ul>
+<li>门物件图层位于玩家下方。</li>
+<li>在本段指令后接上你自己的切换地图逻辑。</li>
+</ul>
+<h3 id="完整指令块"><a class="header" href="#完整指令块">完整指令块</a></h3>
+<pre><code class="language-text">@[play_se] {"path":"res://Sounds/se/第一章 音效/SE_1_3_door_open.wav"}
+@[play_sprite_animation] {"frame_count":30,"path":"res://Sprites/door/door_open.png","time_sec":1}
+@[wait] 10
+@[move_route] {"target":"Player","wait":true}
+@[set_through] true
+@[move_to_event] "门"
+@[set_through] false
+@[end_move_route]
+@[event_fade_to] {"target":"Player"}
+@[wait] 60
+</code></pre>
+<h2 id="模板二无需玩家操控的推字"><a class="header" href="#模板二无需玩家操控的推字">模板二：无需玩家操控的推字</a></h2>
+<h3 id="用途-1"><a class="header" href="#用途-1">用途</a></h3>
+<p>自动推动指定物件，并播放推字动画与音效。</p>
+<h3 id="可调参数"><a class="header" href="#可调参数">可调参数</a></h3>
+<ul>
+<li><code>"pos": [5,5]</code>：改为被推动物件当前坐标。</li>
+<li><code>push_low_1.wav</code> 中的数字可改为 <code>1-4</code>，切换不同推字音效。</li>
+<li><code>rotation</code> 方向参考：
+<ul>
+<li>向右：<code>0</code></li>
+<li>向下：<code>90</code></li>
+<li>向左：<code>180</code></li>
+<li>向上：<code>-90</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="完整指令块-1"><a class="header" href="#完整指令块-1">完整指令块</a></h3>
+<pre><code class="language-text">@[type] {
+    "texts": "动{'name':'推字动画','tags': ['动画']}",
+    "pos": [5,5],
+    "tags": ["推字"],
+    "has_animation": false,
+    "need_accept": false
+}
+@[move_route] {"target":"被推的物件","wait":false}
+@[move_down]
+@[end_move_route]
+@[play_se] {"path":"res://Sounds/se/push_low_1.wav"}
+@[tween_word_sprite] {
+    "target": "推字动画",
+    "position": [32, 80],
+    "rotation": 90,
+    "time_sec": 0
+}
+@[play_sprite_animation] {
+    "target": "推字动画",
+    "frame_count": 15,
+    "path": "res://Sprites/glove_push/u_glove_S.png",
+    "time_sec": 0.5
+}
+@[clear_typed] "推字"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="隐藏音频路径索引"><a class="header" href="#隐藏音频路径索引">隐藏音频路径索引</a></h1>
+<blockquote>
+<p>感谢：艺素馒头
+说明：</p>
+<ul>
+<li>以下仅包含《文字游戏世界》中无法直接在事件里找到的音频路径。</li>
+<li>示例以“名称 + 路径”格式给出，便于查阅与复制使用。</li>
+</ul>
+</blockquote>
+<h2 id="隐藏-se-音频路径"><a class="header" href="#隐藏-se-音频路径">隐藏 SE 音频路径</a></h2>
+<pre><code class="language-text">##  以下是文字游戏世界隐藏的所有se音频的路径:
+##  仅包含文字游戏世界无法直接在事件里找到的音频
+
+se_未知UI音效
+res://Sounds/se/MEL/MEL_4_4_success.wav
+
+se_在文字游戏最后一章被黑洞吞噬后找伙伴的音效
+res://Sounds/se/MEL/MEL_4_21_word_join.wav
+
+se_擦除的音效
+res://Sounds/se/MEL/MEL_4_21_word_leave.wav
+
+se_成句音效但是鸭子叫
+res://Sounds/se/MEL/MEL_Iegal_egg_1.wav
+
+se_成句音效但是更笨拙
+res://Sounds/se/MEL/MEL_Iegal_egg_2.wav
+
+se_成句音效但是彩蛋
+res://Sounds/se/MEL/MEL_Iegal_egg_3.wav
+
+se_成句音效但是坏的
+res://Sounds/se/MEL/MEL_Iegal_egg_4.wav
+
+se_成句音效但是只有开头两个音
+res://Sounds/se/MEL/MEL_Iegal_wrong.wav
+
+se_像成句但又不像,反正就是很吵[护耳警告],敲锣声
+res://Sounds/se/MEL/SFX_Legal Answer_NoMelo.wav
+
+se_也是敲锣声但更轻
+res://Sounds/se/MEL/SFX_process_noMelo_1.wav
+
+se_清脆的敲锣声
+res://Sounds/se/MEL/SFX_process_noMelo_2.wav
+
+se_普通的敲锣声
+res://Sounds/se/MEL/SFX_process_noMelo_3.wav
+
+se_折起纸张
+res://Sounds/se/power/SE_human_leave.wav
+
+se_扔掉纸张_1
+res://Sounds/se/power/SE_human_merge_1.wav
+
+se_扔掉纸张_2
+res://Sounds/se/power/SE_human_merge_2.wav
+
+se_扔掉纸张_3
+res://Sounds/se/power/SE_human_merge_3.wav
+
+se_拆字失败音效
+res://Sounds/se/power/SE_S_19.3_pull_fail.wav
+
+se_打开怀表音效
+res://Sounds/se/system/SE_S_25_cancel.wav
+
+se_打开沉思[esc]音效
+res://Sounds/se/system/SE_S_29_thought_A.wav
+
+se_切换外观_连线中
+res://Sounds/se/system/SE_S_26_adjust_A.wav
+
+se_叮
+res://Sounds/se/typewriter/Bell中音.wav
+
+se_打字机诗人音效_A
+res://Sounds/se/typewriter/SE_S_14_type_poet_A.wav
+
+se_打字机诗人音效_B
+res://Sounds/se/typewriter/SE_S_14_type_poet_B.wav
+
+se_打字机诗人音效_C
+res://Sounds/se/typewriter/SE_S_14_type_poet_B.wav
+
+se_打字机诗人音效_D
+res://Sounds/se/typewriter/SE_S_14_type_poet_B.wav
+
+se_打字机公主音效_A
+res://Sounds/se/typewriter/SE_S_15_type_princess_A.wav
+
+se_打字机公主音效_B
+res://Sounds/se/typewriter/SE_S_15_type_princess_B.wav
+
+se_打字机公主音效_C
+res://Sounds/se/typewriter/SE_S_15_type_princess_C.wav
+
+se_打字机公主音效_D
+res://Sounds/se/typewriter/SE_S_15_type_princess_D.wav
+
+se_打字机公主音效_F
+res://Sounds/se/typewriter/SE_S_15_type_princess_F.wav
+
+se_打字机公主音效_G
+res://Sounds/se/typewriter/SE_S_15_type_princess_G.wav
+
+se_打字机公主音效_H
+res://Sounds/se/typewriter/SE_S_15_type_princess_H.wav
+
+se_打字机轻柔公主音效_A
+res://Sounds/se/typewriter/SE_S_15_type_可能適合princess_輕柔A.wav
+
+se_打字机轻柔公主音效_B
+res://Sounds/se/typewriter/SE_S_15_type_可能適合princess_輕柔B.wav
+
+se_打字机轻柔公主音效_C
+res://Sounds/se/typewriter/SE_S_15_type_可能適合princess_輕柔C.wav
+
+se_打字机轻柔公主音效_D
+res://Sounds/se/typewriter/SE_S_15_type_可能適合princess_輕柔D.wav
+
+se_打字机轻柔公主音效_G
+res://Sounds/se/typewriter/SE_S_15_type_可能適合princess_輕柔G.wav
+
+se_打字机龙音效_A
+res://Sounds/se/typewriter/SE_S_16_type_dragon_A.wav
+
+se_打字机龙音效_B
+res://Sounds/se/typewriter/SE_S_16_type_dragon_B.wav
+
+se_打字机龙音效_C
+res://Sounds/se/typewriter/SE_S_16_type_dragon_C.wav
+
+se_打字机龙音效_D
+res://Sounds/se/typewriter/SE_S_16_type_dragon_D.wav
+
+se_打字机蛇妖音效_A
+res://Sounds/se/typewriter/type_snake_A.wav
+
+se_打字机蛇妖音效_B
+res://Sounds/se/typewriter/type_snake_B.wav
+
+se_打字机蛇妖音效_C
+res://Sounds/se/typewriter/type_snake_C.wav
+
+se_鸟叫_1
+res://Sounds/se/bird_1.wav
+
+se_鸟叫_2
+res://Sounds/se/bird_2.wav
+
+se_鸟叫_3
+res://Sounds/se/bird_3.wav
+
+se_狗叫1
+res://Sounds/se/dog_bark_1.wav
+
+se_狗叫2
+res://Sounds/se/dog_bark_2.wav
+
+se_第0章锁门音效
+res://Sounds/se/door_lock.wav
+
+se_第0章开门音效
+res://Sounds/se/door_open_1.wav
+
+se_每章开头跳字音效
+res://Sounds/se/flip_trim_title.wav
+
+se_地震音效_1
+res://Sounds/se/giant_step_1.wav
+
+se_地震音效_2
+res://Sounds/se/giant_step_2.wav
+
+se_地震音效_3
+res://Sounds/se/giant_step_3.wav
+
+se_安度药水瓶子的声音_1
+res://Sounds/se/glass_bottle_hold_1.wav
+
+se_安度药水瓶子的声音_2
+res://Sounds/se/glass_bottle_hold_2.wav
+
+se_安度药水摔到地上的声音
+res://Sounds/se/glass_bottle_pick_1.wav
+
+se_大风
+res://Sounds/se/house_recover.wav
+
+se_开锁声
+res://Sounds/se/lock_unlock_1.wav
+
+se_成句音效_1
+res://Sounds/se/progress_1.wav
+
+se_成句音效_2
+res://Sounds/se/progress_2.wav
+
+se_成句音效_3
+res://Sounds/se/progress_3.wav
+
+se_成句音效_4
+res://Sounds/se/progress_4.wav
+
+se_成句音效_5
+res://Sounds/se/progress_5.wav
+
+se_完成成句关卡音效
+res://Sounds/se/complete.wav
+
+se_拖字音效_1
+res://Sounds/se/pull_1.wav
+
+se_拖字音效_2
+res://Sounds/se/pull_2.wav
+
+se_拖字音效_3
+res://Sounds/se/pull_3.wav
+
+se_拖字音效_4
+res://Sounds/se/pull_4.wav
+
+se_抓住字
+res://Sounds/se/pull_grab.wav
+
+se_没抓住字
+res://Sounds/se/pull_grab_fail.wav
+
+se_啵
+res://Sounds/se/pull_ungrab.wav
+
+se_推字_1
+res://Sounds/se/push_low_1.wav
+
+se_推字_2
+res://Sounds/se/push_low_2.wav
+
+se_推字_3
+res://Sounds/se/push_low_3.wav
+
+se_推字_4
+res://Sounds/se/push_low_4.wav
+
+se_墙面裂开
+res://Sounds/se/rock_break_1.wav
+
+se_墙皮掉落
+res://Sounds/se/rock_break_drop_1.wav
+
+se_史莱姆砸在墙上_1
+res://Sounds/se/slime_hit_1.wav
+
+se_史莱姆砸在墙上_2
+res://Sounds/se/slime_hit_2.wav
+
+se_史莱姆行走_1
+res://Sounds/se/slime_move_1.wav
+
+se_史莱姆行走_2
+res://Sounds/se/slime_move_2.wav
+
+se_史莱姆吃东西
+res://Sounds/se/slime_tranform_1.wav
+
+se_史莱姆动
+res://Sounds/se/slime_vanish_1.wav
+
+se_史莱姆叫
+res://Sounds/se/slime_vanish_2.wav
+
+se_玩家死亡
+res://Sounds/se/Switch2.wav
+
+se_拔出圣剑
+res://Sounds/se/sword_draw_out_1.wav
+
+se_删字_1
+res://Sounds/se/sword_swing_1.wav
+
+se_删字_2
+res://Sounds/se/sword_swing_2.wav
+
+se_删字_3
+res://Sounds/se/sword_swing_3.wav
+
+se_删字失败_1
+res://Sounds/se/sword_swing_fail_1.wav
+
+se_删字失败_2
+res://Sounds/se/sword_swing_fail_2.wav
+
+se_删字失败_3
+res://Sounds/se/sword_swing_fail_3.wav
+
+se_安度药水回溯
+res://Sounds/se/twist_long_1.wav
+
+se_主菜单选项确认_1
+res://Sounds/se/typerwriter_feedpaper_1.wav
+
+se_主菜单选项确认_2
+res://Sounds/se/typerwriter_feedpaper_2.wav
+
+se_打字机确认
+res://Sounds/se/typerwriter_return.wav
+
+se_默认打字机声音_1
+res://Sounds/se/typer_key_1.wav
+
+se_默认打字机声音_2
+res://Sounds/se/typer_key_2.wav
+
+se_默认打字机声音_3
+res://Sounds/se/typer_key_3.wav
+
+se_默认打字机声音_4
+res://Sounds/se/typer_key_4.wav
+
+se_拆字
+res://Sounds/se/unzip_1.wav
+
+se_组字
+res://Sounds/se/zip_1.wav
+
+</code></pre>
+<h2 id="隐藏-bgm-音频路径"><a class="header" href="#隐藏-bgm-音频路径">隐藏 BGM 音频路径</a></h2>
+<pre><code class="language-text">##  以下是文字游戏世界隐藏的所有bgm音频的路径:
+##  仅包含文字游戏世界无法直接在事件里找到的音频
+
+bgm_⟪文字游戏⟫
+res://Sounds/bgm/ch1/BGM_title.ogg
+
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="隐藏动画路径索引"><a class="header" href="#隐藏动画路径索引">隐藏动画路径索引</a></h1>
+<blockquote>
+<p>感谢：艺素馒头
+说明：</p>
+<ul>
+<li>以下仅包含《文字游戏世界》中隐藏动画的路径索引。</li>
+<li>循环动画会在前面标记 <code>$</code>，一次性动画会在前面标记 <code>#</code>，两个都有表示两种模式都可用。</li>
+<li>前面的 <code>frame_count</code>（帧数）必须正确，否则动画会错误；<code>time_sec</code> 会影响播放速度。</li>
+<li>动画播放魔法仅支持“每行帧数等于 10”或“总帧数小于 10”的精灵图。</li>
+</ul>
+</blockquote>
+<h2 id="隐藏动画路径"><a class="header" href="#隐藏动画路径">隐藏动画路径</a></h2>
+<pre><code class="language-text">##  以下是文字游戏世界所有动画的路径:
+##  循环动画会在前面标记"$",
+##  一次性动画则标记"#",
+##  两个都有则是指该动画一次性或循环都可以
+## 注意事项:前面是帧数,如果帧数不对动画会错误,后面才是地址,其次播放时间会影响播放速度
+
+##遗憾:动画播放魔法只能播放精灵图每行帧等于10与总帧数小于10的动画,一旦每行帧超过或小于就无法正常播放
+
+$咕咕钟:{"frame_count":5,"path":"res://Sprites/00_clock/clock.png","time_sec":0.5}
+
+$火炉:{"frame_count":24,"path":"res://Sprites/00_stove/stove.png","time_sec":2.4}
+
+#$艾斯走路:{"frame_count":3,"path":"res://Sprites/NPC_walk/u_ace_walk.png","time_sec":0.3}
+
+#$伊塔力克走路:{"frame_count":3,"path":"res://Sprites/NPC_walk/u_italic_walk.png","time_sec":0.3}
+
+#$诗人走路:{"frame_count":3,"path":"res://Sprites/NPC_walk/u_poet_walk.png","time_sec":0.3}
+
+#删字失败:{"frame_count":24,"path":"res://Sprites/backspace_fail/nosword.png","time_sec":1}
+
+##由于该动画由程序随机转向所以实际上是从上往下劈,如果有播放这个动画的需要,建议尝试@[backspace_event]这个魔法
+#删字成功:{"frame_count":20,"path":"res://Sprites/backspace_splash/splash.png","time_sec":1}
+
+$摇拽火光:{"frame_count":120,"path":"res://Sprites/candle/candle_burn.png","time_sec":12}
+
+##与摇拽火光搭配使用可以获得不错的效果
+#燃起火焰:{"frame_count":15,"path":"res://Sprites/candle/candle_lightup.png","time_sec":1}
+
+#柴塌了:{"frame_count":10,"path":"res://Sprites/ch2_campfire/firewood.png","time_sec":1}
+
+#酒杯晃动:{"frame_count":20,"path":"res://Sprites/ch3_wine/wine.png","time_sec":1}
+
+#喝酒:{"frame_count":20,"path":"res://Sprites/ch3_wine/wine_drink.png","time_sec":1}
+
+#冰融化成水:{"frame_count":30,"path":"res://Sprites/ch5_ice_melt/ch5_ice_melt.png","time_sec":1}
+
+##房"间"和开"间"是同一个动画的正放与倒放,开门和关门也是
+
+#房"间":{"frame_count":30,"path":"res://Sprites/door/room.png","time_sec":1}
+
+#开门:{"frame_count":30,"path":"res://Sprites/door/door_open.png","time_sec":1}
+
+#推字动画:{"frame_count":15,"path":"res://Sprites/glove_push/u_glove_S.png","time_sec":0.5}
+
+#拆"他":{"frame_count":32,"path":"res://Sprites/helmet/helmet_unzip.png","time_sec":1}
+
+#组"他":{"frame_count":42,"path":"res://Sprites/helmet/helmet_zip.png","time_sec":1.5}
+
+$树:{"frame_count":20,"path":"res://Sprites/tree/tree.png","time_sec":2}
+
+##(应该算动画吧,毕竟能加载)
+/一个白色的小方块:{"frame_count":1,"path":"res://Sprites/unzip/base_white.png","time_sec":0}
+
+##孩子们,一口气从头看到尾差点给我累死了,中间有些动画甚至还没被整合到文字游戏世界里,不过不用担心,这些动画都是经过测试可用的
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="黑魔法提取器"><a href="#黑魔法提取器" class="header">黑魔法提取器</a></h1>
 

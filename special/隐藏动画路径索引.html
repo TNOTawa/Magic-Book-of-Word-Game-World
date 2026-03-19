@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>游戏机制 - 《文字游戏世界》魔法书</title>
+        <title>隐藏动画路径索引 - 《文字游戏世界》魔法书</title>
 
 
         <!-- Custom HTML head -->
@@ -175,63 +175,83 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
-<h2 id="宣告拆字规则"><a class="header" href="#宣告拆字规则">宣告拆字规则</a></h2>
-<pre><code>@[append_split_rule] {
-  
-    "from": [
-      null
-    ],
-    "to": [
-      null,
-      null
-    ]
-  
-}
-</code></pre>
-<p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
-<h2 id="宜告组字规则"><a class="header" href="#宜告组字规则">宜告组字规则</a></h2>
-<pre><code>@[append_merge_rule] {
-  
-    "from": [
-      null,
-      null
-    ],
-    "to": null
-  
-}
-</code></pre>
-<p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
-<h2 id="宣告成句规则"><a class="header" href="#宣告成句规则">宣告成句规则</a></h2>
-<pre><code>@[append_sentence_rule] {
-  
-    "text": "成句",
-    "has_hint": false,
-    "has_animation": true,
-    "memory": [],
-    "progress": 0,
-    "level": 5
-  
-}
-</code></pre>
-<h2 id="取消成句规则"><a class="header" href="#取消成句规则">取消成句规则</a></h2>
-<pre><code>@[delete_sentence_rule] {
-  
-    "text": "成句"
-  
-}
+                        <h1 id="隐藏动画路径索引"><a class="header" href="#隐藏动画路径索引">隐藏动画路径索引</a></h1>
+<blockquote>
+<p>感谢：艺素馒头
+说明：</p>
+<ul>
+<li>以下仅包含《文字游戏世界》中隐藏动画的路径索引。</li>
+<li>循环动画会在前面标记 <code>$</code>，一次性动画会在前面标记 <code>#</code>，两个都有表示两种模式都可用。</li>
+<li>前面的 <code>frame_count</code>（帧数）必须正确，否则动画会错误；<code>time_sec</code> 会影响播放速度。</li>
+<li>动画播放魔法仅支持“每行帧数等于 10”或“总帧数小于 10”的精灵图。</li>
+</ul>
+</blockquote>
+<h2 id="隐藏动画路径"><a class="header" href="#隐藏动画路径">隐藏动画路径</a></h2>
+<pre><code class="language-text">##  以下是文字游戏世界所有动画的路径:
+##  循环动画会在前面标记"$",
+##  一次性动画则标记"#",
+##  两个都有则是指该动画一次性或循环都可以
+## 注意事项:前面是帧数,如果帧数不对动画会错误,后面才是地址,其次播放时间会影响播放速度
+
+##遗憾:动画播放魔法只能播放精灵图每行帧等于10与总帧数小于10的动画,一旦每行帧超过或小于就无法正常播放
+
+$咕咕钟:{"frame_count":5,"path":"res://Sprites/00_clock/clock.png","time_sec":0.5}
+
+$火炉:{"frame_count":24,"path":"res://Sprites/00_stove/stove.png","time_sec":2.4}
+
+#$艾斯走路:{"frame_count":3,"path":"res://Sprites/NPC_walk/u_ace_walk.png","time_sec":0.3}
+
+#$伊塔力克走路:{"frame_count":3,"path":"res://Sprites/NPC_walk/u_italic_walk.png","time_sec":0.3}
+
+#$诗人走路:{"frame_count":3,"path":"res://Sprites/NPC_walk/u_poet_walk.png","time_sec":0.3}
+
+#删字失败:{"frame_count":24,"path":"res://Sprites/backspace_fail/nosword.png","time_sec":1}
+
+##由于该动画由程序随机转向所以实际上是从上往下劈,如果有播放这个动画的需要,建议尝试@[backspace_event]这个魔法
+#删字成功:{"frame_count":20,"path":"res://Sprites/backspace_splash/splash.png","time_sec":1}
+
+$摇拽火光:{"frame_count":120,"path":"res://Sprites/candle/candle_burn.png","time_sec":12}
+
+##与摇拽火光搭配使用可以获得不错的效果
+#燃起火焰:{"frame_count":15,"path":"res://Sprites/candle/candle_lightup.png","time_sec":1}
+
+#柴塌了:{"frame_count":10,"path":"res://Sprites/ch2_campfire/firewood.png","time_sec":1}
+
+#酒杯晃动:{"frame_count":20,"path":"res://Sprites/ch3_wine/wine.png","time_sec":1}
+
+#喝酒:{"frame_count":20,"path":"res://Sprites/ch3_wine/wine_drink.png","time_sec":1}
+
+#冰融化成水:{"frame_count":30,"path":"res://Sprites/ch5_ice_melt/ch5_ice_melt.png","time_sec":1}
+
+##房"间"和开"间"是同一个动画的正放与倒放,开门和关门也是
+
+#房"间":{"frame_count":30,"path":"res://Sprites/door/room.png","time_sec":1}
+
+#开门:{"frame_count":30,"path":"res://Sprites/door/door_open.png","time_sec":1}
+
+#推字动画:{"frame_count":15,"path":"res://Sprites/glove_push/u_glove_S.png","time_sec":0.5}
+
+#拆"他":{"frame_count":32,"path":"res://Sprites/helmet/helmet_unzip.png","time_sec":1}
+
+#组"他":{"frame_count":42,"path":"res://Sprites/helmet/helmet_zip.png","time_sec":1.5}
+
+$树:{"frame_count":20,"path":"res://Sprites/tree/tree.png","time_sec":2}
+
+##(应该算动画吧,毕竟能加载)
+/一个白色的小方块:{"frame_count":1,"path":"res://Sprites/unzip/base_white.png","time_sec":0}
+
+##孩子们,一口气从头看到尾差点给我累死了,中间有些动画甚至还没被整合到文字游戏世界里,不过不用担心,这些动画都是经过测试可用的
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../events/能力设定.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../special/隐藏音频路径索引.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../events/点唱机.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tools/command_extractor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -241,11 +261,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../events/能力设定.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../special/隐藏音频路径索引.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../events/点唱机.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tools/command_extractor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

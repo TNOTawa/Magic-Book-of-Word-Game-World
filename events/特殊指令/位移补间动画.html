@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>游戏机制 - 《文字游戏世界》魔法书</title>
+        <title>位移补间动画 - 《文字游戏世界》魔法书</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
-        <link rel="stylesheet" href="../css/variables-8adf115d.css">
-        <link rel="stylesheet" href="../css/general-2459343d.css">
-        <link rel="stylesheet" href="../css/chrome-ae938929.css">
-        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../src/css/custom-4523c2bd.css">
+        <link rel="stylesheet" href="../../src/css/custom-4523c2bd.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-18295c39.js";
+            window.path_to_searchindex_js = "../../searchindex-18295c39.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-9e0db1c9.js"></script>
+        <script src="../../toc-9e0db1c9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">《文字游戏世界》魔法书</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
@@ -175,63 +175,97 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
-<h2 id="宣告拆字规则"><a class="header" href="#宣告拆字规则">宣告拆字规则</a></h2>
-<pre><code>@[append_split_rule] {
-  
-    "from": [
-      null
-    ],
-    "to": [
-      null,
-      null
-    ]
-  
+                        <h2 id="位移补间动画"><a class="header" href="#位移补间动画">位移补间动画</a></h2>
+<p>用于平滑过渡物件参数的动画指令，可以控制位置、透明度、缩放等属性的变化。</p>
+<pre><code class="language-json">@[tween_parameter] {
+    "target": "物件名称",
+    "parameter": "参数路径",
+    "add": 0,
+    "time_sec": 1,
+    "transition_type": "TRANS_LINEAR",
+    "ease_type": "EASE_IN",
+    "wait": false
 }
 </code></pre>
-<p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
-<h2 id="宜告组字规则"><a class="header" href="#宜告组字规则">宜告组字规则</a></h2>
-<pre><code>@[append_merge_rule] {
-  
-    "from": [
-      null,
-      null
-    ],
-    "to": null
-  
+<h3 id="参数说明"><a class="header" href="#参数说明">参数说明</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>参数名</th><th>类型</th><th>说明</th><th>可选值</th><th>示例</th></tr>
+</thead>
+<tbody>
+<tr><td><code>target</code></td><td>字符串</td><td>目标物件的名称</td><td>任意有效物件名</td><td><code>"物件A"</code></td></tr>
+<tr><td><code>parameter</code></td><td>字符串</td><td>要补间的参数路径，支持 <code>position:x</code>、<code>position:y</code>、<code>opacity</code>、<code>scale:x</code>、<code>scale:y</code> 等</td><td>取决于物件支持的参数</td><td><code>"position:y"</code></td></tr>
+<tr><td><code>add</code></td><td>数字</td><td><strong>相对</strong>增加值，与当前值相加得到目标值。与 <code>value</code> 二选一。</td><td>任意数字</td><td><code>-120</code></td></tr>
+<tr><td><code>value</code></td><td>数字</td><td><strong>绝对</strong>目标值，直接设置参数到该值。与 <code>add</code> 二选一。</td><td>任意数字</td><td><code>300</code></td></tr>
+<tr><td><code>time_sec</code></td><td>数字</td><td>动画持续时间（秒）</td><td>正数</td><td><code>0.5</code></td></tr>
+<tr><td><code>transition_type</code></td><td>字符串</td><td>过渡曲线类型</td><td><code>TRANS_LINEAR</code>、<code>TRANS_SINE</code>、<code>TRANS_QUINT</code> 等</td><td><code>"TRANS_SINE"</code></td></tr>
+<tr><td><code>ease_type</code></td><td>字符串</td><td>缓动方向</td><td><code>EASE_IN</code>、<code>EASE_OUT</code>、<code>EASE_IN_OUT</code>、<code>EASE_OUT_IN</code></td><td><code>"EASE_OUT"</code></td></tr>
+<tr><td><code>wait</code></td><td>布尔值</td><td>是否阻塞式执行（等待动画完成才继续执行后续指令）</td><td><code>true</code> / <code>false</code></td><td><code>true</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="注意事项"><a class="header" href="#注意事项">注意事项</a></h3>
+<ul>
+<li>若同时指定 <code>add</code> 和 <code>value</code>，优先使用 <code>value</code>。</li>
+<li><code>transition_type</code> 与 <code>ease_type</code> 组合可产生丰富的动画效果，具体效果需在游戏中实测。</li>
+<li><code>wait: true</code> 时，脚本会暂停直到动画完成；<code>wait: false</code> 时，动画在后台播放，脚本继续执行。</li>
+<li>如果补间类型不是线性，千万不要把时间填0，不然游戏就会一直除以0卡死。</li>
+</ul>
+<h3 id="示例"><a class="header" href="#示例">示例</a></h3>
+<h4 id="上下弹跳效果"><a class="header" href="#上下弹跳效果">上下弹跳效果</a></h4>
+<pre><code class="language-json">@[tween_parameter] {
+    "target": "物件A",
+    "parameter": "position:y",
+    "add": -120,
+    "time_sec": 0.5,
+    "transition_type": "TRANS_SINE",
+    "ease_type": "EASE_OUT",
+    "wait": true
+}
+
+@[tween_parameter] {
+    "target": "物件A",
+    "parameter": "position:y",
+    "add": 120,
+    "time_sec": 0.5,
+    "transition_type": "TRANS_SINE",
+    "ease_type": "EASE_IN",
+    "wait": true
 }
 </code></pre>
-<p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
-<h2 id="宣告成句规则"><a class="header" href="#宣告成句规则">宣告成句规则</a></h2>
-<pre><code>@[append_sentence_rule] {
-  
-    "text": "成句",
-    "has_hint": false,
-    "has_animation": true,
-    "memory": [],
-    "progress": 0,
-    "level": 5
-  
+<p>这两个指令先后执行，会让物件先向上移动 120 像素（缓出），再向下移动 120 像素（缓入），形成弹跳感。</p>
+<h4 id="淡出并缩小"><a class="header" href="#淡出并缩小">淡出并缩小</a></h4>
+<pre><code class="language-json">@[tween_parameter] {
+    "target": "物件B",
+    "parameter": "opacity",
+    "value": 0,
+    "time_sec": 1,
+    "transition_type": "TRANS_QUINT",
+    "ease_type": "EASE_OUT",
+    "wait": false
+}
+@[tween_parameter] {
+    "target": "物件B",
+    "parameter": "scale:x",
+    "value": 0.5,
+    "time_sec": 1,
+    "transition_type": "TRANS_QUINT",
+    "ease_type": "EASE_OUT",
+    "wait": false
 }
 </code></pre>
-<h2 id="取消成句规则"><a class="header" href="#取消成句规则">取消成句规则</a></h2>
-<pre><code>@[delete_sentence_rule] {
-  
-    "text": "成句"
-  
-}
-</code></pre>
+<p>同时淡出并横向缩小，不阻塞脚本。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../events/能力设定.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../events/特殊指令/移动.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../events/点唱机.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../events/特殊指令/成句动画.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -241,11 +275,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../events/能力设定.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../events/特殊指令/移动.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../events/点唱机.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../events/特殊指令/成句动画.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -265,13 +299,13 @@
         </script>
 
 
-        <script src="../elasticlunr-ef4e11c1.min.js"></script>
-        <script src="../mark-09e88c2c.min.js"></script>
-        <script src="../searcher-c2a407aa.js"></script>
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-c2a407aa.js"></script>
 
-        <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-abc7f01d.js"></script>
-        <script src="../book-a0b12cfe.js"></script>
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 

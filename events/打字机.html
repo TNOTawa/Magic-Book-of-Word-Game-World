@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0ec3f387.js";
+            window.path_to_searchindex_js = "../searchindex-18295c39.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-5172f131.js"></script>
+        <script src="../toc-9e0db1c9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -190,6 +190,7 @@
     "can_skip": true,
     "need_accept": true,
     "wait": true,
+    "is_dialog_end": false,
     "refTexts": [],
     "is_on_top_of_player": true,
     "offset": [0, 0],
@@ -198,10 +199,10 @@
 </code></pre>
 <p>带注释的版本：</p>
 <pre><code>@[type_parallel] {
-    "texts": "你好，世界！",    # 打字内容
+    "texts": "你好，世界！",    # 打字内容（支持 &lt;标签&gt;文本&lt;/标签&gt; 与 字{参数对象} 写法）
     "fixed": false,    # 是否使用屏幕坐标（false为地图坐标）
     "pos": [0, 0],    # 打字位置 [x, y]
-    "tags": [],    # 标签列表
+    "tags": [],    # 标签/组列表（可用于后续 fade_group、dissolve_group 等组操作）
     "has_se": true,    # 是否播放打字音效
     "char_type": null,    # 打字机音效类型（null为默认）
     "has_animation": true,    # 是否显示打字动画
@@ -209,6 +210,7 @@
     "can_skip": true,    # 是否可以跳过
     "need_accept": true,    # 是否需要确认
     "wait": true,    # 是否等待打字结束
+    "is_dialog_end": false,    # 是否启用实心游标（常用于对话结束前的最后一句）
     "refTexts": [],    # 参考文本列表（用于成句检测）
     "is_on_top_of_player": true,    # 主要图层时是否显示在玩家上方
     "offset": [0, 0],    # 位置微调偏移 [x, y]
@@ -225,7 +227,22 @@
 <p><code>type_parallel</code> 还支持以下高级参数：</p>
 <ul>
 <li>
+<p><strong><code>tags</code></strong>：标签/组列表。打字字符会加入这些组，可配合 <code>fade_group</code>、<code>dissolve_group</code> 做统一处理；<code>dissolve_group</code> 是溶解组内物件，不是解散组。
+示例：<code>@[type] {"texts":"我马上要消失喽!","tags":["b"]} @[fade_group] {"group": "b","opacity": 0,"time_sec": 1.0}</code></p>
+</li>
+<li>
 <p><strong><code>offset</code></strong>：<code>[x, y]</code>，对打字位置进行微调（像素偏移），可搭配变量使用。</p>
+</li>
+<li>
+<p><strong><code>texts</code></strong>：打字文本，除普通文本外，还支持以下扩展写法：</p>
+<ul>
+<li><strong>标签样式片段</strong>：<code>&lt;标签名&gt;...&lt;/标签名&gt;</code>，并在 <code>label_settings</code> 中定义同名标签参数。
+示例：<code>"正常说话||&lt;p&gt;诗人说话&lt;/p&gt;||&lt;s&gt;蛇妖说话&lt;/s&gt;"</code></li>
+<li><strong>逐字独立参数</strong>：在某个字后追加 <code>{...}</code>，可将该字独立并指定参数。
+示例：<code>"老{'name':'教学词1','opacity':0}||繁{'tags':['cn_text:繁简']}"</code></li>
+<li><strong>插入物件参数</strong>：<code>[物件{'tags':['标签']}]</code>。
+可用于“删整句但保留该物件”等场景。</li>
+</ul>
 </li>
 <li>
 <p><strong><code>label_settings</code></strong>：对象，用于为文本中的特定标签设置独立的样式与音效。
@@ -238,13 +255,26 @@
 </ul>
 <p>示例：</p>
 <pre><code class="language-json">"label_settings": {
-  "letter_1": {
-    "text_color": "#ffff00ff",
-    "tags": ["letter_1"],
+  "p": {
     "char_type": "poet"
+  },
+  "s": {
+    "char_type": "snake"
   }
 }
 </code></pre>
+</li>
+<li>
+<p><strong><code>texts</code> 中逐字参数可更改项</strong>：</p>
+<ul>
+<li><code>{'name':'名称'}</code></li>
+<li><code>{'text':'字面'}</code></li>
+<li><code>{'opacity':1}</code></li>
+<li><code>{'tags':['cn_text:繁简']}</code></li>
+<li><code>{'tags':['label #1']}</code></li>
+<li><code>{'layer':'back'}</code></li>
+</ul>
+<p>注意：在插入物件场景下，上述参数通常只有 <code>tags</code> 能生效，其它参数不生效。</p>
 </li>
 <li>
 <p><strong><code>char_type</code></strong>：指定打字机音效，可选值：</p>
@@ -273,6 +303,9 @@
 </li>
 <li>
 <p><strong><code>wait</code></strong>：若为 <code>true</code>，事件将等待打字结束后才继续执行后续逻辑。</p>
+</li>
+<li>
+<p><strong><code>is_dialog_end</code></strong>：若为 <code>true</code>，启用实心游标，通常用于一段对话结束前的最后一句。</p>
 </li>
 </ul>
 <blockquote>

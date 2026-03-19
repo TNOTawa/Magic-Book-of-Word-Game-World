@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>游戏机制 - 《文字游戏世界》魔法书</title>
+        <title>实用指令集 - 《文字游戏世界》魔法书</title>
 
 
         <!-- Custom HTML head -->
@@ -175,63 +175,88 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
-<h2 id="宣告拆字规则"><a class="header" href="#宣告拆字规则">宣告拆字规则</a></h2>
-<pre><code>@[append_split_rule] {
-  
-    "from": [
-      null
-    ],
-    "to": [
-      null,
-      null
-    ]
-  
-}
+                        <h1 id="实用指令集"><a class="header" href="#实用指令集">实用指令集</a></h1>
+<blockquote>
+<p>感谢：艺素馒头
+（由解包《文字游戏》一代而得）</p>
+</blockquote>
+<h2 id="目录"><a class="header" href="#目录">目录</a></h2>
+<ul>
+<li><a href="#模板一开门无需额外动画物件">模板一：开门（无需额外动画物件）</a></li>
+<li><a href="#模板二无需玩家操控的推字">模板二：无需玩家操控的推字</a></li>
+</ul>
+<h2 id="模板一开门无需额外动画物件"><a class="header" href="#模板一开门无需额外动画物件">模板一：开门（无需额外动画物件）</a></h2>
+<h3 id="用途"><a class="header" href="#用途">用途</a></h3>
+<p>用于门物件的开门过场。该写法不需要单独放置动画物件。</p>
+<h3 id="前提"><a class="header" href="#前提">前提</a></h3>
+<ul>
+<li>门物件图层位于玩家下方。</li>
+<li>在本段指令后接上你自己的切换地图逻辑。</li>
+</ul>
+<h3 id="完整指令块"><a class="header" href="#完整指令块">完整指令块</a></h3>
+<pre><code class="language-text">@[play_se] {"path":"res://Sounds/se/第一章 音效/SE_1_3_door_open.wav"}
+@[play_sprite_animation] {"frame_count":30,"path":"res://Sprites/door/door_open.png","time_sec":1}
+@[wait] 10
+@[move_route] {"target":"Player","wait":true}
+@[set_through] true
+@[move_to_event] "门"
+@[set_through] false
+@[end_move_route]
+@[event_fade_to] {"target":"Player"}
+@[wait] 60
 </code></pre>
-<p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
-<h2 id="宜告组字规则"><a class="header" href="#宜告组字规则">宜告组字规则</a></h2>
-<pre><code>@[append_merge_rule] {
-  
-    "from": [
-      null,
-      null
-    ],
-    "to": null
-  
+<h2 id="模板二无需玩家操控的推字"><a class="header" href="#模板二无需玩家操控的推字">模板二：无需玩家操控的推字</a></h2>
+<h3 id="用途-1"><a class="header" href="#用途-1">用途</a></h3>
+<p>自动推动指定物件，并播放推字动画与音效。</p>
+<h3 id="可调参数"><a class="header" href="#可调参数">可调参数</a></h3>
+<ul>
+<li><code>"pos": [5,5]</code>：改为被推动物件当前坐标。</li>
+<li><code>push_low_1.wav</code> 中的数字可改为 <code>1-4</code>，切换不同推字音效。</li>
+<li><code>rotation</code> 方向参考：
+<ul>
+<li>向右：<code>0</code></li>
+<li>向下：<code>90</code></li>
+<li>向左：<code>180</code></li>
+<li>向上：<code>-90</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="完整指令块-1"><a class="header" href="#完整指令块-1">完整指令块</a></h3>
+<pre><code class="language-text">@[type] {
+    "texts": "动{'name':'推字动画','tags': ['动画']}",
+    "pos": [5,5],
+    "tags": ["推字"],
+    "has_animation": false,
+    "need_accept": false
 }
-</code></pre>
-<p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
-<h2 id="宣告成句规则"><a class="header" href="#宣告成句规则">宣告成句规则</a></h2>
-<pre><code>@[append_sentence_rule] {
-  
-    "text": "成句",
-    "has_hint": false,
-    "has_animation": true,
-    "memory": [],
-    "progress": 0,
-    "level": 5
-  
+@[move_route] {"target":"被推的物件","wait":false}
+@[move_down]
+@[end_move_route]
+@[play_se] {"path":"res://Sounds/se/push_low_1.wav"}
+@[tween_word_sprite] {
+    "target": "推字动画",
+    "position": [32, 80],
+    "rotation": 90,
+    "time_sec": 0
 }
-</code></pre>
-<h2 id="取消成句规则"><a class="header" href="#取消成句规则">取消成句规则</a></h2>
-<pre><code>@[delete_sentence_rule] {
-  
-    "text": "成句"
-  
+@[play_sprite_animation] {
+    "target": "推字动画",
+    "frame_count": 15,
+    "path": "res://Sprites/glove_push/u_glove_S.png",
+    "time_sec": 0.5
 }
+@[clear_typed] "推字"
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../events/能力设定.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../special/打字机的高级用法.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../events/点唱机.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../special/隐藏音频路径索引.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -241,11 +266,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../events/能力设定.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../special/打字机的高级用法.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../events/点唱机.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../special/隐藏音频路径索引.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

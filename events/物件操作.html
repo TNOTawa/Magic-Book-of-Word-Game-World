@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0ec3f387.js";
+            window.path_to_searchindex_js = "../searchindex-18295c39.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-5172f131.js"></script>
+        <script src="../toc-9e0db1c9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -218,12 +218,18 @@
 <h2 id="淡入淡出"><a class="header" href="#淡入淡出">淡入淡出</a></h2>
 <pre><code>@[event_fade_to] {
   
-    "target": null,
+    "target": "Player",
     "opacity": 0,
     "time_sec": 1
   
 }
 </code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>target</code>：目标物件名称，必填。</li>
+<li><code>opacity</code>：目标不透明度，可选。</li>
+<li><code>time_sec</code>：淡入/淡出持续时间（秒），可选。</li>
+</ul>
 <h2 id="向上下左右走一格"><a class="header" href="#向上下左右走一格">向上/下/左/右走一格</a></h2>
 <p><em>此类 move 指令只能通过<code>@[move_route]</code>调用，具体使用方法见<code>特殊指令</code>中的移动部分。</em></p>
 <pre><code>
