@@ -36,10 +36,10 @@
             const path_to_root = "../../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-323b28f3.js";
+            window.path_to_searchindex_js = "../../searchindex-0b007eaf.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-9e0db1c9.js"></script>
+        <script src="../../toc-4e08e056.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -212,6 +212,10 @@
 <li><code>wait: true</code> 时，脚本会暂停直到动画完成；<code>wait: false</code> 时，动画在后台播放，脚本继续执行。</li>
 <li>如果补间类型不是线性，千万不要把时间填0，不然游戏就会一直除以0卡死。</li>
 </ul>
+<h3 id="停止位移补间动画"><a class="header" href="#停止位移补间动画">停止位移补间动画</a></h3>
+<p>用于中断当前正在执行的 <code>@[tween_parameter]</code> 动画。</p>
+<pre><code class="language-txt">@[stop_tween_parameter]
+</code></pre>
 <h3 id="示例"><a class="header" href="#示例">示例</a></h3>
 <h4 id="上下弹跳效果"><a class="header" href="#上下弹跳效果">上下弹跳效果</a></h4>
 <pre><code class="language-json">@[tween_parameter] {

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>点唱机 - 《文字游戏世界》魔法书</title>
+        <title>子事件 - 《文字游戏世界》魔法书</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
-        <link rel="stylesheet" href="../css/variables-8adf115d.css">
-        <link rel="stylesheet" href="../css/general-2459343d.css">
-        <link rel="stylesheet" href="../css/chrome-ae938929.css">
-        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../src/css/custom-4523c2bd.css">
+        <link rel="stylesheet" href="../../src/css/custom-4523c2bd.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0b007eaf.js";
+            window.path_to_searchindex_js = "../../searchindex-0b007eaf.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-4e08e056.js"></script>
+        <script src="../../toc-4e08e056.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">《文字游戏世界》魔法书</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
@@ -175,37 +175,69 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="点唱机"><a class="header" href="#点唱机">点唱机</a></h1>
-<p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
-<h2 id="播放背景音乐"><a class="header" href="#播放背景音乐">播放背景音乐</a></h2>
-<pre><code>@[editor_play_bgm] {
-  
-    "type": null
-  
-}
-</code></pre>
-<h2 id="停止背景音乐"><a class="header" href="#停止背景音乐">停止背景音乐</a></h2>
-<pre><code>
-@[editor_stop_bgm]
+                        <h2 id="子事件"><a class="header" href="#子事件">子事件</a></h2>
+<h3 id="定义子事件"><a class="header" href="#定义子事件">定义子事件</a></h3>
+<p><code>@[sub_event]</code> 与 <code>@[end_sub_event]</code> 成对出现。</p>
+<pre><code>@[sub_event] "字面"
 
+（此处编写其他指令）
+
+@[end_sub_event]
 </code></pre>
-<h2 id="播放音效"><a class="header" href="#播放音效">播放音效</a></h2>
-<pre><code>@[editor_play_se] {
-  
-    "type": null
-  
+<p><code>@[sub_event]</code> 与 <code>@[end_sub_event]</code> 中间的指令会被添加进该子事件。</p>
+<h4 id="触发逻辑"><a class="header" href="#触发逻辑">触发逻辑</a></h4>
+<p>可以把它理解为“检测指定字面的 if 条件”：</p>
+<ul>
+<li>当玩家位置与朝向正好面对这个指定字面时，条件为 true。</li>
+<li>此时若主物件被触发，就会执行对应的子事件。</li>
+</ul>
+<p>游戏会在物件碰撞生成时构建子事件逻辑，子事件的触发位置是该物件内所有“指定字面”的位置。</p>
+<p>例如指定字面是“木”，那么该物件里所有“木”的坐标都可作为子事件触发点。可用于实现“单个物件不同位置触发不同事件”的效果。</p>
+<h4 id="示例"><a class="header" href="#示例">示例</a></h4>
+<p>下面示例中，当“我”在携带 <code>@[sub_event]</code> 的物件字面“人”附近并朝向“人”时，该物件若被触发，会在 <code>[0, 0]</code> 坐标打出“你好，世界！”。</p>
+<pre><code>你好，世界！
+
+树树树 
+树树人←我
+树树树
+
+@[sub_event] "人"
+
+@[type_parallel] {
+    "texts": "你好，世界！",
+    "pos": [0, 0],
+    "tags": [],
 }
+
+@[end_sub_event]
 </code></pre>
+<h3 id="删字触发块"><a class="header" href="#删字触发块">删字触发块</a></h3>
+<p><code>@[backspace_command]</code> 与 <code>@[end_backspace_command]</code> 成对出现。</p>
+<pre><code>@[backspace_command]
+    ..里面填入魔法
+@[end_backspace_command]
+</code></pre>
+<p>用于处理“玩家对该物件执行删字”这一触发场景。</p>
+<p>当块内存在 <code>@[play_backspace_fail_animation]</code> 或 <code>@[backspace_event]</code> 时，会阻止玩家本次直接删字，并转由物件自身继续执行块内后续指令。</p>
+<p>常见配合：</p>
+<pre><code>@[backspace_command]
+
+@[play_backspace_fail_animation]
+@[backspace_event] {"target": "self"}
+
+@[end_backspace_command]
+</code></pre>
+<p>这种写法可实现“检测到删字后先反馈动画，再由物件自行处理删字/后续逻辑”。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../events/游戏机制.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../events/特殊指令/游戏机制.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../events/镜头.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../events/特殊指令/系统.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -215,11 +247,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../events/游戏机制.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../events/特殊指令/游戏机制.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../events/镜头.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../events/特殊指令/系统.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -239,13 +271,13 @@
         </script>
 
 
-        <script src="../elasticlunr-ef4e11c1.min.js"></script>
-        <script src="../mark-09e88c2c.min.js"></script>
-        <script src="../searcher-c2a407aa.js"></script>
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-c2a407aa.js"></script>
 
-        <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-abc7f01d.js"></script>
-        <script src="../book-a0b12cfe.js"></script>
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 

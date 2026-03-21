@@ -36,10 +36,10 @@
             const path_to_root = "../../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-323b28f3.js";
+            window.path_to_searchindex_js = "../../searchindex-0b007eaf.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-9e0db1c9.js"></script>
+        <script src="../../toc-4e08e056.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -216,6 +216,22 @@
 <p>停止当前播放的环境音。</p>
 <pre><code>@[stop_env]
 </code></pre>
+<h3 id="设置地图环境音"><a class="header" href="#设置地图环境音">设置地图环境音</a></h3>
+<p>为指定地图设置环境音与过渡方式。</p>
+<pre><code class="language-json">@[set_map_env] {
+    "map": "地图名",
+    "has_bgm": true,
+    "bgm_path": "res://Sounds/bgm/ch1/BGM_title.ogg",
+    "bgm_transition_type": "fade"
+}
+</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>map</code>：要设置的地图名称。</li>
+<li><code>has_bgm</code>：是否启用该地图环境音开关（字段名沿用事件参数原文）。</li>
+<li><code>bgm_path</code>：环境音资源路径（字段名沿用事件参数原文）。</li>
+<li><code>bgm_transition_type</code>：切换方式，常见为 <code>"fade"</code>（淡入淡出）。</li>
+</ul>
 
                     </main>
 

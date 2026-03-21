@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-323b28f3.js";
+            window.path_to_searchindex_js = "searchindex-0b007eaf.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-9e0db1c9.js"></script>
+        <script src="toc-4e08e056.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -179,7 +179,7 @@
                         <h1 id="magic-book-of-word-game-world"><a class="header" href="#magic-book-of-word-game-world">Magic Book of Word Game World</a></h1>
 <h2 id="文字游戏世界魔法书"><a class="header" href="#文字游戏世界魔法书">《文字游戏世界》魔法书</a></h2>
 <blockquote>
-<p>最新更新日期：2026/3/19；游戏版本：v1.9.82</p>
+<p>最新更新日期：2026/3/20；游戏版本：v1.9.82</p>
 </blockquote>
 <blockquote>
 <p>正式版已在 Steam 推出，详见：<a href="https://store.steampowered.com/app/3114370/_/">《文字游戏世界》-Steam</a></p>
@@ -967,7 +967,7 @@
 <p><em>大多事件通过分析关卡 JSON 文件得来</em></p>
 <p><em>2026/02/24：通过官方发布的黑魔法教学关卡获得了更多指令</em></p>
 <p><em>2026/02/27：新增大量黑魔法指令，包括物件操作、组操作、精灵动画、音效音乐、地图操作等（感谢 艺素馒头）</em></p>
-<p><em>2026/03/19：通过解包《文字游戏》一代得到大量官方的黑魔法补充（感谢 艺素馒头）</em></p>
+<p><em>2026/03/19、20：通过解包《文字游戏》一代得到大量官方的黑魔法补充（感谢 艺素馒头）</em></p>
 <h2 id="章节目录"><a class="header" href="#章节目录">章节目录</a></h2>
 <ul>
 <li><a href="#无操作指令-1">无操作指令</a></li>
@@ -985,6 +985,9 @@
 <li><a href="#音乐-1">音乐</a></li>
 <li><a href="#环境音-1">环境音</a></li>
 <li><a href="#地图操作-1">地图操作</a></li>
+<li><a href="#游戏机制-2">游戏机制</a></li>
+<li><a href="#子事件-1">子事件</a></li>
+<li><a href="#系统-2">系统</a></li>
 <li><a href="#一代限定-1">一代限定</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -1090,6 +1093,18 @@
 }
 </code></pre>
 <p><strong>target 取值</strong>：可以是 <code>"self"</code>（该物件本身）、<code>"player"</code>（玩家）或具体的物件名称。</p>
+<h3 id="让物件不存在"><a class="header" href="#让物件不存在">让物件不存在</a></h3>
+<p>效果和删除物件相近，让指定物件从场景中变为不存在状态。</p>
+<pre><code class="language-json">@[unexist_event] {
+    "target": "物件名称"
+}
+</code></pre>
+<h3 id="崩塌物件"><a class="header" href="#崩塌物件">崩塌物件</a></h3>
+<p>让指定物件触发垮塌动画效果。</p>
+<pre><code class="language-json">@[crash_event] {
+    "target": "物件名称"
+}
+</code></pre>
 <h3 id="物件回溯"><a class="header" href="#物件回溯">物件回溯</a></h3>
 <p>将指定的物件回溯到游戏前原来的位置，并且让它重新执行事件。如果触发模式为“游戏开始后“的话，无法回溯被删除和被溶解的状态，也不会回溯透明度。</p>
 <pre><code>@[refresh_event] {
@@ -1117,6 +1132,24 @@
 <li><code>target</code>：要克隆的母物件名称，可选。</li>
 <li><code>position</code>：克隆后的位置坐标，可选。</li>
 <li><code>text</code>：克隆后显示的文字内容，可选。</li>
+</ul>
+<h3 id="创建物件"><a class="header" href="#创建物件">创建物件</a></h3>
+<p>凭空创建一个新物件。理论上可传入多数属性，但创建出来的物件通常没有碰撞体。</p>
+<pre><code class="language-json">@[create_event] {
+    "text": "字面",
+    "pos": [X, Y],
+    "tags": "[]",
+    "name": "物件名称",
+    "layer": "mid"
+}
+</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>text</code>：物件显示文字。</li>
+<li><code>pos</code>：物件生成位置坐标。</li>
+<li><code>tags</code>：物件标签字符串。</li>
+<li><code>name</code>：物件名称。</li>
+<li><code>layer</code>：所在图层（如 <code>mid</code>）。</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="强制删字-1"><a href="#强制删字-1" class="header">强制删字</a></h1>
@@ -1168,13 +1201,41 @@
 <tr><td><code>@[move_down]</code></td><td>无</td><td>向下移动一格</td><td><code>@[move_down]</code></td></tr>
 <tr><td><code>@[move_left]</code></td><td>无</td><td>向左移动一格</td><td><code>@[move_left]</code></td></tr>
 <tr><td><code>@[move_right]</code></td><td>无</td><td>向右移动一格</td><td><code>@[move_right]</code></td></tr>
+<tr><td><code>@[move_straight]</code></td><td><code>2</code> / <code>4</code> / <code>6</code> / <code>8</code></td><td>按方向码直线移动一格（<code>2=↓, 4=←, 6=→, 8=↑</code>）</td><td><code>@[move_straight] 2</code></td></tr>
 <tr><td><code>@[move_random]</code></td><td>无</td><td>随机方向移动一格</td><td><code>@[move_random]</code></td></tr>
 <tr><td><code>@[move_toward_player]</code></td><td>无</td><td>向玩家方向移动一格</td><td><code>@[move_toward_player]</code></td></tr>
 <tr><td><code>@[move_toward_event]</code></td><td><code>"目标物件名称"</code></td><td>向指定物件移动一格</td><td><code>@[move_toward_event] "目标"</code></td></tr>
 <tr><td><code>@[jump]</code></td><td><code>[x, y]</code>（相对坐标）</td><td>向相对坐标跳跃，<code>x</code> 和 <code>y</code> 为整数</td><td><code>@[jump] [1,0]</code>（向右一格）</td></tr>
+<tr><td><code>@[jump_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>跳跃到地图上的指定坐标</td><td><code>@[jump_to_point] [15,8]</code></td></tr>
 <tr><td><code>@[jump_random]</code></td><td>无</td><td>随机跳跃到上下左右一格</td><td><code>@[jump_random]</code></td></tr>
 <tr><td><code>@[move_to_event]</code></td><td><code>"目标物件名称"</code></td><td>直接移动到指定物件的位置</td><td><code>@[move_to_event] "目标"</code></td></tr>
 <tr><td><code>@[move_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>移动到地图上的指定坐标</td><td><code>@[move_to_point] [15,8]</code></td></tr>
+<tr><td><code>@[move_straight_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>直线移动到目标点，不会拐弯（即使碰到墙也不会绕路）</td><td><code>@[move_straight_to_point] [15,8]</code></td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>额外的，这些虽然不是移动指令，但也可以加在这之间使用。</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>指令</th><th>参数</th><th>说明</th><th>示例</th></tr>
+</thead>
+<tbody>
+<tr><td><code>@[set_move_speed]</code></td><td>整数</td><td>设置物件移动速度</td><td><code>@[set_move_speed] 1</code></td></tr>
+<tr><td><code>@[wait]</code></td><td>数字</td><td>等待指定时长（若 <code>"wait": false</code> 则不会阻塞）</td><td><code>@[wait] 30</code></td></tr>
+<tr><td><code>@[wait_random_in_range]</code></td><td><code>[min, max]</code></td><td>随机等待一个时长区间（若 <code>"wait": false</code> 则不会阻塞）</td><td><code>@[wait_random_in_range] [1,10]</code></td></tr>
+<tr><td><code>@[set_switch]</code></td><td><code>["name", "value"]</code></td><td>设置开关值</td><td><code>@[set_switch] ["开关A", true]</code></td></tr>
+<tr><td><code>@[set_variable]</code></td><td><code>["name", "value"]</code></td><td>设置变量值</td><td><code>@[set_variable] ["变量B", 114514]</code></td></tr>
+<tr><td><code>@[toggle_switch]</code></td><td><code>{"switchId": null}</code></td><td>切换指定开关状态</td><td><code>@[toggle_switch] {"switchId": null}</code></td></tr>
+<tr><td><code>@[add_variable]</code></td><td><code>{"varId": null, "varValue": 0}</code></td><td>给变量增加数值</td><td><code>@[add_variable] {"varId": null, "varValue": 1}</code></td></tr>
+<tr><td><code>@[play_se]</code></td><td><code>{"path":"...","db":0,"pan":0}</code></td><td>播放音效</td><td><code>@[play_se] {"path":"res://Sounds/...","db":0,"pan":0}</code></td></tr>
+<tr><td><code>@[queue_free]</code></td><td>无</td><td>销毁当前物件</td><td><code>@[queue_free]</code></td></tr>
+<tr><td><code>@[set_visible]</code></td><td><code>true</code> / <code>false</code></td><td>设置该物件是否可见</td><td><code>@[set_visible] false</code></td></tr>
+<tr><td><code>@[fade_to]</code></td><td><code>{"opacity":1,"time_sec":1}</code></td><td>淡入淡出到指定透明度</td><td><code>@[fade_to] {"opacity":1,"time_sec":1}</code></td></tr>
+<tr><td><code>@[set_dead_zone]</code></td><td><code>[x1, y1, x2, y2]</code> 或不填</td><td>设置死区；不指定参数可视为取消</td><td><code>@[set_dead_zone] [0,0,31,17]</code></td></tr>
+<tr><td><code>@[set_move_zone]</code></td><td><code>[x1, y1, x2, y2]</code> 或不填</td><td>设置移动区域；不指定参数可视为取消</td><td><code>@[set_move_zone] [14,7,17,10]</code></td></tr>
+<tr><td><code>@[set_z_index]</code></td><td>数字</td><td>设置物件显示优先级</td><td><code>@[set_z_index] 1</code></td></tr>
+<tr><td><code>@[set_can_pass_group]</code></td><td><code>"组名"</code></td><td>允许该物件可通过包含在组里的物件</td><td><code>@[set_can_pass_group] "组A"</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1290,6 +1351,10 @@
 <li><code>wait: true</code> 时，脚本会暂停直到动画完成；<code>wait: false</code> 时，动画在后台播放，脚本继续执行。</li>
 <li>如果补间类型不是线性，千万不要把时间填0，不然游戏就会一直除以0卡死。</li>
 </ul>
+<h3 id="停止位移补间动画"><a class="header" href="#停止位移补间动画">停止位移补间动画</a></h3>
+<p>用于中断当前正在执行的 <code>@[tween_parameter]</code> 动画。</p>
+<pre><code class="language-txt">@[stop_tween_parameter]
+</code></pre>
 <h3 id="示例"><a class="header" href="#示例">示例</a></h3>
 <h4 id="上下弹跳效果"><a class="header" href="#上下弹跳效果">上下弹跳效果</a></h4>
 <pre><code class="language-json">@[tween_parameter] {
@@ -1426,6 +1491,18 @@
 <li><code>rotation</code>：旋转角度，可选。</li>
 <li><code>time_sec</code>：动画持续时间（秒）。</li>
 </ul>
+<h3 id="物件颤抖"><a class="header" href="#物件颤抖">物件颤抖</a></h3>
+<p>让物件在一段时间内反复抖动。常见于剧情演出场景。</p>
+<pre><code class="language-json">@[shake_event] {
+    "frame": 300,
+    "distance": 10
+}
+</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>frame</code>：震动持续帧数。</li>
+<li><code>distance</code>：每次震动的移动距离。</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="音效-1"><a href="#音效-1" class="header">音效</a></h1>
 <h2 id="音效"><a class="header" href="#音效">音效</a></h2>
@@ -1545,6 +1622,22 @@
 <p>停止当前播放的环境音。</p>
 <pre><code>@[stop_env]
 </code></pre>
+<h3 id="设置地图环境音"><a class="header" href="#设置地图环境音">设置地图环境音</a></h3>
+<p>为指定地图设置环境音与过渡方式。</p>
+<pre><code class="language-json">@[set_map_env] {
+    "map": "地图名",
+    "has_bgm": true,
+    "bgm_path": "res://Sounds/bgm/ch1/BGM_title.ogg",
+    "bgm_transition_type": "fade"
+}
+</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>map</code>：要设置的地图名称。</li>
+<li><code>has_bgm</code>：是否启用该地图环境音开关（字段名沿用事件参数原文）。</li>
+<li><code>bgm_path</code>：环境音资源路径（字段名沿用事件参数原文）。</li>
+<li><code>bgm_transition_type</code>：切换方式，常见为 <code>"fade"</code>（淡入淡出）。</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="地图操作-1"><a href="#地图操作-1" class="header">地图操作</a></h1>
 <h2 id="地图操作"><a class="header" href="#地图操作">地图操作</a></h2>
@@ -1613,6 +1706,131 @@
 <li><code>section_name</code>：区域/阶段名称，可使用 <code>1-11-0</code> 等格式进行区分。</li>
 <li><code>need_save</code>：是否自动保存，可选，默认值为 <code>true</code>。</li>
 </ul>
+<h3 id="设置地图-bgm"><a class="header" href="#设置地图-bgm">设置地图 BGM</a></h3>
+<p>为指定地图设置背景音乐与过渡方式。</p>
+<pre><code class="language-json">@[set_map_bgm] {
+  "map": "地图名",
+  "has_bgm": true,
+  "bgm_path": "res://Sounds/bgm/ch1/BGM_title.ogg",
+  "bgm_transition_type": "fade"
+}
+</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>map</code>：要设置的地图名称。</li>
+<li><code>has_bgm</code>：是否启用该地图 BGM。</li>
+<li><code>bgm_path</code>：BGM 资源路径。</li>
+<li><code>bgm_transition_type</code>：切换方式，常见为 <code>"fade"</code>（淡入淡出）。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="游戏机制-2"><a href="#游戏机制-2" class="header">游戏机制</a></h1>
+<h2 id="游戏机制-1"><a class="header" href="#游戏机制-1">游戏机制</a></h2>
+<h3 id="取消拆字规则"><a class="header" href="#取消拆字规则">取消拆字规则</a></h3>
+<p>删除指定拆字规则。</p>
+<pre><code class="language-json">@[delete_split_rule] {"from": ["拆"], "to": "手,斥"}
+</code></pre>
+<h3 id="取消组字规则"><a class="header" href="#取消组字规则">取消组字规则</a></h3>
+<p>删除指定组字规则。</p>
+<pre><code class="language-json">@[delete_merge_rule] {"from": "系,且", "to": "组"}
+</code></pre>
+<h3 id="取消全部拆字规则"><a class="header" href="#取消全部拆字规则">取消全部拆字规则</a></h3>
+<p>清空当前已宣告的全部拆字规则。</p>
+<pre><code class="language-txt">@[clear_split_rule]
+</code></pre>
+<h3 id="取消全部组字规则"><a class="header" href="#取消全部组字规则">取消全部组字规则</a></h3>
+<p>清空当前已宣告的全部组字规则。</p>
+<pre><code class="language-txt">@[clear_merge_rule]
+</code></pre>
+<h3 id="设置拆字规则并取消之前的拆字规则"><a class="header" href="#设置拆字规则并取消之前的拆字规则">设置拆字规则并取消之前的拆字规则</a></h3>
+<p>先清空旧拆字规则，再设置新的拆字规则。</p>
+<pre><code class="language-json">@[set_split_rule] {"from": ["拆"], "to": "手,斥"}
+</code></pre>
+<h3 id="设置组字规则并取消之前的组字规则"><a class="header" href="#设置组字规则并取消之前的组字规则">设置组字规则并取消之前的组字规则</a></h3>
+<p>先清空旧组字规则，再设置新的组字规则。</p>
+<pre><code class="language-json">@[set_merge_rule] {"from": "系,且", "to": "组"}
+</code></pre>
+<h3 id="获取用户当前使用的是简体还是繁体语言"><a class="header" href="#获取用户当前使用的是简体还是繁体语言">获取用户当前使用的是简体还是繁体语言</a></h3>
+<p>用于读取当前用户语言是否为繁体中文。</p>
+<pre><code class="language-json">@[get_is_user_lang_tc] {"switch": "开关"}
+</code></pre>
+<h3 id="获取用户的简体辅助开关"><a class="header" href="#获取用户的简体辅助开关">获取用户的简体辅助开关</a></h3>
+<p>用于读取当前是否开启简体辅助。</p>
+<pre><code class="language-json">@[get_is_simplified] {"switch": "当前是否开启简体辅助"}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="子事件-1"><a href="#子事件-1" class="header">子事件</a></h1>
+<h2 id="子事件"><a class="header" href="#子事件">子事件</a></h2>
+<h3 id="定义子事件"><a class="header" href="#定义子事件">定义子事件</a></h3>
+<p><code>@[sub_event]</code> 与 <code>@[end_sub_event]</code> 成对出现。</p>
+<pre><code>@[sub_event] "字面"
+
+（此处编写其他指令）
+
+@[end_sub_event]
+</code></pre>
+<p><code>@[sub_event]</code> 与 <code>@[end_sub_event]</code> 中间的指令会被添加进该子事件。</p>
+<h4 id="触发逻辑"><a class="header" href="#触发逻辑">触发逻辑</a></h4>
+<p>可以把它理解为“检测指定字面的 if 条件”：</p>
+<ul>
+<li>当玩家位置与朝向正好面对这个指定字面时，条件为 true。</li>
+<li>此时若主物件被触发，就会执行对应的子事件。</li>
+</ul>
+<p>游戏会在物件碰撞生成时构建子事件逻辑，子事件的触发位置是该物件内所有“指定字面”的位置。</p>
+<p>例如指定字面是“木”，那么该物件里所有“木”的坐标都可作为子事件触发点。可用于实现“单个物件不同位置触发不同事件”的效果。</p>
+<h4 id="示例-1"><a class="header" href="#示例-1">示例</a></h4>
+<p>下面示例中，当“我”在携带 <code>@[sub_event]</code> 的物件字面“人”附近并朝向“人”时，该物件若被触发，会在 <code>[0, 0]</code> 坐标打出“你好，世界！”。</p>
+<pre><code>你好，世界！
+
+树树树 
+树树人←我
+树树树
+
+@[sub_event] "人"
+
+@[type_parallel] {
+    "texts": "你好，世界！",
+    "pos": [0, 0],
+    "tags": [],
+}
+
+@[end_sub_event]
+</code></pre>
+<h3 id="删字触发块"><a class="header" href="#删字触发块">删字触发块</a></h3>
+<p><code>@[backspace_command]</code> 与 <code>@[end_backspace_command]</code> 成对出现。</p>
+<pre><code>@[backspace_command]
+    ..里面填入魔法
+@[end_backspace_command]
+</code></pre>
+<p>用于处理“玩家对该物件执行删字”这一触发场景。</p>
+<p>当块内存在 <code>@[play_backspace_fail_animation]</code> 或 <code>@[backspace_event]</code> 时，会阻止玩家本次直接删字，并转由物件自身继续执行块内后续指令。</p>
+<p>常见配合：</p>
+<pre><code>@[backspace_command]
+
+@[play_backspace_fail_animation]
+@[backspace_event] {"target": "self"}
+
+@[end_backspace_command]
+</code></pre>
+<p>这种写法可实现“检测到删字后先反馈动画，再由物件自行处理删字/后续逻辑”。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="系统-2"><a href="#系统-2" class="header">系统</a></h1>
+<h2 id="系统-1"><a class="header" href="#系统-1">系统</a></h2>
+<h3 id="返回标题界面"><a class="header" href="#返回标题界面">返回标题界面</a></h3>
+<p>直接退出当前流程并返回标题界面。</p>
+<pre><code class="language-txt">@[return_to_title_screen]
+</code></pre>
+<h3 id="直接退出游戏"><a class="header" href="#直接退出游戏">直接退出游戏</a></h3>
+<p>快速关闭游戏流程。</p>
+<pre><code class="language-txt">@[quit_game]
+</code></pre>
+<h3 id="设置成就完成"><a class="header" href="#设置成就完成">设置成就完成</a></h3>
+<p>将指定成就状态设为已完成。</p>
+<pre><code class="language-txt">@[set_achievement]
+</code></pre>
+<h3 id="清除成就完成状态"><a class="header" href="#清除成就完成状态">清除成就完成状态</a></h3>
+<p>将指定成就状态清除为未完成。</p>
+<pre><code class="language-txt">@[clear_achievement]
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="一代限定-1"><a href="#一代限定-1" class="header">一代限定</a></h1>
 <h2 id="一代限定"><a class="header" href="#一代限定">一代限定</a></h2>
@@ -1640,6 +1858,20 @@
 <ul>
 <li>该指令属于一代引擎通信用途，通常只在一代有效。二代绝大多数情况下不会产生实际效果。</li>
 </ul>
+<h2 id="他字的拆组动画触发"><a class="header" href="#他字的拆组动画触发">’他’字的拆组动画触发</a></h2>
+<p>只是播放这个字的动画，推测是在一代使用的，二代可正常使用，但用途相对较窄。</p>
+<h3 id="拆他动画"><a class="header" href="#拆他动画">拆他动画</a></h3>
+<p>在目标物件位置播放“拆他”动画。</p>
+<pre><code class="language-json">@[unzip_animation] {
+    "target": "物件名称"
+}
+</code></pre>
+<h3 id="组他动画"><a class="header" href="#组他动画">组他动画</a></h3>
+<p>在目标物件位置播放“组他”动画。</p>
+<pre><code class="language-json">@[zip_animation] {
+    "target": "物件名称"
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="如何将变量代入参数"><a class="header" href="#如何将变量代入参数">如何将变量代入参数</a></h1>
 <blockquote>
@@ -2140,6 +2372,7 @@ res://Sounds/bgm/ch1/BGM_title.ogg
 <pre><code class="language-text">##  以下是文字游戏世界所有动画的路径:
 ##  循环动画会在前面标记"$",
 ##  一次性动画则标记"#",
+##  静态图片则标记"/",
 ##  两个都有则是指该动画一次性或循环都可以
 ## 注意事项:前面是帧数,如果帧数不对动画会错误,后面才是地址,其次播放时间会影响播放速度
 
@@ -2188,9 +2421,49 @@ $摇拽火光:{"frame_count":120,"path":"res://Sprites/candle/candle_burn.png","
 $树:{"frame_count":20,"path":"res://Sprites/tree/tree.png","time_sec":2}
 
 ##(应该算动画吧,毕竟能加载)
-/一个白色的小方块:{"frame_count":1,"path":"res://Sprites/unzip/base_white.png","time_sec":0}
+/一个白色的小方块:res://Sprites/unzip/base_white.png
 
 ##孩子们,一口气从头看到尾差点给我累死了,中间有些动画甚至还没被整合到文字游戏世界里,不过不用担心,这些动画都是经过测试可用的
+
+##以下动画虽然未经过测试,但是都在游戏文件里了肯定能用
+
+#$人走路:{"frame_count":2,"path":"res://Sprites/ch6_we/we_walk.png","time_sec":0.2}
+
+#$人待机A:{"frame_count":11,"path":"res://Sprites/ch6_we/we_idleA.png","time_sec":1.1}
+
+#$人待机B:{"frame_count":6,"path":"res://Sprites/ch6_we/we_idleB.png","time_sec":0.6}
+
+/一张人的静态图片:res://Sprites/ch6_we/we_default.png
+
+/一张公主的静态图片:res://Sprites/ch7_princess/ch7_princess_ghost.png
+
+/口静态图片:res://Sprites/ch7_tofu/tofu.png
+
+/口静态图片但是没有背景框:res://Sprites/ch7_tofu/tofu_transparent.png
+
+/一张"零一二三四五终"的静态图片:res://Sprites/chapter_title/title_flip_texture.png
+
+/一张"零一二三四五六七八"的静态图片:res://Sprites/chapter_title/title_flip_texture_old.png
+
+##静态噪波图像,不知道有什么用
+/静态噪波图像X:res://Sprites/displacement_texture/displacementX.png
+
+/静态噪波图像XY:res://Sprites/displacement_texture/displacementXY.png
+
+/静态噪波图像Y:res://Sprites/displacement_texture/displacementY.png
+
+#$我走路:{"frame_count":2,"path":"res://Sprites/me/me_walk.png","time_sec":0.2}
+
+#$我待机A:{"frame_count":11,"path":"res://Sprites/me/me_idleA.png","time_sec":1.1}
+
+#$我待机B:{"frame_count":6,"path":"res://Sprites/me/me_idleB.png","time_sec":0.6}
+
+/一张我的静态图片:res://Sprites/me/me_default.png
+
+$一堆数字0-9:{"frame_count":10,"path":"res://Sprites/number/number.png","time_sec":1}
+
+/一张下划线的图片:res://Sprites/underline/underline.png
+
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="黑魔法提取器"><a href="#黑魔法提取器" class="header">黑魔法提取器</a></h1>

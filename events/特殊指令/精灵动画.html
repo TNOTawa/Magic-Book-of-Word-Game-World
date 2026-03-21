@@ -36,10 +36,10 @@
             const path_to_root = "../../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-323b28f3.js";
+            window.path_to_searchindex_js = "../../searchindex-0b007eaf.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-9e0db1c9.js"></script>
+        <script src="../../toc-4e08e056.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -235,6 +235,18 @@
 <li><code>position</code>：目标位置坐标，坐标单位为 90 像素一格。</li>
 <li><code>rotation</code>：旋转角度，可选。</li>
 <li><code>time_sec</code>：动画持续时间（秒）。</li>
+</ul>
+<h3 id="物件颤抖"><a class="header" href="#物件颤抖">物件颤抖</a></h3>
+<p>让物件在一段时间内反复抖动。常见于剧情演出场景。</p>
+<pre><code class="language-json">@[shake_event] {
+    "frame": 300,
+    "distance": 10
+}
+</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>frame</code>：震动持续帧数。</li>
+<li><code>distance</code>：每次震动的移动距离。</li>
 </ul>
 
                     </main>

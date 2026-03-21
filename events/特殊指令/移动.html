@@ -36,10 +36,10 @@
             const path_to_root = "../../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-323b28f3.js";
+            window.path_to_searchindex_js = "../../searchindex-0b007eaf.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-9e0db1c9.js"></script>
+        <script src="../../toc-4e08e056.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -206,13 +206,41 @@
 <tr><td><code>@[move_down]</code></td><td>无</td><td>向下移动一格</td><td><code>@[move_down]</code></td></tr>
 <tr><td><code>@[move_left]</code></td><td>无</td><td>向左移动一格</td><td><code>@[move_left]</code></td></tr>
 <tr><td><code>@[move_right]</code></td><td>无</td><td>向右移动一格</td><td><code>@[move_right]</code></td></tr>
+<tr><td><code>@[move_straight]</code></td><td><code>2</code> / <code>4</code> / <code>6</code> / <code>8</code></td><td>按方向码直线移动一格（<code>2=↓, 4=←, 6=→, 8=↑</code>）</td><td><code>@[move_straight] 2</code></td></tr>
 <tr><td><code>@[move_random]</code></td><td>无</td><td>随机方向移动一格</td><td><code>@[move_random]</code></td></tr>
 <tr><td><code>@[move_toward_player]</code></td><td>无</td><td>向玩家方向移动一格</td><td><code>@[move_toward_player]</code></td></tr>
 <tr><td><code>@[move_toward_event]</code></td><td><code>"目标物件名称"</code></td><td>向指定物件移动一格</td><td><code>@[move_toward_event] "目标"</code></td></tr>
 <tr><td><code>@[jump]</code></td><td><code>[x, y]</code>（相对坐标）</td><td>向相对坐标跳跃，<code>x</code> 和 <code>y</code> 为整数</td><td><code>@[jump] [1,0]</code>（向右一格）</td></tr>
+<tr><td><code>@[jump_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>跳跃到地图上的指定坐标</td><td><code>@[jump_to_point] [15,8]</code></td></tr>
 <tr><td><code>@[jump_random]</code></td><td>无</td><td>随机跳跃到上下左右一格</td><td><code>@[jump_random]</code></td></tr>
 <tr><td><code>@[move_to_event]</code></td><td><code>"目标物件名称"</code></td><td>直接移动到指定物件的位置</td><td><code>@[move_to_event] "目标"</code></td></tr>
 <tr><td><code>@[move_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>移动到地图上的指定坐标</td><td><code>@[move_to_point] [15,8]</code></td></tr>
+<tr><td><code>@[move_straight_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>直线移动到目标点，不会拐弯（即使碰到墙也不会绕路）</td><td><code>@[move_straight_to_point] [15,8]</code></td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>额外的，这些虽然不是移动指令，但也可以加在这之间使用。</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>指令</th><th>参数</th><th>说明</th><th>示例</th></tr>
+</thead>
+<tbody>
+<tr><td><code>@[set_move_speed]</code></td><td>整数</td><td>设置物件移动速度</td><td><code>@[set_move_speed] 1</code></td></tr>
+<tr><td><code>@[wait]</code></td><td>数字</td><td>等待指定时长（若 <code>"wait": false</code> 则不会阻塞）</td><td><code>@[wait] 30</code></td></tr>
+<tr><td><code>@[wait_random_in_range]</code></td><td><code>[min, max]</code></td><td>随机等待一个时长区间（若 <code>"wait": false</code> 则不会阻塞）</td><td><code>@[wait_random_in_range] [1,10]</code></td></tr>
+<tr><td><code>@[set_switch]</code></td><td><code>["name", "value"]</code></td><td>设置开关值</td><td><code>@[set_switch] ["开关A", true]</code></td></tr>
+<tr><td><code>@[set_variable]</code></td><td><code>["name", "value"]</code></td><td>设置变量值</td><td><code>@[set_variable] ["变量B", 114514]</code></td></tr>
+<tr><td><code>@[toggle_switch]</code></td><td><code>{"switchId": null}</code></td><td>切换指定开关状态</td><td><code>@[toggle_switch] {"switchId": null}</code></td></tr>
+<tr><td><code>@[add_variable]</code></td><td><code>{"varId": null, "varValue": 0}</code></td><td>给变量增加数值</td><td><code>@[add_variable] {"varId": null, "varValue": 1}</code></td></tr>
+<tr><td><code>@[play_se]</code></td><td><code>{"path":"...","db":0,"pan":0}</code></td><td>播放音效</td><td><code>@[play_se] {"path":"res://Sounds/...","db":0,"pan":0}</code></td></tr>
+<tr><td><code>@[queue_free]</code></td><td>无</td><td>销毁当前物件</td><td><code>@[queue_free]</code></td></tr>
+<tr><td><code>@[set_visible]</code></td><td><code>true</code> / <code>false</code></td><td>设置该物件是否可见</td><td><code>@[set_visible] false</code></td></tr>
+<tr><td><code>@[fade_to]</code></td><td><code>{"opacity":1,"time_sec":1}</code></td><td>淡入淡出到指定透明度</td><td><code>@[fade_to] {"opacity":1,"time_sec":1}</code></td></tr>
+<tr><td><code>@[set_dead_zone]</code></td><td><code>[x1, y1, x2, y2]</code> 或不填</td><td>设置死区；不指定参数可视为取消</td><td><code>@[set_dead_zone] [0,0,31,17]</code></td></tr>
+<tr><td><code>@[set_move_zone]</code></td><td><code>[x1, y1, x2, y2]</code> 或不填</td><td>设置移动区域；不指定参数可视为取消</td><td><code>@[set_move_zone] [14,7,17,10]</code></td></tr>
+<tr><td><code>@[set_z_index]</code></td><td>数字</td><td>设置物件显示优先级</td><td><code>@[set_z_index] 1</code></td></tr>
+<tr><td><code>@[set_can_pass_group]</code></td><td><code>"组名"</code></td><td>允许该物件可通过包含在组里的物件</td><td><code>@[set_can_pass_group] "组A"</code></td></tr>
 </tbody>
 </table>
 </div>

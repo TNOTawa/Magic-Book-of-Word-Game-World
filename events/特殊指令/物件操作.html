@@ -36,10 +36,10 @@
             const path_to_root = "../../";
             const default_light_theme = "navy";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-323b28f3.js";
+            window.path_to_searchindex_js = "../../searchindex-0b007eaf.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-9e0db1c9.js"></script>
+        <script src="../../toc-4e08e056.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -183,6 +183,18 @@
 }
 </code></pre>
 <p><strong>target 取值</strong>：可以是 <code>"self"</code>（该物件本身）、<code>"player"</code>（玩家）或具体的物件名称。</p>
+<h3 id="让物件不存在"><a class="header" href="#让物件不存在">让物件不存在</a></h3>
+<p>效果和删除物件相近，让指定物件从场景中变为不存在状态。</p>
+<pre><code class="language-json">@[unexist_event] {
+    "target": "物件名称"
+}
+</code></pre>
+<h3 id="崩塌物件"><a class="header" href="#崩塌物件">崩塌物件</a></h3>
+<p>让指定物件触发垮塌动画效果。</p>
+<pre><code class="language-json">@[crash_event] {
+    "target": "物件名称"
+}
+</code></pre>
 <h3 id="物件回溯"><a class="header" href="#物件回溯">物件回溯</a></h3>
 <p>将指定的物件回溯到游戏前原来的位置，并且让它重新执行事件。如果触发模式为“游戏开始后“的话，无法回溯被删除和被溶解的状态，也不会回溯透明度。</p>
 <pre><code>@[refresh_event] {
@@ -210,6 +222,24 @@
 <li><code>target</code>：要克隆的母物件名称，可选。</li>
 <li><code>position</code>：克隆后的位置坐标，可选。</li>
 <li><code>text</code>：克隆后显示的文字内容，可选。</li>
+</ul>
+<h3 id="创建物件"><a class="header" href="#创建物件">创建物件</a></h3>
+<p>凭空创建一个新物件。理论上可传入多数属性，但创建出来的物件通常没有碰撞体。</p>
+<pre><code class="language-json">@[create_event] {
+    "text": "字面",
+    "pos": [X, Y],
+    "tags": "[]",
+    "name": "物件名称",
+    "layer": "mid"
+}
+</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>text</code>：物件显示文字。</li>
+<li><code>pos</code>：物件生成位置坐标。</li>
+<li><code>tags</code>：物件标签字符串。</li>
+<li><code>name</code>：物件名称。</li>
+<li><code>layer</code>：所在图层（如 <code>mid</code>）。</li>
 </ul>
 
                     </main>
