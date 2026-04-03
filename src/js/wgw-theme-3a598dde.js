@@ -130,7 +130,7 @@
     // 创建分割线容器
     dividerContainer = document.createElement('div');
     dividerContainer.id = 'wgw-divider';
-    dividerContainer.style.cssText = 'position:absolute;top:0;left:50%;transform:translateX(-50%);width:1em;height:100vh;overflow:hidden;pointer-events:none;user-select:none;z-index:10;font-size:20px;line-height:1;color:rgba(255,255,255,0.22);font-family:zpix,sans-serif;white-space:pre;';
+    dividerContainer.style.cssText = 'position:absolute;top:0;left:50%;transform:translateX(-50%);width:1em;height:100vh;overflow:hidden;pointer-events:none;user-select:none;z-index:10;font-size:20px;line-height:1;color:rgba(255,255,255,0.5);font-family:zpix,sans-serif;white-space:pre;';
     resizeHandle.appendChild(dividerContainer);
 
     var fullText = '';
