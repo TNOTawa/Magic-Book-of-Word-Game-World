@@ -292,13 +292,13 @@ html.wgw-theme .search-wrapper::after {
   font-family: var(--main-font) !important;
 }
 
-/* 搜索框边框：左侧 */
+/* 搜索框边框：左侧 - 紧贴输入框 */
 html.wgw-theme #searchbar::before {
   content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
   position: absolute;
-  top: calc(var(--wgw-border-font-size) * -1 - 0.7em);
-  left: 0;
-  bottom: calc(var(--wgw-border-font-size) * -1 - 0.7em);
+  top: 0;
+  left: calc(var(--wgw-border-font-size) * -1);
+  bottom: 0;
   width: var(--wgw-border-font-size);
   font-size: var(--wgw-border-font-size);
   line-height: 1;
@@ -309,13 +309,13 @@ html.wgw-theme #searchbar::before {
   font-family: var(--main-font) !important;
 }
 
-/* 搜索框边框：右侧 */
+/* 搜索框边框：右侧 - 紧贴输入框 */
 html.wgw-theme #searchbar::after {
   content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
   position: absolute;
-  top: calc(var(--wgw-border-font-size) * -1 - 0.7em);
-  right: 0;
-  bottom: calc(var(--wgw-border-font-size) * -1 - 0.7em);
+  top: 0;
+  right: calc(var(--wgw-border-font-size) * -1);
+  bottom: 0;
   width: var(--wgw-border-font-size);
   font-size: var(--wgw-border-font-size);
   line-height: 1;
@@ -326,29 +326,78 @@ html.wgw-theme #searchbar::after {
   font-family: var(--main-font) !important;
 }
 
-/* 原生滚动条样式 - 使用"卷轴"文字作为背景 */
+/* 原生滚动条样式 - 隐藏但保留功能 */
 html.wgw-theme * {
-  scrollbar-width: auto;
-  scrollbar-color: #fff rgba(255, 255, 255, 0.3);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 }
 
 html.wgw-theme *::-webkit-scrollbar {
-  width: var(--wgw-scroll-track-font-size);
-  height: var(--wgw-scroll-track-font-size);
+  width: 18px;
+  height: 18px;
 }
 
 html.wgw-theme *::-webkit-scrollbar-track {
-  background: #000;
-  position: relative;
+  background: transparent;
 }
 
 html.wgw-theme *::-webkit-scrollbar-thumb {
-  background: #fff;
-  border: 2px solid #000;
+  background: rgba(255, 255, 255, 0.1);
+  border: 4px solid transparent;
+  background-clip: padding-box;
+}
+
+html.wgw-theme *::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+  background-clip: padding-box;
 }
 
 html.wgw-theme *::-webkit-scrollbar-corner {
-  background: #000;
+  background: transparent;
+}
+
+/* 卷轴文字覆盖层 - 侧边栏 */
+html.wgw-theme .sidebar-scrollbox {
+  position: relative;
+}
+
+html.wgw-theme .sidebar-scrollbox::after {
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: calc(100% - var(--sidebar-width) + 0.2em);
+  width: 1em;
+  font-size: var(--wgw-scroll-track-font-size);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 1000;
+}
+
+/* 卷轴文字覆盖层 - 主内容区 */
+html.wgw-theme .content main {
+  position: relative;
+}
+
+html.wgw-theme .content main::after {
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0.2em;
+  width: 1em;
+  font-size: var(--wgw-scroll-track-font-size);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 1000;
 }
 
 /* 侧边栏与主内容区布局 */
@@ -377,4 +426,116 @@ html.wgw-theme .sidebar .chapter li a {
 html.wgw-theme .content main,
 html.wgw-theme .searchresults {
   padding-right: 0;
+}
+
+/* MD标记替换为中文字符 */
+
+/* 标题前添加"井"字 */
+html.wgw-theme h1::before {
+  content: "井";
+  font-size: 0.8em;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 0.3em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme h2::before {
+  content: "井井";
+  font-size: 0.75em;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 0.3em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme h3::before {
+  content: "井井井";
+  font-size: 0.7em;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 0.3em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme h4::before {
+  content: "井井井井";
+  font-size: 0.65em;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 0.3em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme h5::before {
+  content: "井井井井井";
+  font-size: 0.6em;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 0.3em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme h6::before {
+  content: "井井井井井井";
+  font-size: 0.55em;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 0.3em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+/* 列表标记替换 */
+html.wgw-theme ul {
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+html.wgw-theme ul > li::before {
+  content: "（点）";
+  font-size: 0.6em;
+  font-weight: bold;
+  margin-left: -1.5em;
+  margin-right: 0.5em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme ul ul > li::before {
+  content: "（子）";
+  font-size: 0.6em;
+  margin-left: -1.5em;
+  margin-right: 0.5em;
+  color: #fff;
+  font-family: var(--main-font) !important;
+}
+
+/* 分割线替换 */
+html.wgw-theme hr {
+  border: 0;
+  height: var(--wgw-border-font-size);
+  background: transparent;
+  position: relative;
+  margin: 1.5em 0;
+  overflow: hidden;
+}
+
+html.wgw-theme hr::before {
+  content: "分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线分割线";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: var(--main-font) !important;
 }
