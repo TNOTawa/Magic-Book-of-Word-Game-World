@@ -173,7 +173,7 @@ html.wgw-theme pre::after {
 
 /* 代码块边框：左侧 */
 html.wgw-theme pre code::before {
-  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
+  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
   position: absolute;
   top: 0;
   left: 0;
@@ -190,7 +190,7 @@ html.wgw-theme pre code::before {
 
 /* 代码块边框：右侧 */
 html.wgw-theme pre code::after {
-  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
+  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
   position: absolute;
   top: 0;
   right: 0;
@@ -809,16 +809,20 @@ pre code:not([class*="language-"]) {
   white-space: pre-wrap;
 }
 
+/* 事件名称 @[event_name] - 黄色 */
 pre code.language-json .hljs-meta,
 pre code:not([class*="language-"]) .hljs-meta {
   color: #ffd54f !important;
+  font-weight: bold;
 }
 
+/* 字符串值 - 绿色 */
 pre code.language-json .hljs-string,
 pre code:not([class*="language-"]) .hljs-string {
   color: #81c784 !important;
 }
 
+/* 属性名 - 蓝色 */
 pre code.language-json .hljs-attr,
 pre code:not([class*="language-"]) .hljs-attr,
 pre code.language-json .hljs-property,
@@ -826,6 +830,7 @@ pre code:not([class*="language-"]) .hljs-property {
   color: #4fc3f7 !important;
 }
 
+/* 数字和字面量 - 橙色 */
 pre code.language-json .hljs-number,
 pre code:not([class*="language-"]) .hljs-number,
 pre code.language-json .hljs-literal,
@@ -833,6 +838,14 @@ pre code:not([class*="language-"]) .hljs-literal {
   color: #ff8a65 !important;
 }
 
+/* 注释 - 灰色 */
+pre code.language-json .hljs-comment,
+pre code:not([class*="language-"]) .hljs-comment {
+  color: #757575 !important;
+  font-style: italic;
+}
+
+/* 标点符号 - 浅灰 */
 pre code.language-json .hljs-punctuation,
 pre code:not([class*="language-"]) .hljs-punctuation {
   color: #e0e0e0 !important;
