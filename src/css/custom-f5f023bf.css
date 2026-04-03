@@ -1,9 +1,14 @@
+/* ============================================
+   字体声明
+   ============================================ */
 @font-face {
   font-family: zpix;
   src: url("https://cdn.jsdelivr.net/gh/viscose3977/zpix_for_obs@main/zpix.woff2");
 }
 
-/* 全站统一字体 */
+/* ============================================
+   CSS 变量
+   ============================================ */
 :root {
   --main-font: "zpix", sans-serif;
   --wgw-page-font-size: 18px;
@@ -13,8 +18,42 @@
   --wgw-divider-font-size: 20px;
   --wgw-title-mark-color: #ffeb3b;
   --wgw-title-mark-muted: #fff3a6;
+
+  /* 颜色变量 */
+  --wgw-color-white: #fff;
+  --wgw-color-black: #000;
+  --wgw-color-link: #00e676;
+  --wgw-color-link-hover: #66ffa6;
+  --wgw-color-bold: #ff9800;
+  --wgw-color-italic: #03a9f4;
+  --wgw-color-underline: #e91e63;
+  --wgw-color-blockquote: #ce93d8;
+  --wgw-color-blockquote-border: #9c27b0;
+  --wgw-color-list-primary: #4caf50;
+  --wgw-color-list-secondary: #81c784;
+  --wgw-color-code-inline: #00e676;
+  --wgw-color-code-block: #00e676;
+  --wgw-color-nav-arrow: #ffeb3b;
+  --wgw-color-nav-arrow-hover: #fff176;
+  --wgw-color-divider: rgba(255, 255, 255, 0.45);
+  --wgw-color-scrollbar: rgba(255, 255, 255, 0.5);
+  --wgw-color-scrollbar-hover: rgba(255, 255, 255, 0.7);
+  --wgw-color-resize-handle: rgba(255, 255, 255, 0.22);
+
+  /* 代码高亮颜色 */
+  --wgw-hljs-meta: #ffd54f;
+  --wgw-hljs-string: #81c784;
+  --wgw-hljs-attr: #4fc3f7;
+  --wgw-hljs-number: #ff8a65;
+  --wgw-hljs-punctuation: #e0e0e0;
+
+  /* 链接选择器公共部分（用于简化选择器） */
+  --wgw-link-selectors: ".content main p > a, .content main li > a, .content main blockquote p > a, .content main td > a, .content main th > a, .searchresults .searchresults-outer a:not(.mobile-nav-chapters)";
 }
 
+/* ============================================
+   全站统一字体
+   ============================================ */
 html,
 body,
 button,
@@ -43,13 +82,16 @@ body {
   line-height: 1.75;
 }
 
-/* WGW主题：纯文字黑底风格 */
+/* ============================================
+   WGW 主题基础样式
+   ============================================ */
 html.wgw-theme,
 html.wgw-theme body {
-  background: #000 !important;
-  color: #fff !important;
+  background: var(--wgw-color-black) !important;
+  color: var(--wgw-color-white) !important;
 }
 
+/* 背景统一为黑色的元素 */
 html.wgw-theme body,
 html.wgw-theme .content,
 html.wgw-theme .content main,
@@ -69,11 +111,12 @@ html.wgw-theme .theme-popup,
 html.wgw-theme .theme-popup ul,
 html.wgw-theme .theme-popup li,
 html.wgw-theme .theme-popup button {
-  background: #000 !important;
-  color: #fff !important;
+  background: var(--wgw-color-black) !important;
+  color: var(--wgw-color-white) !important;
   box-shadow: none !important;
 }
 
+/* 文字颜色统一为白色的元素 */
 html.wgw-theme p,
 html.wgw-theme li,
 html.wgw-theme summary,
@@ -82,16 +125,18 @@ html.wgw-theme span,
 html.wgw-theme div,
 html.wgw-theme input,
 html.wgw-theme button {
-  color: #fff !important;
+  color: var(--wgw-color-white) !important;
   font-family: var(--main-font) !important;
 }
 
+/* 按钮悬停效果 */
 html.wgw-theme button:hover,
 html.wgw-theme button:focus {
-  background: #fff !important;
-  color: #000 !important;
+  background: var(--wgw-color-white) !important;
+  color: var(--wgw-color-black) !important;
 }
 
+/* 无边框元素 */
 html.wgw-theme .menu-bar,
 html.wgw-theme .sidebar,
 html.wgw-theme .page,
@@ -105,6 +150,7 @@ html.wgw-theme .theme-popup button {
   border: 0 !important;
 }
 
+/* 主题弹出框内边距 */
 html.wgw-theme .theme-popup {
   padding: 0.5em 0.8em !important;
 }
@@ -113,11 +159,65 @@ html.wgw-theme .theme-popup button {
   padding: 0.3em 0.5em !important;
 }
 
-/* 代码块容器 */
+/* ============================================
+   伪元素边框装饰 - 公共样式
+   ============================================ */
+
+/* 水平边框装饰（顶部/底部） */
+html.wgw-theme .wgw-border-h::before,
+html.wgw-theme .wgw-border-h::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: var(--wgw-color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme .wgw-border-h::before {
+  top: 0;
+}
+
+html.wgw-theme .wgw-border-h::after {
+  bottom: 0;
+}
+
+/* 垂直边框装饰（左侧/右侧） */
+html.wgw-theme .wgw-border-v::before,
+html.wgw-theme .wgw-border-v::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: var(--wgw-color-white);
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme .wgw-border-v::before {
+  left: 0;
+}
+
+html.wgw-theme .wgw-border-v::after {
+  right: 0;
+}
+
+/* ============================================
+   代码块样式
+   ============================================ */
 html.wgw-theme pre {
   position: relative;
-  background: #000 !important;
-  color: #fff !important;
+  background: var(--wgw-color-black) !important;
+  color: var(--wgw-color-white) !important;
   border: 0 !important;
   box-shadow: none !important;
   padding: 1.5em !important;
@@ -128,7 +228,7 @@ html.wgw-theme pre {
 html.wgw-theme pre code {
   display: block;
   background: transparent !important;
-  color: #fff !important;
+  color: var(--wgw-color-white) !important;
   font-family: var(--main-font) !important;
 }
 
@@ -137,96 +237,22 @@ html.wgw-theme code {
   font-family: var(--main-font) !important;
 }
 
-/* 代码块边框：顶部 */
-html.wgw-theme pre::before {
-  content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
-}
-
-/* 代码块边框：底部 */
+/* 代码块边框装饰 */
+html.wgw-theme pre::before,
 html.wgw-theme pre::after {
   content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
 }
 
-/* 代码块边框：左侧 */
-html.wgw-theme pre code::before {
-  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
-}
-
-/* 代码块边框：右侧 */
+html.wgw-theme pre code::before,
 html.wgw-theme pre code::after {
-  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
+  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
 }
 
-/* 代码高亮统一为白色 */
-html.wgw-theme .hljs,
-html.wgw-theme .hljs-subst,
-html.wgw-theme .language-json,
-html.wgw-theme code.language-json,
-html.wgw-theme .hljs-attr,
-html.wgw-theme .hljs-string,
-html.wgw-theme .hljs-number,
-html.wgw-theme .hljs-literal,
-html.wgw-theme .hljs-punctuation,
-html.wgw-theme .hljs-brace,
-html.wgw-theme .hljs-symbol,
-html.wgw-theme .hljs-comment,
-html.wgw-theme .hljs-name,
-html.wgw-theme .hljs-property {
-  color: #fff !important;
-  background: transparent !important;
-}
-
-/* 搜索框 - 根据实际HTML结构修复 */
+/* ============================================
+   搜索框样式
+   ============================================ */
 html.wgw-theme .searchbar-outer {
-  background: #000 !important;
+  background: var(--wgw-color-black) !important;
   position: relative;
   padding: 0 !important;
   margin: 0.5em !important;
@@ -234,14 +260,14 @@ html.wgw-theme .searchbar-outer {
 
 html.wgw-theme .search-wrapper {
   position: relative;
-  background: #000;
+  background: var(--wgw-color-black);
   padding: calc(var(--wgw-border-font-size) + 0.5em) var(--wgw-border-font-size);
 }
 
 html.wgw-theme #mdbook-searchbar {
   position: relative;
-  background: #000 !important;
-  color: #fff !important;
+  background: var(--wgw-color-black) !important;
+  color: var(--wgw-color-white) !important;
   border: 0 !important;
   box-shadow: none !important;
   padding: 0.5em 0.8em !important;
@@ -250,105 +276,50 @@ html.wgw-theme #mdbook-searchbar {
   z-index: 1;
 }
 
-/* 搜索框边框：顶部 */
-html.wgw-theme .search-wrapper::before {
-  content: "搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
-  z-index: 0;
-}
-
-/* 搜索框边框：底部 */
+/* 搜索框边框装饰 */
+html.wgw-theme .search-wrapper::before,
 html.wgw-theme .search-wrapper::after {
   content: "搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
   z-index: 0;
 }
 
-/* 搜索框边框：左侧 */
-html.wgw-theme #mdbook-searchbar::before {
-  content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
-  z-index: 0;
-}
-
-/* 搜索框边框：右侧 */
+html.wgw-theme #mdbook-searchbar::before,
 html.wgw-theme #mdbook-searchbar::after {
   content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
   z-index: 0;
 }
 
-/* 原生滚动条样式 - 仅修改侧边栏 */
+/* ============================================
+   滚动条样式
+   ============================================ */
 html.wgw-theme .sidebar-scrollbox {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.5) #000;
+  scrollbar-color: var(--wgw-color-scrollbar) var(--wgw-color-black);
   overflow-y: auto !important;
 }
 
 html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar {
   width: 16px;
-  background: #000;
+  background: var(--wgw-color-black);
 }
 
 html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--wgw-color-black);
 }
 
 html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5);
-  border: 3px solid #000;
+  background: var(--wgw-color-scrollbar);
+  border: 3px solid var(--wgw-color-black);
   border-radius: 0;
 }
 
 html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--wgw-color-scrollbar-hover);
 }
 
-/* 侧边栏与主内容区布局 */
+/* ============================================
+   侧边栏样式
+   ============================================ */
 html.wgw-theme .sidebar {
   border-right: 0 !important;
 }
@@ -365,13 +336,13 @@ html.wgw-theme .sidebar .chapter li {
 html.wgw-theme .sidebar .chapter li a {
   display: block;
   padding: 0.3em 0.8em;
-  color: #fff !important;
+  color: var(--wgw-color-white) !important;
   text-decoration: none !important;
 }
 
 html.wgw-theme .sidebar .chapter .spacer,
 html.wgw-theme .sidebar .chapter strong {
-  color: #ffeb3b !important;
+  color: var(--wgw-title-mark-color) !important;
 }
 
 html.wgw-theme .content main,
@@ -379,22 +350,17 @@ html.wgw-theme .searchresults {
   padding-right: 0;
 }
 
-html.wgw-theme .page {
-  position: relative;
-}
-
-html.wgw-theme .sidebar-scrollbox {
-  position: relative;
-}
-
-html.wgw-theme .content {
-  position: relative;
-}
-
+/* 相对定位容器 */
+html.wgw-theme .page,
+html.wgw-theme .sidebar-scrollbox,
+html.wgw-theme .content,
 html.wgw-theme #mdbook-body-container {
   position: relative;
 }
 
+/* ============================================
+   侧边栏调整手柄装饰
+   ============================================ */
 html.wgw-theme #mdbook-sidebar-resize-handle {
   position: absolute;
   top: 0;
@@ -406,6 +372,7 @@ html.wgw-theme #mdbook-sidebar-resize-handle {
   pointer-events: none;
 }
 
+/* 调整手柄装饰文字 - 公共样式 */
 html.wgw-theme #mdbook-sidebar-resize-handle::before,
 html.wgw-theme #mdbook-sidebar-resize-handle::after,
 html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator::before,
@@ -416,7 +383,7 @@ html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator::after {
   width: 1em;
   font-size: var(--wgw-divider-font-size);
   line-height: 1;
-  color: rgba(255, 255, 255, 0.22);
+  color: var(--wgw-color-resize-handle);
   white-space: pre;
   text-align: center;
   pointer-events: none;
@@ -428,22 +395,22 @@ html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator::after {
 
 html.wgw-theme #mdbook-sidebar-resize-handle::before {
   top: -90%;
-  animation: wgw-divider-scroll-1 36s linear infinite;
+  animation: wgw-divider-scroll 36s linear infinite;
 }
 
 html.wgw-theme #mdbook-sidebar-resize-handle::after {
   top: 0%;
-  animation: wgw-divider-scroll-2 36s linear infinite;
+  animation: wgw-divider-scroll 36s linear infinite;
 }
 
 html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator::before {
   top: 90%;
-  animation: wgw-divider-scroll-3 36s linear infinite;
+  animation: wgw-divider-scroll 36s linear infinite;
 }
 
 html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator::after {
   top: 180%;
-  animation: wgw-divider-scroll-4 36s linear infinite;
+  animation: wgw-divider-scroll 36s linear infinite;
 }
 
 html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator {
@@ -455,7 +422,8 @@ html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator {
   pointer-events: auto;
 }
 
-@keyframes wgw-divider-scroll-1 {
+/* 合并相同的动画关键帧 */
+@keyframes wgw-divider-scroll {
   from {
     transform: translateX(-50%) translateY(0);
   }
@@ -464,39 +432,17 @@ html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator {
   }
 }
 
-@keyframes wgw-divider-scroll-2 {
-  from {
-    transform: translateX(-50%) translateY(0);
-  }
-  to {
-    transform: translateX(-50%) translateY(-360%);
-  }
-}
+/* ============================================
+   标题标记（井字替换）
+   ============================================ */
 
-@keyframes wgw-divider-scroll-3 {
-  from {
-    transform: translateX(-50%) translateY(0);
-  }
-  to {
-    transform: translateX(-50%) translateY(-360%);
-  }
-}
-
-@keyframes wgw-divider-scroll-4 {
-  from {
-    transform: translateX(-50%) translateY(0);
-  }
-  to {
-    transform: translateX(-50%) translateY(-360%);
-  }
-}
-
-/* MD标记替换为中文字符 */
-
-/* 标题前添加"井"字 - 使用inline-block防止换行 */
-html.wgw-theme h1::before {
-  content: "井";
-  font-size: 0.8em;
+/* 标题标记公共样式 */
+html.wgw-theme h1::before,
+html.wgw-theme h2::before,
+html.wgw-theme h3::before,
+html.wgw-theme h4::before,
+html.wgw-theme h5::before,
+html.wgw-theme h6::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
@@ -504,69 +450,39 @@ html.wgw-theme h1::before {
   font-family: var(--main-font) !important;
   display: inline-block;
   white-space: nowrap;
+}
+
+html.wgw-theme h1::before {
+  content: "井";
+  font-size: 0.8em;
 }
 
 html.wgw-theme h2::before {
   content: "井井";
   font-size: 0.75em;
-  font-weight: bold;
-  font-style: italic;
-  margin-right: 0.3em;
-  color: var(--wgw-title-mark-color);
-  font-family: var(--main-font) !important;
-  display: inline-block;
-  white-space: nowrap;
 }
 
 html.wgw-theme h3::before {
   content: "井井井";
   font-size: 0.7em;
-  font-weight: bold;
-  font-style: italic;
-  margin-right: 0.3em;
-  color: var(--wgw-title-mark-color);
-  font-family: var(--main-font) !important;
-  display: inline-block;
-  white-space: nowrap;
 }
 
 html.wgw-theme h4::before {
   content: "井井井井";
   font-size: 0.65em;
-  font-weight: bold;
-  font-style: italic;
-  margin-right: 0.3em;
-  color: var(--wgw-title-mark-color);
-  font-family: var(--main-font) !important;
-  display: inline-block;
-  white-space: nowrap;
 }
 
 html.wgw-theme h5::before {
   content: "井井井井井";
   font-size: 0.6em;
-  font-weight: bold;
-  font-style: italic;
-  margin-right: 0.3em;
-  color: var(--wgw-title-mark-color);
-  font-family: var(--main-font) !important;
-  display: inline-block;
-  white-space: nowrap;
 }
 
 html.wgw-theme h6::before {
   content: "井井井井井井";
   font-size: 0.55em;
-  font-weight: bold;
-  font-style: italic;
-  margin-right: 0.3em;
-  color: var(--wgw-title-mark-color);
-  font-family: var(--main-font) !important;
-  display: inline-block;
-  white-space: nowrap;
 }
 
-/* 标题文字保持白色，仅井高亮 */
+/* 标题文字保持白色 */
 html.wgw-theme h1,
 html.wgw-theme h2,
 html.wgw-theme h3,
@@ -579,10 +495,12 @@ html.wgw-theme h3 *,
 html.wgw-theme h4 *,
 html.wgw-theme h5 *,
 html.wgw-theme h6 * {
-  color: #fff !important;
+  color: var(--wgw-color-white) !important;
 }
 
-/* 列表标记替换 - 使用inline-block防止换行 */
+/* ============================================
+   列表标记
+   ============================================ */
 html.wgw-theme ul {
   list-style: none;
   padding-left: 2.5em;
@@ -592,34 +510,33 @@ html.wgw-theme ul > li {
   position: relative;
 }
 
-html.wgw-theme ul > li::before {
-  content: "（点）";
+/* 列表标记公共样式 */
+html.wgw-theme ul > li::before,
+html.wgw-theme ul ul > li::before {
   font-size: 0.6em;
   font-weight: bold;
   position: absolute;
   left: -3.2em;
   top: 0.2em;
-  color: #4caf50;
   font-family: var(--main-font) !important;
   display: inline-block;
   width: 2.6em;
   white-space: nowrap;
+}
+
+html.wgw-theme ul > li::before {
+  content: "（点）";
+  color: var(--wgw-color-list-primary);
 }
 
 html.wgw-theme ul ul > li::before {
   content: "（子）";
-  font-size: 0.6em;
-  position: absolute;
-  left: -3.2em;
-  top: 0.2em;
-  color: #81c784;
-  font-family: var(--main-font) !important;
-  display: inline-block;
-  width: 2.6em;
-  white-space: nowrap;
+  color: var(--wgw-color-list-secondary);
 }
 
-/* 分割线替换 - 使用inline-block防止换行 */
+/* ============================================
+   分割线
+   ============================================ */
 html.wgw-theme hr {
   border: 0;
   height: var(--wgw-border-font-size);
@@ -637,22 +554,38 @@ html.wgw-theme hr::before {
   right: 0;
   font-size: var(--wgw-border-font-size);
   line-height: 1;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--wgw-color-divider);
   white-space: nowrap;
   overflow: hidden;
   font-family: var(--main-font) !important;
   display: inline-block;
 }
 
-/* 高亮样式 */
+/* ============================================
+   文本强调样式
+   ============================================ */
 
-/* 加粗文本高亮 */
+/* 加粗文本 */
 html.wgw-theme strong,
 html.wgw-theme b {
-  color: #ff9800 !important;
+  color: var(--wgw-color-bold) !important;
   font-weight: bold;
 }
 
+/* 斜体文本 */
+html.wgw-theme em,
+html.wgw-theme i {
+  color: var(--wgw-color-italic) !important;
+  font-style: italic;
+}
+
+/* 下划线文本 */
+html.wgw-theme u {
+  color: var(--wgw-color-underline) !important;
+  text-decoration: underline;
+}
+
+/* 标题内加粗/斜体重置为白色 */
 html.wgw-theme h1 strong,
 html.wgw-theme h2 strong,
 html.wgw-theme h3 strong,
@@ -664,17 +597,7 @@ html.wgw-theme h2 b,
 html.wgw-theme h3 b,
 html.wgw-theme h4 b,
 html.wgw-theme h5 b,
-html.wgw-theme h6 b {
-  color: #fff !important;
-}
-
-/* 斜体文本高亮 */
-html.wgw-theme em,
-html.wgw-theme i {
-  color: #03a9f4 !important;
-  font-style: italic;
-}
-
+html.wgw-theme h6 b,
 html.wgw-theme h1 em,
 html.wgw-theme h2 em,
 html.wgw-theme h3 em,
@@ -687,41 +610,60 @@ html.wgw-theme h3 i,
 html.wgw-theme h4 i,
 html.wgw-theme h5 i,
 html.wgw-theme h6 i {
-  color: #fff !important;
+  color: var(--wgw-color-white) !important;
 }
 
-/* 下划线文本高亮 */
-html.wgw-theme u {
-  color: #e91e63 !important;
-  text-decoration: underline;
-}
+/* ============================================
+   代码高亮
+   ============================================ */
 
-/* 行内代码高亮 */
+/* 行内代码 */
 html.wgw-theme code:not(pre code) {
-  color: #00e676 !important;
+  color: var(--wgw-color-code-inline) !important;
   background: rgba(0, 230, 118, 0.1) !important;
   padding: 0.1em 0.3em;
   border-radius: 3px;
 }
 
-/* 代码块内代码高亮 */
+/* 代码块内代码 */
 html.wgw-theme pre code,
 html.wgw-theme pre code.language-json,
 html.wgw-theme pre code:not([class*="language-"]) {
-  color: #00e676 !important;
+  color: var(--wgw-color-code-block) !important;
 }
 
-/* 无语言时按JSON样式处理 */
+/* 代码高亮统一为白色（wgw主题下） */
+html.wgw-theme .hljs,
+html.wgw-theme .hljs-subst,
+html.wgw-theme .language-json,
+html.wgw-theme code.language-json,
+html.wgw-theme .hljs-attr,
+html.wgw-theme .hljs-string,
+html.wgw-theme .hljs-number,
+html.wgw-theme .hljs-literal,
+html.wgw-theme .hljs-punctuation,
+html.wgw-theme .hljs-brace,
+html.wgw-theme .hljs-symbol,
+html.wgw-theme .hljs-comment,
+html.wgw-theme .hljs-name,
+html.wgw-theme .hljs-property {
+  color: var(--wgw-color-white) !important;
+  background: transparent !important;
+}
+
+/* 无语言代码块的属性高亮 */
 html.wgw-theme pre code:not([class*="language-"]) .hljs-attr,
 html.wgw-theme pre code:not([class*="language-"]) .hljs-string,
 html.wgw-theme pre code:not([class*="language-"]) .hljs-number,
 html.wgw-theme pre code:not([class*="language-"]) .hljs-literal,
 html.wgw-theme pre code:not([class*="language-"]) .hljs-punctuation,
 html.wgw-theme pre code:not([class*="language-"]) .hljs-property {
-  color: #00e676 !important;
+  color: var(--wgw-color-code-block) !important;
 }
 
-/* 代码块复制按钮中文化 */
+/* ============================================
+   代码块复制按钮
+   ============================================ */
 html.wgw-theme pre .buttons {
   position: absolute;
   top: 0;
@@ -737,8 +679,8 @@ html.wgw-theme pre .clip-button {
   padding: 0.45em !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background: #000 !important;
-  color: #fff !important;
+  background: var(--wgw-color-black) !important;
+  color: var(--wgw-color-white) !important;
   box-shadow: none !important;
   font-family: var(--main-font) !important;
   font-size: 1.1em !important;
@@ -760,8 +702,8 @@ html.wgw-theme pre .clip-button::before {
 
 html.wgw-theme pre .clip-button:hover,
 html.wgw-theme pre .clip-button:focus {
-  background: #000 !important;
-  color: #fff !important;
+  background: var(--wgw-color-black) !important;
+  color: var(--wgw-color-white) !important;
 }
 
 html.wgw-theme pre .clip-button .tooltiptext,
@@ -772,10 +714,14 @@ html.wgw-theme pre .clip-button .tooltiptext::after {
 
 html.wgw-theme pre .clip-button .tooltiptext::before {
   content: "复制成功";
-  color: #fff !important;
+  color: var(--wgw-color-white) !important;
 }
 
-/* 正文超链接高亮 */
+/* ============================================
+   超链接样式
+   ============================================ */
+
+/* 链接基础样式 */
 html.wgw-theme .content main p > a,
 html.wgw-theme .content main li > a,
 html.wgw-theme .content main blockquote p > a,
@@ -783,12 +729,13 @@ html.wgw-theme .content main td > a,
 html.wgw-theme .content main th > a,
 html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters) {
   position: relative;
-  color: #00e676 !important;
+  color: var(--wgw-color-link) !important;
   text-decoration: none !important;
   display: inline-block;
   padding: 0 0.7em;
 }
 
+/* 链接前后装饰括号 */
 html.wgw-theme .content main p > a::before,
 html.wgw-theme .content main li > a::before,
 html.wgw-theme .content main blockquote p > a::before,
@@ -803,7 +750,7 @@ html.wgw-theme .content main th > a::after,
 html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters)::after {
   position: absolute;
   top: 0;
-  color: #fff !important;
+  color: var(--wgw-color-white) !important;
   font-family: var(--main-font) !important;
   pointer-events: none;
 }
@@ -828,30 +775,37 @@ html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters)::
   right: 0;
 }
 
+/* 链接悬停效果 */
 html.wgw-theme .content main p > a:hover,
 html.wgw-theme .content main li > a:hover,
 html.wgw-theme .content main blockquote p > a:hover,
 html.wgw-theme .content main td > a:hover,
 html.wgw-theme .content main th > a:hover,
 html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters):hover {
-  color: #66ffa6 !important;
+  color: var(--wgw-color-link-hover) !important;
   background: transparent !important;
 }
 
-/* 引用块高亮 */
+/* ============================================
+   引用块样式
+   ============================================ */
 html.wgw-theme blockquote {
-  border-left: 4px solid #9c27b0 !important;
+  border-left: 4px solid var(--wgw-color-blockquote-border) !important;
   padding-left: 1em;
   margin-left: 0;
-  color: #ce93d8 !important;
+  color: var(--wgw-color-blockquote) !important;
   background: rgba(156, 39, 176, 0.05) !important;
 }
 
 html.wgw-theme blockquote p {
-  color: #ce93d8 !important;
+  color: var(--wgw-color-blockquote) !important;
 }
 
-/* 章节导航按钮：整体叠加渲染 */
+/* ============================================
+   章节导航按钮
+   ============================================ */
+
+/* 导航按钮公共样式 */
 html.wgw-theme .mobile-nav-chapters,
 html.wgw-theme .nav-chapters {
   position: fixed !important;
@@ -875,11 +829,9 @@ html.wgw-theme .nav-chapters {
   overflow: visible !important;
 }
 
+/* 隐藏子元素和图标 */
 html.wgw-theme .mobile-nav-chapters > *,
-html.wgw-theme .nav-chapters > * {
-  display: none !important;
-}
-
+html.wgw-theme .nav-chapters > *,
 html.wgw-theme .mobile-nav-chapters .fa-svg,
 html.wgw-theme .nav-chapters .fa-svg,
 html.wgw-theme .mobile-nav-chapters svg,
@@ -887,6 +839,7 @@ html.wgw-theme .nav-chapters svg {
   display: none !important;
 }
 
+/* 导航按钮位置 */
 html.wgw-theme .mobile-nav-chapters.previous,
 html.wgw-theme .nav-chapters.previous {
   right: 5.4rem !important;
@@ -897,6 +850,7 @@ html.wgw-theme .nav-chapters.next {
   right: 2rem !important;
 }
 
+/* 导航箭头符号 */
 html.wgw-theme .mobile-nav-chapters.previous::before,
 html.wgw-theme .nav-chapters.previous::before {
   content: "<";
@@ -904,21 +858,9 @@ html.wgw-theme .nav-chapters.previous::before {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #ffeb3b;
+  color: var(--wgw-color-nav-arrow);
   font-family: var(--main-font) !important;
   white-space: nowrap;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous::after,
-html.wgw-theme .nav-chapters.previous::after {
-  content: "[ ";
-  position: absolute;
-  top: 50%;
-  right: calc(100% + 0.2em);
-  transform: translateY(-50%);
-  color: #fff;
-  font-family: var(--main-font) !important;
-  white-space: pre;
 }
 
 html.wgw-theme .mobile-nav-chapters.next::before,
@@ -928,9 +870,22 @@ html.wgw-theme .nav-chapters.next::before {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #ffeb3b;
+  color: var(--wgw-color-nav-arrow);
   font-family: var(--main-font) !important;
   white-space: nowrap;
+}
+
+/* 导航括号 */
+html.wgw-theme .mobile-nav-chapters.previous::after,
+html.wgw-theme .nav-chapters.previous::after {
+  content: "[ ";
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 0.2em);
+  transform: translateY(-50%);
+  color: var(--wgw-color-white);
+  font-family: var(--main-font) !important;
+  white-space: pre;
 }
 
 html.wgw-theme .mobile-nav-chapters.next::after,
@@ -940,11 +895,12 @@ html.wgw-theme .nav-chapters.next::after {
   top: 50%;
   left: calc(100% + 0.2em);
   transform: translateY(-50%);
-  color: #fff;
+  color: var(--wgw-color-white);
   font-family: var(--main-font) !important;
   white-space: pre;
 }
 
+/* 导航叠加层和标记 */
 html.wgw-theme .mobile-nav-chapters.next .wgw-nav-overlay,
 html.wgw-theme .nav-chapters.next .wgw-nav-overlay {
   display: none;
@@ -955,22 +911,16 @@ html.wgw-theme .nav-chapters.next::marker {
   content: "";
 }
 
+/* 相邻导航按钮样式 */
 html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next,
 html.wgw-theme .nav-chapters.previous + .nav-chapters.next {
-  --wgw-nav-middle-color: #fff;
+  --wgw-nav-middle-color: var(--wgw-color-white);
+  right: 2rem !important;
 }
 
 html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next::after,
 html.wgw-theme .nav-chapters.previous + .nav-chapters.next::after {
   content: " ]";
-}
-
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next {
-  right: 2rem !important;
-}
-
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next {
-  right: 2rem !important;
 }
 
 html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next .fa-svg,
@@ -980,6 +930,7 @@ html.wgw-theme .nav-chapters.previous + .nav-chapters.next svg {
   display: none !important;
 }
 
+/* 禁用导航按钮文本选择 */
 html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next::selection,
 html.wgw-theme .nav-chapters.previous + .nav-chapters.next::selection,
 html.wgw-theme .mobile-nav-chapters.previous::selection,
@@ -989,6 +940,7 @@ html.wgw-theme .nav-chapters.next::selection {
   background: transparent;
 }
 
+/* 导航按钮悬停效果 */
 html.wgw-theme .mobile-nav-chapters.previous:hover,
 html.wgw-theme .mobile-nav-chapters.previous:focus,
 html.wgw-theme .mobile-nav-chapters.next:hover,
@@ -1008,9 +960,12 @@ html.wgw-theme .nav-chapters.previous:hover::before,
 html.wgw-theme .nav-chapters.previous:focus::before,
 html.wgw-theme .nav-chapters.next:hover::before,
 html.wgw-theme .nav-chapters.next:focus::before {
-  color: #fff176 !important;
+  color: var(--wgw-color-nav-arrow-hover) !important;
 }
 
+/* ============================================
+   导航包装器
+   ============================================ */
 html.wgw-theme .nav-wrapper,
 html.wgw-theme .nav-wide-wrapper {
   position: fixed !important;
@@ -1028,6 +983,7 @@ html.wgw-theme .nav-wide-wrapper .nav-chapters {
   pointer-events: auto;
 }
 
+/* 导航提示文字 */
 html.wgw-theme .nav-wrapper::after,
 html.wgw-theme .nav-wide-wrapper::after {
   content: "[ x / > ]";
@@ -1036,7 +992,7 @@ html.wgw-theme .nav-wide-wrapper::after {
   bottom: 2rem;
   font-size: 2.4em;
   line-height: 1;
-  color: #fff;
+  color: var(--wgw-color-white);
   font-family: var(--main-font) !important;
   white-space: pre;
   pointer-events: none;
@@ -1071,12 +1027,14 @@ html.wgw-theme .nav-wide-wrapper:has(.nav-chapters.previous)::before {
   bottom: 2rem;
   font-size: 2.4em;
   line-height: 1;
-  color: #fff;
+  color: var(--wgw-color-white);
   font-family: var(--main-font) !important;
   pointer-events: none;
 }
 
-/* 特殊JSON / 事件语法高亮：所有主题通用 */
+/* ============================================
+   代码语法高亮（所有主题通用）
+   ============================================ */
 pre code.language-json,
 pre code:not([class*="language-"]) {
   white-space: pre-wrap;
@@ -1084,29 +1042,29 @@ pre code:not([class*="language-"]) {
 
 pre code.language-json .hljs-meta,
 pre code:not([class*="language-"]) .hljs-meta {
-  color: #ffd54f !important;
+  color: var(--wgw-hljs-meta) !important;
 }
 
 pre code.language-json .hljs-string,
 pre code:not([class*="language-"]) .hljs-string {
-  color: #81c784 !important;
+  color: var(--wgw-hljs-string) !important;
 }
 
 pre code.language-json .hljs-attr,
 pre code:not([class*="language-"]) .hljs-attr,
 pre code.language-json .hljs-property,
 pre code:not([class*="language-"]) .hljs-property {
-  color: #4fc3f7 !important;
+  color: var(--wgw-hljs-attr) !important;
 }
 
 pre code.language-json .hljs-number,
 pre code:not([class*="language-"]) .hljs-number,
 pre code.language-json .hljs-literal,
 pre code:not([class*="language-"]) .hljs-literal {
-  color: #ff8a65 !important;
+  color: var(--wgw-hljs-number) !important;
 }
 
 pre code.language-json .hljs-punctuation,
 pre code:not([class*="language-"]) .hljs-punctuation {
-  color: #e0e0e0 !important;
+  color: var(--wgw-hljs-punctuation) !important;
 }
