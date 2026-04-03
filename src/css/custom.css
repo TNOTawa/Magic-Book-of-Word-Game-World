@@ -322,30 +322,15 @@ html.wgw-theme #mdbook-searchbar::after {
   z-index: 0;
 }
 
-/* 原生滚动条样式 - 仅修改侧边栏 */
+/* 隐藏侧边栏原生滚动条 */
 html.wgw-theme .sidebar-scrollbox {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.5) #000;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-y: auto !important;
 }
 
 html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar {
-  width: 16px;
-  background: #000;
-}
-
-html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-track {
-  background: #000;
-}
-
-html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5);
-  border: 3px solid #000;
-  border-radius: 0;
-}
-
-html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.7);
+  display: none;
 }
 
 /* 侧边栏与主内容区布局 */
@@ -355,7 +340,8 @@ html.wgw-theme .sidebar {
 
 html.wgw-theme .sidebar .chapter {
   list-style: none !important;
-  padding-left: 0 !important;
+  padding-left: 1em !important;
+  margin-left: 0.5em !important;
 }
 
 html.wgw-theme .sidebar .chapter li {
@@ -399,43 +385,22 @@ html.wgw-theme #mdbook-sidebar-resize-handle {
   position: absolute;
   top: 0;
   right: calc(var(--sidebar-resize-indicator-width) * -1);
-  width: var(--sidebar-resize-indicator-width);
+  width: calc(var(--sidebar-resize-indicator-width) + 20px);
   height: 100%;
-  overflow: hidden;
-}
-
-html.wgw-theme #mdbook-sidebar-resize-handle::before {
-  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
-  position: absolute;
-  top: -120%;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  width: 1em;
-  height: 340%;
-  font-size: var(--wgw-divider-font-size);
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.22);
-  white-space: pre;
+  overflow: visible;
+  z-index: 5;
   pointer-events: none;
-  user-select: none;
-  font-family: var(--main-font) !important;
-  animation: wgw-divider-scroll 120s linear infinite;
-  will-change: transform;
 }
 
 html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator {
   position: relative;
   z-index: 1;
   background: transparent !important;
+  pointer-events: auto;
 }
 
-@keyframes wgw-divider-scroll {
-  from {
-    transform: translateX(-50%) translateY(0);
-  }
-  to {
-    transform: translateX(-50%) translateY(-33.333%);
-  }
+html.wgw-theme #mdbook-sidebar-resize-handle #wgw-divider {
+  pointer-events: none;
 }
 
 /* MD标记替换为中文字符 */
@@ -671,8 +636,8 @@ html.wgw-theme pre code:not([class*="language-"]) .hljs-property {
 /* 代码块复制按钮中文化 */
 html.wgw-theme pre .buttons {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 0.3em;
+  right: 0.3em;
   z-index: 4;
 }
 
@@ -681,7 +646,7 @@ html.wgw-theme pre .clip-button {
   min-width: 0 !important;
   min-height: 0 !important;
   height: auto !important;
-  padding: 0.45em !important;
+  padding: 0.3em 0.45em !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #000 !important;
@@ -693,6 +658,7 @@ html.wgw-theme pre .clip-button {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 html.wgw-theme pre .clip-button i,
@@ -701,7 +667,7 @@ html.wgw-theme pre .clip-button svg {
 }
 
 html.wgw-theme pre .clip-button::before {
-  content: "复制";
+  content: attr(data-label);
   display: block;
 }
 
@@ -798,179 +764,43 @@ html.wgw-theme blockquote p {
   color: #ce93d8 !important;
 }
 
-/* 章节导航按钮：移动端与桌面端统一右下角 */
+/* 隐藏原生导航按钮 - 由JS渲染 */
 html.wgw-theme .mobile-nav-chapters,
 html.wgw-theme .nav-chapters {
-  position: fixed !important;
-  bottom: 2rem !important;
-  top: auto !important;
-  left: auto !important;
+  display: none !important;
+}
+
+/* JS渲染的导航容器样式 */
+.wgw-nav-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
   z-index: 30;
-  width: 1em !important;
-  height: 1em !important;
-  min-width: 1em !important;
-  min-height: 1em !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: transparent !important;
-  font-size: 2.4em !important;
-  line-height: 1 !important;
-  text-decoration: none !important;
-  text-shadow: none !important;
-  overflow: visible !important;
+  font-size: 2.4em;
+  line-height: 1;
+  font-family: var(--main-font) !important;
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous,
-html.wgw-theme .nav-chapters.previous {
-  right: 5.6rem !important;
+.wgw-nav-bracket,
+.wgw-nav-slash {
+  color: #fff;
 }
 
-html.wgw-theme .mobile-nav-chapters.next,
-html.wgw-theme .nav-chapters.next {
-  right: 2rem !important;
-}
-
-html.wgw-theme .mobile-nav-chapters > *,
-html.wgw-theme .nav-chapters > * {
-  display: none !important;
-}
-
-html.wgw-theme .mobile-nav-chapters .fa-svg,
-html.wgw-theme .nav-chapters .fa-svg,
-html.wgw-theme .mobile-nav-chapters svg,
-html.wgw-theme .nav-chapters svg {
-  display: none !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous::before,
-html.wgw-theme .nav-chapters.previous::before {
-  content: "<";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wgw-nav-arrow {
   color: #ffeb3b;
-  font-family: var(--main-font) !important;
-  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous::after,
-html.wgw-theme .nav-chapters.previous::after {
-  content: "[ ";
-  position: absolute;
-  top: 50%;
-  right: calc(100% + 0.15em);
-  transform: translateY(-50%);
-  color: #fff;
-  font-family: var(--main-font) !important;
-  white-space: pre;
+.wgw-nav-arrow:hover {
+  color: #fff176;
 }
 
-html.wgw-theme .mobile-nav-chapters.next::before,
-html.wgw-theme .nav-chapters.next::before {
-  content: ">";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #ffeb3b;
-  font-family: var(--main-font) !important;
-  white-space: nowrap;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::after,
-html.wgw-theme .nav-chapters.next::after {
-  content: " ]";
-  position: absolute;
-  top: 50%;
-  left: calc(100% + 0.15em);
-  transform: translateY(-50%);
-  color: #fff;
-  font-family: var(--main-font) !important;
-  white-space: pre;
-}
-
-html.wgw-theme .mobile-nav-chapters.next,
-html.wgw-theme .nav-chapters.next {
-  color: #fff !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.next > .wgw-nav-middle,
-html.wgw-theme .nav-chapters.next > .wgw-nav-middle {
-  display: none;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::marker,
-html.wgw-theme .nav-chapters.next::marker {
-  content: "";
-}
-
-html.wgw-theme .mobile-nav-chapters.next {
-  position: fixed !important;
-}
-
-html.wgw-theme .nav-chapters.next {
-  position: fixed !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::after,
-html.wgw-theme .nav-chapters.next::after,
-html.wgw-theme .mobile-nav-chapters.next::before,
-html.wgw-theme .nav-chapters.next::before,
-html.wgw-theme .mobile-nav-chapters.previous::after,
-html.wgw-theme .nav-chapters.previous::after,
-html.wgw-theme .mobile-nav-chapters.previous::before,
-html.wgw-theme .nav-chapters.previous::before {
-  letter-spacing: 0 !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next::before,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next::before {
-  content: "/ >";
-  left: calc(-0.35em);
-  color: #fff;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next::after,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next::after {
-  content: " ]";
-}
-
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next {
-  color: transparent !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next .fa-svg,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next .fa-svg,
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next svg,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next svg {
-  display: none !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous:hover,
-html.wgw-theme .mobile-nav-chapters.previous:focus,
-html.wgw-theme .mobile-nav-chapters.next:hover,
-html.wgw-theme .mobile-nav-chapters.next:focus,
-html.wgw-theme .nav-chapters.previous:hover,
-html.wgw-theme .nav-chapters.previous:focus,
-html.wgw-theme .nav-chapters.next:hover,
-html.wgw-theme .nav-chapters.next:focus {
-  background: transparent !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous:hover::before,
-html.wgw-theme .mobile-nav-chapters.previous:focus::before,
-html.wgw-theme .mobile-nav-chapters.next:hover::before,
-html.wgw-theme .mobile-nav-chapters.next:focus::before,
-html.wgw-theme .nav-chapters.previous:hover::before,
-html.wgw-theme .nav-chapters.previous:focus::before,
-html.wgw-theme .nav-chapters.next:hover::before,
-html.wgw-theme .nav-chapters.next:focus::before {
-  color: #fff176 !important;
+.wgw-nav-disabled {
+  color: #666;
 }
 
 /* 特殊JSON / 事件语法高亮：所有主题通用 */
