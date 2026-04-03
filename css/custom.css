@@ -365,6 +365,13 @@ html.wgw-theme .sidebar .chapter li {
 html.wgw-theme .sidebar .chapter li a {
   display: block;
   padding: 0.3em 0.8em;
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+html.wgw-theme .sidebar .chapter .spacer,
+html.wgw-theme .sidebar .chapter strong {
+  color: #ffeb3b !important;
 }
 
 html.wgw-theme .content main,
@@ -378,7 +385,7 @@ html.wgw-theme .page {
 
 html.wgw-theme .sidebar-scrollbox {
   position: relative;
-  padding-right: calc(1em + 0.5rem);
+  padding-right: calc(1em + 0.9rem);
 }
 
 html.wgw-theme .sidebar-scrollbox::after {
@@ -395,6 +402,7 @@ html.wgw-theme .sidebar-scrollbox::after {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
+  animation: wgw-divider-scroll 16s linear infinite;
 }
 
 html.wgw-theme .content {
@@ -415,11 +423,21 @@ html.wgw-theme .content::before {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
+  animation: wgw-divider-scroll 16s linear infinite;
 }
 
 html.wgw-theme .content main,
 html.wgw-theme .searchresults {
-  padding-left: calc(1em + 0.6rem);
+  padding-left: calc(1em + 0.9rem);
+}
+
+@keyframes wgw-divider-scroll {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
 }
 
 /* MD标记替换为中文字符 */
@@ -504,37 +522,19 @@ html.wgw-theme h3,
 html.wgw-theme h4,
 html.wgw-theme h5,
 html.wgw-theme h6,
-html.wgw-theme h1 strong,
-html.wgw-theme h2 strong,
-html.wgw-theme h3 strong,
-html.wgw-theme h4 strong,
-html.wgw-theme h5 strong,
-html.wgw-theme h6 strong,
-html.wgw-theme h1 b,
-html.wgw-theme h2 b,
-html.wgw-theme h3 b,
-html.wgw-theme h4 b,
-html.wgw-theme h5 b,
-html.wgw-theme h6 b,
-html.wgw-theme h1 em,
-html.wgw-theme h2 em,
-html.wgw-theme h3 em,
-html.wgw-theme h4 em,
-html.wgw-theme h5 em,
-html.wgw-theme h6 em,
-html.wgw-theme h1 i,
-html.wgw-theme h2 i,
-html.wgw-theme h3 i,
-html.wgw-theme h4 i,
-html.wgw-theme h5 i,
-html.wgw-theme h6 i {
+html.wgw-theme h1 *,
+html.wgw-theme h2 *,
+html.wgw-theme h3 *,
+html.wgw-theme h4 *,
+html.wgw-theme h5 *,
+html.wgw-theme h6 * {
   color: #fff !important;
 }
 
 /* 列表标记替换 - 使用inline-block防止换行 */
 html.wgw-theme ul {
   list-style: none;
-  padding-left: 2em;
+  padding-left: 2.5em;
 }
 
 html.wgw-theme ul > li {
@@ -546,12 +546,12 @@ html.wgw-theme ul > li::before {
   font-size: 0.6em;
   font-weight: bold;
   position: absolute;
-  left: -2.6em;
+  left: -3.2em;
   top: 0.2em;
   color: #4caf50;
   font-family: var(--main-font) !important;
   display: inline-block;
-  width: 2.1em;
+  width: 2.6em;
   white-space: nowrap;
 }
 
@@ -559,12 +559,12 @@ html.wgw-theme ul ul > li::before {
   content: "（子）";
   font-size: 0.6em;
   position: absolute;
-  left: -2.6em;
+  left: -3.2em;
   top: 0.2em;
   color: #81c784;
   font-family: var(--main-font) !important;
   display: inline-block;
-  width: 2.1em;
+  width: 2.6em;
   white-space: nowrap;
 }
 
@@ -726,13 +726,35 @@ html.wgw-theme pre .clip-button .tooltiptext::before {
 
 /* 超链接高亮 */
 html.wgw-theme a {
-  color: #2196f3 !important;
-  text-decoration: underline;
+  position: relative;
+  color: #00e676 !important;
+  text-decoration: none !important;
+  display: inline-block;
+  padding: 0 0.7em;
+}
+
+html.wgw-theme a::before,
+html.wgw-theme a::after {
+  position: absolute;
+  top: 0;
+  color: #fff !important;
+  font-family: var(--main-font) !important;
+  pointer-events: none;
+}
+
+html.wgw-theme a::before {
+  content: "[";
+  left: 0;
+}
+
+html.wgw-theme a::after {
+  content: "]";
+  right: 0;
 }
 
 html.wgw-theme a:hover {
-  color: #64b5f6 !important;
-  background: rgba(33, 150, 243, 0.1) !important;
+  color: #66ffa6 !important;
+  background: transparent !important;
 }
 
 /* 引用块高亮 */
@@ -746,4 +768,39 @@ html.wgw-theme blockquote {
 
 html.wgw-theme blockquote p {
   color: #ce93d8 !important;
+}
+
+/* 特殊JSON / 事件语法高亮：所有主题通用 */
+pre code.language-json,
+pre code:not([class*="language-"]) {
+  white-space: pre-wrap;
+}
+
+pre code.language-json .hljs-meta,
+pre code:not([class*="language-"]) .hljs-meta {
+  color: #ffd54f !important;
+}
+
+pre code.language-json .hljs-string,
+pre code:not([class*="language-"]) .hljs-string {
+  color: #81c784 !important;
+}
+
+pre code.language-json .hljs-attr,
+pre code:not([class*="language-"]) .hljs-attr,
+pre code.language-json .hljs-property,
+pre code:not([class*="language-"]) .hljs-property {
+  color: #4fc3f7 !important;
+}
+
+pre code.language-json .hljs-number,
+pre code:not([class*="language-"]) .hljs-number,
+pre code.language-json .hljs-literal,
+pre code:not([class*="language-"]) .hljs-literal {
+  color: #ff8a65 !important;
+}
+
+pre code.language-json .hljs-punctuation,
+pre code:not([class*="language-"]) .hljs-punctuation {
+  color: #e0e0e0 !important;
 }
