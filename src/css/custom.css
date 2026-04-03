@@ -292,13 +292,13 @@ html.wgw-theme .search-wrapper::after {
   font-family: var(--main-font) !important;
 }
 
-/* 搜索框边框：左侧 */
-html.wgw-theme #searchbar::before {
+/* 搜索框边框：左侧 - 使用 search-wrapper 的伪元素 */
+html.wgw-theme .search-wrapper > *:first-child::before {
   content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
   position: absolute;
-  top: calc(var(--wgw-border-font-size) * -1);
+  top: 0;
   left: 0;
-  bottom: calc(var(--wgw-border-font-size) * -1);
+  bottom: 0;
   width: var(--wgw-border-font-size);
   font-size: var(--wgw-border-font-size);
   line-height: 1;
@@ -307,15 +307,16 @@ html.wgw-theme #searchbar::before {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
+  z-index: 10;
 }
 
-/* 搜索框边框：右侧 */
-html.wgw-theme #searchbar::after {
+/* 搜索框边框：右侧 - 使用 search-wrapper 的伪元素 */
+html.wgw-theme .search-wrapper > *:first-child::after {
   content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
   position: absolute;
-  top: calc(var(--wgw-border-font-size) * -1);
+  top: 0;
   right: 0;
-  bottom: calc(var(--wgw-border-font-size) * -1);
+  bottom: 0;
   width: var(--wgw-border-font-size);
   font-size: var(--wgw-border-font-size);
   line-height: 1;
@@ -324,6 +325,7 @@ html.wgw-theme #searchbar::after {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
+  z-index: 10;
 }
 
 /* 原生滚动条样式 */
@@ -357,12 +359,64 @@ html.wgw-theme .sidebar {
 
 html.wgw-theme .sidebar-scrollbox {
   padding-right: 0;
+  position: relative;
+}
+
+html.wgw-theme .sidebar .chapter {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+html.wgw-theme .sidebar .chapter li {
+  list-style: none !important;
+}
+
+html.wgw-theme .sidebar .chapter li a {
+  display: block;
+  padding: 0.3em 0.8em;
 }
 
 html.wgw-theme .content main,
 html.wgw-theme .searchresults {
   padding-right: 2em;
   position: relative;
+}
+
+/* 侧边栏卷轴滚动条 - 显示在侧边栏内容区右侧 */
+html.wgw-theme .sidebar-scrollbox::before {
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0.2em;
+  width: 1em;
+  font-size: var(--wgw-scroll-track-font-size);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 100;
+}
+
+html.wgw-theme .sidebar-scrollbox:hover::after,
+html.wgw-theme .sidebar-scrollbox:active::after {
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  right: 0.2em;
+  width: 1em;
+  font-size: var(--wgw-scroll-thumb-font-size);
+  line-height: 1;
+  color: #fff;
+  background: #000;
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 101;
 }
 
 /* 侧边栏分割线上的卷轴滚动条 */
