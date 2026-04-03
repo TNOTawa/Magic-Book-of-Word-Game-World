@@ -185,13 +185,13 @@
 <p><strong>target 取值</strong>：可以是 <code>"self"</code>（该物件本身）、<code>"player"</code>（玩家）或具体的物件名称。</p>
 <h3 id="让物件不存在"><a class="header" href="#让物件不存在">让物件不存在</a></h3>
 <p>效果和删除物件相近，让指定物件从场景中变为不存在状态。</p>
-<pre><code class="language-json">@[unexist_event] {
+<pre><code>@[unexist_event] {
     "target": "物件名称"
 }
 </code></pre>
 <h3 id="崩塌物件"><a class="header" href="#崩塌物件">崩塌物件</a></h3>
 <p>让指定物件触发垮塌动画效果。</p>
-<pre><code class="language-json">@[crash_event] {
+<pre><code>@[crash_event] {
     "target": "物件名称"
 }
 </code></pre>
@@ -225,7 +225,7 @@
 </ul>
 <h3 id="创建物件"><a class="header" href="#创建物件">创建物件</a></h3>
 <p>凭空创建一个新物件。理论上可传入多数属性，但创建出来的物件通常没有碰撞体。</p>
-<pre><code class="language-json">@[create_event] {
+<pre><code>@[create_event] {
     "text": "字面",
     "pos": [X, Y],
     "tags": "[]",
@@ -293,7 +293,7 @@
         <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../src/js/wgw-theme-48c8588e.js"></script>
+        <script src="../../src/js/wgw-theme-cfbb6528.js"></script>
 
 
 

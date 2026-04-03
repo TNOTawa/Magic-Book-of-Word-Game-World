@@ -236,33 +236,83 @@
   function highlightEventSyntax(codeElement) {
     var text = codeElement.textContent;
     
-    // 高亮规则：
-    // 1. @[event_name] - 事件名称（黄色）
-    // 2. "key": - 属性名（蓝色）
-    // 3. "value" - 字符串值（绿色）
-    // 4. 123, true, false, null - 数字和字面量（橙色）
-    // 5. # comment - 注释（灰色）
-    
-    var highlighted = text
-      // 注释（必须先处理，避免被其他规则覆盖）
-      .replace(/(#[^\n]*)/g, '<span class="hljs-comment">$1</span>')
-      // 事件名称 @[event_name]
-      .replace(/@\[([^\]]+)\]/g, '<span class="hljs-meta">@[$1]</span>')
-      // 属性名 "key":
-      .replace(/("(?:[^"\\]|\\.)*")(\s*:)/g, '<span class="hljs-attr">$1</span>$2')
-      // 字符串值（不在属性名位置的）
-      .replace(/:\s*("(?:[^"\\]|\\.)*")/g, ': <span class="hljs-string">$1</span>')
-      // 数组/对象中的字符串
-      .replace(/\[\s*("(?:[^"\\]|\\.)*")/g, '[<span class="hljs-string">$1</span>')
-      .replace(/,\s*("(?:[^"\\]|\\.)*")/g, ', <span class="hljs-string">$1</span>')
-      // 数字
-      .replace(/:\s*(-?\d+\.?\d*)/g, ': <span class="hljs-number">$1</span>')
-      .replace(/\[\s*(-?\d+\.?\d*)/g, '[<span class="hljs-number">$1</span>')
-      .replace(/,\s*(-?\d+\.?\d*)/g, ', <span class="hljs-number">$1</span>')
-      // 布尔值和null
-      .replace(/:\s*(true|false|null)\b/g, ': <span class="hljs-literal">$1</span>')
-      .replace(/\[\s*(true|false|null)\b/g, '[<span class="hljs-literal">$1</span>')
-      .replace(/,\s*(true|false|null)\b/g, ', <span class="hljs-literal">$1</span>');
+    // 使用更精确的逐行处理方式
+    var lines = text.split('\n');
+    var highlighted = lines.map(function(line) {
+      // 跳过空行
+      if (!line.trim()) {
+        return line;
+      }
+      
+      var result = line;
+      var hasEventTag = /@\[/.test(line);
+      
+      // 1. 先处理事件名称 @[event_name]（包括 @[#raw_commend] 这种情况）
+      // 注意：事件名中的 # 不是注释
+      if (hasEventTag) {
+        result = result.replace(/@\[([^\]]+)\]/g, '<span class="hljs-meta">@[$1]</span>');
+      }
+      
+      // 2. 处理注释（整行或行尾的 #，但要避免字符串内的 #）
+      // 只有在不是字符串内的 # 才是注释
+      if (!hasEventTag) {
+        result = result.replace(/^(\s*)(#[^\n]*)$/g, '$1<span class="hljs-comment">$2</span>');
+        result = result.replace(/(\s+)(#[^\n]*)$/g, '$1<span class="hljs-comment">$2</span>');
+      }
+      
+      // 3. 处理 @[event] "string" 或 @[event] true 这种单参数格式
+      result = result.replace(/<span class="hljs-meta">@\[([^\]]+)\]<\/span>(\s+)("([^"\\]|\\.)*")/g, function(match, event, sp, str) {
+        return '<span class="hljs-meta">@[' + event + ']</span>' + sp + '<span class="hljs-string">' + str + '</span>';
+      });
+      result = result.replace(/<span class="hljs-meta">@\[([^\]]+)\]<\/span>(\s+)(true|false|null)\b/g, function(match, event, sp, literal) {
+        return '<span class="hljs-meta">@[' + event + ']</span>' + sp + '<span class="hljs-literal">' + literal + '</span>';
+      });
+      result = result.replace(/<span class="hljs-meta">@\[([^\]]+)\]<\/span>(\s+)(-?\d+\.?\d*)/g, function(match, event, sp, num) {
+        return '<span class="hljs-meta">@[' + event + ']</span>' + sp + '<span class="hljs-number">' + num + '</span>';
+      });
+      
+      // 4. 处理 "key": value 格式
+      // 先匹配整个键值对，然后分别高亮
+      result = result.replace(/("([^"\\]|\\.)*")(\s*)(:)(\s*)("([^"\\]|\\.)*")/g, function(match, key, k1, sp1, colon, sp2, value) {
+        return '<span class="hljs-attr">' + key + '</span>' + sp1 + colon + sp2 + '<span class="hljs-string">' + value + '</span>';
+      });
+      
+      // 5. 处理 "key": 数字
+      result = result.replace(/("([^"\\]|\\.)*")(\s*)(:)(\s*)(-?\d+\.?\d*)/g, function(match, key, k1, sp1, colon, sp2, num) {
+        return '<span class="hljs-attr">' + key + '</span>' + sp1 + colon + sp2 + '<span class="hljs-number">' + num + '</span>';
+      });
+      
+      // 6. 处理 "key": true/false/null
+      result = result.replace(/("([^"\\]|\\.)*")(\s*)(:)(\s*)(true|false|null)\b/g, function(match, key, k1, sp1, colon, sp2, literal) {
+        return '<span class="hljs-attr">' + key + '</span>' + sp1 + colon + sp2 + '<span class="hljs-literal">' + literal + '</span>';
+      });
+      
+      // 7. 处理数组中的字符串 ["value", "value"]
+      result = result.replace(/\[(\s*)("([^"\\]|\\.)*")/g, function(match, sp, str) {
+        return '[' + sp + '<span class="hljs-string">' + str + '</span>';
+      });
+      result = result.replace(/,(\s*)("([^"\\]|\\.)*")/g, function(match, sp, str) {
+        return ',' + sp + '<span class="hljs-string">' + str + '</span>';
+      });
+      
+      // 8. 处理数组中的数字
+      result = result.replace(/\[(\s*)(-?\d+\.?\d*)/g, function(match, sp, num) {
+        return '[' + sp + '<span class="hljs-number">' + num + '</span>';
+      });
+      result = result.replace(/,(\s*)(-?\d+\.?\d*)(?=\s*[,\]])/g, function(match, sp, num) {
+        return ',' + sp + '<span class="hljs-number">' + num + '</span>';
+      });
+      
+      // 9. 处理数组中的布尔值
+      result = result.replace(/\[(\s*)(true|false|null)\b/g, function(match, sp, literal) {
+        return '[' + sp + '<span class="hljs-literal">' + literal + '</span>';
+      });
+      result = result.replace(/,(\s*)(true|false|null)\b/g, function(match, sp, literal) {
+        return ',' + sp + '<span class="hljs-literal">' + literal + '</span>';
+      });
+      
+      return result;
+    }).join('\n');
     
     codeElement.innerHTML = highlighted;
   }

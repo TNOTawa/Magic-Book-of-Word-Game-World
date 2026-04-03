@@ -195,7 +195,7 @@
 <h2 id="2-应用示例"><a class="header" href="#2-应用示例">2. 应用示例</a></h2>
 <h3 id="21-修改位置参数pos"><a class="header" href="#21-修改位置参数pos">2.1 修改位置参数（<code>pos</code>）</a></h3>
 <p>假设已定义一个名为 <code>变量X</code> 的数值变量，希望打字机事件的 X 坐标动态跟随该变量值：</p>
-<pre><code class="language-json">"pos": [
+<pre><code>"pos": [
   "v:变量X",
   0
 ]
@@ -203,19 +203,19 @@
 <p>此时，打字机文本的水平位置将实时反映 <code>变量X</code> 的当前数值。</p>
 <h3 id="22-控制遮挡逻辑is_on_top_of_player"><a class="header" href="#22-控制遮挡逻辑is_on_top_of_player">2.2 控制遮挡逻辑（<code>is_on_top_of_player</code>）</a></h3>
 <p>若希望打字机是否遮挡玩家由名为 <code>开关Y</code> 的布尔开关控制：</p>
-<pre><code class="language-json">"is_on_top_of_player": "s:开关Y"
+<pre><code>"is_on_top_of_player": "s:开关Y"
 </code></pre>
 <p>当 <code>开关Y</code> 为 <strong>开启（true）</strong> 时，打字机文本将显示在角色上方；关闭（false）时则不会遮挡。</p>
 <h3 id="23-动态显示文本内容texts"><a class="header" href="#23-动态显示文本内容texts">2.3 动态显示文本内容（<code>texts</code>）</a></h3>
 <p><strong>重要限制</strong>：打字机的 <code>texts</code> 字段<strong>不支持字符串拼接</strong>。若要显示变量或开关的值，<code>texts</code> 必须<strong>完全等于</strong>一个变量或开关的引用，不能包含其他静态文本。</p>
 <p>✅ 正确用法：</p>
-<pre><code class="language-json">"texts": "v:变量X"
+<pre><code>"texts": "v:变量X"
 </code></pre>
 <p>或</p>
-<pre><code class="language-json">"texts": "s:开关Y"
+<pre><code>"texts": "s:开关Y"
 </code></pre>
 <p>❌ 错误用法（不会按预期工作）：</p>
-<pre><code class="language-json">"texts": "当前分数：v:变量X"  // 静态文本 + 变量 → 只显示变量
+<pre><code>"texts": "当前分数：v:变量X"  // 静态文本 + 变量 → 只显示变量
 </code></pre>
 <blockquote>
 <p><strong>替代方案</strong>：如需组合静态文本与动态值，建议使用多个打字事件；或是与固定物件拼接而成。</p>
@@ -278,7 +278,7 @@
         <script src="../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../src/js/wgw-theme-48c8588e.js"></script>
+        <script src="../src/js/wgw-theme-cfbb6528.js"></script>
 
 
 

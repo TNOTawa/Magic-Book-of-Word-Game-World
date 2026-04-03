@@ -178,35 +178,35 @@
                         <h2 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h2>
 <h3 id="取消拆字规则"><a class="header" href="#取消拆字规则">取消拆字规则</a></h3>
 <p>删除指定拆字规则。</p>
-<pre><code class="language-json">@[delete_split_rule] {"from": ["拆"], "to": "手,斥"}
+<pre><code>@[delete_split_rule] {"from": ["拆"], "to": "手,斥"}
 </code></pre>
 <h3 id="取消组字规则"><a class="header" href="#取消组字规则">取消组字规则</a></h3>
 <p>删除指定组字规则。</p>
-<pre><code class="language-json">@[delete_merge_rule] {"from": "系,且", "to": "组"}
+<pre><code>@[delete_merge_rule] {"from": "系,且", "to": "组"}
 </code></pre>
 <h3 id="取消全部拆字规则"><a class="header" href="#取消全部拆字规则">取消全部拆字规则</a></h3>
 <p>清空当前已宣告的全部拆字规则。</p>
-<pre><code class="language-txt">@[clear_split_rule]
+<pre><code>@[clear_split_rule]
 </code></pre>
 <h3 id="取消全部组字规则"><a class="header" href="#取消全部组字规则">取消全部组字规则</a></h3>
 <p>清空当前已宣告的全部组字规则。</p>
-<pre><code class="language-txt">@[clear_merge_rule]
+<pre><code>@[clear_merge_rule]
 </code></pre>
 <h3 id="设置拆字规则并取消之前的拆字规则"><a class="header" href="#设置拆字规则并取消之前的拆字规则">设置拆字规则并取消之前的拆字规则</a></h3>
 <p>先清空旧拆字规则，再设置新的拆字规则。</p>
-<pre><code class="language-json">@[set_split_rule] {"from": ["拆"], "to": "手,斥"}
+<pre><code>@[set_split_rule] {"from": ["拆"], "to": "手,斥"}
 </code></pre>
 <h3 id="设置组字规则并取消之前的组字规则"><a class="header" href="#设置组字规则并取消之前的组字规则">设置组字规则并取消之前的组字规则</a></h3>
 <p>先清空旧组字规则，再设置新的组字规则。</p>
-<pre><code class="language-json">@[set_merge_rule] {"from": "系,且", "to": "组"}
+<pre><code>@[set_merge_rule] {"from": "系,且", "to": "组"}
 </code></pre>
 <h3 id="获取用户当前使用的是简体还是繁体语言"><a class="header" href="#获取用户当前使用的是简体还是繁体语言">获取用户当前使用的是简体还是繁体语言</a></h3>
 <p>用于读取当前用户语言是否为繁体中文。</p>
-<pre><code class="language-json">@[get_is_user_lang_tc] {"switch": "开关"}
+<pre><code>@[get_is_user_lang_tc] {"switch": "开关"}
 </code></pre>
 <h3 id="获取用户的简体辅助开关"><a class="header" href="#获取用户的简体辅助开关">获取用户的简体辅助开关</a></h3>
 <p>用于读取当前是否开启简体辅助。</p>
-<pre><code class="language-json">@[get_is_simplified] {"switch": "当前是否开启简体辅助"}
+<pre><code>@[get_is_simplified] {"switch": "当前是否开启简体辅助"}
 </code></pre>
 
                     </main>
@@ -260,7 +260,7 @@
         <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../src/js/wgw-theme-48c8588e.js"></script>
+        <script src="../../src/js/wgw-theme-cfbb6528.js"></script>
 
 
 

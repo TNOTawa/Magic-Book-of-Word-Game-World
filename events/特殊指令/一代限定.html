@@ -180,15 +180,15 @@
 <h2 id="设置物件自开关"><a class="header" href="#设置物件自开关">设置物件自开关</a></h2>
 <p>在关卡文件里，每个物件都有一个 <code>existCondition</code> 属性。这个属性用于检测条件是否成立，成立后才会允许该物件执行。</p>
 <p><code>existCondition</code> 示例：</p>
-<pre><code class="language-json">"existCondition": "s:开关==true &amp;&amp; self:auto==false"
+<pre><code>"existCondition": "s:开关==true &amp;&amp; self:auto==false"
 </code></pre>
 <p>其中 <code>self</code> 指自开关，后面接开关名称。</p>
-<pre><code class="language-txt">@[set_self_switch] ["开关名称", true]
+<pre><code>@[set_self_switch] ["开关名称", true]
 </code></pre>
 <p>一代中，这个魔法通常用于“开始时执行”的物件；很多开始时执行物件会带上 <code>self:auto==false</code>，避免重复触发。</p>
 <p>二代中经测试似乎没有效果，建议按需自行验证。</p>
 <h2 id="调用全局方法"><a class="header" href="#调用全局方法">调用全局方法</a></h2>
-<pre><code class="language-txt">@[call_method] {
+<pre><code>@[call_method] {
     "target": "Global",
     "target_type": "path",
     "method": "set_chapter_progress",
@@ -204,13 +204,13 @@
 <p>只是播放这个字的动画，推测是在一代使用的，二代可正常使用，但用途相对较窄。</p>
 <h3 id="拆他动画"><a class="header" href="#拆他动画">拆他动画</a></h3>
 <p>在目标物件位置播放“拆他”动画。</p>
-<pre><code class="language-json">@[unzip_animation] {
+<pre><code>@[unzip_animation] {
     "target": "物件名称"
 }
 </code></pre>
 <h3 id="组他动画"><a class="header" href="#组他动画">组他动画</a></h3>
 <p>在目标物件位置播放“组他”动画。</p>
-<pre><code class="language-json">@[zip_animation] {
+<pre><code>@[zip_animation] {
     "target": "物件名称"
 }
 </code></pre>
@@ -266,7 +266,7 @@
         <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../src/js/wgw-theme-48c8588e.js"></script>
+        <script src="../../src/js/wgw-theme-cfbb6528.js"></script>
 
 
 

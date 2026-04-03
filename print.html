@@ -445,7 +445,7 @@
 <li><code>char_type</code>：该片段使用的打字机音效（见下方 <code>char_type</code> 可选值）</li>
 </ul>
 <p>示例：</p>
-<pre><code class="language-json">"label_settings": {
+<pre><code>"label_settings": {
   "p": {
     "char_type": "poet"
   },
@@ -832,7 +832,7 @@
 <p>根据条件表达式的结果决定是否执行内部的指令序列。</p>
 <h3 id="类型一变量条件-type-var"><a class="header" href="#类型一变量条件-type-var">类型一：变量条件 <code>type: "var"</code></a></h3>
 <p>对变量的数值进行比较判断。</p>
-<pre><code class="language-json">@[if] {
+<pre><code>@[if] {
   "type": "var",
   "varOption": {
     "varId": "变量ID",
@@ -856,7 +856,7 @@
 </table>
 </div>
 <p><strong>示例：</strong></p>
-<pre><code class="language-json">@[if] {
+<pre><code>@[if] {
   "type": "var",
   "varOption": {
     "varId": "score",
@@ -867,7 +867,7 @@
 </code></pre>
 <h3 id="类型二开关条件-type-switch"><a class="header" href="#类型二开关条件-type-switch">类型二：开关条件 <code>type: "switch"</code></a></h3>
 <p>对开关（布尔）变量进行判断。</p>
-<pre><code class="language-json">@[if] {
+<pre><code>@[if] {
   "type": "switch",
   "switchOption": {
     "varId": "开关ID",
@@ -891,7 +891,7 @@
 </table>
 </div>
 <p><strong>示例：</strong></p>
-<pre><code class="language-json">@[if] {
+<pre><code>@[if] {
   "type": "switch",
   "switchOption": {
     "varId": "door_open",
@@ -1098,13 +1098,13 @@
 <p><strong>target 取值</strong>：可以是 <code>"self"</code>（该物件本身）、<code>"player"</code>（玩家）或具体的物件名称。</p>
 <h3 id="让物件不存在"><a class="header" href="#让物件不存在">让物件不存在</a></h3>
 <p>效果和删除物件相近，让指定物件从场景中变为不存在状态。</p>
-<pre><code class="language-json">@[unexist_event] {
+<pre><code>@[unexist_event] {
     "target": "物件名称"
 }
 </code></pre>
 <h3 id="崩塌物件"><a class="header" href="#崩塌物件">崩塌物件</a></h3>
 <p>让指定物件触发垮塌动画效果。</p>
-<pre><code class="language-json">@[crash_event] {
+<pre><code>@[crash_event] {
     "target": "物件名称"
 }
 </code></pre>
@@ -1138,7 +1138,7 @@
 </ul>
 <h3 id="创建物件"><a class="header" href="#创建物件">创建物件</a></h3>
 <p>凭空创建一个新物件。理论上可传入多数属性，但创建出来的物件通常没有碰撞体。</p>
-<pre><code class="language-json">@[create_event] {
+<pre><code>@[create_event] {
     "text": "字面",
     "pos": [X, Y],
     "tags": "[]",
@@ -1319,7 +1319,7 @@
 <h1 id="位移补间动画-1"><a href="#位移补间动画-1" class="header">位移补间动画</a></h1>
 <h2 id="位移补间动画"><a class="header" href="#位移补间动画">位移补间动画</a></h2>
 <p>用于平滑过渡物件参数的动画指令，可以控制位置、透明度、缩放等属性的变化。</p>
-<pre><code class="language-json">@[tween_parameter] {
+<pre><code>@[tween_parameter] {
     "target": "物件名称",
     "parameter": "参数路径",
     "add": 0,
@@ -1356,11 +1356,11 @@
 </ul>
 <h3 id="停止位移补间动画"><a class="header" href="#停止位移补间动画">停止位移补间动画</a></h3>
 <p>用于中断当前正在执行的 <code>@[tween_parameter]</code> 动画。</p>
-<pre><code class="language-txt">@[stop_tween_parameter]
+<pre><code>@[stop_tween_parameter]
 </code></pre>
 <h3 id="示例"><a class="header" href="#示例">示例</a></h3>
 <h4 id="上下弹跳效果"><a class="header" href="#上下弹跳效果">上下弹跳效果</a></h4>
-<pre><code class="language-json">@[tween_parameter] {
+<pre><code>@[tween_parameter] {
     "target": "物件A",
     "parameter": "position:y",
     "add": -120,
@@ -1382,7 +1382,7 @@
 </code></pre>
 <p>这两个指令先后执行，会让物件先向上移动 120 像素（缓出），再向下移动 120 像素（缓入），形成弹跳感。</p>
 <h4 id="淡出并缩小"><a class="header" href="#淡出并缩小">淡出并缩小</a></h4>
-<pre><code class="language-json">@[tween_parameter] {
+<pre><code>@[tween_parameter] {
     "target": "物件B",
     "parameter": "opacity",
     "value": 0,
@@ -1496,7 +1496,7 @@
 </ul>
 <h3 id="物件颤抖"><a class="header" href="#物件颤抖">物件颤抖</a></h3>
 <p>让物件在一段时间内反复抖动。常见于剧情演出场景。</p>
-<pre><code class="language-json">@[shake_event] {
+<pre><code>@[shake_event] {
     "frame": 300,
     "distance": 10
 }
@@ -1627,7 +1627,7 @@
 </code></pre>
 <h3 id="设置地图环境音"><a class="header" href="#设置地图环境音">设置地图环境音</a></h3>
 <p>为指定地图设置环境音与过渡方式。</p>
-<pre><code class="language-json">@[set_map_env] {
+<pre><code>@[set_map_env] {
     "map": "地图名",
     "has_bgm": true,
     "bgm_path": "res://Sounds/bgm/ch1/BGM_title.ogg",
@@ -1711,7 +1711,7 @@
 </ul>
 <h3 id="设置地图-bgm"><a class="header" href="#设置地图-bgm">设置地图 BGM</a></h3>
 <p>为指定地图设置背景音乐与过渡方式。</p>
-<pre><code class="language-json">@[set_map_bgm] {
+<pre><code>@[set_map_bgm] {
   "map": "地图名",
   "has_bgm": true,
   "bgm_path": "res://Sounds/bgm/ch1/BGM_title.ogg",
@@ -1730,35 +1730,35 @@
 <h2 id="游戏机制-1"><a class="header" href="#游戏机制-1">游戏机制</a></h2>
 <h3 id="取消拆字规则"><a class="header" href="#取消拆字规则">取消拆字规则</a></h3>
 <p>删除指定拆字规则。</p>
-<pre><code class="language-json">@[delete_split_rule] {"from": ["拆"], "to": "手,斥"}
+<pre><code>@[delete_split_rule] {"from": ["拆"], "to": "手,斥"}
 </code></pre>
 <h3 id="取消组字规则"><a class="header" href="#取消组字规则">取消组字规则</a></h3>
 <p>删除指定组字规则。</p>
-<pre><code class="language-json">@[delete_merge_rule] {"from": "系,且", "to": "组"}
+<pre><code>@[delete_merge_rule] {"from": "系,且", "to": "组"}
 </code></pre>
 <h3 id="取消全部拆字规则"><a class="header" href="#取消全部拆字规则">取消全部拆字规则</a></h3>
 <p>清空当前已宣告的全部拆字规则。</p>
-<pre><code class="language-txt">@[clear_split_rule]
+<pre><code>@[clear_split_rule]
 </code></pre>
 <h3 id="取消全部组字规则"><a class="header" href="#取消全部组字规则">取消全部组字规则</a></h3>
 <p>清空当前已宣告的全部组字规则。</p>
-<pre><code class="language-txt">@[clear_merge_rule]
+<pre><code>@[clear_merge_rule]
 </code></pre>
 <h3 id="设置拆字规则并取消之前的拆字规则"><a class="header" href="#设置拆字规则并取消之前的拆字规则">设置拆字规则并取消之前的拆字规则</a></h3>
 <p>先清空旧拆字规则，再设置新的拆字规则。</p>
-<pre><code class="language-json">@[set_split_rule] {"from": ["拆"], "to": "手,斥"}
+<pre><code>@[set_split_rule] {"from": ["拆"], "to": "手,斥"}
 </code></pre>
 <h3 id="设置组字规则并取消之前的组字规则"><a class="header" href="#设置组字规则并取消之前的组字规则">设置组字规则并取消之前的组字规则</a></h3>
 <p>先清空旧组字规则，再设置新的组字规则。</p>
-<pre><code class="language-json">@[set_merge_rule] {"from": "系,且", "to": "组"}
+<pre><code>@[set_merge_rule] {"from": "系,且", "to": "组"}
 </code></pre>
 <h3 id="获取用户当前使用的是简体还是繁体语言"><a class="header" href="#获取用户当前使用的是简体还是繁体语言">获取用户当前使用的是简体还是繁体语言</a></h3>
 <p>用于读取当前用户语言是否为繁体中文。</p>
-<pre><code class="language-json">@[get_is_user_lang_tc] {"switch": "开关"}
+<pre><code>@[get_is_user_lang_tc] {"switch": "开关"}
 </code></pre>
 <h3 id="获取用户的简体辅助开关"><a class="header" href="#获取用户的简体辅助开关">获取用户的简体辅助开关</a></h3>
 <p>用于读取当前是否开启简体辅助。</p>
-<pre><code class="language-json">@[get_is_simplified] {"switch": "当前是否开启简体辅助"}
+<pre><code>@[get_is_simplified] {"switch": "当前是否开启简体辅助"}
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="子事件-1"><a href="#子事件-1" class="header">子事件</a></h1>
@@ -1820,19 +1820,19 @@
 <h2 id="系统-1"><a class="header" href="#系统-1">系统</a></h2>
 <h3 id="返回标题界面"><a class="header" href="#返回标题界面">返回标题界面</a></h3>
 <p>直接退出当前流程并返回标题界面。</p>
-<pre><code class="language-txt">@[return_to_title_screen]
+<pre><code>@[return_to_title_screen]
 </code></pre>
 <h3 id="直接退出游戏"><a class="header" href="#直接退出游戏">直接退出游戏</a></h3>
 <p>快速关闭游戏流程。</p>
-<pre><code class="language-txt">@[quit_game]
+<pre><code>@[quit_game]
 </code></pre>
 <h3 id="设置成就完成"><a class="header" href="#设置成就完成">设置成就完成</a></h3>
 <p>将指定成就状态设为已完成。</p>
-<pre><code class="language-txt">@[set_achievement]
+<pre><code>@[set_achievement]
 </code></pre>
 <h3 id="清除成就完成状态"><a class="header" href="#清除成就完成状态">清除成就完成状态</a></h3>
 <p>将指定成就状态清除为未完成。</p>
-<pre><code class="language-txt">@[clear_achievement]
+<pre><code>@[clear_achievement]
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="一代限定-1"><a href="#一代限定-1" class="header">一代限定</a></h1>
@@ -1841,15 +1841,15 @@
 <h2 id="设置物件自开关"><a class="header" href="#设置物件自开关">设置物件自开关</a></h2>
 <p>在关卡文件里，每个物件都有一个 <code>existCondition</code> 属性。这个属性用于检测条件是否成立，成立后才会允许该物件执行。</p>
 <p><code>existCondition</code> 示例：</p>
-<pre><code class="language-json">"existCondition": "s:开关==true &amp;&amp; self:auto==false"
+<pre><code>"existCondition": "s:开关==true &amp;&amp; self:auto==false"
 </code></pre>
 <p>其中 <code>self</code> 指自开关，后面接开关名称。</p>
-<pre><code class="language-txt">@[set_self_switch] ["开关名称", true]
+<pre><code>@[set_self_switch] ["开关名称", true]
 </code></pre>
 <p>一代中，这个魔法通常用于“开始时执行”的物件；很多开始时执行物件会带上 <code>self:auto==false</code>，避免重复触发。</p>
 <p>二代中经测试似乎没有效果，建议按需自行验证。</p>
 <h2 id="调用全局方法"><a class="header" href="#调用全局方法">调用全局方法</a></h2>
-<pre><code class="language-txt">@[call_method] {
+<pre><code>@[call_method] {
     "target": "Global",
     "target_type": "path",
     "method": "set_chapter_progress",
@@ -1865,13 +1865,13 @@
 <p>只是播放这个字的动画，推测是在一代使用的，二代可正常使用，但用途相对较窄。</p>
 <h3 id="拆他动画"><a class="header" href="#拆他动画">拆他动画</a></h3>
 <p>在目标物件位置播放“拆他”动画。</p>
-<pre><code class="language-json">@[unzip_animation] {
+<pre><code>@[unzip_animation] {
     "target": "物件名称"
 }
 </code></pre>
 <h3 id="组他动画"><a class="header" href="#组他动画">组他动画</a></h3>
 <p>在目标物件位置播放“组他”动画。</p>
-<pre><code class="language-json">@[zip_animation] {
+<pre><code>@[zip_animation] {
     "target": "物件名称"
 }
 </code></pre>
@@ -1896,7 +1896,7 @@
 <h2 id="2-应用示例"><a class="header" href="#2-应用示例">2. 应用示例</a></h2>
 <h3 id="21-修改位置参数pos"><a class="header" href="#21-修改位置参数pos">2.1 修改位置参数（<code>pos</code>）</a></h3>
 <p>假设已定义一个名为 <code>变量X</code> 的数值变量，希望打字机事件的 X 坐标动态跟随该变量值：</p>
-<pre><code class="language-json">"pos": [
+<pre><code>"pos": [
   "v:变量X",
   0
 ]
@@ -1904,19 +1904,19 @@
 <p>此时，打字机文本的水平位置将实时反映 <code>变量X</code> 的当前数值。</p>
 <h3 id="22-控制遮挡逻辑is_on_top_of_player"><a class="header" href="#22-控制遮挡逻辑is_on_top_of_player">2.2 控制遮挡逻辑（<code>is_on_top_of_player</code>）</a></h3>
 <p>若希望打字机是否遮挡玩家由名为 <code>开关Y</code> 的布尔开关控制：</p>
-<pre><code class="language-json">"is_on_top_of_player": "s:开关Y"
+<pre><code>"is_on_top_of_player": "s:开关Y"
 </code></pre>
 <p>当 <code>开关Y</code> 为 <strong>开启（true）</strong> 时，打字机文本将显示在角色上方；关闭（false）时则不会遮挡。</p>
 <h3 id="23-动态显示文本内容texts"><a class="header" href="#23-动态显示文本内容texts">2.3 动态显示文本内容（<code>texts</code>）</a></h3>
 <p><strong>重要限制</strong>：打字机的 <code>texts</code> 字段<strong>不支持字符串拼接</strong>。若要显示变量或开关的值，<code>texts</code> 必须<strong>完全等于</strong>一个变量或开关的引用，不能包含其他静态文本。</p>
 <p>✅ 正确用法：</p>
-<pre><code class="language-json">"texts": "v:变量X"
+<pre><code>"texts": "v:变量X"
 </code></pre>
 <p>或</p>
-<pre><code class="language-json">"texts": "s:开关Y"
+<pre><code>"texts": "s:开关Y"
 </code></pre>
 <p>❌ 错误用法（不会按预期工作）：</p>
-<pre><code class="language-json">"texts": "当前分数：v:变量X"  // 静态文本 + 变量 → 只显示变量
+<pre><code>"texts": "当前分数：v:变量X"  // 静态文本 + 变量 → 只显示变量
 </code></pre>
 <blockquote>
 <p><strong>替代方案</strong>：如需组合静态文本与动态值，建议使用多个打字事件；或是与固定物件拼接而成。</p>
@@ -1971,7 +1971,7 @@
 <li>在本段指令后接上你自己的切换地图逻辑。</li>
 </ul>
 <h3 id="完整指令块"><a class="header" href="#完整指令块">完整指令块</a></h3>
-<pre><code class="language-text">@[play_se] {"path":"res://Sounds/se/第一章 音效/SE_1_3_door_open.wav"}
+<pre><code>@[play_se] {"path":"res://Sounds/se/第一章 音效/SE_1_3_door_open.wav"}
 @[play_sprite_animation] {"frame_count":30,"path":"res://Sprites/door/door_open.png","time_sec":1}
 @[wait] 10
 @[move_route] {"target":"Player","wait":true}
@@ -1999,7 +1999,7 @@
 </li>
 </ul>
 <h3 id="完整指令块-1"><a class="header" href="#完整指令块-1">完整指令块</a></h3>
-<pre><code class="language-text">@[type] {
+<pre><code>@[type] {
     "texts": "动{'name':'推字动画','tags': ['动画']}",
     "pos": [5,5],
     "tags": ["推字"],
@@ -2035,7 +2035,7 @@
 </ul>
 </blockquote>
 <h2 id="隐藏-se-音频路径"><a class="header" href="#隐藏-se-音频路径">隐藏 SE 音频路径</a></h2>
-<pre><code class="language-text">##  以下是文字游戏世界隐藏的所有se音频的路径:
+<pre><code>##  以下是文字游戏世界隐藏的所有se音频的路径:
 ##  仅包含文字游戏世界无法直接在事件里找到的音频
 
 se_未知UI音效
@@ -2352,7 +2352,7 @@ res://Sounds/se/zip_1.wav
 
 </code></pre>
 <h2 id="隐藏-bgm-音频路径"><a class="header" href="#隐藏-bgm-音频路径">隐藏 BGM 音频路径</a></h2>
-<pre><code class="language-text">##  以下是文字游戏世界隐藏的所有bgm音频的路径:
+<pre><code>##  以下是文字游戏世界隐藏的所有bgm音频的路径:
 ##  仅包含文字游戏世界无法直接在事件里找到的音频
 
 bgm_⟪文字游戏⟫
@@ -2372,7 +2372,7 @@ res://Sounds/bgm/ch1/BGM_title.ogg
 </ul>
 </blockquote>
 <h2 id="隐藏动画路径"><a class="header" href="#隐藏动画路径">隐藏动画路径</a></h2>
-<pre><code class="language-text">##  以下是文字游戏世界所有动画的路径:
+<pre><code>##  以下是文字游戏世界所有动画的路径:
 ##  循环动画会在前面标记"$",
 ##  一次性动画则标记"#",
 ##  静态图片则标记"/",
@@ -6300,7 +6300,7 @@ $一堆数字0-9:{"frame_count":10,"path":"res://Sprites/number/number.png","tim
         <script src="book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="src/js/wgw-theme-48c8588e.js"></script>
+        <script src="src/js/wgw-theme-cfbb6528.js"></script>
 
         <script>
         window.addEventListener('load', function() {

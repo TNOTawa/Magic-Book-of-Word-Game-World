@@ -177,7 +177,7 @@
                     <main>
                         <h2 id="位移补间动画"><a class="header" href="#位移补间动画">位移补间动画</a></h2>
 <p>用于平滑过渡物件参数的动画指令，可以控制位置、透明度、缩放等属性的变化。</p>
-<pre><code class="language-json">@[tween_parameter] {
+<pre><code>@[tween_parameter] {
     "target": "物件名称",
     "parameter": "参数路径",
     "add": 0,
@@ -214,11 +214,11 @@
 </ul>
 <h3 id="停止位移补间动画"><a class="header" href="#停止位移补间动画">停止位移补间动画</a></h3>
 <p>用于中断当前正在执行的 <code>@[tween_parameter]</code> 动画。</p>
-<pre><code class="language-txt">@[stop_tween_parameter]
+<pre><code>@[stop_tween_parameter]
 </code></pre>
 <h3 id="示例"><a class="header" href="#示例">示例</a></h3>
 <h4 id="上下弹跳效果"><a class="header" href="#上下弹跳效果">上下弹跳效果</a></h4>
-<pre><code class="language-json">@[tween_parameter] {
+<pre><code>@[tween_parameter] {
     "target": "物件A",
     "parameter": "position:y",
     "add": -120,
@@ -240,7 +240,7 @@
 </code></pre>
 <p>这两个指令先后执行，会让物件先向上移动 120 像素（缓出），再向下移动 120 像素（缓入），形成弹跳感。</p>
 <h4 id="淡出并缩小"><a class="header" href="#淡出并缩小">淡出并缩小</a></h4>
-<pre><code class="language-json">@[tween_parameter] {
+<pre><code>@[tween_parameter] {
     "target": "物件B",
     "parameter": "opacity",
     "value": 0,
@@ -312,7 +312,7 @@
         <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../src/js/wgw-theme-48c8588e.js"></script>
+        <script src="../../src/js/wgw-theme-cfbb6528.js"></script>
 
 
 
