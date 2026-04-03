@@ -385,58 +385,48 @@ html.wgw-theme .page {
 
 html.wgw-theme .sidebar-scrollbox {
   position: relative;
-  padding-right: calc(1em + 0.9rem);
-}
-
-html.wgw-theme .sidebar-scrollbox::after {
-  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
-  position: absolute;
-  top: 0;
-  right: 0.2rem;
-  bottom: 0;
-  width: 1em;
-  font-size: var(--wgw-divider-font-size);
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.28);
-  white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
-  animation: wgw-divider-scroll 16s linear infinite;
 }
 
 html.wgw-theme .content {
   position: relative;
 }
 
-html.wgw-theme .content::before {
-  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
-  position: absolute;
-  top: 0;
-  left: 0.2rem;
-  bottom: 0;
+html.wgw-theme .page::after {
+  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
+  position: fixed;
+  top: -30vh;
+  left: var(--sidebar-width, 300px);
+  transform: translateX(-50%) translateY(0);
+  height: 160vh;
   width: 1em;
   font-size: var(--wgw-divider-font-size);
   line-height: 1;
-  color: rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.22);
   white-space: pre;
   overflow: hidden;
   pointer-events: none;
+  user-select: none;
+  z-index: 0;
   font-family: var(--main-font) !important;
-  animation: wgw-divider-scroll 16s linear infinite;
+  animation: wgw-divider-scroll 90s linear infinite;
+  will-change: transform;
 }
 
+html.wgw-theme .sidebar,
+html.wgw-theme .content,
 html.wgw-theme .content main,
-html.wgw-theme .searchresults {
-  padding-left: calc(1em + 0.9rem);
+html.wgw-theme .searchresults,
+html.wgw-theme .menu-bar {
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes wgw-divider-scroll {
   from {
-    transform: translateY(100%);
+    transform: translateX(-50%) translateY(0);
   }
   to {
-    transform: translateY(-100%);
+    transform: translateX(-50%) translateY(-50%);
   }
 }
 
@@ -724,8 +714,13 @@ html.wgw-theme pre .clip-button .tooltiptext::before {
   color: #fff !important;
 }
 
-/* 超链接高亮 */
-html.wgw-theme a {
+/* 正文超链接高亮 */
+html.wgw-theme .content main p > a,
+html.wgw-theme .content main li > a,
+html.wgw-theme .content main blockquote p > a,
+html.wgw-theme .content main td > a,
+html.wgw-theme .content main th > a,
+html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters) {
   position: relative;
   color: #00e676 !important;
   text-decoration: none !important;
@@ -733,8 +728,18 @@ html.wgw-theme a {
   padding: 0 0.7em;
 }
 
-html.wgw-theme a::before,
-html.wgw-theme a::after {
+html.wgw-theme .content main p > a::before,
+html.wgw-theme .content main li > a::before,
+html.wgw-theme .content main blockquote p > a::before,
+html.wgw-theme .content main td > a::before,
+html.wgw-theme .content main th > a::before,
+html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters)::before,
+html.wgw-theme .content main p > a::after,
+html.wgw-theme .content main li > a::after,
+html.wgw-theme .content main blockquote p > a::after,
+html.wgw-theme .content main td > a::after,
+html.wgw-theme .content main th > a::after,
+html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters)::after {
   position: absolute;
   top: 0;
   color: #fff !important;
@@ -742,17 +747,32 @@ html.wgw-theme a::after {
   pointer-events: none;
 }
 
-html.wgw-theme a::before {
+html.wgw-theme .content main p > a::before,
+html.wgw-theme .content main li > a::before,
+html.wgw-theme .content main blockquote p > a::before,
+html.wgw-theme .content main td > a::before,
+html.wgw-theme .content main th > a::before,
+html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters)::before {
   content: "[";
   left: 0;
 }
 
-html.wgw-theme a::after {
+html.wgw-theme .content main p > a::after,
+html.wgw-theme .content main li > a::after,
+html.wgw-theme .content main blockquote p > a::after,
+html.wgw-theme .content main td > a::after,
+html.wgw-theme .content main th > a::after,
+html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters)::after {
   content: "]";
   right: 0;
 }
 
-html.wgw-theme a:hover {
+html.wgw-theme .content main p > a:hover,
+html.wgw-theme .content main li > a:hover,
+html.wgw-theme .content main blockquote p > a:hover,
+html.wgw-theme .content main td > a:hover,
+html.wgw-theme .content main th > a:hover,
+html.wgw-theme .searchresults .searchresults-outer a:not(.mobile-nav-chapters):hover {
   color: #66ffa6 !important;
   background: transparent !important;
 }
@@ -768,6 +788,81 @@ html.wgw-theme blockquote {
 
 html.wgw-theme blockquote p {
   color: #ce93d8 !important;
+}
+
+/* 移动端章节导航 */
+html.wgw-theme .mobile-nav-chapters {
+  position: fixed !important;
+  bottom: 1rem !important;
+  top: auto !important;
+  z-index: 20;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #ffeb3b !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  width: auto !important;
+  font-size: 1.5em !important;
+  line-height: 1;
+  text-shadow: 1px 1px 0 #000;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous {
+  right: 3.2rem !important;
+}
+
+html.wgw-theme .mobile-nav-chapters.next {
+  right: 1rem !important;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous::before {
+  content: "[";
+  position: absolute;
+  left: -0.65em;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+}
+
+html.wgw-theme .mobile-nav-chapters.next::after {
+  content: "]";
+  position: absolute;
+  right: -0.65em;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous::after {
+  content: "/";
+  position: absolute;
+  right: -0.55em;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous .fa-svg,
+html.wgw-theme .mobile-nav-chapters.next .fa-svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous svg,
+html.wgw-theme .mobile-nav-chapters.next svg {
+  width: 0.7em;
+  height: 0.7em;
+  fill: currentColor;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous:hover,
+html.wgw-theme .mobile-nav-chapters.next:hover,
+html.wgw-theme .mobile-nav-chapters.previous:focus,
+html.wgw-theme .mobile-nav-chapters.next:focus {
+  color: #fff176 !important;
+  background: transparent !important;
 }
 
 /* 特殊JSON / 事件语法高亮：所有主题通用 */
