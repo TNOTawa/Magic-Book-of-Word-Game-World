@@ -205,21 +205,12 @@ html.wgw-theme pre code::after {
   font-family: var(--main-font) !important;
 }
 
-/* 代码高亮统一为白色 */
+/* 代码高亮基础样式 - 不包括事件语法的特殊高亮 */
 html.wgw-theme .hljs,
 html.wgw-theme .hljs-subst,
-html.wgw-theme .language-json,
-html.wgw-theme code.language-json,
-html.wgw-theme .hljs-attr,
-html.wgw-theme .hljs-string,
-html.wgw-theme .hljs-number,
-html.wgw-theme .hljs-literal,
-html.wgw-theme .hljs-punctuation,
 html.wgw-theme .hljs-brace,
 html.wgw-theme .hljs-symbol,
-html.wgw-theme .hljs-comment,
-html.wgw-theme .hljs-name,
-html.wgw-theme .hljs-property {
+html.wgw-theme .hljs-name {
   color: #fff !important;
   background: transparent !important;
 }
@@ -623,14 +614,47 @@ html.wgw-theme pre code:not([class*="language-"]) {
   color: #00e676 !important;
 }
 
-/* 无语言时按JSON样式处理 */
+/* WGW主题事件语法高亮 */
+/* 事件名称 @[event_name] - 黄色 */
+html.wgw-theme pre code.language-json .hljs-meta,
+html.wgw-theme pre code:not([class*="language-"]) .hljs-meta {
+  color: #ffd54f !important;
+  font-weight: bold;
+}
+
+/* 字符串值 - 绿色 */
+html.wgw-theme pre code.language-json .hljs-string,
+html.wgw-theme pre code:not([class*="language-"]) .hljs-string {
+  color: #81c784 !important;
+}
+
+/* 属性名 - 蓝色 */
+html.wgw-theme pre code.language-json .hljs-attr,
 html.wgw-theme pre code:not([class*="language-"]) .hljs-attr,
-html.wgw-theme pre code:not([class*="language-"]) .hljs-string,
-html.wgw-theme pre code:not([class*="language-"]) .hljs-number,
-html.wgw-theme pre code:not([class*="language-"]) .hljs-literal,
-html.wgw-theme pre code:not([class*="language-"]) .hljs-punctuation,
+html.wgw-theme pre code.language-json .hljs-property,
 html.wgw-theme pre code:not([class*="language-"]) .hljs-property {
-  color: #00e676 !important;
+  color: #4fc3f7 !important;
+}
+
+/* 数字和字面量 - 橙色 */
+html.wgw-theme pre code.language-json .hljs-number,
+html.wgw-theme pre code:not([class*="language-"]) .hljs-number,
+html.wgw-theme pre code.language-json .hljs-literal,
+html.wgw-theme pre code:not([class*="language-"]) .hljs-literal {
+  color: #ff8a65 !important;
+}
+
+/* 注释 - 灰色 */
+html.wgw-theme pre code.language-json .hljs-comment,
+html.wgw-theme pre code:not([class*="language-"]) .hljs-comment {
+  color: #757575 !important;
+  font-style: italic;
+}
+
+/* 标点符号 - 浅灰 */
+html.wgw-theme pre code.language-json .hljs-punctuation,
+html.wgw-theme pre code:not([class*="language-"]) .hljs-punctuation {
+  color: #e0e0e0 !important;
 }
 
 /* 代码块复制按钮中文化 */
