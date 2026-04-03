@@ -232,6 +232,57 @@
     }
   }
 
+  // 语法高亮：处理事件指令格式（JSON变种）
+  function highlightEventSyntax(codeElement) {
+    var text = codeElement.textContent;
+    
+    // 高亮规则：
+    // 1. @[event_name] - 事件名称（黄色）
+    // 2. "key": - 属性名（蓝色）
+    // 3. "value" - 字符串值（绿色）
+    // 4. 123, true, false, null - 数字和字面量（橙色）
+    // 5. # comment - 注释（灰色）
+    
+    var highlighted = text
+      // 注释（必须先处理，避免被其他规则覆盖）
+      .replace(/(#[^\n]*)/g, '<span class="hljs-comment">$1</span>')
+      // 事件名称 @[event_name]
+      .replace(/@\[([^\]]+)\]/g, '<span class="hljs-meta">@[$1]</span>')
+      // 属性名 "key":
+      .replace(/("(?:[^"\\]|\\.)*")(\s*:)/g, '<span class="hljs-attr">$1</span>$2')
+      // 字符串值（不在属性名位置的）
+      .replace(/:\s*("(?:[^"\\]|\\.)*")/g, ': <span class="hljs-string">$1</span>')
+      // 数组/对象中的字符串
+      .replace(/\[\s*("(?:[^"\\]|\\.)*")/g, '[<span class="hljs-string">$1</span>')
+      .replace(/,\s*("(?:[^"\\]|\\.)*")/g, ', <span class="hljs-string">$1</span>')
+      // 数字
+      .replace(/:\s*(-?\d+\.?\d*)/g, ': <span class="hljs-number">$1</span>')
+      .replace(/\[\s*(-?\d+\.?\d*)/g, '[<span class="hljs-number">$1</span>')
+      .replace(/,\s*(-?\d+\.?\d*)/g, ', <span class="hljs-number">$1</span>')
+      // 布尔值和null
+      .replace(/:\s*(true|false|null)\b/g, ': <span class="hljs-literal">$1</span>')
+      .replace(/\[\s*(true|false|null)\b/g, '[<span class="hljs-literal">$1</span>')
+      .replace(/,\s*(true|false|null)\b/g, ', <span class="hljs-literal">$1</span>');
+    
+    codeElement.innerHTML = highlighted;
+  }
+
+  // 初始化代码高亮
+  function initCodeHighlight() {
+    // 处理所有未指定语言的代码块和JSON代码块
+    var codeBlocks = document.querySelectorAll('pre code:not([class*="language-"]), pre code.language-json');
+    
+    codeBlocks.forEach(function(codeElement) {
+      // 避免重复处理
+      if (codeElement.dataset.wgwHighlighted === 'true') {
+        return;
+      }
+      
+      codeElement.dataset.wgwHighlighted = 'true';
+      highlightEventSyntax(codeElement);
+    });
+  }
+
   // 初始化复制按钮
   function initCopyButtons() {
     var buttons = document.querySelectorAll('pre .clip-button');
@@ -302,6 +353,7 @@
     initDivider();
     fixSidebarSpacing();
     initCopyButtons();
+    initCodeHighlight();
   }
 
   // 页面加载完成后执行
@@ -311,12 +363,14 @@
       initDivider();
       fixSidebarSpacing();
       initCopyButtons();
+      initCodeHighlight();
     });
   } else {
     renderNavButtons();
     initDivider();
     fixSidebarSpacing();
     initCopyButtons();
+    initCodeHighlight();
   }
 
   // 监听主题变化
