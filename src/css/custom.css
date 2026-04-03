@@ -406,12 +406,13 @@ html.wgw-theme .page::after {
   overflow: hidden;
   pointer-events: none;
   user-select: none;
-  z-index: 0;
+  z-index: -1;
   font-family: var(--main-font) !important;
   animation: wgw-divider-scroll 90s linear infinite;
   will-change: transform;
 }
 
+html.wgw-theme .page,
 html.wgw-theme .sidebar,
 html.wgw-theme .content,
 html.wgw-theme .content main,
@@ -790,11 +791,13 @@ html.wgw-theme blockquote p {
   color: #ce93d8 !important;
 }
 
-/* 移动端章节导航 */
-html.wgw-theme .mobile-nav-chapters {
+/* 章节导航按钮：移动端与桌面端统一右下角 */
+html.wgw-theme .mobile-nav-chapters,
+html.wgw-theme .nav-chapters {
   position: fixed !important;
   bottom: 1rem !important;
   top: auto !important;
+  left: auto !important;
   z-index: 20;
   background: transparent !important;
   border: 0 !important;
@@ -802,67 +805,92 @@ html.wgw-theme .mobile-nav-chapters {
   color: #ffeb3b !important;
   padding: 0 !important;
   min-height: 0 !important;
-  width: auto !important;
+  width: 1em !important;
+  height: 1em !important;
   font-size: 1.5em !important;
   line-height: 1;
   text-shadow: 1px 1px 0 #000;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous {
-  right: 3.2rem !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.next {
-  right: 1rem !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous::before {
-  content: "[";
-  position: absolute;
-  left: -0.65em;
-  top: 0;
-  color: #fff;
-  pointer-events: none;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::after {
-  content: "]";
-  position: absolute;
-  right: -0.65em;
-  top: 0;
-  color: #fff;
-  pointer-events: none;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous::after {
-  content: "/";
-  position: absolute;
-  right: -0.55em;
-  top: 0;
-  color: #fff;
-  pointer-events: none;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous .fa-svg,
-html.wgw-theme .mobile-nav-chapters.next .fa-svg {
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous svg,
-html.wgw-theme .mobile-nav-chapters.next svg {
+html.wgw-theme .mobile-nav-chapters.previous,
+html.wgw-theme .nav-chapters.previous {
+  right: 4rem !important;
+}
+
+html.wgw-theme .mobile-nav-chapters.next,
+html.wgw-theme .nav-chapters.next {
+  right: 1rem !important;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous::before,
+html.wgw-theme .nav-chapters.previous::before {
+  content: "[";
+  position: absolute;
+  left: -1em;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous::after,
+html.wgw-theme .nav-chapters.previous::after {
+  content: "/";
+  position: absolute;
+  right: -1em;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+}
+
+html.wgw-theme .mobile-nav-chapters.next::after,
+html.wgw-theme .nav-chapters.next::after {
+  content: "]";
+  position: absolute;
+  right: -1em;
+  top: 0;
+  color: #fff;
+  pointer-events: none;
+}
+
+html.wgw-theme .mobile-nav-chapters .fa-svg,
+html.wgw-theme .nav-chapters .fa-svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffeb3b !important;
+}
+
+html.wgw-theme .mobile-nav-chapters svg,
+html.wgw-theme .nav-chapters svg {
   width: 0.7em;
   height: 0.7em;
-  fill: currentColor;
+  fill: #ffeb3b !important;
 }
 
 html.wgw-theme .mobile-nav-chapters.previous:hover,
 html.wgw-theme .mobile-nav-chapters.next:hover,
 html.wgw-theme .mobile-nav-chapters.previous:focus,
-html.wgw-theme .mobile-nav-chapters.next:focus {
+html.wgw-theme .mobile-nav-chapters.next:focus,
+html.wgw-theme .nav-chapters.previous:hover,
+html.wgw-theme .nav-chapters.next:hover,
+html.wgw-theme .nav-chapters.previous:focus,
+html.wgw-theme .nav-chapters.next:focus {
   color: #fff176 !important;
   background: transparent !important;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous:hover svg,
+html.wgw-theme .mobile-nav-chapters.next:hover svg,
+html.wgw-theme .mobile-nav-chapters.previous:focus svg,
+html.wgw-theme .mobile-nav-chapters.next:focus svg,
+html.wgw-theme .nav-chapters.previous:hover svg,
+html.wgw-theme .nav-chapters.next:hover svg,
+html.wgw-theme .nav-chapters.previous:focus svg,
+html.wgw-theme .nav-chapters.next:focus svg {
+  fill: #fff176 !important;
 }
 
 /* 特殊JSON / 事件语法高亮：所有主题通用 */
