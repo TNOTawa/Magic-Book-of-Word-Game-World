@@ -10,6 +10,9 @@
   --wgw-border-font-size: 10px;
   --wgw-scroll-track-font-size: 20px;
   --wgw-scroll-thumb-font-size: 24px;
+  --wgw-divider-font-size: 20px;
+  --wgw-title-mark-color: #ffeb3b;
+  --wgw-title-mark-muted: #fff3a6;
 }
 
 html,
@@ -348,6 +351,7 @@ html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-thumb:hover {
 /* 侧边栏与主内容区布局 */
 html.wgw-theme .sidebar {
   border-right: 0 !important;
+  position: relative;
 }
 
 html.wgw-theme .sidebar .chapter {
@@ -369,6 +373,42 @@ html.wgw-theme .searchresults {
   padding-right: 0;
 }
 
+html.wgw-theme .page {
+  position: relative;
+}
+
+html.wgw-theme .sidebar::after {
+  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
+  position: absolute;
+  top: 0;
+  right: 0.1em;
+  bottom: 0;
+  width: 1em;
+  font-size: var(--wgw-divider-font-size);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.28);
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme .page::before {
+  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
+  position: absolute;
+  top: 0;
+  left: 0.1em;
+  bottom: 0;
+  width: 1em;
+  font-size: var(--wgw-divider-font-size);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.28);
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
 /* MD标记替换为中文字符 */
 
 /* 标题前添加"井"字 - 使用inline-block防止换行 */
@@ -378,7 +418,7 @@ html.wgw-theme h1::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #ffeb3b;
+  color: var(--wgw-title-mark-color);
   font-family: var(--main-font) !important;
   display: inline-block;
   white-space: nowrap;
@@ -390,7 +430,7 @@ html.wgw-theme h2::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #ffeb3b;
+  color: var(--wgw-title-mark-color);
   font-family: var(--main-font) !important;
   display: inline-block;
   white-space: nowrap;
@@ -402,7 +442,7 @@ html.wgw-theme h3::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #ffeb3b;
+  color: var(--wgw-title-mark-color);
   font-family: var(--main-font) !important;
   display: inline-block;
   white-space: nowrap;
@@ -414,7 +454,7 @@ html.wgw-theme h4::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #ffeb3b;
+  color: var(--wgw-title-mark-color);
   font-family: var(--main-font) !important;
   display: inline-block;
   white-space: nowrap;
@@ -426,7 +466,7 @@ html.wgw-theme h5::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #ffeb3b;
+  color: var(--wgw-title-mark-color);
   font-family: var(--main-font) !important;
   display: inline-block;
   white-space: nowrap;
@@ -438,20 +478,35 @@ html.wgw-theme h6::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #ffeb3b;
+  color: var(--wgw-title-mark-color);
   font-family: var(--main-font) !important;
   display: inline-block;
   white-space: nowrap;
 }
 
-/* 标题高亮 */
+/* 标题文字保持白色，仅井高亮 */
 html.wgw-theme h1,
 html.wgw-theme h2,
 html.wgw-theme h3,
 html.wgw-theme h4,
 html.wgw-theme h5,
 html.wgw-theme h6 {
-  color: #ffeb3b !important;
+  color: #fff !important;
+}
+
+html.wgw-theme h1 strong::before,
+html.wgw-theme h2 strong::before,
+html.wgw-theme h3 strong::before,
+html.wgw-theme h4 strong::before,
+html.wgw-theme h5 strong::before,
+html.wgw-theme h6 strong::before,
+html.wgw-theme h1 em::before,
+html.wgw-theme h2 em::before,
+html.wgw-theme h3 em::before,
+html.wgw-theme h4 em::before,
+html.wgw-theme h5 em::before,
+html.wgw-theme h6 em::before {
+  color: var(--wgw-title-mark-muted);
 }
 
 /* 列表标记替换 - 使用inline-block防止换行 */
@@ -469,12 +524,12 @@ html.wgw-theme ul > li::before {
   font-size: 0.6em;
   font-weight: bold;
   position: absolute;
-  left: -2em;
+  left: -2.6em;
   top: 0.2em;
   color: #4caf50;
   font-family: var(--main-font) !important;
   display: inline-block;
-  width: 1.5em;
+  width: 2.1em;
   white-space: nowrap;
 }
 
@@ -482,12 +537,12 @@ html.wgw-theme ul ul > li::before {
   content: "（子）";
   font-size: 0.6em;
   position: absolute;
-  left: -2em;
+  left: -2.6em;
   top: 0.2em;
   color: #81c784;
   font-family: var(--main-font) !important;
   display: inline-block;
-  width: 1.5em;
+  width: 2.1em;
   white-space: nowrap;
 }
 
@@ -509,7 +564,7 @@ html.wgw-theme hr::before {
   right: 0;
   font-size: var(--wgw-border-font-size);
   line-height: 1;
-  color: #9c27b0;
+  color: rgba(255, 255, 255, 0.45);
   white-space: nowrap;
   overflow: hidden;
   font-family: var(--main-font) !important;
@@ -549,6 +604,52 @@ html.wgw-theme code:not(pre code) {
 /* 代码块内代码高亮 */
 html.wgw-theme pre code {
   color: #00e676 !important;
+}
+
+/* 代码块复制按钮中文化 */
+html.wgw-theme pre .buttons {
+  position: absolute;
+  top: calc(var(--wgw-border-font-size) * -1.2);
+  right: 0;
+  z-index: 3;
+}
+
+html.wgw-theme pre .clip-button {
+  width: auto !important;
+  min-height: auto !important;
+  padding: 0.28em 0.8em !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #000 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  font-family: var(--main-font) !important;
+  font-size: 1.1em !important;
+  line-height: 1.2 !important;
+}
+
+html.wgw-theme pre .clip-button i {
+  display: none !important;
+}
+
+html.wgw-theme pre .clip-button::before {
+  content: "复制";
+}
+
+html.wgw-theme pre .clip-button:hover,
+html.wgw-theme pre .clip-button:focus {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html.wgw-theme pre .clip-button .tooltiptext::before,
+html.wgw-theme pre .clip-button .tooltiptext::after {
+  color: #fff !important;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme pre .clip-button .tooltiptext::before {
+  content: "复制";
 }
 
 /* 超链接高亮 */
