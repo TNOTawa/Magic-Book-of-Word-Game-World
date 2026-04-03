@@ -3,15 +3,42 @@
   src: url("https://cdn.jsdelivr.net/gh/viscose3977/zpix_for_obs@main/zpix.woff2");
 }
 
-/* 应用到整个页面 */
+/* 全站统一字体与基础字号 */
 :root {
   --main-font: "zpix", sans-serif;
+  --wgw-page-font-size: 22px;
+  --wgw-small-font-size: 16px;
+  --wgw-code-border-text: "代码块代码块代码块代码块代码块代码块代码块代码块代码块";
+  --wgw-scroll-track-text: "卷轴卷轴卷轴卷轴卷轴卷轴卷轴卷轴卷轴卷轴卷轴卷轴";
+  --wgw-scroll-thumb-text: "卷轴卷轴卷轴卷轴卷轴卷轴";
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea,
+code,
+pre,
+kbd,
+samp,
+.sidebar,
+.chapter,
+.menu-bar,
+.nav-chapters,
+.mobile-nav-chapters,
+.search-wrapper,
+.searchresults,
+.content,
+.content main {
+  font-family: var(--main-font) !important;
 }
 
 body {
   font-family: var(--main-font) !important;
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: var(--wgw-page-font-size);
+  line-height: 1.75;
 }
 
 /* WGW主题：纯文字黑底风格 */
@@ -35,10 +62,34 @@ html.wgw-theme .right-drawer,
 html.wgw-theme .search-wrapper,
 html.wgw-theme .searchresults-outer,
 html.wgw-theme .searchresults-header,
-html.wgw-theme .searchresults {
+html.wgw-theme .searchresults,
+html.wgw-theme .theme-popup,
+html.wgw-theme .theme-popup ul,
+html.wgw-theme .theme-popup li,
+html.wgw-theme .theme-popup button {
   background: #000 !important;
   color: #fff !important;
   box-shadow: none !important;
+}
+
+html.wgw-theme body,
+html.wgw-theme .menu-title,
+html.wgw-theme .content,
+html.wgw-theme .sidebar,
+html.wgw-theme .chapter,
+html.wgw-theme .nav-chapters,
+html.wgw-theme .mobile-nav-chapters,
+html.wgw-theme .searchresults,
+html.wgw-theme #searchbar {
+  font-size: var(--wgw-page-font-size) !important;
+}
+
+html.wgw-theme .chapter li,
+html.wgw-theme .sidebar a,
+html.wgw-theme .menu-bar button,
+html.wgw-theme .theme-popup button,
+html.wgw-theme .searchresults a {
+  font-family: var(--main-font) !important;
 }
 
 html.wgw-theme h1,
@@ -54,7 +105,9 @@ html.wgw-theme strong,
 html.wgw-theme em,
 html.wgw-theme summary,
 html.wgw-theme label,
-html.wgw-theme code {
+html.wgw-theme code,
+html.wgw-theme span,
+html.wgw-theme div {
   color: #fff !important;
 }
 
@@ -63,8 +116,10 @@ html.wgw-theme a {
 }
 
 html.wgw-theme a:hover,
-html.wgw-theme a:focus {
-  background: #fff;
+html.wgw-theme a:focus,
+html.wgw-theme button:hover,
+html.wgw-theme button:focus {
+  background: #fff !important;
   color: #000 !important;
 }
 
@@ -73,59 +128,108 @@ html.wgw-theme .sidebar,
 html.wgw-theme .page,
 html.wgw-theme .searchresults-outer,
 html.wgw-theme .searchresults-header,
-html.wgw-theme .searchresults {
+html.wgw-theme .searchresults,
+html.wgw-theme .theme-popup,
+html.wgw-theme .theme-popup ul,
+html.wgw-theme .theme-popup li,
+html.wgw-theme .theme-popup button {
   border: 0 !important;
 }
 
-html.wgw-theme pre,
-html.wgw-theme .boring,
-html.wgw-theme .code {
+html.wgw-theme .theme-popup {
+  padding: 0.5em 0.8em !important;
+}
+
+html.wgw-theme .theme-popup button {
+  padding: 0.3em 0.5em !important;
+}
+
+html.wgw-theme pre {
   position: relative;
   background: #000 !important;
   color: #fff !important;
   border: 0 !important;
-  padding: 2.6em 1.2em !important;
-  overflow: hidden;
-}
-
-html.wgw-theme pre::before,
-html.wgw-theme pre::after,
-html.wgw-theme .boring::before,
-html.wgw-theme .boring::after,
-html.wgw-theme .code::before,
-html.wgw-theme .code::after {
-  content: "代码块代码块代码块代码块代码块";
-  position: absolute;
-  left: 0;
-  right: 0;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  pointer-events: none;
-}
-
-html.wgw-theme pre::before,
-html.wgw-theme .boring::before,
-html.wgw-theme .code::before {
-  top: 0.4em;
-}
-
-html.wgw-theme pre::after,
-html.wgw-theme .boring::after,
-html.wgw-theme .code::after {
-  bottom: 0.4em;
+  box-shadow: none !important;
+  padding: 3.2em 3.1em !important;
+  margin: 1.8em 0 !important;
+  overflow: auto !important;
 }
 
 html.wgw-theme pre code {
   display: block;
   background: transparent !important;
   color: #fff !important;
+  font-family: var(--main-font) !important;
 }
 
 html.wgw-theme code {
   background: transparent !important;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme pre::before,
+html.wgw-theme pre::after {
+  content: var(--wgw-code-border-text);
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: 0;
+  line-height: 1;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme pre::before {
+  top: 0.45em;
+}
+
+html.wgw-theme pre::after {
+  bottom: 0.45em;
+}
+
+html.wgw-theme pre code::before,
+html.wgw-theme pre code::after {
+  content: "码\A块\A代\A码\A块";
+  position: absolute;
+  top: 1.55em;
+  bottom: 1.55em;
+  width: 1em;
+  white-space: pre;
+  overflow: hidden;
+  line-height: 1.8;
+  color: #fff;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme pre code::before {
+  left: -1.9em;
+}
+
+html.wgw-theme pre code::after {
+  right: -1.9em;
+  content: "代\A码\A块\A代\A码";
+}
+
+html.wgw-theme .hljs,
+html.wgw-theme .hljs-subst,
+html.wgw-theme .language-json,
+html.wgw-theme code.language-json {
+  color: #fff !important;
+  background: transparent !important;
+}
+
+html.wgw-theme .hljs-attr,
+html.wgw-theme .hljs-string,
+html.wgw-theme .hljs-number,
+html.wgw-theme .hljs-literal,
+html.wgw-theme .hljs-punctuation,
+html.wgw-theme .hljs-brace,
+html.wgw-theme .hljs-symbol {
+  color: #fff !important;
 }
 
 html.wgw-theme .searchbar-outer {
@@ -137,7 +241,8 @@ html.wgw-theme #searchbar {
   color: #fff !important;
   border: 0 !important;
   box-shadow: none !important;
-  padding: 1.2em 0.9em !important;
+  padding: 1.5em 0.9em 1em !important;
+  font-family: var(--main-font) !important;
 }
 
 html.wgw-theme .search-wrapper {
@@ -151,38 +256,29 @@ html.wgw-theme .search-wrapper::before {
   top: 0;
   left: 0.2em;
   color: #fff;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   white-space: nowrap;
   pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
 html.wgw-theme * {
-  scrollbar-width: auto;
-  scrollbar-color: #fff rgba(255, 255, 255, 0.22);
+  scrollbar-width: thin;
+  scrollbar-color: #fff transparent;
 }
 
 html.wgw-theme *::-webkit-scrollbar {
-  width: 28px;
-  height: 28px;
-  background: #000;
+  width: 18px;
+  height: 18px;
 }
 
 html.wgw-theme *::-webkit-scrollbar-track {
-  background-color: #000;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.22) 0,
-    rgba(255, 255, 255, 0.22) 1.2em,
-    transparent 1.2em,
-    transparent 2.4em
-  );
-  position: relative;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 html.wgw-theme *::-webkit-scrollbar-thumb {
-  background-color: #000;
-  background-image: linear-gradient(#fff, #fff);
-  border: 2px solid #fff;
+  background: #fff;
+  border: 4px solid #000;
 }
 
 html.wgw-theme *::-webkit-scrollbar-corner {
@@ -191,46 +287,108 @@ html.wgw-theme *::-webkit-scrollbar-corner {
 
 html.wgw-theme .sidebar-scrollbox,
 html.wgw-theme .content main,
-html.wgw-theme .searchresults {
+html.wgw-theme .searchresults,
+html.wgw-theme pre {
   position: relative;
 }
 
-html.wgw-theme .sidebar-scrollbox::after,
-html.wgw-theme .content main::after,
-html.wgw-theme .searchresults::after {
-  content: "卷轴卷轴卷轴卷轴卷轴卷轴";
-  position: absolute;
-  top: 0;
-  right: 2px;
-  bottom: 0;
-  width: 1.4em;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  font-size: 12px;
-  line-height: 1.1;
-  color: rgba(255, 255, 255, 0.22);
-  overflow: hidden;
-  pointer-events: none;
+html.wgw-theme .content main,
+html.wgw-theme .searchresults {
+  padding-right: 1.8em;
 }
 
-html.wgw-theme .sidebar-scrollbox:hover::before,
-html.wgw-theme .content main:hover::before,
-html.wgw-theme .searchresults:hover::before,
-html.wgw-theme .sidebar-scrollbox:active::before,
-html.wgw-theme .content main:active::before,
-html.wgw-theme .searchresults:active::before {
-  content: "卷轴卷轴";
+html.wgw-theme .sidebar-scrollbox {
+  padding-right: 1.2em;
+}
+
+html.wgw-theme .sidebar {
+  border-right: 0 !important;
+}
+
+html.wgw-theme .sidebar-resize-handle {
+  position: relative;
+  background: transparent !important;
+  width: 1.8em !important;
+}
+
+html.wgw-theme .sidebar-resize-handle::after {
+  content: var(--wgw-scroll-track-text);
   position: absolute;
   top: 0;
-  right: 2px;
+  right: 0;
   bottom: 0;
   width: 1.4em;
   writing-mode: vertical-rl;
   text-orientation: upright;
-  font-size: 16px;
+  font-size: var(--wgw-small-font-size);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.32);
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme .sidebar-resize-handle:hover::before,
+html.wgw-theme .sidebar-resize-handle:active::before {
+  content: var(--wgw-scroll-thumb-text);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1.4em;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 20px;
   line-height: 1;
   color: #fff;
   background: #000;
   overflow: hidden;
   pointer-events: none;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme .content main::after,
+html.wgw-theme .searchresults::after,
+html.wgw-theme pre::selection {
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme .content main::after,
+html.wgw-theme .searchresults::after,
+html.wgw-theme pre::after {
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme .content main::before,
+html.wgw-theme .content main::after,
+html.wgw-theme .searchresults::before,
+html.wgw-theme .searchresults::after {
+  position: absolute;
+  top: 0;
+  right: 0.1em;
+  bottom: 0;
+  width: 1.4em;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+html.wgw-theme .content main::after,
+html.wgw-theme .searchresults::after {
+  content: var(--wgw-scroll-track-text);
+  color: rgba(255, 255, 255, 0.24);
+  font-size: var(--wgw-small-font-size);
+  line-height: 1;
+}
+
+html.wgw-theme .content main:hover::before,
+html.wgw-theme .content main:active::before,
+html.wgw-theme .searchresults:hover::before,
+html.wgw-theme .searchresults:active::before {
+  content: var(--wgw-scroll-thumb-text);
+  color: #fff;
+  background: #000;
+  font-size: 20px;
+  line-height: 1;
 }
