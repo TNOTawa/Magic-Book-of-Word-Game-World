@@ -13,3 +13,224 @@ body {
   font-size: 18px;
   line-height: 1.6;
 }
+
+/* WGW主题：纯文字黑底风格 */
+html.wgw-theme,
+html.wgw-theme body {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html.wgw-theme body,
+html.wgw-theme .content,
+html.wgw-theme .content main,
+html.wgw-theme .page,
+html.wgw-theme .sidebar,
+html.wgw-theme .sidebar-scrollbox,
+html.wgw-theme .chapter,
+html.wgw-theme .menu-bar,
+html.wgw-theme .nav-chapters,
+html.wgw-theme .mobile-nav-chapters,
+html.wgw-theme .right-drawer,
+html.wgw-theme .search-wrapper,
+html.wgw-theme .searchresults-outer,
+html.wgw-theme .searchresults-header,
+html.wgw-theme .searchresults {
+  background: #000 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+html.wgw-theme h1,
+html.wgw-theme h2,
+html.wgw-theme h3,
+html.wgw-theme h4,
+html.wgw-theme h5,
+html.wgw-theme h6,
+html.wgw-theme p,
+html.wgw-theme li,
+html.wgw-theme a,
+html.wgw-theme strong,
+html.wgw-theme em,
+html.wgw-theme summary,
+html.wgw-theme label,
+html.wgw-theme code {
+  color: #fff !important;
+}
+
+html.wgw-theme a {
+  text-decoration: none;
+}
+
+html.wgw-theme a:hover,
+html.wgw-theme a:focus {
+  background: #fff;
+  color: #000 !important;
+}
+
+html.wgw-theme .menu-bar,
+html.wgw-theme .sidebar,
+html.wgw-theme .page,
+html.wgw-theme .searchresults-outer,
+html.wgw-theme .searchresults-header,
+html.wgw-theme .searchresults {
+  border: 0 !important;
+}
+
+html.wgw-theme pre,
+html.wgw-theme .boring,
+html.wgw-theme .code {
+  position: relative;
+  background: #000 !important;
+  color: #fff !important;
+  border: 0 !important;
+  padding: 2.6em 1.2em !important;
+  overflow: hidden;
+}
+
+html.wgw-theme pre::before,
+html.wgw-theme pre::after,
+html.wgw-theme .boring::before,
+html.wgw-theme .boring::after,
+html.wgw-theme .code::before,
+html.wgw-theme .code::after {
+  content: "代码块代码块代码块代码块代码块";
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+html.wgw-theme pre::before,
+html.wgw-theme .boring::before,
+html.wgw-theme .code::before {
+  top: 0.4em;
+}
+
+html.wgw-theme pre::after,
+html.wgw-theme .boring::after,
+html.wgw-theme .code::after {
+  bottom: 0.4em;
+}
+
+html.wgw-theme pre code {
+  display: block;
+  background: transparent !important;
+  color: #fff !important;
+}
+
+html.wgw-theme code {
+  background: transparent !important;
+}
+
+html.wgw-theme .searchbar-outer {
+  background: #000 !important;
+}
+
+html.wgw-theme #searchbar {
+  background: #000 !important;
+  color: #fff !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 1.2em 0.9em !important;
+}
+
+html.wgw-theme .search-wrapper {
+  position: relative;
+  padding-top: 1.4em;
+}
+
+html.wgw-theme .search-wrapper::before {
+  content: "搜搜搜搜搜搜搜";
+  position: absolute;
+  top: 0;
+  left: 0.2em;
+  color: #fff;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+html.wgw-theme * {
+  scrollbar-width: auto;
+  scrollbar-color: #fff rgba(255, 255, 255, 0.22);
+}
+
+html.wgw-theme *::-webkit-scrollbar {
+  width: 28px;
+  height: 28px;
+  background: #000;
+}
+
+html.wgw-theme *::-webkit-scrollbar-track {
+  background-color: #000;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 0,
+    rgba(255, 255, 255, 0.22) 1.2em,
+    transparent 1.2em,
+    transparent 2.4em
+  );
+  position: relative;
+}
+
+html.wgw-theme *::-webkit-scrollbar-thumb {
+  background-color: #000;
+  background-image: linear-gradient(#fff, #fff);
+  border: 2px solid #fff;
+}
+
+html.wgw-theme *::-webkit-scrollbar-corner {
+  background: #000;
+}
+
+html.wgw-theme .sidebar-scrollbox,
+html.wgw-theme .content main,
+html.wgw-theme .searchresults {
+  position: relative;
+}
+
+html.wgw-theme .sidebar-scrollbox::after,
+html.wgw-theme .content main::after,
+html.wgw-theme .searchresults::after {
+  content: "卷轴卷轴卷轴卷轴卷轴卷轴";
+  position: absolute;
+  top: 0;
+  right: 2px;
+  bottom: 0;
+  width: 1.4em;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 12px;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.22);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+html.wgw-theme .sidebar-scrollbox:hover::before,
+html.wgw-theme .content main:hover::before,
+html.wgw-theme .searchresults:hover::before,
+html.wgw-theme .sidebar-scrollbox:active::before,
+html.wgw-theme .content main:active::before,
+html.wgw-theme .searchresults:active::before {
+  content: "卷轴卷轴";
+  position: absolute;
+  top: 0;
+  right: 2px;
+  bottom: 0;
+  width: 1.4em;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 16px;
+  line-height: 1;
+  color: #fff;
+  background: #000;
+  overflow: hidden;
+  pointer-events: none;
+}
