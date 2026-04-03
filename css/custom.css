@@ -126,16 +126,16 @@ html.wgw-theme .theme-popup button {
   padding: 0.3em 0.5em !important;
 }
 
-/* 代码块容器：边框在最外层 */
+/* 代码块容器 */
 html.wgw-theme pre {
   position: relative;
   background: #000 !important;
   color: #fff !important;
   border: 0 !important;
   box-shadow: none !important;
-  padding: calc(var(--wgw-border-font-size) + 0.8em) calc(var(--wgw-border-font-size) + 0.8em) !important;
+  padding: 1.5em !important;
   margin: 1.8em 0 !important;
-  overflow: visible !important;
+  overflow: auto !important;
 }
 
 html.wgw-theme pre code {
@@ -143,8 +143,6 @@ html.wgw-theme pre code {
   background: transparent !important;
   color: #fff !important;
   font-family: var(--main-font) !important;
-  overflow: auto !important;
-  max-height: 600px;
 }
 
 html.wgw-theme code {
@@ -152,85 +150,72 @@ html.wgw-theme code {
   font-family: var(--main-font) !important;
 }
 
-/* 代码块边框：使用伪元素 + repeating-linear-gradient 模拟文字重复 */
-html.wgw-theme pre::before,
-html.wgw-theme pre::after,
-html.wgw-theme pre > code::before,
-html.wgw-theme pre > code::after {
-  content: "";
-  position: absolute;
-  background: #000;
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* 顶部边框 */
+/* 代码块边框：顶部 */
 html.wgw-theme pre::before {
+  content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: var(--wgw-border-font-size);
-  background-image: repeating-linear-gradient(
-    to right,
-    transparent 0,
-    transparent 0.05em,
-    #fff 0.05em,
-    #fff 0.1em
-  );
-  content: "代码块";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
-  background-clip: text;
-  -webkit-background-clip: text;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
-/* 底部边框 */
+/* 代码块边框：底部 */
 html.wgw-theme pre::after {
+  content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: var(--wgw-border-font-size);
-  content: "代码块";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
-/* 左侧边框 */
-html.wgw-theme pre > code::before {
+/* 代码块边框：左侧 */
+html.wgw-theme pre code::before {
+  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
+  position: absolute;
   top: 0;
-  left: calc(var(--wgw-border-font-size) * -1);
+  left: 0;
   bottom: 0;
   width: var(--wgw-border-font-size);
-  content: "代\A码\A块";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: pre;
   overflow: hidden;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
-/* 右侧边框 */
-html.wgw-theme pre > code::after {
+/* 代码块边框：右侧 */
+html.wgw-theme pre code::after {
+  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
+  position: absolute;
   top: 0;
-  right: calc(var(--wgw-border-font-size) * -1);
+  right: 0;
   bottom: 0;
   width: var(--wgw-border-font-size);
-  content: "代\A码\A块";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: pre;
   overflow: hidden;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
 /* 代码高亮统一为白色 */
@@ -259,13 +244,12 @@ html.wgw-theme .searchbar-outer {
 
 html.wgw-theme .search-wrapper {
   position: relative;
-  padding: calc(var(--wgw-border-font-size) + 0.5em);
+  padding: 1em;
   background: #000;
 }
 
 html.wgw-theme #searchbar {
   position: relative;
-  z-index: 1;
   background: #000 !important;
   color: #fff !important;
   border: 0 !important;
@@ -274,71 +258,72 @@ html.wgw-theme #searchbar {
   font-family: var(--main-font) !important;
 }
 
-/* 搜索框边框 */
-html.wgw-theme .search-wrapper::before,
-html.wgw-theme .search-wrapper::after,
-html.wgw-theme #searchbar::before,
-html.wgw-theme #searchbar::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  z-index: 0;
-}
-
+/* 搜索框边框：顶部 */
 html.wgw-theme .search-wrapper::before {
+  content: "搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜";
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: var(--wgw-border-font-size);
-  content: "搜";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
+/* 搜索框边框：底部 */
 html.wgw-theme .search-wrapper::after {
+  content: "搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜";
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: var(--wgw-border-font-size);
-  content: "搜";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
+/* 搜索框边框：左侧 */
 html.wgw-theme #searchbar::before {
+  content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
+  position: absolute;
   top: calc(var(--wgw-border-font-size) * -1);
-  left: calc(var(--wgw-border-font-size) * -1);
+  left: 0;
   bottom: calc(var(--wgw-border-font-size) * -1);
   width: var(--wgw-border-font-size);
-  content: "搜";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: pre;
   overflow: hidden;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
+/* 搜索框边框：右侧 */
 html.wgw-theme #searchbar::after {
+  content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
+  position: absolute;
   top: calc(var(--wgw-border-font-size) * -1);
-  right: calc(var(--wgw-border-font-size) * -1);
+  right: 0;
   bottom: calc(var(--wgw-border-font-size) * -1);
   width: var(--wgw-border-font-size);
-  content: "搜";
   font-size: var(--wgw-border-font-size);
   line-height: 1;
   color: #fff;
   white-space: pre;
   overflow: hidden;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
 }
 
 /* 原生滚动条样式 */
@@ -389,7 +374,7 @@ html.wgw-theme .sidebar-resize-handle {
 }
 
 html.wgw-theme .sidebar-resize-handle::before {
-  content: "卷\A轴";
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -399,8 +384,6 @@ html.wgw-theme .sidebar-resize-handle::before {
   line-height: 1;
   color: rgba(255, 255, 255, 0.3);
   white-space: pre;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
@@ -408,7 +391,7 @@ html.wgw-theme .sidebar-resize-handle::before {
 
 html.wgw-theme .sidebar-resize-handle:hover::after,
 html.wgw-theme .sidebar-resize-handle:active::after {
-  content: "卷\A轴";
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
   position: absolute;
   top: 10%;
   bottom: 10%;
@@ -419,8 +402,6 @@ html.wgw-theme .sidebar-resize-handle:active::after {
   color: #fff;
   background: #000;
   white-space: pre;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
@@ -428,7 +409,7 @@ html.wgw-theme .sidebar-resize-handle:active::after {
 
 /* 主内容区卷轴滚动条 */
 html.wgw-theme .content main::before {
-  content: "卷\A轴";
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -438,8 +419,6 @@ html.wgw-theme .content main::before {
   line-height: 1;
   color: rgba(255, 255, 255, 0.3);
   white-space: pre;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
@@ -448,7 +427,7 @@ html.wgw-theme .content main::before {
 
 html.wgw-theme .content main:hover::after,
 html.wgw-theme .content main:active::after {
-  content: "卷\A轴";
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
   position: absolute;
   top: 10%;
   bottom: 10%;
@@ -459,8 +438,6 @@ html.wgw-theme .content main:active::after {
   color: #fff;
   background: #000;
   white-space: pre;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
@@ -469,7 +446,7 @@ html.wgw-theme .content main:active::after {
 
 /* 搜索结果区卷轴滚动条 */
 html.wgw-theme .searchresults::before {
-  content: "卷\A轴";
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -479,8 +456,6 @@ html.wgw-theme .searchresults::before {
   line-height: 1;
   color: rgba(255, 255, 255, 0.3);
   white-space: pre;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
@@ -488,7 +463,7 @@ html.wgw-theme .searchresults::before {
 
 html.wgw-theme .searchresults:hover::after,
 html.wgw-theme .searchresults:active::after {
-  content: "卷\A轴";
+  content: "卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴\A卷\A轴";
   position: absolute;
   top: 10%;
   bottom: 10%;
@@ -499,8 +474,6 @@ html.wgw-theme .searchresults:active::after {
   color: #fff;
   background: #000;
   white-space: pre;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
