@@ -399,19 +399,19 @@ html.wgw-theme #mdbook-sidebar-resize-handle {
   position: absolute;
   top: 0;
   right: calc(var(--sidebar-resize-indicator-width) * -1);
-  width: var(--sidebar-resize-indicator-width);
+  width: calc(var(--wgw-divider-font-size) + 4px);
   height: 100%;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 5;
+  pointer-events: none;
 }
 
-html.wgw-theme #mdbook-sidebar-resize-handle::before {
-  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
+html.wgw-theme #mdbook-sidebar-resize-handle::before,
+html.wgw-theme #mdbook-sidebar-resize-handle::after {
+  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
   position: absolute;
-  top: -120%;
   left: 50%;
-  transform: translateX(-50%) translateY(0);
   width: 1em;
-  height: 340%;
   font-size: var(--wgw-divider-font-size);
   line-height: 1;
   color: rgba(255, 255, 255, 0.22);
@@ -419,22 +419,43 @@ html.wgw-theme #mdbook-sidebar-resize-handle::before {
   pointer-events: none;
   user-select: none;
   font-family: var(--main-font) !important;
-  animation: wgw-divider-scroll 120s linear infinite;
   will-change: transform;
+}
+
+html.wgw-theme #mdbook-sidebar-resize-handle::before {
+  top: 0;
+  transform: translateX(-50%) translateY(0);
+  animation: wgw-divider-scroll-a 60s linear infinite;
+}
+
+html.wgw-theme #mdbook-sidebar-resize-handle::after {
+  top: -180%;
+  transform: translateX(-50%) translateY(0);
+  animation: wgw-divider-scroll-b 60s linear infinite;
 }
 
 html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator {
   position: relative;
   z-index: 1;
   background: transparent !important;
+  pointer-events: auto;
 }
 
-@keyframes wgw-divider-scroll {
-  from {
+@keyframes wgw-divider-scroll-a {
+  0% {
+    transform: translateX(-50%) translateY(180%);
+  }
+  100% {
     transform: translateX(-50%) translateY(0);
   }
-  to {
-    transform: translateX(-50%) translateY(-33.333%);
+}
+
+@keyframes wgw-divider-scroll-b {
+  0% {
+    transform: translateX(-50%) translateY(360%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(180%);
   }
 }
 
@@ -798,179 +819,63 @@ html.wgw-theme blockquote p {
   color: #ce93d8 !important;
 }
 
-/* 章节导航按钮：移动端与桌面端统一右下角 */
+/* 章节导航按钮：隐藏原始元素 */
 html.wgw-theme .mobile-nav-chapters,
 html.wgw-theme .nav-chapters {
+  display: none !important;
+}
+
+/* JS渲染的导航容器 */
+html.wgw-theme .wgw-nav-container {
   position: fixed !important;
   bottom: 2rem !important;
-  top: auto !important;
-  left: auto !important;
-  z-index: 30;
-  width: 1em !important;
-  height: 1em !important;
-  min-width: 1em !important;
-  min-height: 1em !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: transparent !important;
-  font-size: 2.4em !important;
-  line-height: 1 !important;
-  text-decoration: none !important;
-  text-shadow: none !important;
-  overflow: visible !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous,
-html.wgw-theme .nav-chapters.previous {
-  right: 5.6rem !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.next,
-html.wgw-theme .nav-chapters.next {
   right: 2rem !important;
-}
-
-html.wgw-theme .mobile-nav-chapters > *,
-html.wgw-theme .nav-chapters > * {
-  display: none !important;
-}
-
-html.wgw-theme .mobile-nav-chapters .fa-svg,
-html.wgw-theme .nav-chapters .fa-svg,
-html.wgw-theme .mobile-nav-chapters svg,
-html.wgw-theme .nav-chapters svg {
-  display: none !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous::before,
-html.wgw-theme .nav-chapters.previous::before {
-  content: "<";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #ffeb3b;
+  z-index: 100;
+  font-size: 2.4em !important;
   font-family: var(--main-font) !important;
-  white-space: nowrap;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous::after,
-html.wgw-theme .nav-chapters.previous::after {
-  content: "[ ";
-  position: absolute;
-  top: 50%;
-  right: calc(100% + 0.15em);
-  transform: translateY(-50%);
-  color: #fff;
-  font-family: var(--main-font) !important;
-  white-space: pre;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::before,
-html.wgw-theme .nav-chapters.next::before {
-  content: ">";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #ffeb3b;
-  font-family: var(--main-font) !important;
-  white-space: nowrap;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::after,
-html.wgw-theme .nav-chapters.next::after {
-  content: " ]";
-  position: absolute;
-  top: 50%;
-  left: calc(100% + 0.15em);
-  transform: translateY(-50%);
-  color: #fff;
-  font-family: var(--main-font) !important;
-  white-space: pre;
-}
-
-html.wgw-theme .mobile-nav-chapters.next,
-html.wgw-theme .nav-chapters.next {
-  color: #fff !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.next > .wgw-nav-middle,
-html.wgw-theme .nav-chapters.next > .wgw-nav-middle {
-  display: none;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::marker,
-html.wgw-theme .nav-chapters.next::marker {
-  content: "";
-}
-
-html.wgw-theme .mobile-nav-chapters.next {
-  position: fixed !important;
-}
-
-html.wgw-theme .nav-chapters.next {
-  position: fixed !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.next::after,
-html.wgw-theme .nav-chapters.next::after,
-html.wgw-theme .mobile-nav-chapters.next::before,
-html.wgw-theme .nav-chapters.next::before,
-html.wgw-theme .mobile-nav-chapters.previous::after,
-html.wgw-theme .nav-chapters.previous::after,
-html.wgw-theme .mobile-nav-chapters.previous::before,
-html.wgw-theme .nav-chapters.previous::before {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  line-height: 1 !important;
+  white-space: pre !important;
   letter-spacing: 0 !important;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next::before,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next::before {
-  content: "/ >";
-  left: calc(-0.35em);
-  color: #fff;
+html.wgw-theme .wgw-nav-bracket {
+  color: #fff !important;
+  display: inline-block !important;
+  width: 1em !important;
+  text-align: center !important;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next::after,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next::after {
-  content: " ]";
+html.wgw-theme .wgw-nav-arrow {
+  color: #ffeb3b !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  width: 1em !important;
+  text-align: center !important;
+  cursor: pointer !important;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next {
-  color: transparent !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next .fa-svg,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next .fa-svg,
-html.wgw-theme .mobile-nav-chapters.previous + .mobile-nav-chapters.next svg,
-html.wgw-theme .nav-chapters.previous + .nav-chapters.next svg {
-  display: none !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous:hover,
-html.wgw-theme .mobile-nav-chapters.previous:focus,
-html.wgw-theme .mobile-nav-chapters.next:hover,
-html.wgw-theme .mobile-nav-chapters.next:focus,
-html.wgw-theme .nav-chapters.previous:hover,
-html.wgw-theme .nav-chapters.previous:focus,
-html.wgw-theme .nav-chapters.next:hover,
-html.wgw-theme .nav-chapters.next:focus {
-  background: transparent !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous:hover::before,
-html.wgw-theme .mobile-nav-chapters.previous:focus::before,
-html.wgw-theme .mobile-nav-chapters.next:hover::before,
-html.wgw-theme .mobile-nav-chapters.next:focus::before,
-html.wgw-theme .nav-chapters.previous:hover::before,
-html.wgw-theme .nav-chapters.previous:focus::before,
-html.wgw-theme .nav-chapters.next:hover::before,
-html.wgw-theme .nav-chapters.next:focus::before {
+html.wgw-theme .wgw-nav-arrow:hover,
+html.wgw-theme .wgw-nav-arrow:focus {
   color: #fff176 !important;
+}
+
+html.wgw-theme .wgw-nav-slash {
+  color: #fff !important;
+  display: inline-block !important;
+  width: 1em !important;
+  text-align: center !important;
+}
+
+html.wgw-theme .wgw-nav-disabled {
+  color: rgba(255, 255, 255, 0.3) !important;
+  display: inline-block !important;
+  width: 1em !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  cursor: default !important;
 }
 
 /* 特殊JSON / 事件语法高亮：所有主题通用 */
