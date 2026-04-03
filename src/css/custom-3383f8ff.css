@@ -113,7 +113,7 @@ html.wgw-theme .theme-popup button {
   padding: 0.3em 0.5em !important;
 }
 
-/* 代码块容器 - CSS伪元素边框，可无限扩展 */
+/* 代码块容器 - CSS伪元素边框，"代码块"三字循环 */
 html.wgw-theme pre {
   position: relative;
   background: #000 !important;
@@ -125,22 +125,75 @@ html.wgw-theme pre {
   overflow: auto !important;
 }
 
+/* 代码块边框：顶部 */
 html.wgw-theme pre::before {
-  content: "";
+  content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  border: var(--wgw-border-font-size) solid transparent;
-  border-image: repeating-linear-gradient(
-    90deg,
-    #fff 0,
-    #fff 10px,
-    transparent 10px,
-    transparent 20px
-  ) 10;
+  height: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
   pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 1;
+}
+
+/* 代码块边框：底部 */
+html.wgw-theme pre::after {
+  content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 1;
+}
+
+/* 代码块边框：左侧 */
+html.wgw-theme pre code::before {
+  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 1;
+}
+
+/* 代码块边框：右侧 */
+html.wgw-theme pre code::after {
+  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
   z-index: 1;
 }
 
@@ -150,7 +203,6 @@ html.wgw-theme pre code {
   color: #fff !important;
   font-family: var(--main-font) !important;
   position: relative;
-  z-index: 2;
 }
 
 html.wgw-theme code {
@@ -214,30 +266,15 @@ html.wgw-theme #mdbook-searchbar {
   z-index: 1;
 }
 
-/* 原生滚动条样式 - 仅修改侧边栏 */
+/* 隐藏侧边栏原生滚动条 */
 html.wgw-theme .sidebar-scrollbox {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.5) #000;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-y: auto !important;
 }
 
 html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar {
-  width: 16px;
-  background: #000;
-}
-
-html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-track {
-  background: #000;
-}
-
-html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5);
-  border: 3px solid #000;
-  border-radius: 0;
-}
-
-html.wgw-theme .sidebar-scrollbox::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.7);
+  display: none;
 }
 
 /* 侧边栏与主内容区布局 */
@@ -279,23 +316,29 @@ html.wgw-theme .table-wrapper {
   overflow: auto;
 }
 
-html.wgw-theme .table-wrapper::before {
-  content: "";
+html.wgw-theme .table-wrapper::before,
+html.wgw-theme .table-wrapper::after {
+  content: "表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格";
   position: absolute;
-  top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  border: var(--wgw-border-font-size) solid transparent;
-  border-image: repeating-linear-gradient(
-    90deg,
-    #fff 0,
-    #fff 10px,
-    transparent 10px,
-    transparent 20px
-  ) 10;
+  height: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
   pointer-events: none;
+  font-family: var(--main-font) !important;
   z-index: 1;
+}
+
+html.wgw-theme .table-wrapper::before {
+  top: 0;
+}
+
+html.wgw-theme .table-wrapper::after {
+  bottom: 0;
 }
 
 html.wgw-theme table {
@@ -603,8 +646,8 @@ html.wgw-theme pre code:not([class*="language-"]) .hljs-property {
 /* 代码块复制按钮中文化 */
 html.wgw-theme pre .buttons {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 0.2em;
+  right: 0.2em;
   z-index: 4;
 }
 
@@ -613,7 +656,7 @@ html.wgw-theme pre .clip-button {
   min-width: 0 !important;
   min-height: 0 !important;
   height: auto !important;
-  padding: 0.45em !important;
+  padding: 0.3em 0.45em !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #000 !important;
@@ -625,6 +668,7 @@ html.wgw-theme pre .clip-button {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 html.wgw-theme pre .clip-button i,
@@ -633,7 +677,7 @@ html.wgw-theme pre .clip-button svg {
 }
 
 html.wgw-theme pre .clip-button::before {
-  content: "复制";
+  content: attr(data-label);
   display: block;
 }
 

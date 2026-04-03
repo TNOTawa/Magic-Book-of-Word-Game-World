@@ -213,13 +213,36 @@
 
   // 修复侧边栏间距和滚动
   function fixSidebarSpacing() {
+    var sidebar = document.querySelector('.sidebar');
+    var scrollbox = document.querySelector('.sidebar-scrollbox');
+    var chapter = document.querySelector('.sidebar .chapter');
+
     if (!isWgwTheme()) {
+      if (sidebar) {
+        sidebar.style.borderRight = '';
+        sidebar.style.overflow = '';
+      }
+      if (scrollbox) {
+        scrollbox.style.overflowY = '';
+        scrollbox.style.overflowX = '';
+        scrollbox.style.scrollbarWidth = '';
+        scrollbox.style.scrollbarColor = '';
+        scrollbox.style.height = '';
+        scrollbox.style.display = '';
+        scrollbox.style.maxHeight = '';
+      }
+      if (chapter) {
+        chapter.style.listStyle = '';
+        chapter.style.paddingLeft = '';
+        chapter.style.marginLeft = '';
+      }
+      var resetPartTitles = document.querySelectorAll('.part-title');
+      resetPartTitles.forEach(function(el) {
+        el.style.paddingLeft = '';
+        el.style.marginLeft = '';
+      });
       return;
     }
-
-    var sidebar = document.querySelector('html.wgw-theme .sidebar');
-    var scrollbox = document.querySelector('html.wgw-theme .sidebar-scrollbox');
-    var chapter = document.querySelector('html.wgw-theme .sidebar .chapter');
 
     if (sidebar) {
       sidebar.style.borderRight = '0';
@@ -229,8 +252,8 @@
     if (scrollbox) {
       scrollbox.style.overflowY = 'auto';
       scrollbox.style.overflowX = 'hidden';
-      scrollbox.style.scrollbarWidth = 'thin';
-      scrollbox.style.scrollbarColor = 'rgba(255, 255, 255, 0.5) #000';
+      scrollbox.style.scrollbarWidth = 'none';
+      scrollbox.style.scrollbarColor = '';
       scrollbox.style.height = '100%';
       scrollbox.style.display = 'block';
       scrollbox.style.maxHeight = '';
@@ -242,10 +265,72 @@
       chapter.style.marginLeft = '0.5em';
     }
 
-    var partTitles = document.querySelectorAll('html.wgw-theme .part-title');
+    var partTitles = document.querySelectorAll('.part-title');
     partTitles.forEach(function(el) {
       el.style.paddingLeft = '0.8em';
       el.style.marginLeft = '0';
+    });
+  }
+
+  function initCopyButtons() {
+    var buttons = document.querySelectorAll('pre .clip-button');
+
+    buttons.forEach(function(button) {
+      if (!button.dataset.wgwOriginalTitle) {
+        button.dataset.wgwOriginalTitle = button.getAttribute('title') || '';
+      }
+      if (!button.dataset.wgwOriginalAriaLabel) {
+        button.dataset.wgwOriginalAriaLabel = button.getAttribute('aria-label') || '';
+      }
+
+      if (!isWgwTheme()) {
+        button.removeAttribute('data-label');
+        button.removeAttribute('data-copied');
+        if (button._wgwCopyResetTimer) {
+          clearTimeout(button._wgwCopyResetTimer);
+          button._wgwCopyResetTimer = null;
+        }
+        button.setAttribute('title', button.dataset.wgwOriginalTitle);
+        button.setAttribute('aria-label', button.dataset.wgwOriginalAriaLabel);
+        return;
+      }
+
+      button.dataset.label = button.dataset.copied === 'true' ? '√已复制' : '复制';
+      button.setAttribute('title', button.dataset.label);
+      button.setAttribute('aria-label', button.dataset.label);
+
+      if (button.dataset.wgwBound === 'true') {
+        return;
+      }
+
+      button.dataset.wgwBound = 'true';
+      button.addEventListener('click', function() {
+        if (!isWgwTheme()) {
+          return;
+        }
+
+        button.dataset.copied = 'true';
+        button.dataset.label = '√已复制';
+        button.setAttribute('title', '√已复制');
+        button.setAttribute('aria-label', '√已复制');
+
+        if (button._wgwCopyResetTimer) {
+          clearTimeout(button._wgwCopyResetTimer);
+        }
+
+        button._wgwCopyResetTimer = setTimeout(function() {
+          button.dataset.copied = 'false';
+          if (isWgwTheme()) {
+            button.dataset.label = '复制';
+            button.setAttribute('title', '复制');
+            button.setAttribute('aria-label', '复制');
+          } else {
+            button.removeAttribute('data-label');
+            button.setAttribute('title', button.dataset.wgwOriginalTitle);
+            button.setAttribute('aria-label', button.dataset.wgwOriginalAriaLabel);
+          }
+        }, 1400);
+      });
     });
   }
 
@@ -255,6 +340,7 @@
     renderNavButtons();
     initDivider();
     fixSidebarSpacing();
+    initCopyButtons();
   }
 
   // 页面加载完成后执行
@@ -263,11 +349,13 @@
       renderNavButtons();
       initDivider();
       fixSidebarSpacing();
+      initCopyButtons();
     });
   } else {
     renderNavButtons();
     initDivider();
     fixSidebarSpacing();
+    initCopyButtons();
   }
 
   // 监听主题变化
