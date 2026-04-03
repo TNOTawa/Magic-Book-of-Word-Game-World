@@ -1,10 +1,8 @@
-// WGW主题渲染脚本
-// 用于重新渲染导航按钮、分割线
-
+// WGW主题增强脚本
 (function() {
   'use strict';
 
-  // 分割线配置
+  // 配置
   var DIVIDER_TEXT = '文字游戏世界魔法书';
   var DIVIDER_REPEAT = 6;
   var SCROLL_SPEED = 0.5;
@@ -15,13 +13,14 @@
   var navInitialized = false;
   var dividerInitialized = false;
 
+  // 检查是否为WGW主题
   function isWgwTheme() {
     return document.documentElement.classList.contains('wgw-theme');
   }
 
+  // 渲染导航按钮
   function renderNavButtons() {
     if (!isWgwTheme()) {
-      // 如果不是WGW主题，隐藏自定义导航
       hideCustomNav();
       showOriginalNav();
       return;
@@ -60,30 +59,10 @@
     var desktopPrev = document.querySelector('.nav-chapters.previous');
     var desktopNext = document.querySelector('.nav-chapters.next');
 
-    if (mobilePrev) {
-      mobilePrev.style.display = '';
-      mobilePrev.style.color = '';
-      var svg = mobilePrev.querySelector('.fa-svg, svg');
-      if (svg) svg.style.display = '';
-    }
-    if (mobileNext) {
-      mobileNext.style.display = '';
-      mobileNext.style.color = '';
-      var svg2 = mobileNext.querySelector('.fa-svg, svg');
-      if (svg2) svg2.style.display = '';
-    }
-    if (desktopPrev) {
-      desktopPrev.style.display = '';
-      desktopPrev.style.color = '';
-      var svg3 = desktopPrev.querySelector('.fa-svg, svg');
-      if (svg3) svg3.style.display = '';
-    }
-    if (desktopNext) {
-      desktopNext.style.display = '';
-      desktopNext.style.color = '';
-      var svg4 = desktopNext.querySelector('.fa-svg, svg');
-      if (svg4) svg4.style.display = '';
-    }
+    if (mobilePrev) mobilePrev.style.display = '';
+    if (mobileNext) mobileNext.style.display = '';
+    if (desktopPrev) desktopPrev.style.display = '';
+    if (desktopNext) desktopNext.style.display = '';
   }
 
   function hideOriginalNav() {
@@ -92,18 +71,10 @@
     var desktopPrev = document.querySelector('.nav-chapters.previous');
     var desktopNext = document.querySelector('.nav-chapters.next');
 
-    if (mobilePrev) {
-      mobilePrev.style.display = 'none';
-    }
-    if (mobileNext) {
-      mobileNext.style.display = 'none';
-    }
-    if (desktopPrev) {
-      desktopPrev.style.display = 'none';
-    }
-    if (desktopNext) {
-      desktopNext.style.display = 'none';
-    }
+    if (mobilePrev) mobilePrev.style.display = 'none';
+    if (mobileNext) mobileNext.style.display = 'none';
+    if (desktopPrev) desktopPrev.style.display = 'none';
+    if (desktopNext) desktopNext.style.display = 'none';
   }
 
   function renderNavPair(prevBtn, nextBtn, type) {
@@ -127,14 +98,13 @@
     }
   }
 
-  // 分割线
+  // 初始化分割线
   function initDivider() {
     if (dividerInitialized) {
       return;
     }
 
     if (!isWgwTheme()) {
-      // 非WGW主题时隐藏分割线
       if (dividerContainer) {
         dividerContainer.style.display = 'none';
       }
@@ -147,7 +117,6 @@
       return;
     }
 
-    // 显示分割线
     if (dividerContainer) {
       dividerContainer.style.display = '';
       dividerInitialized = true;
@@ -158,7 +127,7 @@
     var singleTextHeight = DIVIDER_TEXT.length * charHeight;
     var totalHeight = singleTextHeight * DIVIDER_REPEAT;
 
-    // 创建分割线容器，作为 resizeHandle 的子元素
+    // 创建分割线容器
     dividerContainer = document.createElement('div');
     dividerContainer.id = 'wgw-divider';
     dividerContainer.style.cssText = 'position:absolute;top:0;left:50%;transform:translateX(-50%);width:1em;height:100vh;overflow:hidden;pointer-events:none;user-select:none;z-index:10;font-size:20px;line-height:1;color:rgba(255,255,255,0.22);font-family:zpix,sans-serif;white-space:pre;';
@@ -221,6 +190,7 @@
       if (sidebar) {
         sidebar.style.borderRight = '';
         sidebar.style.overflow = '';
+        sidebar.style.paddingLeft = '';
       }
       if (scrollbox) {
         scrollbox.style.overflowY = '';
@@ -236,17 +206,13 @@
         chapter.style.paddingLeft = '';
         chapter.style.marginLeft = '';
       }
-      var resetPartTitles = document.querySelectorAll('.part-title');
-      resetPartTitles.forEach(function(el) {
-        el.style.paddingLeft = '';
-        el.style.marginLeft = '';
-      });
       return;
     }
 
     if (sidebar) {
       sidebar.style.borderRight = '0';
       sidebar.style.overflow = 'visible';
+      sidebar.style.paddingLeft = '1em';
     }
 
     if (scrollbox) {
@@ -264,14 +230,9 @@
       chapter.style.paddingLeft = '1em';
       chapter.style.marginLeft = '0.5em';
     }
-
-    var partTitles = document.querySelectorAll('.part-title');
-    partTitles.forEach(function(el) {
-      el.style.paddingLeft = '0.8em';
-      el.style.marginLeft = '0';
-    });
   }
 
+  // 初始化复制按钮
   function initCopyButtons() {
     var buttons = document.querySelectorAll('pre .clip-button');
 

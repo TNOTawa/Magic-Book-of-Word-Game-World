@@ -113,16 +113,28 @@ html.wgw-theme .theme-popup button {
   padding: 0.3em 0.5em !important;
 }
 
-/* 代码块容器 - CSS伪元素边框，"代码块"三字循环 */
+/* 代码块容器 */
 html.wgw-theme pre {
   position: relative;
   background: #000 !important;
   color: #fff !important;
   border: 0 !important;
   box-shadow: none !important;
-  padding: calc(1.5em + var(--wgw-border-font-size)) !important;
+  padding: 1.5em !important;
   margin: 1.8em 0 !important;
   overflow: auto !important;
+}
+
+html.wgw-theme pre code {
+  display: block;
+  background: transparent !important;
+  color: #fff !important;
+  font-family: var(--main-font) !important;
+}
+
+html.wgw-theme code {
+  background: transparent !important;
+  font-family: var(--main-font) !important;
 }
 
 /* 代码块边框：顶部 */
@@ -140,7 +152,6 @@ html.wgw-theme pre::before {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
-  z-index: 1;
 }
 
 /* 代码块边框：底部 */
@@ -158,7 +169,6 @@ html.wgw-theme pre::after {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
-  z-index: 1;
 }
 
 /* 代码块边框：左侧 */
@@ -176,7 +186,6 @@ html.wgw-theme pre code::before {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
-  z-index: 1;
 }
 
 /* 代码块边框：右侧 */
@@ -194,31 +203,6 @@ html.wgw-theme pre code::after {
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
-  z-index: 1;
-}
-
-html.wgw-theme pre code {
-  display: block;
-  background: transparent !important;
-  color: #fff !important;
-  font-family: var(--main-font) !important;
-  position: relative;
-}
-
-html.wgw-theme code {
-  background: transparent !important;
-  font-family: var(--main-font) !important;
-}
-
-/* 单行代码视为JSON高亮 */
-html.wgw-theme p code,
-html.wgw-theme li code,
-html.wgw-theme td code,
-html.wgw-theme th code {
-  color: #00e676 !important;
-  background: rgba(0, 230, 118, 0.1) !important;
-  padding: 0.1em 0.3em;
-  border-radius: 3px;
 }
 
 /* 代码高亮统一为白色 */
@@ -240,7 +224,7 @@ html.wgw-theme .hljs-property {
   background: transparent !important;
 }
 
-/* 搜索框 - JS渲染边框 */
+/* 搜索框 - 根据实际HTML结构修复 */
 html.wgw-theme .searchbar-outer {
   background: #000 !important;
   position: relative;
@@ -264,6 +248,78 @@ html.wgw-theme #mdbook-searchbar {
   font-family: var(--main-font) !important;
   width: 100%;
   z-index: 1;
+}
+
+/* 搜索框边框：顶部 */
+html.wgw-theme .search-wrapper::before {
+  content: "搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 0;
+}
+
+/* 搜索框边框：底部 */
+html.wgw-theme .search-wrapper::after {
+  content: "搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜搜";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 0;
+}
+
+/* 搜索框边框：左侧 */
+html.wgw-theme #mdbook-searchbar::before {
+  content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 0;
+}
+
+/* 搜索框边框：右侧 */
+html.wgw-theme #mdbook-searchbar::after {
+  content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--wgw-border-font-size);
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  white-space: pre;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  z-index: 0;
 }
 
 /* 隐藏侧边栏原生滚动条 */
@@ -302,72 +358,6 @@ html.wgw-theme .sidebar .chapter li a {
 html.wgw-theme .sidebar .chapter .spacer,
 html.wgw-theme .sidebar .chapter strong {
   color: #ffeb3b !important;
-}
-
-html.wgw-theme .part-title {
-  padding-left: 0.8em !important;
-  margin-left: 0 !important;
-}
-
-/* 表格边框 */
-html.wgw-theme .table-wrapper {
-  position: relative;
-  margin: 1.8em 0;
-  overflow: auto;
-}
-
-html.wgw-theme .table-wrapper::before,
-html.wgw-theme .table-wrapper::after {
-  content: "表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格表格";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
-  z-index: 1;
-}
-
-html.wgw-theme .table-wrapper::before {
-  top: 0;
-}
-
-html.wgw-theme .table-wrapper::after {
-  bottom: 0;
-}
-
-html.wgw-theme table {
-  border-collapse: collapse;
-  width: 100%;
-  background: #000 !important;
-  color: #fff !important;
-}
-
-html.wgw-theme table th,
-html.wgw-theme table td {
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  padding: 0.5em 0.8em;
-  position: relative;
-}
-
-/* 第一行与第二行之间的分割线为白色"格" */
-html.wgw-theme table thead tr:first-child th,
-html.wgw-theme table thead tr:first-child td {
-  border-bottom: 2px solid #fff !important;
-}
-
-html.wgw-theme table thead tr:nth-child(2) th,
-html.wgw-theme table thead tr:nth-child(2) td {
-  border-bottom: 2px solid #fff !important;
-}
-
-html.wgw-theme table tbody tr:first-child td {
-  border-top: 2px solid #fff !important;
 }
 
 html.wgw-theme .content main,
@@ -646,8 +636,8 @@ html.wgw-theme pre code:not([class*="language-"]) .hljs-property {
 /* 代码块复制按钮中文化 */
 html.wgw-theme pre .buttons {
   position: absolute;
-  top: 0.2em;
-  right: 0.2em;
+  top: 0.3em;
+  right: 0.3em;
   z-index: 4;
 }
 
@@ -774,63 +764,43 @@ html.wgw-theme blockquote p {
   color: #ce93d8 !important;
 }
 
-/* 章节导航按钮：隐藏原始元素 */
+/* 隐藏原生导航按钮 - 由JS渲染 */
 html.wgw-theme .mobile-nav-chapters,
 html.wgw-theme .nav-chapters {
   display: none !important;
 }
 
-/* JS渲染的导航容器 */
-html.wgw-theme .wgw-nav-container {
-  position: fixed !important;
-  bottom: 2rem !important;
-  right: 2rem !important;
-  z-index: 100;
-  font-size: 2.4em !important;
+/* JS渲染的导航容器样式 */
+.wgw-nav-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 30;
+  font-size: 2.4em;
+  line-height: 1;
   font-family: var(--main-font) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 0 !important;
-  line-height: 1 !important;
-  white-space: pre !important;
-  letter-spacing: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
 }
 
-html.wgw-theme .wgw-nav-bracket {
-  color: #fff !important;
-  display: inline-block !important;
-  width: 1em !important;
-  text-align: center !important;
+.wgw-nav-bracket,
+.wgw-nav-slash {
+  color: #fff;
 }
 
-html.wgw-theme .wgw-nav-arrow {
-  color: #ffeb3b !important;
-  text-decoration: none !important;
-  display: inline-block !important;
-  width: 1em !important;
-  text-align: center !important;
-  cursor: pointer !important;
+.wgw-nav-arrow {
+  color: #ffeb3b;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-html.wgw-theme .wgw-nav-arrow:hover,
-html.wgw-theme .wgw-nav-arrow:focus {
-  color: #fff176 !important;
+.wgw-nav-arrow:hover {
+  color: #fff176;
 }
 
-html.wgw-theme .wgw-nav-slash {
-  color: #fff !important;
-  display: inline-block !important;
-  width: 1em !important;
-  text-align: center !important;
-}
-
-html.wgw-theme .wgw-nav-disabled {
-  color: rgba(255, 255, 255, 0.3) !important;
-  display: inline-block !important;
-  width: 1em !important;
-  text-align: center !important;
-  pointer-events: none !important;
-  cursor: default !important;
+.wgw-nav-disabled {
+  color: #666;
 }
 
 /* 特殊JSON / 事件语法高亮：所有主题通用 */
