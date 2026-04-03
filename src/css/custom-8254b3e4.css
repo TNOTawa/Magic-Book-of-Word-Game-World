@@ -240,6 +240,7 @@ html.wgw-theme .hljs-property {
 /* 搜索框容器 */
 html.wgw-theme .searchbar-outer {
   background: #000 !important;
+  position: relative;
 }
 
 html.wgw-theme .search-wrapper {
@@ -292,13 +293,13 @@ html.wgw-theme .search-wrapper::after {
   font-family: var(--main-font) !important;
 }
 
-/* 搜索框边框：左侧 - 使用 search-wrapper 的伪元素 */
-html.wgw-theme .search-wrapper > *:first-child::before {
+/* 搜索框边框：左侧和右侧 - 使用额外的包装层 */
+html.wgw-theme .searchbar-outer::before {
   content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  top: 1em;
+  left: 1em;
+  bottom: 1em;
   width: var(--wgw-border-font-size);
   font-size: var(--wgw-border-font-size);
   line-height: 1;
@@ -310,13 +311,12 @@ html.wgw-theme .search-wrapper > *:first-child::before {
   z-index: 10;
 }
 
-/* 搜索框边框：右侧 - 使用 search-wrapper 的伪元素 */
-html.wgw-theme .search-wrapper > *:first-child::after {
+html.wgw-theme .searchbar-outer::after {
   content: "搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜\A搜";
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  top: 1em;
+  right: 1em;
+  bottom: 1em;
   width: var(--wgw-border-font-size);
   font-size: var(--wgw-border-font-size);
   line-height: 1;
