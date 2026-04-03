@@ -6,5 +6,5 @@ authors = ["TNOT"]
 [output.html]
 additional-css = ["src/css/custom.css"]
 additional-js = ["src/js/wgw-theme.js"]
-default-theme = "Navy"
+default-theme = "Auto"
 preferred-dark-theme = "wgw-theme"
