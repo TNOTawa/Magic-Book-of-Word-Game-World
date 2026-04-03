@@ -71,20 +71,10 @@ html.wgw-theme .theme-popup button {
   box-shadow: none !important;
 }
 
-html.wgw-theme h1,
-html.wgw-theme h2,
-html.wgw-theme h3,
-html.wgw-theme h4,
-html.wgw-theme h5,
-html.wgw-theme h6,
 html.wgw-theme p,
 html.wgw-theme li,
-html.wgw-theme a,
-html.wgw-theme strong,
-html.wgw-theme em,
 html.wgw-theme summary,
 html.wgw-theme label,
-html.wgw-theme code,
 html.wgw-theme span,
 html.wgw-theme div,
 html.wgw-theme input,
@@ -93,12 +83,6 @@ html.wgw-theme button {
   font-family: var(--main-font) !important;
 }
 
-html.wgw-theme a {
-  text-decoration: none;
-}
-
-html.wgw-theme a:hover,
-html.wgw-theme a:focus,
 html.wgw-theme button:hover,
 html.wgw-theme button:focus {
   background: #fff !important;
@@ -387,15 +371,17 @@ html.wgw-theme .searchresults {
 
 /* MD标记替换为中文字符 */
 
-/* 标题前添加"井"字 */
+/* 标题前添加"井"字 - 使用inline-block防止换行 */
 html.wgw-theme h1::before {
   content: "井";
   font-size: 0.8em;
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #fff;
+  color: #ffeb3b;
   font-family: var(--main-font) !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 html.wgw-theme h2::before {
@@ -404,8 +390,10 @@ html.wgw-theme h2::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #fff;
+  color: #ffeb3b;
   font-family: var(--main-font) !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 html.wgw-theme h3::before {
@@ -414,8 +402,10 @@ html.wgw-theme h3::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #fff;
+  color: #ffeb3b;
   font-family: var(--main-font) !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 html.wgw-theme h4::before {
@@ -424,8 +414,10 @@ html.wgw-theme h4::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #fff;
+  color: #ffeb3b;
   font-family: var(--main-font) !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 html.wgw-theme h5::before {
@@ -434,8 +426,10 @@ html.wgw-theme h5::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #fff;
+  color: #ffeb3b;
   font-family: var(--main-font) !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 html.wgw-theme h6::before {
@@ -444,11 +438,23 @@ html.wgw-theme h6::before {
   font-weight: bold;
   font-style: italic;
   margin-right: 0.3em;
-  color: #fff;
+  color: #ffeb3b;
   font-family: var(--main-font) !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
-/* 列表标记替换 */
+/* 标题高亮 */
+html.wgw-theme h1,
+html.wgw-theme h2,
+html.wgw-theme h3,
+html.wgw-theme h4,
+html.wgw-theme h5,
+html.wgw-theme h6 {
+  color: #ffeb3b !important;
+}
+
+/* 列表标记替换 - 使用inline-block防止换行 */
 html.wgw-theme ul {
   list-style: none;
   padding-left: 2em;
@@ -465,10 +471,11 @@ html.wgw-theme ul > li::before {
   position: absolute;
   left: -2em;
   top: 0.2em;
-  color: #fff;
+  color: #4caf50;
   font-family: var(--main-font) !important;
   display: inline-block;
   width: 1.5em;
+  white-space: nowrap;
 }
 
 html.wgw-theme ul ul > li::before {
@@ -477,13 +484,14 @@ html.wgw-theme ul ul > li::before {
   position: absolute;
   left: -2em;
   top: 0.2em;
-  color: #fff;
+  color: #81c784;
   font-family: var(--main-font) !important;
   display: inline-block;
   width: 1.5em;
+  white-space: nowrap;
 }
 
-/* 分割线替换 */
+/* 分割线替换 - 使用inline-block防止换行 */
 html.wgw-theme hr {
   border: 0;
   height: var(--wgw-border-font-size);
@@ -501,8 +509,68 @@ html.wgw-theme hr::before {
   right: 0;
   font-size: var(--wgw-border-font-size);
   line-height: 1;
-  color: #fff;
+  color: #9c27b0;
   white-space: nowrap;
   overflow: hidden;
   font-family: var(--main-font) !important;
+  display: inline-block;
+}
+
+/* 高亮样式 */
+
+/* 加粗文本高亮 */
+html.wgw-theme strong,
+html.wgw-theme b {
+  color: #ff9800 !important;
+  font-weight: bold;
+}
+
+/* 斜体文本高亮 */
+html.wgw-theme em,
+html.wgw-theme i {
+  color: #03a9f4 !important;
+  font-style: italic;
+}
+
+/* 下划线文本高亮 */
+html.wgw-theme u {
+  color: #e91e63 !important;
+  text-decoration: underline;
+}
+
+/* 行内代码高亮 */
+html.wgw-theme code:not(pre code) {
+  color: #00e676 !important;
+  background: rgba(0, 230, 118, 0.1) !important;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+/* 代码块内代码高亮 */
+html.wgw-theme pre code {
+  color: #00e676 !important;
+}
+
+/* 超链接高亮 */
+html.wgw-theme a {
+  color: #2196f3 !important;
+  text-decoration: underline;
+}
+
+html.wgw-theme a:hover {
+  color: #64b5f6 !important;
+  background: rgba(33, 150, 243, 0.1) !important;
+}
+
+/* 引用块高亮 */
+html.wgw-theme blockquote {
+  border-left: 4px solid #9c27b0 !important;
+  padding-left: 1em;
+  margin-left: 0;
+  color: #ce93d8 !important;
+  background: rgba(156, 39, 176, 0.05) !important;
+}
+
+html.wgw-theme blockquote p {
+  color: #ce93d8 !important;
 }
