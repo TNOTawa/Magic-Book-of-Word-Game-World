@@ -113,7 +113,7 @@ html.wgw-theme .theme-popup button {
   padding: 0.3em 0.5em !important;
 }
 
-/* 代码块容器 - JS渲染边框 */
+/* 代码块容器 - CSS伪元素边框，可无限扩展 */
 html.wgw-theme pre {
   position: relative;
   background: #000 !important;
@@ -125,16 +125,48 @@ html.wgw-theme pre {
   overflow: auto !important;
 }
 
+html.wgw-theme pre::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: var(--wgw-border-font-size) solid transparent;
+  border-image: repeating-linear-gradient(
+    90deg,
+    #fff 0,
+    #fff 10px,
+    transparent 10px,
+    transparent 20px
+  ) 10;
+  pointer-events: none;
+  z-index: 1;
+}
+
 html.wgw-theme pre code {
   display: block;
   background: transparent !important;
   color: #fff !important;
   font-family: var(--main-font) !important;
+  position: relative;
+  z-index: 2;
 }
 
 html.wgw-theme code {
   background: transparent !important;
   font-family: var(--main-font) !important;
+}
+
+/* 单行代码视为JSON高亮 */
+html.wgw-theme p code,
+html.wgw-theme li code,
+html.wgw-theme td code,
+html.wgw-theme th code {
+  color: #00e676 !important;
+  background: rgba(0, 230, 118, 0.1) !important;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
 }
 
 /* 代码高亮统一为白色 */
@@ -240,6 +272,61 @@ html.wgw-theme .part-title {
   margin-left: 0 !important;
 }
 
+/* 表格边框 */
+html.wgw-theme .table-wrapper {
+  position: relative;
+  margin: 1.8em 0;
+  overflow: auto;
+}
+
+html.wgw-theme .table-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: var(--wgw-border-font-size) solid transparent;
+  border-image: repeating-linear-gradient(
+    90deg,
+    #fff 0,
+    #fff 10px,
+    transparent 10px,
+    transparent 20px
+  ) 10;
+  pointer-events: none;
+  z-index: 1;
+}
+
+html.wgw-theme table {
+  border-collapse: collapse;
+  width: 100%;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html.wgw-theme table th,
+html.wgw-theme table td {
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 0.5em 0.8em;
+  position: relative;
+}
+
+/* 第一行与第二行之间的分割线为白色"格" */
+html.wgw-theme table thead tr:first-child th,
+html.wgw-theme table thead tr:first-child td {
+  border-bottom: 2px solid #fff !important;
+}
+
+html.wgw-theme table thead tr:nth-child(2) th,
+html.wgw-theme table thead tr:nth-child(2) td {
+  border-bottom: 2px solid #fff !important;
+}
+
+html.wgw-theme table tbody tr:first-child td {
+  border-top: 2px solid #fff !important;
+}
+
 html.wgw-theme .content main,
 html.wgw-theme .searchresults {
   padding-right: 0;
@@ -265,16 +352,22 @@ html.wgw-theme #mdbook-sidebar-resize-handle {
   position: absolute;
   top: 0;
   right: calc(var(--sidebar-resize-indicator-width) * -1);
-  width: var(--sidebar-resize-indicator-width);
+  width: calc(var(--sidebar-resize-indicator-width) + 20px);
   height: 100%;
-  overflow: hidden;
+  overflow: visible;
   z-index: 5;
+  pointer-events: none;
 }
 
 html.wgw-theme #mdbook-sidebar-resize-handle .sidebar-resize-indicator {
   position: relative;
   z-index: 1;
   background: transparent !important;
+  pointer-events: auto;
+}
+
+html.wgw-theme #mdbook-sidebar-resize-handle #wgw-divider {
+  pointer-events: none;
 }
 
 /* MD标记替换为中文字符 */
