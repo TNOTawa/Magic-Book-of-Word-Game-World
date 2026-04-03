@@ -396,12 +396,12 @@ html.wgw-theme #mdbook-body-container {
 }
 
 html.wgw-theme #mdbook-body-container::after {
-  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
+  content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
   position: fixed;
-  top: 0;
+  top: -100vh;
   left: calc(var(--sidebar-width) + (var(--sidebar-resize-indicator-width) / 2));
   transform: translateX(-50%) translateY(0);
-  height: 100vh;
+  height: 300vh;
   width: 1em;
   font-size: var(--wgw-divider-font-size);
   line-height: 1;
@@ -412,7 +412,7 @@ html.wgw-theme #mdbook-body-container::after {
   user-select: none;
   z-index: 0;
   font-family: var(--main-font) !important;
-  animation: wgw-divider-scroll 120s linear infinite;
+  animation: wgw-divider-scroll 160s linear infinite;
   will-change: transform;
 }
 
@@ -433,7 +433,7 @@ html.wgw-theme .nav-wide-wrapper {
     transform: translateX(-50%) translateY(0);
   }
   to {
-    transform: translateX(-50%) translateY(-45vh);
+    transform: translateX(-50%) translateY(-100vh);
   }
 }
 
@@ -846,20 +846,31 @@ html.wgw-theme .nav-chapters svg {
 
 html.wgw-theme .mobile-nav-chapters.previous::before,
 html.wgw-theme .nav-chapters.previous::before {
-  content: "[ < /";
+  content: "[ ";
   position: absolute;
   top: 50%;
-  right: 0;
+  right: calc(100% + 1.05em);
   transform: translateY(-50%);
-  color: #ffeb3b;
+  color: #fff;
   font-family: var(--main-font) !important;
   white-space: pre;
-  letter-spacing: 0;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous::after,
+html.wgw-theme .nav-chapters.previous::after {
+  content: " / ";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 0.2em);
+  transform: translateY(-50%);
+  color: #fff;
+  font-family: var(--main-font) !important;
+  white-space: pre;
 }
 
 html.wgw-theme .mobile-nav-chapters.next::before,
 html.wgw-theme .nav-chapters.next::before {
-  content: "> ]";
+  content: " > ";
   position: absolute;
   top: 50%;
   left: 0;
@@ -867,17 +878,39 @@ html.wgw-theme .nav-chapters.next::before {
   color: #ffeb3b;
   font-family: var(--main-font) !important;
   white-space: pre;
-  letter-spacing: 0;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous:hover::before,
+html.wgw-theme .mobile-nav-chapters.next::after,
+html.wgw-theme .nav-chapters.next::after {
+  content: " ]";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 1.05em);
+  transform: translateY(-50%);
+  color: #fff;
+  font-family: var(--main-font) !important;
+  white-space: pre;
+}
+
+html.wgw-theme .mobile-nav-chapters.previous:hover,
+html.wgw-theme .mobile-nav-chapters.previous:focus,
+html.wgw-theme .mobile-nav-chapters.next:hover,
+html.wgw-theme .mobile-nav-chapters.next:focus,
+html.wgw-theme .nav-chapters.previous:hover,
+html.wgw-theme .nav-chapters.previous:focus,
+html.wgw-theme .nav-chapters.next:hover,
+html.wgw-theme .nav-chapters.next:focus {
+  background: transparent !important;
+}
+
 html.wgw-theme .mobile-nav-chapters.next:hover::before,
-html.wgw-theme .mobile-nav-chapters.previous:focus::before,
 html.wgw-theme .mobile-nav-chapters.next:focus::before,
-html.wgw-theme .nav-chapters.previous:hover::before,
 html.wgw-theme .nav-chapters.next:hover::before,
-html.wgw-theme .nav-chapters.previous:focus::before,
-html.wgw-theme .nav-chapters.next:focus::before {
+html.wgw-theme .nav-chapters.next:focus::before,
+html.wgw-theme .mobile-nav-chapters.previous:hover,
+html.wgw-theme .mobile-nav-chapters.previous:focus,
+html.wgw-theme .nav-chapters.previous:hover,
+html.wgw-theme .nav-chapters.previous:focus {
   color: #fff176 !important;
 }
 

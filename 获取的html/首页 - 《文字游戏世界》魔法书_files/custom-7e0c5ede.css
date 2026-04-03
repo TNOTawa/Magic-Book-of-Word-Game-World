@@ -391,13 +391,17 @@ html.wgw-theme .content {
   position: relative;
 }
 
-html.wgw-theme .page::after {
+html.wgw-theme #mdbook-body-container {
+  position: relative;
+}
+
+html.wgw-theme #mdbook-body-container::after {
   content: "文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书\A文\A字\A游\A戏\A世\A界\A魔\A法\A书";
   position: fixed;
-  top: -30vh;
-  left: var(--sidebar-width, 300px);
+  top: 0;
+  left: calc(var(--sidebar-width) + (var(--sidebar-resize-indicator-width) / 2));
   transform: translateX(-50%) translateY(0);
-  height: 160vh;
+  height: 100vh;
   width: 1em;
   font-size: var(--wgw-divider-font-size);
   line-height: 1;
@@ -406,18 +410,20 @@ html.wgw-theme .page::after {
   overflow: hidden;
   pointer-events: none;
   user-select: none;
-  z-index: -1;
+  z-index: 0;
   font-family: var(--main-font) !important;
-  animation: wgw-divider-scroll 90s linear infinite;
+  animation: wgw-divider-scroll 120s linear infinite;
   will-change: transform;
 }
 
+html.wgw-theme .page-wrapper,
 html.wgw-theme .page,
-html.wgw-theme .sidebar,
 html.wgw-theme .content,
 html.wgw-theme .content main,
 html.wgw-theme .searchresults,
-html.wgw-theme .menu-bar {
+html.wgw-theme .menu-bar,
+html.wgw-theme .nav-wrapper,
+html.wgw-theme .nav-wide-wrapper {
   position: relative;
   z-index: 1;
 }
@@ -427,7 +433,7 @@ html.wgw-theme .menu-bar {
     transform: translateX(-50%) translateY(0);
   }
   to {
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-45vh);
   }
 }
 
@@ -795,102 +801,84 @@ html.wgw-theme blockquote p {
 html.wgw-theme .mobile-nav-chapters,
 html.wgw-theme .nav-chapters {
   position: fixed !important;
-  bottom: 1rem !important;
+  bottom: 2rem !important;
   top: auto !important;
   left: auto !important;
-  z-index: 20;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  color: #ffeb3b !important;
-  padding: 0 !important;
-  min-height: 0 !important;
+  z-index: 30;
   width: 1em !important;
   height: 1em !important;
-  font-size: 1.5em !important;
-  line-height: 1;
-  text-shadow: 1px 1px 0 #000;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
+  min-width: 1em !important;
+  min-height: 1em !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  font-size: 2.4em !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  overflow: visible !important;
 }
 
 html.wgw-theme .mobile-nav-chapters.previous,
 html.wgw-theme .nav-chapters.previous {
-  right: 4rem !important;
+  right: 5.5rem !important;
 }
 
 html.wgw-theme .mobile-nav-chapters.next,
 html.wgw-theme .nav-chapters.next {
-  right: 1rem !important;
+  right: 2rem !important;
+}
+
+html.wgw-theme .mobile-nav-chapters > *,
+html.wgw-theme .nav-chapters > * {
+  display: none !important;
+}
+
+html.wgw-theme .mobile-nav-chapters .fa-svg,
+html.wgw-theme .nav-chapters .fa-svg,
+html.wgw-theme .mobile-nav-chapters svg,
+html.wgw-theme .nav-chapters svg {
+  display: none !important;
 }
 
 html.wgw-theme .mobile-nav-chapters.previous::before,
 html.wgw-theme .nav-chapters.previous::before {
-  content: "[";
+  content: "[ < /";
   position: absolute;
-  left: -1em;
-  top: 0;
-  color: #fff;
-  pointer-events: none;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: #ffeb3b;
+  font-family: var(--main-font) !important;
+  white-space: pre;
+  letter-spacing: 0;
 }
 
-html.wgw-theme .mobile-nav-chapters.previous::after,
-html.wgw-theme .nav-chapters.previous::after {
-  content: "/";
+html.wgw-theme .mobile-nav-chapters.next::before,
+html.wgw-theme .nav-chapters.next::before {
+  content: "> ]";
   position: absolute;
-  right: -1em;
-  top: 0;
-  color: #fff;
-  pointer-events: none;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #ffeb3b;
+  font-family: var(--main-font) !important;
+  white-space: pre;
+  letter-spacing: 0;
 }
 
-html.wgw-theme .mobile-nav-chapters.next::after,
-html.wgw-theme .nav-chapters.next::after {
-  content: "]";
-  position: absolute;
-  right: -1em;
-  top: 0;
-  color: #fff;
-  pointer-events: none;
-}
-
-html.wgw-theme .mobile-nav-chapters .fa-svg,
-html.wgw-theme .nav-chapters .fa-svg {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffeb3b !important;
-}
-
-html.wgw-theme .mobile-nav-chapters svg,
-html.wgw-theme .nav-chapters svg {
-  width: 0.7em;
-  height: 0.7em;
-  fill: #ffeb3b !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous:hover,
-html.wgw-theme .mobile-nav-chapters.next:hover,
-html.wgw-theme .mobile-nav-chapters.previous:focus,
-html.wgw-theme .mobile-nav-chapters.next:focus,
-html.wgw-theme .nav-chapters.previous:hover,
-html.wgw-theme .nav-chapters.next:hover,
-html.wgw-theme .nav-chapters.previous:focus,
-html.wgw-theme .nav-chapters.next:focus {
+html.wgw-theme .mobile-nav-chapters.previous:hover::before,
+html.wgw-theme .mobile-nav-chapters.next:hover::before,
+html.wgw-theme .mobile-nav-chapters.previous:focus::before,
+html.wgw-theme .mobile-nav-chapters.next:focus::before,
+html.wgw-theme .nav-chapters.previous:hover::before,
+html.wgw-theme .nav-chapters.next:hover::before,
+html.wgw-theme .nav-chapters.previous:focus::before,
+html.wgw-theme .nav-chapters.next:focus::before {
   color: #fff176 !important;
-  background: transparent !important;
-}
-
-html.wgw-theme .mobile-nav-chapters.previous:hover svg,
-html.wgw-theme .mobile-nav-chapters.next:hover svg,
-html.wgw-theme .mobile-nav-chapters.previous:focus svg,
-html.wgw-theme .mobile-nav-chapters.next:focus svg,
-html.wgw-theme .nav-chapters.previous:hover svg,
-html.wgw-theme .nav-chapters.next:hover svg,
-html.wgw-theme .nav-chapters.previous:focus svg,
-html.wgw-theme .nav-chapters.next:focus svg {
-  fill: #fff176 !important;
 }
 
 /* 特殊JSON / 事件语法高亮：所有主题通用 */
