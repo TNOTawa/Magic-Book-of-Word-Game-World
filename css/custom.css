@@ -257,7 +257,7 @@ html.wgw-theme .wgw-table-divider {
   position: absolute;
   font-size: var(--wgw-border-font-size);
   line-height: 1;
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: rgba(255, 255, 255, 0.2) !important;
   overflow: hidden;
   pointer-events: none;
   font-family: var(--main-font) !important;
@@ -280,7 +280,7 @@ html.wgw-theme .wgw-table-col-divider {
 
 /* 表头分隔线不透明 */
 html.wgw-theme .wgw-table-header-divider {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 1) !important;
 }
 
 /* 移除表格原生边框 */
