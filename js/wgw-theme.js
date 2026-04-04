@@ -247,20 +247,23 @@
       var result = line;
       var hasEventTag = /@\[/.test(line);
       
-      // 1. 先处理事件名称 @[event_name]（包括 @[#raw_commend] 这种情况）
-      // 注意：事件名中的 # 不是注释
+      // 1. 处理双井号注释 ## 和单井号注释 #（但要避免事件名和字符串内的 #）
+      if (!hasEventTag && /^\s*##/.test(line)) {
+        // 整行双井号注释
+        return '<span class="hljs-comment">' + line + '</span>';
+      }
+      
+      // 2. 先处理事件名称 @[event_name]（包括 @[#raw_commend] 这种情况）
       if (hasEventTag) {
         result = result.replace(/@\[([^\]]+)\]/g, '<span class="hljs-meta">@[$1]</span>');
       }
       
-      // 2. 处理注释（整行或行尾的 #，但要避免字符串内的 #）
-      // 只有在不是字符串内的 # 才是注释
-      if (!hasEventTag) {
-        result = result.replace(/^(\s*)(#[^\n]*)$/g, '$1<span class="hljs-comment">$2</span>');
-        result = result.replace(/(\s+)(#[^\n]*)$/g, '$1<span class="hljs-comment">$2</span>');
+      // 3. 处理单井号注释（整行或行尾，但要避免字符串内的 #）
+      if (!hasEventTag && /^\s*#[^#]/.test(line)) {
+        return '<span class="hljs-comment">' + line + '</span>';
       }
       
-      // 3. 处理 @[event] "string" 或 @[event] true 这种单参数格式
+      // 4. 处理 @[event] "string" 或 @[event] true 这种单参数格式
       result = result.replace(/<span class="hljs-meta">@\[([^\]]+)\]<\/span>(\s+)("([^"\\]|\\.)*")/g, function(match, event, sp, str) {
         return '<span class="hljs-meta">@[' + event + ']</span>' + sp + '<span class="hljs-string">' + str + '</span>';
       });
@@ -271,23 +274,22 @@
         return '<span class="hljs-meta">@[' + event + ']</span>' + sp + '<span class="hljs-number">' + num + '</span>';
       });
       
-      // 4. 处理 "key": value 格式
-      // 先匹配整个键值对，然后分别高亮
+      // 5. 处理 "key": value 格式（包括变量引用 "v:xxx" 和开关 "s:xxx"）
       result = result.replace(/("([^"\\]|\\.)*")(\s*)(:)(\s*)("([^"\\]|\\.)*")/g, function(match, key, k1, sp1, colon, sp2, value) {
         return '<span class="hljs-attr">' + key + '</span>' + sp1 + colon + sp2 + '<span class="hljs-string">' + value + '</span>';
       });
       
-      // 5. 处理 "key": 数字
+      // 6. 处理 "key": 数字
       result = result.replace(/("([^"\\]|\\.)*")(\s*)(:)(\s*)(-?\d+\.?\d*)/g, function(match, key, k1, sp1, colon, sp2, num) {
         return '<span class="hljs-attr">' + key + '</span>' + sp1 + colon + sp2 + '<span class="hljs-number">' + num + '</span>';
       });
       
-      // 6. 处理 "key": true/false/null
+      // 7. 处理 "key": true/false/null
       result = result.replace(/("([^"\\]|\\.)*")(\s*)(:)(\s*)(true|false|null)\b/g, function(match, key, k1, sp1, colon, sp2, literal) {
         return '<span class="hljs-attr">' + key + '</span>' + sp1 + colon + sp2 + '<span class="hljs-literal">' + literal + '</span>';
       });
       
-      // 7. 处理数组中的字符串 ["value", "value"]
+      // 8. 处理数组中的字符串（包括变量引用）
       result = result.replace(/\[(\s*)("([^"\\]|\\.)*")/g, function(match, sp, str) {
         return '[' + sp + '<span class="hljs-string">' + str + '</span>';
       });
@@ -295,7 +297,7 @@
         return ',' + sp + '<span class="hljs-string">' + str + '</span>';
       });
       
-      // 8. 处理数组中的数字
+      // 9. 处理数组中的数字
       result = result.replace(/\[(\s*)(-?\d+\.?\d*)/g, function(match, sp, num) {
         return '[' + sp + '<span class="hljs-number">' + num + '</span>';
       });
@@ -303,7 +305,7 @@
         return ',' + sp + '<span class="hljs-number">' + num + '</span>';
       });
       
-      // 9. 处理数组中的布尔值
+      // 10. 处理数组中的 null/true/false
       result = result.replace(/\[(\s*)(true|false|null)\b/g, function(match, sp, literal) {
         return '[' + sp + '<span class="hljs-literal">' + literal + '</span>';
       });
@@ -311,10 +313,89 @@
         return ',' + sp + '<span class="hljs-literal">' + literal + '</span>';
       });
       
+      // 11. 处理裸变量名（不带引号的标识符，如 [X, Y]）
+      // 只在数组上下文中处理，避免误匹配
+      result = result.replace(/\[(\s*)([A-Za-z_]\w*)/g, function(match, sp, varName) {
+        return '[' + sp + '<span class="hljs-name">' + varName + '</span>';
+      });
+      result = result.replace(/,(\s*)([A-Za-z_]\w*)(?=\s*[,\]])/g, function(match, sp, varName) {
+        return ',' + sp + '<span class="hljs-name">' + varName + '</span>';
+      });
+      
       return result;
     }).join('\n');
     
     codeElement.innerHTML = highlighted;
+  }
+
+  // 初始化代码块边框
+  function initCodeBlockBorders() {
+    if (!isWgwTheme()) {
+      // 移除所有边框元素
+      document.querySelectorAll('.wgw-code-border').forEach(function(el) {
+        el.remove();
+      });
+      return;
+    }
+
+    var preBlocks = document.querySelectorAll('pre');
+    
+    preBlocks.forEach(function(pre) {
+      // 避免重复处理
+      if (pre.dataset.wgwBorderInit === 'true') {
+        return;
+      }
+      
+      pre.dataset.wgwBorderInit = 'true';
+      
+      // 创建边框容器
+      var borderTop = document.createElement('div');
+      borderTop.className = 'wgw-code-border wgw-code-border-top';
+      borderTop.textContent = '代码块'.repeat(40);
+      
+      var borderBottom = document.createElement('div');
+      borderBottom.className = 'wgw-code-border wgw-code-border-bottom';
+      borderBottom.textContent = '代码块'.repeat(40);
+      
+      var borderLeft = document.createElement('div');
+      borderLeft.className = 'wgw-code-border wgw-code-border-left';
+      
+      var borderRight = document.createElement('div');
+      borderRight.className = 'wgw-code-border wgw-code-border-right';
+      
+      // 插入边框
+      pre.insertBefore(borderTop, pre.firstChild);
+      pre.insertBefore(borderBottom, null);
+      pre.insertBefore(borderLeft, pre.firstChild);
+      pre.insertBefore(borderRight, null);
+      
+      // 动态计算左右边框高度
+      function updateVerticalBorders() {
+        var height = pre.offsetHeight;
+        var borderSize = 10; // --wgw-border-font-size
+        var lineHeight = borderSize;
+        var repeatCount = Math.ceil((height - borderSize * 2) / lineHeight) + 5; // 额外添加5行确保覆盖
+        
+        var verticalText = '';
+        for (var i = 0; i < repeatCount; i++) {
+          verticalText += '代\n码\n块\n';
+        }
+        
+        borderLeft.textContent = verticalText;
+        borderRight.textContent = verticalText;
+      }
+      
+      // 初始化
+      updateVerticalBorders();
+      
+      // 监听尺寸变化
+      if (typeof ResizeObserver !== 'undefined') {
+        var resizeObserver = new ResizeObserver(function() {
+          updateVerticalBorders();
+        });
+        resizeObserver.observe(pre);
+      }
+    });
   }
 
   // 初始化代码高亮
@@ -403,6 +484,7 @@
     initDivider();
     fixSidebarSpacing();
     initCopyButtons();
+    initCodeBlockBorders();
     initCodeHighlight();
   }
 
@@ -413,6 +495,7 @@
       initDivider();
       fixSidebarSpacing();
       initCopyButtons();
+      initCodeBlockBorders();
       initCodeHighlight();
     });
   } else {
@@ -420,6 +503,7 @@
     initDivider();
     fixSidebarSpacing();
     initCopyButtons();
+    initCodeBlockBorders();
     initCodeHighlight();
   }
 
