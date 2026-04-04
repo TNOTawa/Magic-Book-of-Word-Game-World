@@ -137,72 +137,48 @@ html.wgw-theme code {
   font-family: var(--main-font) !important;
 }
 
-/* 代码块边框：顶部 */
-html.wgw-theme pre::before {
-  content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
+/* JS生成的代码块边框样式 */
+html.wgw-theme .wgw-code-border {
   position: absolute;
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  user-select: none;
+}
+
+html.wgw-theme .wgw-code-border-top {
   top: 0;
   left: 0;
   right: 0;
   height: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
   white-space: nowrap;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
 }
 
-/* 代码块边框：底部 */
-html.wgw-theme pre::after {
-  content: "代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块代码块";
-  position: absolute;
+html.wgw-theme .wgw-code-border-bottom {
   bottom: 0;
   left: 0;
   right: 0;
   height: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
   white-space: nowrap;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
 }
 
-/* 代码块边框：左侧 */
-html.wgw-theme pre code::before {
-  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
-  position: absolute;
+html.wgw-theme .wgw-code-border-left {
   top: 0;
   left: 0;
   bottom: 0;
   width: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
   white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
 }
 
-/* 代码块边框：右侧 */
-html.wgw-theme pre code::after {
-  content: "代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块\A代\A码\A块";
-  position: absolute;
+html.wgw-theme .wgw-code-border-right {
   top: 0;
   right: 0;
   bottom: 0;
   width: var(--wgw-border-font-size);
-  font-size: var(--wgw-border-font-size);
-  line-height: 1;
-  color: #fff;
   white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  font-family: var(--main-font) !important;
 }
 
 /* 代码高亮基础样式 - 不包括事件语法的特殊高亮 */
@@ -867,6 +843,12 @@ pre code.language-json .hljs-comment,
 pre code:not([class*="language-"]) .hljs-comment {
   color: #757575 !important;
   font-style: italic;
+}
+
+/* 裸变量名 - 紫色 */
+pre code.language-json .hljs-name,
+pre code:not([class*="language-"]) .hljs-name {
+  color: #ba68c8 !important;
 }
 
 /* 标点符号 - 浅灰 */
