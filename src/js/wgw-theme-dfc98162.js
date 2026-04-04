@@ -398,6 +398,170 @@
     });
   }
 
+  // 初始化表格边框
+  function initTableBorders() {
+    if (!isWgwTheme()) {
+      // 移除所有表格边框元素
+      document.querySelectorAll('.wgw-table-border, .wgw-table-divider').forEach(function(el) {
+        el.remove();
+      });
+      return;
+    }
+
+    var tables = document.querySelectorAll('table');
+    
+    tables.forEach(function(table) {
+      // 避免重复处理
+      if (table.dataset.wgwBorderInit === 'true') {
+        return;
+      }
+      
+      table.dataset.wgwBorderInit = 'true';
+      
+      // 创建表格包装器
+      var wrapper = document.createElement('div');
+      wrapper.className = 'wgw-table-wrapper';
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+      
+      // 创建外边框
+      var borderTop = document.createElement('div');
+      borderTop.className = 'wgw-table-border wgw-table-border-top';
+      borderTop.textContent = '表格'.repeat(60);
+      
+      var borderBottom = document.createElement('div');
+      borderBottom.className = 'wgw-table-border wgw-table-border-bottom';
+      borderBottom.textContent = '表格'.repeat(60);
+      
+      var borderLeft = document.createElement('div');
+      borderLeft.className = 'wgw-table-border wgw-table-border-left';
+      
+      var borderRight = document.createElement('div');
+      borderRight.className = 'wgw-table-border wgw-table-border-right';
+      
+      wrapper.insertBefore(borderTop, wrapper.firstChild);
+      wrapper.appendChild(borderBottom);
+      wrapper.insertBefore(borderLeft, wrapper.firstChild);
+      wrapper.appendChild(borderRight);
+      
+      // 动态计算左右边框高度
+      function updateTableVerticalBorders() {
+        var height = wrapper.offsetHeight;
+        var borderSize = 10;
+        var lineHeight = borderSize;
+        var repeatCount = Math.ceil((height - borderSize * 2) / lineHeight) + 5;
+        
+        var verticalText = '';
+        for (var i = 0; i < repeatCount; i++) {
+          verticalText += '表\n格\n';
+        }
+        
+        borderLeft.textContent = verticalText;
+        borderRight.textContent = verticalText;
+      }
+      
+      // 添加内部分隔线
+      function updateTableDividers() {
+        // 移除旧的分隔线
+        wrapper.querySelectorAll('.wgw-table-divider').forEach(function(el) {
+          el.remove();
+        });
+        
+        var rows = table.querySelectorAll('tr');
+        var firstRow = rows[0];
+        
+        if (!firstRow) return;
+        
+        var cells = firstRow.querySelectorAll('th, td');
+        var colCount = cells.length;
+        
+        // 添加列分隔线
+        for (var i = 1; i < colCount; i++) {
+          var colDivider = document.createElement('div');
+          colDivider.className = 'wgw-table-divider wgw-table-col-divider';
+          colDivider.dataset.colIndex = i;
+          wrapper.appendChild(colDivider);
+          
+          var colText = '';
+          var dividerHeight = wrapper.offsetHeight - 20;
+          var colRepeatCount = Math.ceil(dividerHeight / 10) + 2;
+          for (var j = 0; j < colRepeatCount; j++) {
+            colText += '列\n';
+          }
+          colDivider.textContent = colText;
+        }
+        
+        // 添加行分隔线
+        for (var i = 1; i < rows.length; i++) {
+          var rowDivider = document.createElement('div');
+          rowDivider.className = 'wgw-table-divider wgw-table-row-divider';
+          rowDivider.dataset.rowIndex = i;
+          rowDivider.textContent = '行'.repeat(100);
+          
+          // 第一行与第二行之间的分隔线不透明
+          if (i === 1) {
+            rowDivider.classList.add('wgw-table-header-divider');
+          }
+          
+          wrapper.appendChild(rowDivider);
+        }
+        
+        // 更新分隔线位置
+        updateDividerPositions();
+      }
+      
+      // 更新分隔线位置
+      function updateDividerPositions() {
+        var rows = table.querySelectorAll('tr');
+        var tableRect = table.getBoundingClientRect();
+        var wrapperRect = wrapper.getBoundingClientRect();
+        
+        // 更新列分隔线位置
+        if (rows[0]) {
+          var cells = rows[0].querySelectorAll('th, td');
+          cells.forEach(function(cell, index) {
+            if (index === 0) return;
+            
+            var cellRect = cell.getBoundingClientRect();
+            var colDivider = wrapper.querySelector('.wgw-table-col-divider[data-col-index="' + index + '"]');
+            
+            if (colDivider) {
+              var leftPos = cellRect.left - wrapperRect.left - 5;
+              colDivider.style.left = leftPos + 'px';
+            }
+          });
+        }
+        
+        // 更新行分隔线位置
+        rows.forEach(function(row, index) {
+          if (index === 0) return;
+          
+          var rowRect = row.getBoundingClientRect();
+          var rowDivider = wrapper.querySelector('.wgw-table-row-divider[data-row-index="' + index + '"]');
+          
+          if (rowDivider) {
+            var topPos = rowRect.top - wrapperRect.top - 5;
+            rowDivider.style.top = topPos + 'px';
+          }
+        });
+      }
+      
+      // 初始化
+      updateTableVerticalBorders();
+      updateTableDividers();
+      
+      // 监听尺寸变化
+      if (typeof ResizeObserver !== 'undefined') {
+        var resizeObserver = new ResizeObserver(function() {
+          updateTableVerticalBorders();
+          updateTableDividers();
+        });
+        resizeObserver.observe(wrapper);
+        resizeObserver.observe(table);
+      }
+    });
+  }
+
   // 初始化代码高亮
   function initCodeHighlight() {
     // 处理所有未指定语言的代码块和JSON代码块
@@ -485,6 +649,7 @@
     fixSidebarSpacing();
     initCopyButtons();
     initCodeBlockBorders();
+    initTableBorders();
     initCodeHighlight();
   }
 
@@ -496,6 +661,7 @@
       fixSidebarSpacing();
       initCopyButtons();
       initCodeBlockBorders();
+      initTableBorders();
       initCodeHighlight();
     });
   } else {
@@ -504,6 +670,7 @@
     fixSidebarSpacing();
     initCopyButtons();
     initCodeBlockBorders();
+    initTableBorders();
     initCodeHighlight();
   }
 

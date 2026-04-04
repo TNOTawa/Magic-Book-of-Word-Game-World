@@ -133,8 +133,18 @@ html.wgw-theme pre code {
 }
 
 html.wgw-theme code {
-  background: transparent !important;
+  color: #00e676 !important;
+  background: rgba(0, 230, 118, 0.1) !important;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
   font-family: var(--main-font) !important;
+}
+
+html.wgw-theme pre code {
+  color: #fff !important;
+  background: transparent !important;
+  padding: 0;
+  border-radius: 0;
 }
 
 /* JS生成的代码块边框样式 */
@@ -179,6 +189,120 @@ html.wgw-theme .wgw-code-border-right {
   bottom: 0;
   width: var(--wgw-border-font-size);
   white-space: pre;
+}
+
+/* 表格边框样式 */
+html.wgw-theme .wgw-table-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 1.8em 0;
+  padding: 1.5em;
+  background: #000;
+  overflow: visible;
+}
+
+html.wgw-theme .wgw-table-wrapper table {
+  margin: 0;
+  border-collapse: collapse;
+  border: 0;
+  background: transparent;
+}
+
+html.wgw-theme .wgw-table-border {
+  position: absolute;
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: #fff;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  user-select: none;
+  opacity: 1;
+}
+
+html.wgw-theme .wgw-table-border-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--wgw-border-font-size);
+  white-space: nowrap;
+}
+
+html.wgw-theme .wgw-table-border-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--wgw-border-font-size);
+  white-space: nowrap;
+}
+
+html.wgw-theme .wgw-table-border-left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--wgw-border-font-size);
+  white-space: pre;
+}
+
+html.wgw-theme .wgw-table-border-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--wgw-border-font-size);
+  white-space: pre;
+}
+
+/* 表格内部分隔线 */
+html.wgw-theme .wgw-table-divider {
+  position: absolute;
+  font-size: var(--wgw-border-font-size);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--main-font) !important;
+  user-select: none;
+}
+
+html.wgw-theme .wgw-table-row-divider {
+  left: var(--wgw-border-font-size);
+  right: var(--wgw-border-font-size);
+  height: var(--wgw-border-font-size);
+  white-space: nowrap;
+}
+
+html.wgw-theme .wgw-table-col-divider {
+  top: var(--wgw-border-font-size);
+  bottom: var(--wgw-border-font-size);
+  width: var(--wgw-border-font-size);
+  white-space: pre;
+}
+
+/* 表头分隔线不透明 */
+html.wgw-theme .wgw-table-header-divider {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* 移除表格原生边框 */
+html.wgw-theme table,
+html.wgw-theme table th,
+html.wgw-theme table td {
+  border: 0 !important;
+}
+
+html.wgw-theme table th,
+html.wgw-theme table td {
+  padding: 0.5em 0.8em;
+  color: #fff !important;
+}
+
+html.wgw-theme table th {
+  font-weight: bold;
+  background: transparent !important;
+}
+
+html.wgw-theme table tr {
+  background: transparent !important;
 }
 
 /* 代码高亮基础样式 - 不包括事件语法的特殊高亮 */
@@ -573,21 +697,6 @@ html.wgw-theme h6 i {
 html.wgw-theme u {
   color: #e91e63 !important;
   text-decoration: underline;
-}
-
-/* 行内代码高亮 */
-html.wgw-theme code:not(pre code) {
-  color: #00e676 !important;
-  background: rgba(0, 230, 118, 0.1) !important;
-  padding: 0.1em 0.3em;
-  border-radius: 3px;
-}
-
-/* 代码块内代码高亮 */
-html.wgw-theme pre code,
-html.wgw-theme pre code.language-json,
-html.wgw-theme pre code:not([class*="language-"]) {
-  color: #00e676 !important;
 }
 
 /* WGW主题事件语法高亮 */
