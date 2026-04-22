@@ -36,7 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../../searchindex-bbe2c347.js";
+            window.path_to_searchindex_js = "../../searchindex-5ccc679d.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-4e08e056.js"></script>
@@ -177,40 +177,159 @@
                     <main>
                         <h2 id="设置事件参数"><a class="header" href="#设置事件参数">设置事件参数</a></h2>
 <pre><code>@[set_event_params] {
-    
     "target": "物件名称",
     "需要更改的参数": 更改后的参数
-
 }
 </code></pre>
-<p>可以设置指定物件的参数。以下是部分参数的列表。</p>
-<p><strong>target 取值</strong>：可以是 <code>"self"</code>（该物件本身）、<code>"player"</code>（玩家）或具体的物件名称。</p>
+<p>用于直接修改指定物件或玩家当前持有的事件参数。根据最新研究，<code>@[set_event_params]</code> 不仅能改常见显示参数，还能改不少底层移动、渲染、音效与运行状态字段。</p>
+<h3 id="target-取值"><a class="header" href="#target-取值"><code>target</code> 取值</a></h3>
+<ul>
+<li><code>"self"</code>：当前执行该指令的物件自身。</li>
+<li><code>"player"</code>：玩家。</li>
+<li><code>"具体物件名"</code>：场景中的目标物件。</li>
+</ul>
+<h3 id="常用可修改参数"><a class="header" href="#常用可修改参数">常用可修改参数</a></h3>
+<p>下表优先列出实用性较高、风险较低的字段。示例中的值仅作演示，实际效果请结合关卡逻辑测试。</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>属性名（英文）</th><th>中文说明</th><th>类型</th><th>示例值</th></tr>
+<tr><th>属性名</th><th>中文说明</th><th>类型 / 可选值</th><th>示例值</th></tr>
 </thead>
 <tbody>
-<tr><td><code>text</code></td><td>显示的文字内容</td><td>字符串</td><td><code>"新文字"</code></td></tr>
-<tr><td><code>hasBackground</code></td><td>是否有背景框</td><td>布尔值</td><td><code>true</code> / <code>false</code></td></tr>
-<tr><td><code>opacity</code></td><td>透明度（0~1）</td><td>数字</td><td><code>0.5</code></td></tr>
-<tr><td><code>eventTriggerAction</code></td><td>触发方式</td><td>字符串</td><td>游戏开始后<code>"auto"</code> / 玩家调查后<code>"press"</code> / 玩家触碰后<code>"touch"</code> / 被物件触发<code>"trigger"</code></td></tr>
-<tr><td><code>existCondition</code></td><td>触发条件</td><td>字符串</td><td><code>"s:switch_name_触发物件==true"</code></td></tr>
-<tr><td><code>isOnTopOfPlayer</code></td><td>是否显示在角色上方</td><td>布尔值</td><td><code>true</code></td></tr>
-<tr><td><code>visible</code></td><td>是否可见</td><td>布尔值</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>text</code></td><td>普通物件显示的字面</td><td>字符串</td><td><code>"门"</code></td></tr>
+<tr><td><code>big_text</code></td><td>大物件专属字面</td><td>字符串</td><td><code>"终点"</code></td></tr>
+<tr><td><code>text_color</code></td><td>文字颜色</td><td>颜色字符串</td><td><code>"#FFFFFF"</code></td></tr>
+<tr><td><code>opacity</code></td><td>不透明度</td><td>整数</td><td><code>255</code></td></tr>
+<tr><td><code>visible</code></td><td>是否渲染</td><td>布尔值</td><td><code>false</code></td></tr>
+<tr><td><code>layer</code></td><td>所在层级</td><td><code>BACK</code> / <code>MID</code> / <code>FRONT</code></td><td><code>"FRONT"</code></td></tr>
+<tr><td><code>z_index</code></td><td>图层高度</td><td>整数</td><td><code>10</code></td></tr>
+<tr><td><code>z_as_relative</code></td><td>图层是否基于父节点</td><td>布尔值</td><td><code>false</code></td></tr>
+<tr><td><code>center_rotation</code></td><td>以中心点旋转的角度</td><td><code>0</code> ~ <code>359</code></td><td><code>180</code></td></tr>
+<tr><td><code>move_speed</code></td><td>物件速度</td><td>整数或 <code>Slow</code> / <code>Normal</code> / <code>Fast</code> / <code>Very Fast</code></td><td><code>"Fast"</code></td></tr>
+<tr><td><code>direction</code></td><td>面向方向</td><td><code>2</code> / <code>4</code> / <code>6</code> / <code>8</code></td><td><code>6</code></td></tr>
+<tr><td><code>now_pos</code></td><td>当前网格坐标</td><td>二维数组</td><td><code>[3,5]</code></td></tr>
+<tr><td><code>through</code></td><td>是否穿透</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>can_push</code></td><td>是否可推</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>can_delete</code></td><td>是否可删</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>can_split</code></td><td>是否可拆</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>can_move</code></td><td>当前是否允许移动</td><td>布尔值</td><td><code>false</code></td></tr>
+<tr><td><code>locked</code></td><td>是否锁定循环移动</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>event_trigger_action</code></td><td>触发方式</td><td><code>AUTO</code> / <code>PRESS</code> / <code>TOUCH</code></td><td><code>"PRESS"</code></td></tr>
+<tr><td><code>exist_condition</code></td><td>存在条件</td><td>字符串</td><td><code>"s:开关A==true"</code></td></tr>
+<tr><td><code>exist_fade_in</code></td><td>出现时是否淡入</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>is_high_priority</code></td><td>是否优先出现</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>need_be_saved</code></td><td>是否参与存档</td><td>布尔值</td><td><code>false</code></td></tr>
+<tr><td><code>bgs</code></td><td>绑定的环境音路径</td><td>字符串</td><td><code>"res://Sounds/se/wind.wav"</code></td></tr>
+<tr><td><code>bgs_loop</code></td><td>环境音是否循环</td><td>布尔值</td><td><code>true</code></td></tr>
+<tr><td><code>bgs_max_dist</code></td><td>声音传播距离</td><td><code>0</code> ~ <code>2000</code></td><td><code>600</code></td></tr>
+<tr><td><code>commands</code></td><td>物件自身携带的命令文本</td><td>字符串</td><td><code>"@[play_se] \"res://...\""</code></td></tr>
+<tr><td><code>loop_move_route</code></td><td>循环移动指令</td><td>字符串</td><td><code>"@[move_up]"</code></td></tr>
+<tr><td><code>copy_from_event</code></td><td>创建时复制命令来源</td><td>字符串</td><td><code>"模板物件"</code></td></tr>
+<tr><td><code>user_data</code></td><td>用户自定义数据</td><td>字典</td><td><code>{}</code></td></tr>
 </tbody>
 </table>
 </div>
-<p><strong>备注</strong>：</p>
+<h3 id="可用于补间的参数"><a class="header" href="#可用于补间的参数">可用于补间的参数</a></h3>
+<p>研究表明，以下字段更适合通过 <code>@[tween_parameter]</code> 平滑修改，而不是直接硬切：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>参数路径</th><th>说明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>position:x</code></td><td>像素坐标 X</td></tr>
+<tr><td><code>position:y</code></td><td>像素坐标 Y</td></tr>
+<tr><td><code>opacity</code></td><td>不透明度</td></tr>
+<tr><td><code>scale:x</code></td><td>横向缩放</td></tr>
+<tr><td><code>scale:y</code></td><td>纵向缩放</td></tr>
+</tbody>
+</table>
+</div>
+<p>如果只是想做动画，请优先使用补间；如果是想永久改物件状态，则优先使用 <code>@[set_event_params]</code>。</p>
+<h3 id="新发现的渲染参数"><a class="header" href="#新发现的渲染参数">新发现的渲染参数</a></h3>
+<p>这些字段适合做显示控制、颜色变化、局部透明等效果：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>属性名</th><th>中文说明</th><th>类型 / 范围</th><th>示例值</th></tr>
+</thead>
+<tbody>
+<tr><td><code>modulate:r</code></td><td>整体红色通道</td><td><code>0</code> ~ <code>255</code></td><td><code>255</code></td></tr>
+<tr><td><code>modulate:g</code></td><td>整体绿色通道</td><td><code>0</code> ~ <code>255</code></td><td><code>128</code></td></tr>
+<tr><td><code>modulate:b</code></td><td>整体蓝色通道</td><td><code>0</code> ~ <code>255</code></td><td><code>64</code></td></tr>
+<tr><td><code>modulate:a</code></td><td>整体透明通道</td><td><code>0</code> ~ <code>255</code></td><td><code>200</code></td></tr>
+<tr><td><code>self_modulate:r</code></td><td>仅自身红色通道，不影响子节点</td><td><code>0</code> ~ <code>255</code></td><td><code>255</code></td></tr>
+<tr><td><code>self_modulate:g</code></td><td>仅自身绿色通道，不影响子节点</td><td><code>0</code> ~ <code>255</code></td><td><code>255</code></td></tr>
+<tr><td><code>self_modulate:b</code></td><td>仅自身蓝色通道，不影响子节点</td><td><code>0</code> ~ <code>255</code></td><td><code>255</code></td></tr>
+<tr><td><code>self_modulate:a</code></td><td>仅自身透明通道，不影响子节点</td><td><code>0</code> ~ <code>255</code></td><td><code>180</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="理论上可改但要谨慎的运行时参数"><a class="header" href="#理论上可改但要谨慎的运行时参数">理论上可改，但要谨慎的运行时参数</a></h3>
+<p><code>@[set_event_params]</code> 的实现方式决定了：只要该物件能通过 <code>get()</code> 访问到对应字段，而且字段不是 <code>null</code>，理论上就有机会被修改。因此除导出变量外，还有一批运行时字段也可能生效。</p>
+<h4 id="物件--玩家共用父类中的常见字段"><a class="header" href="#物件--玩家共用父类中的常见字段">物件 / 玩家共用父类中的常见字段</a></h4>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>属性名</th><th>中文说明</th><th>类型 / 说明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>moving_pos</code></td><td>插值中的移动位置</td><td>二维数组</td></tr>
+<tr><td><code>has_move_cooldown</code></td><td>是否有移动冷却</td><td>布尔值</td></tr>
+<tr><td><code>cooldown_count</code></td><td>当前移动冷却时间</td><td>整数</td></tr>
+<tr><td><code>max_cooldown_count</code></td><td>最大移动冷却时间</td><td>整数</td></tr>
+<tr><td><code>move_route</code></td><td>当前移动路径</td><td>数组</td></tr>
+<tr><td><code>move_route_index</code></td><td>当前移动路径索引</td><td>整数</td></tr>
+<tr><td><code>wait_count</code></td><td>等待计数</td><td>整数</td></tr>
+<tr><td><code>is_move_route_forcing</code></td><td>是否处于强制移动</td><td>布尔值</td></tr>
+<tr><td><code>is_movement_pause</code></td><td>是否暂停移动</td><td>布尔值</td></tr>
+<tr><td><code>move_zone</code></td><td>可移动区域</td><td>数组</td></tr>
+<tr><td><code>move_dead_zone</code></td><td>不可移动区域</td><td>数组</td></tr>
+<tr><td><code>can_pass_group</code></td><td>可通过的组</td><td>字符串</td></tr>
+<tr><td><code>original_move_route</code></td><td>原始移动路径</td><td>数组</td></tr>
+<tr><td><code>original_move_route_index</code></td><td>原始移动路径索引</td><td>数组</td></tr>
+<tr><td><code>tileMap</code></td><td>地图引用</td><td>路径或对象引用</td></tr>
+<tr><td><code>jump_peak</code></td><td>跳跃高度</td><td>整数</td></tr>
+<tr><td><code>jump_count</code></td><td>跳跃计数</td><td>整数</td></tr>
+<tr><td><code>is_shaking</code></td><td>是否震动中</td><td>布尔值</td></tr>
+<tr><td><code>now_shake_frame</code></td><td>当前震动帧</td><td>浮点数</td></tr>
+<tr><td><code>total_shake_frame</code></td><td>总震动帧</td><td>浮点数</td></tr>
+<tr><td><code>shake_distance</code></td><td>震动距离</td><td>浮点数</td></tr>
+<tr><td><code>is_stucking</code></td><td>是否卡住</td><td>布尔值</td></tr>
+<tr><td><code>is_pushing_around</code></td><td>是否正在推动其他物件</td><td>布尔值</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="风险更高的字段"><a class="header" href="#风险更高的字段">风险更高的字段</a></h4>
+<p>下列字段虽然理论可改，但容易影响解释器状态、存在判定或子事件结构，不建议在正式关卡中随意操作：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>属性名</th><th>风险说明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>org_pos</code></td><td>物件初始位置，通常只在游戏开始时赋值一次</td></tr>
+<tr><td><code>existing</code></td><td>物件当前是否存在，强改可能与存在条件冲突</td></tr>
+<tr><td><code>list</code></td><td>已解析的命令列表，改坏后可能导致解释器异常</td></tr>
+<tr><td><code>was_exist_condition_valid</code></td><td>上次存在条件检查结果，可能影响刷新逻辑</td></tr>
+<tr><td><code>sub_events</code></td><td>子事件命令字典，结构错误容易直接损坏子事件执行</td></tr>
+</tbody>
+</table>
+</div>
+<p>其中 <code>sub_events</code> 需要保持如下字典结构：</p>
+<pre><code>{
+  "子事件字符1": [命令列表],
+  "子事件字符2": [命令列表]
+}
+</code></pre>
+<h3 id="注意事项"><a class="header" href="#注意事项">注意事项</a></h3>
 <ul>
-<li><code>text</code> 参数仅适用于单个字符（一个字）的情况。</li>
-<li><code>visible</code> 设置为 <code>false</code> 可以让物件消失。</li>
-</ul>
-<p>存在的问题（暂不清楚是否修复）：</p>
-<ul>
-<li>更改字面后物件会移动至背景，修改层级参数无效。</li>
-<li>无法修改位置，可以用传送器代替。</li>
-<li>无法修改物件是否可以被推删拆组。</li>
+<li>普通物件与玩家使用同一个父类，所以某些移动相关字段对玩家也可能生效。这也是“等待期间玩家无法行动”这一现象的重要解释之一。</li>
+<li><code>type</code> 虽然可改为 <code>Event</code> 或 <code>Player</code> 标记，但研究指出它更像引擎内部标记，改完<strong>不会真的把物件变成玩家</strong>。</li>
+<li>若要修改位置，优先考虑 <code>@[transport_event]</code>；强行改部分底层位置参数可能造成显示与碰撞不同步。</li>
+<li>若要做平滑过渡，请优先改用 <code>@[tween_parameter]</code>，避免直接设置导致跳变。</li>
+<li>研究笔记指出：用补间直接改“事件参数”类字段可能出现异常，因此<strong>改物件属性优先使用 <code>@[set_event_params]</code>，做动画优先使用补间可安全支持的字段</strong>。</li>
+<li><code>commands</code>、<code>move_route</code>、<code>sub_events</code> 这类结构化字段不建议手写热修改，除非已经确认格式完全正确。</li>
 </ul>
 
                     </main>
