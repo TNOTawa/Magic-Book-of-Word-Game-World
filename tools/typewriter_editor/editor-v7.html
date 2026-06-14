@@ -730,7 +730,7 @@ function parseBrackets(pairChar, str) {
       else { stack.push(ch); openCount++; }
     } else if (stack.length === 0) continue;
     else if (ch === closeCh) {
-      if (openCount !== 0) { stack.push(ch); openCount--; i++; continue; }
+      if (openCount !== 0) { stack.push(ch); openCount--; continue; }
       results.push([]);
       results[results.length - 1].push(stack.shift());
       results[results.length - 1].push(stack.join(''));
@@ -738,6 +738,22 @@ function parseBrackets(pairChar, str) {
     } else stack.push(ch);
   }
   return results;
+}
+
+// === 简单 JSON 提取：深度计数 + 字符串感知，不重复造轮子 ===
+function extractJSON(text) {
+  let start = -1, depth = 0;
+  let inString = false, escape = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (escape) { escape = false; continue; }
+    if (ch === '\\') { escape = true; continue; }
+    if (ch === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (ch === '{') { if (start === -1) start = i; depth++; }
+    else if (ch === '}') { depth--; if (depth === 0 && start !== -1) return text.substring(start, i + 1); }
+  }
+  return '';
 }
 
 function gridToPixel(vx, vy) {
@@ -2209,8 +2225,13 @@ function exportSingleBlock(idStr) {
   const remark = bm.remark || '';
   delete bm.remark;
   
-  let output = '@[type] ' + formatBlackMagicJSON(bm);
-  if (remark && remark !== '打字机 ') output = '#' + remark + '\n' + output;
+  // 备注含"平行" → @[type_parallel]
+  const isParallel = remark.includes('平行');
+  const prefix = isParallel ? '@[type_parallel]' : '@[type]';
+  const cleanRemark = remark.replace(/\s*平行\s*/g, '').trim();
+  
+  let output = prefix + ' ' + formatBlackMagicJSON(bm);
+  if (cleanRemark && cleanRemark !== '打字机') output = '#' + cleanRemark + '\n' + output;
   
   copyToClipboard(output);
   alert('已复制到剪贴板！');
@@ -2236,93 +2257,158 @@ function dictToSingleBlackMagic(ev) {
   const remark = bm.remark || '';
   delete bm.remark;
   
-  let output = '@[type] ' + formatBlackMagicJSON(bm);
-  if (remark && remark !== '打字机 ') output = '#' + remark + '\n' + output;
+  // 备注含"平行" → @[type_parallel]
+  const isParallel = remark.includes('平行');
+  const prefix = isParallel ? '@[type_parallel]' : '@[type]';
+  const cleanRemark = remark.replace(/\s*平行\s*/g, '').trim();
+  
+  let output = prefix + ' ' + formatBlackMagicJSON(bm);
+  if (cleanRemark && cleanRemark !== '打字机') output = '#' + cleanRemark + '\n' + output;
   return output;
 }
 
-function blackMagicToDict(text) {
-  if (!text.trim()) return null;
-  if (!(text.includes('{') && text.includes('}'))) {
+// === 黑魔法行级解析器 ===
+// 将原始文本按行解析为"块"列表，每个块 = { type, lines, comment }
+function parseBlackMagicBlocks(fullText) {
+  const rawLines = fullText.split('\n');
+  const blocks = [];
+  let pendingComment = '';
+  let i = 0;
+  
+  while (i < rawLines.length) {
+    let line = rawLines[i];
+    const trimmed = line.trimStart();
+    
+    // 空白行跳过（不重置 pendingComment，保证跨空白行的注释关联）
+    if (!trimmed) { i++; continue; }
+    
+    // # 注释 → 挂起等待下一个块
+    if (trimmed.startsWith('#')) {
+      pendingComment = trimmed.substring(1).trim();
+      i++; continue;
+    }
+    
+    // @[type] 或 @[type_parallel] → 打字机块
+    if (trimmed.startsWith('@[type]') || trimmed.startsWith('@[type_parallel]')) {
+      const isParallel = trimmed.startsWith('@[type_parallel]');
+      let blockText = line;
+      i++;
+      
+      // 逐行追加，直到 extractJSON 能成功提取完整 JSON
+      while (i < rawLines.length) {
+        blockText += '\n' + rawLines[i];
+        i++;
+        if (extractJSON(blockText)) break;
+      }
+      
+      blocks.push({
+        type: 'typewriter',
+        isParallel: isParallel,
+        text: blockText,
+        comment: pendingComment
+      });
+      pendingComment = '';
+      continue;
+    }
+    
+    // @[其他] → 普通事件（收集续行直到下一个 @[ 或 #）
+    if (trimmed.startsWith('@[')) {
+      let eventText = line;
+      i++;
+      
+      while (i < rawLines.length) {
+        const cl = rawLines[i];
+        const ct = cl.trimStart();
+        // 碰到下一个指令或注释 → 停止
+        if (ct.startsWith('@[') || ct.startsWith('#')) break;
+        // Tab/空格开头的行 → 续行
+        if (cl.startsWith('\t') || cl.startsWith(' ')) {
+          eventText += '\n' + cl;
+          i++;
+        } else {
+          break;
+        }
+      }
+      
+      // 若前一行有注释，从注释行开始截取内容字符串
+      const fullText = pendingComment
+        ? ('# ' + pendingComment + '\n' + eventText)
+        : eventText;
+      
+      blocks.push({
+        type: 'plain',
+        text: fullText,
+        comment: pendingComment
+      });
+      pendingComment = '';
+      continue;
+    }
+    
+    // Tab/空格开头的行（不属于任何块 → 跳过）
+    i++;
+  }
+  
+  return blocks;
+}
+
+// === 黑魔法 JSON 提取（简易深度计数，不重复造轮子） ===
+// 上面已有 extractJSON，这里直接复用
+
+function blackMagicToDict(block) {
+  // block = { type, text, isParallel?, comment? }
+  const text = block.text || '';
+  
+  if (block.type === 'plain') {
     const evt = JSON.parse(JSON.stringify(DEFAULT_EVENT));
     evt.id = genId();
-    evt.texts = text.trim();
+    let contentText = text.trim();
+    // 若内容以 # 注释开头，提取为 remark
+    if (contentText.startsWith('#')) {
+      const nlIdx = contentText.indexOf('\n');
+      if (nlIdx > -1) {
+        evt.remark = contentText.substring(1, nlIdx).trim();
+        contentText = contentText.substring(nlIdx + 1).trim();
+      }
+    }
+    evt.texts = contentText;
     return evt;
   }
   
-  let comment = '';
-  const lines = text.split('\n');
-  if (lines[0].startsWith('#')) comment = lines[0].substring(1).trim();
+  // typewriter 块
+  const jsonStr = extractJSON(text);
+  if (!jsonStr) return null;
   
-  // Find the JSON part between {}
-  let jsonString = '';
-  const braceResult = parseBrackets('{}', text);
-  if (braceResult.length) jsonString = '{' + braceResult[0][1] + '}';
-  else return null;
+  let dict;
+  try { dict = JSON.parse(jsonStr); }
+  catch(e) { return null; }
   
-  try {
-    var dict = JSON.parse(jsonString);
-  } catch(e) { return null; }
-  
-  let eventType = null;
-  let readLine = 0;
-  while (!lines[readLine].startsWith('@[')) { readLine++; if (readLine >= lines.length) return null; }
-  
-  if (lines[readLine].startsWith('@[type]') || lines[readLine].startsWith('@[type_parallel]')) {
-    eventType = '打字机';
-    dict.type = eventType;
-    dict.remark = lines[readLine].startsWith('@[type_parallel]') ? ('平行 ' + comment) : comment;
-  } else if (lines[readLine].startsWith('@[')) {
-    eventType = '普通事件';
-    const evt = JSON.parse(JSON.stringify(DEFAULT_EVENT)); evt.id = genId(); evt.texts = text.trim(); return evt;
-  } else return null;
-  
+  dict.type = '打字机';
   dict.id = genId();
   
-  if (eventType === '打字机') {
-    if ('pos' in dict) { dict.posX = dict.pos[0]; dict.posY = dict.pos[1]; }
-    if ('offset' in dict) { dict.offsetX = dict.offset[0]; dict.offsetY = dict.offset[1]; }
-    if ('tags' in dict && Array(dict.tags)) dict.tags = dict.tags[0];
-    if ('char_type' in dict) { const ci = SFX_TABLE.indexOf(dict.char_type); dict.char_type = ci >= 0 ? ci : 0; }
-    if ('layer' in dict) { const li = LAYER_TABLE.indexOf(dict.layer); dict.layer = li >= 0 ? li : 1; }
-    if ('has_se' in dict) { if (dict.has_se === false) dict.char_type = 1; delete dict.has_se; }
-    // 显式标准化布尔键
-    const boolKeys = ['fixed', 'has_animation', 'can_skip', 'need_accept', 'wait', 'is_dialog_end', 'is_on_top_of_player'];
-    for (const k of boolKeys) { if (k in dict) dict[k] = !!dict[k]; }
-    
-    // Merge defaults
-    for (const key in DEFAULT_TYPE_EVENT) {
-      if (!(key in dict)) dict[key] = DEFAULT_TYPE_EVENT[key];
-    }
+  // 备注：注释 + 平行标记（若注释已含"平行"则不重复追加）
+  const comment = block.comment || '';
+  if (block.isParallel && !comment.includes('平行')) {
+    dict.remark = comment ? comment + ' 平行' : '平行';
+  } else {
+    dict.remark = comment;
   }
+  
+  // 标准化字段
+  if ('pos' in dict) { dict.posX = dict.pos[0]; dict.posY = dict.pos[1]; }
+  if ('offset' in dict) { dict.offsetX = dict.offset[0]; dict.offsetY = dict.offset[1]; }
+  if ('tags' in dict && Array.isArray(dict.tags)) dict.tags = dict.tags[0] || '';
+  if ('char_type' in dict) { const ci = SFX_TABLE.indexOf(dict.char_type); dict.char_type = ci >= 0 ? ci : 0; }
+  if ('layer' in dict) { const li = LAYER_TABLE.indexOf(dict.layer); dict.layer = li >= 0 ? li : 1; }
+  if ('has_se' in dict) { if (dict.has_se === false) dict.char_type = 1; delete dict.has_se; }
+  
+  const boolKeys = ['fixed', 'has_animation', 'can_skip', 'need_accept', 'wait', 'is_dialog_end', 'is_on_top_of_player'];
+  for (const k of boolKeys) { if (k in dict) dict[k] = !!dict[k]; }
+  
+  for (const key in DEFAULT_TYPE_EVENT) {
+    if (!(key in dict)) dict[key] = DEFAULT_TYPE_EVENT[key];
+  }
+  
   return dict;
-}
-
-function getBlackMagicGroups(text) {
-  const results = [];
-  let searchStart = 0;
-  const atCount = (text.match(/@\[/g) || []).length;
-  
-  for (let i = 0; i < atCount; i++) {
-    let commIdx = text.indexOf('#', searchStart);
-    let mainIdx = text.indexOf('@[', searchStart);
-    if (mainIdx === -1) break;
-    if (commIdx === -1) commIdx = Infinity;
-    // Handle # inside strings roughly
-    if (commIdx > 0 && text[commIdx-1] === '"') commIdx = text.indexOf('#', commIdx + 1);
-    
-    if (mainIdx < commIdx) { results.push(mainIdx); searchStart = mainIdx + 2; }
-    else { results.push(commIdx); searchStart = mainIdx + 2; }
-  }
-  
-  if (results.length <= 1) return text;
-  
-  const final = [];
-  for (let i = 0; i < results.length; i++) {
-    if (i === results.length - 1) final.push(text.substring(results[i]));
-    else final.push(text.substring(results[i], results[i + 1]));
-  }
-  return final;
 }
 
 // === 样式冲突检测 & 去重处理 ===
@@ -2413,14 +2499,14 @@ function _resolveLabelSettings(dicts) {
 }
 
 function importBlackMagicGroup(fullText) {
-  const groups = getBlackMagicGroups(fullText);
-  if (typeof groups === 'string') { importSingleBlack(groups); return; }
+  const blocks = parseBlackMagicBlocks(fullText);
+  if (!blocks.length) return;
 
-  // Phase 1: 解析所有 dict（只做一次，避免重复 parse）
+  // Phase 1: 解析所有 dict
   const dicts = [];
   const undoIds = [];
-  for (const blockText of groups) {
-    const d = blackMagicToDict(blockText);
+  for (const block of blocks) {
+    const d = blackMagicToDict(block);
     if (!d || typeof d !== 'object') continue;
     dicts.push(d);
     undoIds.push(d.id);
@@ -2428,7 +2514,7 @@ function importBlackMagicGroup(fullText) {
   if (!dicts.length) return;
 
   // Phase 2: 统一处理 label_settings（批量去重 + 冲突检测）
-  if (!_resolveLabelSettings(dicts)) return;  // 冲突 → 中断
+  if (!_resolveLabelSettings(dicts)) return;
 
   // Phase 3: 插入
   const insertPos = selectedIds.length > 0 ? (eventObjIndexMap[selectedIds[selectedIds.length - 1]] ?? -1) : -1;
@@ -2448,20 +2534,26 @@ function importBlackMagicGroup(fullText) {
 }
 
 function importSingleBlack(fullText) {
-  const dicts = [blackMagicToDict(fullText)];
-  if (!dicts[0]) return;
+  const blocks = parseBlackMagicBlocks(fullText);
+  if (!blocks.length) return;
+  
+  const dicts = [];
+  for (const block of blocks) {
+    const d = blackMagicToDict(block);
+    if (!d || typeof d !== 'object') continue;
+    dicts.push(d);
+  }
+  if (!dicts.length) return;
 
-  // 统一走 _resolveLabelSettings（处理冲突检测 + 重命名 + 去重）
   if (!_resolveLabelSettings(dicts)) return;
 
-  const dict = dicts[0];
-  const id = dict.id;
-  const insertPos = selectedIds.length > 0 ? (eventObjIndexMap[selectedIds[selectedIds.length - 1]] ?? -1) : -1;
-
-  if (insertPos === -1) { blockList.push(dict); eventIdList.push(id); renderBlockList(false); }
-  else { blockList.splice(insertPos + 1, 0, dict); eventIdList.splice(insertPos + 1, 0, id); renderBlockList(true); }
-
-  saveUndo('create', id, false);
+  for (const dict of dicts) {
+    const id = dict.id;
+    const insertPos = selectedIds.length > 0 ? (eventObjIndexMap[selectedIds[selectedIds.length - 1]] ?? -1) : -1;
+    if (insertPos === -1) { blockList.push(dict); eventIdList.push(id); renderBlockList(false); }
+    else { blockList.splice(insertPos + 1, 0, dict); eventIdList.splice(insertPos + 1, 0, id); renderBlockList(true); }
+    saveUndo('create', id, false);
+  }
 }
 
 let importOverwriteMode = false;
