@@ -16,8 +16,8 @@
         <link rel="icon" href="favicon-de23e50b.svg">
         <link rel="shortcut icon" href="favicon-8114d1fc.png">
         <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
         <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "searchindex-5ccc679d.js";
+            window.path_to_searchindex_js = "searchindex-896ec503.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-4e08e056.js"></script>
+        <script src="toc-0ef47519.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -501,7 +501,7 @@
 </ul>
 <blockquote>
 <p>在此推荐由 <code>艺素馒头</code> 制作的黑魔法打字机编辑器，其拥有强大的可视化打字机黑魔法指令编辑功能。
-<a href="events/tools/typer_editor.html">黑魔法打字机编辑器</a></p>
+<a href="events/tools/typewriter-editor-v6.html">黑魔法打字机编辑器</a></p>
 </blockquote>
 <h2 id="清除"><a class="header" href="#清除">清除</a></h2>
 <pre><code>
@@ -3236,1454 +3236,3414 @@ $一堆数字0-9:{"frame_count":10,"path":"res://Sprites/number/number.png","tim
 
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>黑魔法打字机编辑器</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/custom.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "zpix", sans-serif;
-        }
-<pre><code>    body {
-        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
-        color: #e0e0e0;
-        min-height: 100vh;
-        padding: 20px;
-    }
-    
-    .container {
-        max-width: 1800px;
-        margin: 0 auto;
-    }
-    
-    header {
-        text-align: center;
-        margin-bottom: 25px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #333;
-    }
-    
-    h1 {
-        color: #8a2be2;
-        font-size: 2.5rem;
-        margin-bottom: 8px;
-        text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
-    }
-    
-    .subtitle {
-        color: #aaa;
-        font-size: 1.1rem;
-    }
-    
-    .main-content {
-        display: flex;
-        gap: 30px;
-        flex-wrap: wrap;
-    }
-    
-    .editor-section, .preview-section {
-        flex: 1;
-        min-width: 500px;
-        background-color: rgba(30, 30, 40, 0.8);
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .section-title {
-        color: #7b68ee;
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #444;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .section-title i {
-        color: #9370db;
-    }
-    
-    .field-group {
-        margin-bottom: 20px;
-    }
-    
-    .field-label {
-        display: block;
-        margin-bottom: 8px;
-        color: #b19cd9;
-        font-weight: 500;
-    }
-    
-    .field-input {
-        width: 100%;
-        padding: 10px 12px;
-        background-color: rgba(20, 20, 30, 0.8);
-        border: 1px solid #444;
-        border-radius: 6px;
-        color: #e0e0e0;
-        font-size: 1rem;
-    }
-    
-    .field-input:focus {
-        outline: none;
-        border-color: #7b68ee;
-        box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.2);
-    }
-    
-    .checkbox-group, .radio-group {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
-    
-    .checkbox-label, .radio-label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-    }
-    
-    .checkbox-label input, .radio-label input {
-        cursor: pointer;
-    }
-    
-    .edit-btn {
-        background-color: #5d4a9e;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 6px 12px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        margin-top: 8px;
-        transition: background-color 0.2s;
-    }
-    
-    .edit-btn:hover {
-        background-color: #7b68ee;
-    }
-    
-    .effects-container {
-        background-color: rgba(20, 20, 30, 0.8);
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 20px;
-    }
-    
-    .effects-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-    
-    .add-effect-btn {
-        background-color: #5d4a9e;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 8px 15px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: background-color 0.2s;
-    }
-    
-    .add-effect-btn:hover {
-        background-color: #7b68ee;
-    }
-    
-    .effects-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-    
-    .effect-tag {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .effect-tag:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    .effect-color {
-        width: 20px;
-        height: 20px;
-        border-radius: 4px;
-        border: 1px solid #444;
-    }
-    
-    .effect-actions {
-        display: flex;
-        gap: 5px;
-    }
-    
-    .effect-action-btn {
-        background: none;
-        border: none;
-        color: #aaa;
-        cursor: pointer;
-        font-size: 0.8rem;
-        padding: 2px;
-    }
-    
-    .effect-action-btn:hover {
-        color: white;
-    }
-    
-    .texts-input {
-        width: 100%;
-        min-height: 150px;
-        padding: 15px;
-        background-color: rgba(20, 20, 30, 0.8);
-        border: 1px solid #444;
-        border-radius: 8px;
-        color: #e0e0e0;
-        font-size: 1.1rem;
-        line-height: 1.5;
-        resize: vertical;
-    }
-    
-    .texts-input:focus {
-        outline: none;
-        border-color: #7b68ee;
-    }
-    
-    /* 重新设计预览区域 - 网格布局 */
-    .preview-area {
-        background-color: rgba(20, 20, 30, 0.8);
-        border-radius: 8px;
-        padding: 10px;
-        min-height: 400px;
-        border: 1px solid #444;
-        overflow: auto;
-        position: relative;
-    }
-    
-    .grid-container {
-        display: inline-block;
-        position: relative;
-        border: 1px solid #2a4a5a;
-        background-color: rgba(10, 20, 30, 0.9);
-    }
-    
-    .grid-content {
-        display: grid;
-        position: relative;
-    }
-    
-    .grid-cell {
-        width: 20px;
-        height: 20px;
-        border: 1px solid rgba(42, 74, 90, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        position: relative;
-        color: #ffffff;
-    }
-    
-    .grid-cell.highlight {
-        background-color: rgba(255, 255, 0, 0.2);
-        border: 1px solid #ff0;
-    }
-    
-    .cell-content {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .row-numbers {
-        position: absolute;
-        left: 0;
-        top: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .row-number {
-        width: 30px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        color: #7b68ee;
-        background-color: rgba(20, 20, 30, 0.9);
-        border-right: 1px solid #444;
-    }
-    
-    .column-numbers {
-        position: absolute;
-        left: 30px;
-        top: 0;
-        display: flex;
-    }
-    
-    .column-number {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        color: #7b68ee;
-        background-color: rgba(20, 20, 30, 0.9);
-        border-bottom: 1px solid #444;
-    }
-    
-    .preview-info {
-        margin-top: 10px;
-        font-size: 0.9rem;
-        color: #7b68ee;
-        display: flex;
-        gap: 20px;
-    }
-    
-    .grid-overlay {
-        position: absolute;
-        left: 30px;
-        top: 20px;
-    }
-    
-    .json-output {
-        width: 100%;
-        min-height: 300px;
-        background-color: rgba(20, 20, 30, 0.8);
-        border: 1px solid #444;
-        border-radius: 8px;
-        padding: 15px;
-        color: #e0e0e0;
-        font-family: 'Courier New', monospace;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        white-space: pre;
-        overflow-x: auto;
-        margin-top: 20px;
-    }
-    
-    .controls {
-        display: flex;
-        justify-content: center;
-        margin-top: 25px;
-        gap: 15px;
-    }
-    
-    .copy-btn {
-        background: linear-gradient(135deg, #5d4a9e 0%, #7b68ee 100%);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 12px 25px;
-        font-size: 1.1rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .copy-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(123, 104, 238, 0.4);
-    }
-    
-    .color-picker-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        display: none;
-    }
-    
-    .color-picker-content {
-        background-color: rgba(30, 30, 40, 0.95);
-        border-radius: 10px;
-        padding: 25px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-    
-    .color-picker-title {
-        color: #7b68ee;
-        margin-bottom: 20px;
-        font-size: 1.3rem;
-    }
-    
-    .color-input-group {
-        margin-bottom: 20px;
-    }
-    
-    .color-preview {
-        width: 100%;
-        height: 60px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border: 1px solid #444;
-    }
-    
-    .color-picker-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
-    }
-    
-    .modal-btn {
-        padding: 10px 20px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-        font-weight: 500;
-    }
-    
-    .modal-confirm {
-        background-color: #5d4a9e;
-        color: white;
-    }
-    
-    .modal-cancel {
-        background-color: #444;
-        color: #ddd;
-    }
-    
-    .color-input-wrapper {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-    
-    .color-hex-input {
-        flex: 1;
-        padding: 10px;
-        background-color: rgba(20, 20, 30, 0.8);
-        border: 1px solid #444;
-        border-radius: 6px;
-        color: #e0e0e0;
-    }
-    
-    .color-wheel {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
-        margin: 0 auto 20px;
-        position: relative;
-        cursor: crosshair;
-    }
-    
-    .color-wheel-selector {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 2px solid white;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-    }
-    
-    .tag-example {
-        font-size: 0.9rem;
-        color: #aaa;
-        margin-top: 5px;
-    }
-    
-    .notification {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        background-color: #5d4a9e;
-        color: white;
-        border-radius: 6px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        z-index: 1001;
-        transform: translateY(100px);
-        opacity: 0;
-        transition: transform 0.3s, opacity 0.3s;
-    }
-    
-    .notification.show {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    
-    @media (max-width: 1200px) {
-        .main-content {
-            flex-direction: column;
-        }
-        
-        .editor-section, .preview-section {
-            min-width: 100%;
-        }
-    }
-    
-    .effect-tag-btn {
-        background-color: transparent;
-        border: 1px solid #5d4a9e;
-        color: #b19cd9;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.2s;
-    }
-    
-    .effect-tag-btn:hover {
-        background-color: rgba(93, 74, 158, 0.2);
-    }
-    
-    .effects-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 15px;
-    }
-&lt;/style&gt;
-</code></pre>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打字机事件编辑器 - 魔法书</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'zpix', 'Microsoft YaHei', 'SimHei', sans-serif;
+  background: #1a1a2e;
+  color: #eee;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+<p>/* === Top Bar === */
+.top-bar {
+background: linear-gradient(135deg, #9c27b0, #6a1b9a);
+padding: 8px 16px;
+display: flex;
+align-items: center;
+gap: 12px;
+z-index: 100;
+}
+.top-bar h1 { font-size: 18px; color: #fff; }
+.btn {
+background: rgba(255,255,255,0.15);
+border: 1px solid rgba(255,255,255,0.3);
+color: #fff; padding: 5px 12px;
+border-radius: 4px; cursor: pointer;
+font-size: 13px; transition: all 0.15s;
+}
+.btn:hover { background: rgba(255,255,255,0.3); }
+.btn:active { transform: scale(0.96); }
+.btn-sm { padding: 3px 8px; font-size: 12px; }
+.btn-danger { background: rgba(244,67,54,0.3); border-color: #f44336; }
+.btn-success { background: rgba(76,175,80,0.3); border-color: #4CAF50; }
+.btn-primary { background: rgba(33,150,243,0.3); border-color: #2196F3; }
+.btn-toggle.active { background: rgba(76,175,80,0.5); border-color: #4CAF50; }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn:disabled:hover { background: rgba(255,255,255,0.15); }</p>
+<p>/* === Main Layout === */
+.main-area {
+flex: 1; display: flex; overflow: hidden;
+}</p>
+<p>/* === Left Panel - Canvas Preview === */
+.preview-panel {
+width: 63%; min-width: 400px;
+display: flex; flex-direction: column;
+border-right: 2px solid #333;
+}
+.preview-header {
+padding: 6px 12px;
+background: #16213e;
+display: flex; gap: 8px; align-items: center;
+flex-wrap: wrap;
+border-bottom: 1px solid #333;
+}
+.preview-header label { font-size: 12px; color: #aaa; }
+.preview-header input[type=“number”] {
+width: 55px; padding: 2px 4px;
+background: #0f3460; color: #fff;
+border: 1px solid #444; border-radius: 3px; font-size: 12px;
+}
+.canvas-wrapper {
+flex: 1; position: relative;
+overflow: hidden;
+background: #1a1a2e;
+}
+#previewCanvas {
+position: absolute; top: 30px; left: 30px;
+width: 960px; height: 540px;
+}
+.canvas-overlay {
+position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+pointer-events: none;
+}</p>
+<p>/* Grid coordinates overlay */
+.coord-overlay {
+position: absolute; top: 0; left: 30px;
+display: flex;
+}
+.coord-overlay-h { display: flex; }
+.coord-overlay-v {
+position: absolute; top: 30px; left: 0;
+display: flex; flex-direction: column;
+}
+.coord-cell {
+width: 30px; height: 30px;
+display: flex; align-items: center; justify-content: center;
+font-size: 11px; color: #666;
+user-select: none;
+}</p>
+<p>/* === Right Panel - Block List === */
+.block-panel {
+width: calc(42% - 60px); min-width: 390px;
+display: flex; flex-direction: column;
+background: #1e1e3a;
+}
+.panel-toolbar {
+padding: 8px 10px;
+background: #16213e;
+display: flex; gap: 6px; flex-wrap: wrap;
+border-bottom: 1px solid #333;
+align-items: center;
+}
+.remark-input {
+flex: 1; min-width: 120px;
+padding: 4px 8px; background: #0f3460;
+color: #fff; border: 1px solid #444; border-radius: 3px;
+font-size: 12px;
+}
+.remark-input::placeholder { color: #666; }</p>
+<p>/* Block list scroll area */
+.block-scroll {
+flex: 1; overflow-y: auto; overflow-x: hidden;
+padding: 8px;
+position: relative;
+}
+.block-list {
+display: flex; flex-direction: column;
+gap: 8px;
+padding-bottom: 200px;
+}</p>
+<p>/* Single Block */
+.block-item {
+border-radius: 6px;
+flex-shrink: 0;
+}
+.block-item.selected { outline: 2px solid #4CAF50; outline-offset: -2px; }
+.block-item.selected .block-header { background: #1a3a0a !important; border-color: #4CAF50 !important; }
+.block-item.highlighted .block-header { background: #1a3a0a !important; }
+.block-header {
+height: 40px;
+background: #000;
+border-radius: 6px;
+cursor: pointer;
+display: flex; align-items: center; padding: 0 10px;
+user-select: none;
+border: 2px solid transparent;
+transition: border-color 0.15s;
+}
+.block-header:hover { border-color: #444; }
+.block-header .block-title {
+font-size: 18px; font-weight: bold;
+margin-left: 8px; white-space: nowrap; overflow: hidden;
+text-overflow: ellipsis; max-width: 420px;
+}
+.block-header .expand-arrow {
+margin-left: auto; font-size: 16px; color: #888;
+transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.block-item.expanded .expand-arrow { transform: rotate(180deg); }
+.block-item.playing .block-header { background: #3a1a0a !important; border-color: #ff9800 !important; }
+.drag-handle {
+width: 14px; height: 40px;
+background: rgba(255,255,255,0.15);
+border-radius: 3px; margin-right: 8px;
+cursor: grab; flex-shrink: 0;
+display: flex; align-items: center; justify-content: center;
+opacity: 0.6; transition: opacity 0.15s;
+}
+.drag-handle:hover { opacity: 1; background: rgba(255,255,255,0.3); }
+.drag-handle:active { cursor: grabbing; }
+.drag-handle-inner {
+width: 4px; height: 20px;
+background: repeating-linear-gradient(#888, #888 2px, transparent 2px, transparent 5px);
+border-radius: 2px;
+}</p>
+<p>/* SortableJS drag styles */
+.sortable-ghost {
+opacity: 0.4;
+}
+.sortable-drag {
+opacity: 0.9;
+box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}</p>
+<p>/* Expanded content area */
+.block-content {
+max-height: 0; overflow: hidden;
+background: #111;
+border-radius: 0 0 6px 6px;
+transition: max-height 0.35s cubic-bezier(0.36, 0, 0.66, -0.56),
+padding 0.25s ease-in;
+padding: 0 10px;
+}
+.block-item.expanded .block-content {
+max-height: 600px; padding: 10px;
+}</p>
+<p>/* Typewriter block specific fields */
+.tw-fields {
+display: grid; grid-template-columns: 1fr 180px; gap: 10px;
+align-items: start;
+}
+.text-edit-area textarea {
+width: 100%; height: 160px;
+background: #0a0a1a; color: #fff;
+border: 1px solid #333; border-radius: 4px;
+padding: 8px; font-size: 14px; resize: vertical;
+font-family: ‘zpix’, ‘Microsoft YaHei’, monospace; line-height: 1.5;
+}
+.text-edit-area textarea:focus { outline: none; border-color: #9c27b0; }
+.symbol-btns {
+display: grid; grid-template-columns: repeat(8, 1fr);
+gap: 3px;
+}
+.sym-btn {
+padding: 4px 2px; font-size: 13px;
+background: #1a1a3a; border: 1px solid #333;
+color: #ddd; border-radius: 3px; cursor: pointer;
+text-align: center;
+}
+.sym-btn:hover { background: #2a2a5a; }
+.sym-btn.pair { color: #ffb74d; }
+.sym-btn.sym-functional { color: #64b5f6; }</p>
+<p>.fields-grid {
+display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+margin-top: 6px;
+}
+.field-row label {
+font-size: 11px; color: #aaa; display: block; margin-bottom: 2px;
+}
+.field-row input[type=“text”], .field-row input[type=“number”] {
+width: 100%; padding: 3px 6px;
+background: #0a0a1a; color: #fff;
+border: 1px solid #333; border-radius: 3px; font-size: 12px;
+}
+.field-row input:focus { outline: none; border-color: #9c27b0; }</p>
+<p>.bool-toggles {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 4px; margin-top: 6px;
+}
+.toggle-btn {
+padding: 3px 6px; font-size: 11px;
+background: #222; border: 1px solid #444;
+color: #999; border-radius: 3px; cursor: pointer; text-align: left;
+}
+.toggle-btn.active { background: #1a4d2e; border-color: #4CAF50; color: #8bc34a; }
+.toggle-btn:hover:not(.active) { border-color: #666; }</p>
+<p>.sound-layer-area { margin-top: 6px; }
+.sl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.sl-btn {
+padding: 4px 6px; font-size: 11px;
+background: #222; border: 1px solid #444;
+color: #999; border-radius: 3px; cursor: pointer; text-align: center;
+}
+.sl-btn.active { background: #1a3a5e; border-color: #2196F3; color: #64b5f6; }
+.section-label { font-size: 11px; color: #888; margin-top: 4px; margin-bottom: 2px; }
+.action-btns { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; }
+.action-btns .btn { font-size: 11px; padding: 4px 10px; }</p>
+<p>/* Event block fields */
+.event-textarea {
+width: 100%; height: 120px;
+background: #0a0a1a; color: #fff;
+border: 1px solid #333; border-radius: 4px;
+padding: 8px; font-size: 14px; resize: vertical;
+font-family: monospace;
+}</p>
+<p>/* === Style Panel (Right Sidebar) === */
+.style-sidebar {
+width: 170px; background: #111;
+border-left: 1px solid #333;
+display: flex; flex-direction: column;
+overflow-y: auto;
+}
+.style-header {
+padding: 8px; font-size: 13px; font-weight: bold;
+background: #1a1a3a; border-bottom: 1px solid #333;
+text-align: center;
+}
+.style-list { padding: 4px; flex: 1; }
+.style-item {
+display: flex; align-items: center; padding: 4px 6px;
+margin-bottom: 3px; background: #1a1a2e;
+border-radius: 3px; cursor: pointer; font-size: 12px;
+gap: 4px;
+}
+.style-item:hover { background: #252545; }
+.style-color-swatch {
+width: 14px; height: 14px; border-radius: 2px;
+border: 1px solid #555; flex-shrink: 0;
+}
+.style-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.style-del {
+font-size: 10px; color: #f44336; cursor: pointer;
+padding: 0 2px; border: 1px solid #f44336; border-radius: 2px;
+line-height: 14px;
+}
+.style-modify {
+font-size: 10px; color: #2196F3; cursor: pointer;
+padding: 0 2px; border: 1px solid #2196F3; border-radius: 2px;
+line-height: 14px; margin-right: 2px;
+}</p>
+<p>/* === Modals === */
+.modal-overlay {
+position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+background: rgba(0,0,0,0.7);
+display: flex; align-items: center; justify-content: center;
+z-index: 1000;
+}
+.modal-overlay.hidden { display: none; }
+.modal-box {
+background: #1a1a2e; border: 2px solid #444;
+border-radius: 8px; width: 700px; max-height: 80vh;
+display: flex; flex-direction: column;
+}
+.modal-head {
+padding: 12px 16px; font-size: 16px; font-weight: bold;
+border-bottom: 1px solid #333; display: flex; justify-content: space-between;
+}
+.modal-close {
+background: none; border: none; color: #888; font-size: 22px;
+cursor: pointer; padding: 0 6px; line-height: 1;
+}
+.modal-body { padding: 16px; flex: 1; overflow-y: auto; }
+.modal-foot {
+padding: 12px 16px; border-top: 1px solid #333;
+display: flex; gap: 8px; justify-content: flex-end;
+}
+.modal-textarea {
+width: 100%; height: 350px;
+background: #000; color: #0f0;
+border: 1px solid #444; border-radius: 4px;
+padding: 10px; font-family: ‘Consolas’, ‘Courier New’, monospace;
+font-size: 13px; resize: none;
+}</p>
+<p>/* Style creation modal */
+.style-form-row {
+display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.style-form-row label { font-size: 13px; min-width: 100px; }
+.style-form-row input, .style-form-row select {
+padding: 4px 8px; background: #0a0a1a; color: #fff;
+border: 1px solid #444; border-radius: 3px;
+}
+.style-effect-tabs { display: flex; gap: 4px; margin-bottom: 10px; }
+.style-effect-tab {
+padding: 4px 12px; background: #222; border: 1px solid #444;
+color: #aaa; border-radius: 3px; cursor: pointer; font-size: 12px;
+}
+.style-effect-tab.active { background: #1a3a5e; border-color: #2196F3; color: #64b5f6; }</p>
+<p>/* Transfer Object panel */
+.transfer-panel {
+position: fixed; bottom: 60px; left: 8px;
+z-index: 50;
+}
+.transfer-toggle {
+background: linear-gradient(135deg, #ff9966, #ff5e62);
+border: 2px solid #ff7733;
+color: #fff; padding: 8px 16px;
+border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;
+}
+.transfer-menu {
+display: none; position: absolute; bottom: 100%;
+left: 0; margin-bottom: 4px;
+background: #1a1a2e; border: 1px solid #444;
+border-radius: 6px; padding: 6px; min-width: 150px;
+flex-direction: column; gap: 4px;
+}
+.transfer-menu.show { display: flex; }</p>
+<p>/* Status bar */
+.status-bar {
+padding: 4px 12px; background: #0d0d1a;
+font-size: 11px; color: #666;
+display: flex; gap: 16px; border-top: 1px solid #222;
+}</p>
+<dl>
+<dt id="-scrollbar-styling-"><a class="header" href="#-scrollbar-styling-">/* Scrollbar styling */</a></dt>
+<dd>:-webkit-scrollbar { width: 8px; height: 8px; }</dd>
+<dd>:-webkit-scrollbar-track { background: #111; }</dd>
+<dd>:-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }</dd>
+<dd>:-webkit-scrollbar-thumb:hover { background: #555; }</dd>
+</dl>
+<p>/* Animation for new blocks */
+@keyframes slideIn {
+from { opacity: 0; transform: translateY(-10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.block-item.new-block { animation: slideIn 0.2s ease-out; }</p>
+<p>/* Playing indicator */
+.playing-indicator {
+position: absolute; top: 8px; right: 8px;
+background: #f44336; color: #fff;
+padding: 3px 10px; border-radius: 12px;
+font-size: 11px; animation: pulse 1s infinite;
+}
+@keyframes pulse {
+0%, 100% { opacity: 1; } 50% { opacity: 0.5; }
+}
+</p>
 
 <body>
-    
-<div class="container">
-        <header>
-            
-<h1><span class="fa-svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M64 416L168.6 180.7c15.3-34.4 40.3-63.5 72-83.7l146.9-94c3-1.9 6.5-2.9 10-2.9C407.7 0 416 8.3 416 18.6v1.6c0 2.6-.5 5.1-1.4 7.5L354.8 176.9c-1.9 4.7-2.8 9.7-2.8 14.7c0 5.5 1.2 11 3.4 16.1L448 416H240.9l11.8-35.4 40.4-13.5c6.5-2.2 10.9-8.3 10.9-15.2s-4.4-13-10.9-15.2l-40.4-13.5-13.5-40.4C237 276.4 230.9 272 224 272s-13 4.4-15.2 10.9l-13.5 40.4-40.4 13.5C148.4 339 144 345.1 144 352s4.4 13 10.9 15.2l40.4 13.5L207.1 416H64zM279.6 141.5c-1.1-3.3-4.1-5.5-7.6-5.5s-6.5 2.2-7.6 5.5l-6.7 20.2-20.2 6.7c-3.3 1.1-5.5 4.1-5.5 7.6s2.2 6.5 5.5 7.6l20.2 6.7 6.7 20.2c1.1 3.3 4.1 5.5 7.6 5.5s6.5-2.2 7.6-5.5l6.7-20.2 20.2-6.7c3.3-1.1 5.5-4.1 5.5-7.6s-2.2-6.5-5.5-7.6l-20.2-6.7-6.7-20.2zM32 448H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg></span> 黑魔法打字机编辑器</h1>
+<!-- Top Bar -->
+<div class="top-bar">
+  
+<h1>📝 打字机事件编辑器</h1>
 
-            
-<p class="subtitle">为文字游戏辅助创建自定义黑魔法打字机事件，实时预览文字效果，一键复制到游戏中使用</p>
+  <button class="btn btn-primary" onclick="createTypewriterBlock()">+ 创建打字机</button>
+  <button class="btn" onclick="createEventBlock()">+ 创建普通事件</button>
+  <button class="btn btn-primary" id="btnPlayGroup" onclick="playEventGroup()" title="播放事件组 (Space跳过)">▶ 播放事件组</button>
+  <button class="btn" id="btnUndo" onclick="doUndo()" title="撤销 (Ctrl+Z)">↩ 撤销</button>
+  <button class="btn" id="btnRedo" onclick="doRedo()" title="重做 (Ctrl+Y)">↪ 重做</button>
+  
+<div style="flex:1"></div>
 
-        </header>
-<pre><code>    &lt;div class="main-content"&gt;
-        &lt;div class="editor-section"&gt;
-            &lt;h2 class="section-title"&gt;&lt;i class="fas fa-sliders-h"&gt;&lt;/i&gt; 指令配置&lt;/h2&gt;
-            
-            &lt;div class="effects-container"&gt;
-                &lt;div class="effects-header"&gt;
-                    &lt;h3&gt;&lt;i class="fas fa-palette"&gt;&lt;/i&gt; 文字效果&lt;/h3&gt;
-                    &lt;button class="add-effect-btn" id="addEffectBtn"&gt;
-                        &lt;i class="fas fa-plus"&gt;&lt;/i&gt; 添加效果
-                    &lt;/button&gt;
-                &lt;/div&gt;
-                
-                &lt;div class="effects-buttons" id="effectButtons"&gt;
-                    &lt;!-- 效果按钮将在这里动态生成 --&gt;
-                &lt;/div&gt;
-                
-                &lt;div class="effects-tags" id="effectsTags"&gt;
-                    &lt;!-- 效果标签将在这里动态生成 --&gt;
-                &lt;/div&gt;
-                
-                &lt;div class="field-group"&gt;
-                    &lt;label class="field-label"&gt;文本内容 (texts)&lt;/label&gt;
-                    &lt;textarea class="texts-input" id="textsInput" placeholder="在此输入您的文本内容..."&gt;欢迎来到&lt;c&gt;黑魔法&lt;/c&gt;世界,在这里你可以施展强大的咒语。&lt;/textarea&gt;
-                    &lt;div class="tag-example"&gt;点击上方的效果按钮，将在光标位置插入效果标签，如：&amp;lt;c&amp;gt;红色文字&amp;lt;/c&amp;gt;&lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;固定于画面 (fixed)&lt;/label&gt;
-                &lt;div class="checkbox-group"&gt;
-                    &lt;label class="checkbox-label"&gt;
-                        &lt;input type="checkbox" id="fixedCheckbox"&gt;
-                        &lt;span&gt;启用&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;位置坐标 (pos)&lt;/label&gt;
-                &lt;div style="display: flex; gap: 10px;"&gt;
-                    &lt;input type="number" id="posX" class="field-input" placeholder="X坐标" style="flex: 1;" value="0"&gt;
-                    &lt;input type="number" id="posY" class="field-input" placeholder="Y坐标" style="flex: 1;" value="0"&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;标签 (tags)&lt;/label&gt;
-                &lt;input type="text" id="tagsInput" class="field-input" placeholder='输入标签，多个用逗号分隔，如："label #1", "tag2"'&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;打字音效 (has_se)&lt;/label&gt;
-                &lt;div class="checkbox-group"&gt;
-                    &lt;label class="checkbox-label"&gt;
-                        &lt;input type="checkbox" id="hasSeCheckbox" checked&gt;
-                        &lt;span&gt;启用&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;音效类型 (char_type)&lt;/label&gt;
-                &lt;select id="charTypeSelect" class="field-input"&gt;
-                    &lt;option value="null"&gt;null (默认)&lt;/option&gt;
-                    &lt;option value="princess"&gt;princess (轻巧)&lt;/option&gt;
-                    &lt;option value="dragon"&gt;dragon (沉重)&lt;/option&gt;
-                    &lt;option value="snake"&gt;snake (高亢)&lt;/option&gt;
-                    &lt;option value="poet"&gt;poet (老旧)&lt;/option&gt;
-                    &lt;option value="giant_l"&gt;giant_l (干燥)&lt;/option&gt;
-                    &lt;option value="giant_r"&gt;giant_r (机械)&lt;/option&gt;
-                &lt;/select&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;打字动画 (has_animation)&lt;/label&gt;
-                &lt;div class="checkbox-group"&gt;
-                    &lt;label class="checkbox-label"&gt;
-                        &lt;input type="checkbox" id="hasAnimationCheckbox" checked&gt;
-                        &lt;span&gt;启用&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;层级 (layer)&lt;/label&gt;
-                &lt;div class="radio-group"&gt;
-                    &lt;label class="radio-label"&gt;
-                        &lt;input type="radio" name="layer" value="front" checked&gt;
-                        &lt;span&gt;前景 (front)&lt;/span&gt;
-                    &lt;/label&gt;
-                    &lt;label class="radio-label"&gt;
-                        &lt;input type="radio" name="layer" value="mid"&gt;
-                        &lt;span&gt;主景 (mid)&lt;/span&gt;
-                    &lt;/label&gt;
-                    &lt;label class="radio-label"&gt;
-                        &lt;input type="radio" name="layer" value="back"&gt;
-                        &lt;span&gt;背景 (back)&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;可以跳过 (can_skip)&lt;/label&gt;
-                &lt;div class="checkbox-group"&gt;
-                    &lt;label class="checkbox-label"&gt;
-                        &lt;input type="checkbox" id="canSkipCheckbox" checked&gt;
-                        &lt;span&gt;启用&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;需要确认 (need_accept)&lt;/label&gt;
-                &lt;div class="checkbox-group"&gt;
-                    &lt;label class="checkbox-label"&gt;
-                        &lt;input type="checkbox" id="needAcceptCheckbox" checked&gt;
-                        &lt;span&gt;启用&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;玩家需要等待 (wait)&lt;/label&gt;
-                &lt;div class="checkbox-group"&gt;
-                    &lt;label class="checkbox-label"&gt;
-                        &lt;input type="checkbox" id="waitCheckbox" checked&gt;
-                        &lt;span&gt;启用&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="field-group"&gt;
-                &lt;label class="field-label"&gt;文字会遮住玩家 (is_on_top_of_player)&lt;/label&gt;
-                &lt;div class="checkbox-group"&gt;
-                    &lt;label class="checkbox-label"&gt;
-                        &lt;input type="checkbox" id="onTopCheckbox" checked&gt;
-                        &lt;span&gt;启用&lt;/span&gt;
-                    &lt;/label&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        
-        &lt;div class="preview-section"&gt;
-            &lt;h2 class="section-title"&gt;&lt;i class="fas fa-eye"&gt;&lt;/i&gt; 舞台预览 (&lt;span id="gridSizeInfo"&gt;32×18&lt;/span&gt;)&lt;/h2&gt;
-            &lt;div class="preview-area" id="textPreview"&gt;
-                &lt;!-- 网格内容将在这里动态生成 --&gt;
-            &lt;/div&gt;
-            &lt;div class="preview-info"&gt;
-                &lt;span id="gridSizeInfo2"&gt;网格尺寸: 32列 × 18行&lt;/span&gt;
-                &lt;span id="characterCountInfo"&gt;字符数: 0&lt;/span&gt;
-            &lt;/div&gt;
-            
-            &lt;h2 class="section-title" style="margin-top: 30px;"&gt;&lt;i class="fas fa-code"&gt;&lt;/i&gt; 完整JSON指令&lt;/h2&gt;
-            &lt;div class="json-output" id="jsonOutput"&gt;
-                &lt;!-- JSON输出将在这里动态生成 --&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    
-    &lt;div class="controls"&gt;
-        &lt;button class="copy-btn" id="copyBtn"&gt;
-            &lt;i class="fas fa-copy"&gt;&lt;/i&gt; 复制黑魔法指令
-        &lt;/button&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+  <button class="btn" onclick="exportBlackMagic()">输出黑魔法</button>
+  <button class="btn" onclick="showImportModal(false)">导入黑魔法</button>
+  <button class="btn btn-danger" onclick="showImportModal(true)">覆盖导入</button>
+  <button class="btn" onclick="refreshList()">刷新列表</button>
+</div>
 
-&lt;!-- 颜色选择器模态框 --&gt;
-&lt;div class="color-picker-modal" id="colorPickerModal"&gt;
-    &lt;div class="color-picker-content"&gt;
-        &lt;h3 class="color-picker-title" id="colorPickerTitle"&gt;添加文字效果&lt;/h3&gt;
-        
-        &lt;div class="field-group"&gt;
-            &lt;label class="field-label"&gt;效果名称 (仅支持英文)&lt;/label&gt;
-            &lt;input type="text" id="effectNameInput" class="field-input" placeholder="例如: c, glow, shadow"&gt;
-        &lt;/div&gt;
-        
-        &lt;div class="field-group"&gt;
-            &lt;label class="field-label"&gt;颜色选择&lt;/label&gt;
-            &lt;div class="color-preview" id="colorPreview"&gt;&lt;/div&gt;
-            &lt;div class="color-input-wrapper"&gt;
-                &lt;input type="text" id="colorHexInput" class="color-hex-input" placeholder="#FFFFFF" value="#FFFFFF"&gt;
-                &lt;input type="color" id="colorPicker" value="#FFFFFF" style="width: 50px; height: 40px;"&gt;
-            &lt;/div&gt;
-            &lt;div class="tag-example"&gt;点击色块或直接输入颜色代码，如：#FF0000 为红色&lt;/div&gt;
-        &lt;/div&gt;
-        
-        &lt;div class="color-picker-actions"&gt;
-            &lt;button class="modal-btn modal-cancel" id="cancelColorBtn"&gt;取消&lt;/button&gt;
-            &lt;button class="modal-btn modal-confirm" id="confirmColorBtn"&gt;确认&lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+<!-- Main Area -->
+<div class="main-area">
+  <!-- Left: Preview Canvas -->
+  
+<div class="preview-panel">
+    
+<div class="preview-header">
+      <label><input type="checkbox" id="chkShowGrid" checked="" onchange="toggleGrid()"> 显示网格</label>
+      <label><input type="checkbox" id="chkShowCoords" onchange="toggleCoords()"> 行列标识</label>
+      <span style="margin-left:auto">相机X:</span>
+      <input type="number" id="camX" value="16" onchange="onCamChange()">
+      <span>相机Y:</span>
+      <input type="number" id="camY" value="9" onchange="onCamChange()">
+      <button class="btn btn-sm" id="btnClearPreview" onclick="clearPreview(true);renderAvailablePreview();" title="清除所有预览字符和转移物件">🧹 清除预览</button>
+    </div>
 
-&lt;!-- 通知 --&gt;
-&lt;div class="notification" id="notification"&gt;
-    &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
-    &lt;span id="notificationText"&gt;已复制到剪贴板！&lt;/span&gt;
-&lt;/div&gt;
+    
+<div class="canvas-wrapper" id="canvasWrapper">
+      <canvas id="previewCanvas" width="960" height="540"></canvas>
+      
+<div class="coord-overlay" id="coordOverlayH"></div>
 
-&lt;script&gt;
-    // 初始数据
-    let config = {
-        texts: "欢迎来到&lt;c&gt;黑魔法&lt;/c&gt;世界,在这里你可以施展强大的咒语。",
-        fixed: false,
-        pos: [0, 0],
-        tags: ["label #1"],
-        has_se: true,
-        char_type: null,
-        has_animation: true,
-        layer: "mid",
-        can_skip: true,
-        need_accept: true,
-        wait: true,
-        refTexts: [],
-        is_on_top_of_player: true,
-        label_settings: {
-            c: {
-                text_color: "#FF0000"
-            }
-        }
-    };
+      
+<div class="coord-overlay-v" id="coordOverlayV"></div>
+
+    </div>
+
     
-    // 当前编辑的效果
-    let currentEffect = null;
-    let effects = { ...config.label_settings };
+<div style="padding:6px 12px;background:#16213e;display:flex;gap:6px;border-top:1px solid #333;font-size:12px">
+      <button class="btn btn-toggle" id="btnToggleGrid" onclick="toggleGridBtn()">显示网格</button>
+      <button class="btn btn-toggle" id="btnToggleCoords" onclick="toggleCoordsBtn()">显示行列标识</button>
+      <input class="remark-input" id="newBlockRemark" placeholder="填写打字机备注">
+      <button class="btn btn-primary" onclick="createTypewriterBlock()">创建打字</button>
+      <button class="btn" onclick="createEventBlock()">创建普通事件</button>
+    </div>
+
+  </div>
+
+  <!-- Center: Block List -->
+  
+<div class="block-panel">
     
-    // DOM元素
-    const textsInput = document.getElementById('textsInput');
-    const fixedCheckbox = document.getElementById('fixedCheckbox');
-    const posXInput = document.getElementById('posX');
-    const posYInput = document.getElementById('posY');
-    const tagsInput = document.getElementById('tagsInput');
-    const hasSeCheckbox = document.getElementById('hasSeCheckbox');
-    const charTypeSelect = document.getElementById('charTypeSelect');
-    const hasAnimationCheckbox = document.getElementById('hasAnimationCheckbox');
-    const layerRadios = document.querySelectorAll('input[name="layer"]');
-    const canSkipCheckbox = document.getElementById('canSkipCheckbox');
-    const needAcceptCheckbox = document.getElementById('needAcceptCheckbox');
-    const waitCheckbox = document.getElementById('waitCheckbox');
-    const onTopCheckbox = document.getElementById('onTopCheckbox');
+<div class="panel-toolbar">
+      <button class="btn btn-danger" onclick="deleteSelected()">删除选中</button>
+      <input class="remark-input" id="changeRemarkInput" placeholder="更改选中打字机备注">
+      <button class="btn btn-sm" onclick="changeSelectedRemark()">改备注</button>
+      <button class="btn btn-sm" onclick="copyBlocks()">复制选中</button>
+      <button class="btn btn-sm" onclick="cutBlocks()">剪切选中</button>
+      <button class="btn btn-sm" onclick="pasteBlocks()">粘贴</button>
+      <button class="btn btn-sm" onclick="duplicateBlocks()">复制并粘贴</button>
+      <button class="btn btn-sm" style="margin-left:auto" onclick="exportBlackMagic()">输出黑魔法</button>
+    </div>
+
     
-    const textPreview = document.getElementById('textPreview');
-    const jsonOutput = document.getElementById('jsonOutput');
-    const gridSizeInfo = document.getElementById('gridSizeInfo');
-    const gridSizeInfo2 = document.getElementById('gridSizeInfo2');
-    const characterCountInfo = document.getElementById('characterCountInfo');
+<div class="block-scroll" id="blockScroll">
+      
+<div class="block-list" id="blockList"></div>
+
+    </div>
+
+  </div>
+
+  <!-- Right: Styles Sidebar -->
+  
+<div class="style-sidebar">
     
-    const effectsTags = document.getElementById('effectsTags');
-    const effectButtons = document.getElementById('effectButtons');
+<div class="style-header">样式库</div>
+
     
-    const colorPickerModal = document.getElementById('colorPickerModal');
-    const colorPickerTitle = document.getElementById('colorPickerTitle');
-    const effectNameInput = document.getElementById('effectNameInput');
-    const colorHexInput = document.getElementById('colorHexInput');
-    const colorPicker = document.getElementById('colorPicker');
-    const colorPreview = document.getElementById('colorPreview');
+<div style="padding:4px">
+      <button class="btn btn-sm" style="width:100%" onclick="showStyleModal(&#39;create&#39;)">+ 创建样式</button>
+    </div>
+
     
-    const addEffectBtn = document.getElementById('addEffectBtn');
-    const cancelColorBtn = document.getElementById('cancelColorBtn');
-    const confirmColorBtn = document.getElementById('confirmColorBtn');
-    
-    const copyBtn = document.getElementById('copyBtn');
-    const notification = document.getElementById('notification');
-    const notificationText = document.getElementById('notificationText');
-    
-    // 初始化UI
-    function initUI() {
-        // 设置输入框初始值
-        textsInput.value = config.texts;
-        fixedCheckbox.checked = config.fixed;
-        posXInput.value = config.pos[0];
-        posYInput.value = config.pos[1];
-        tagsInput.value = config.tags.map(tag =&gt; `"${tag}"`).join(', ');
-        hasSeCheckbox.checked = config.has_se;
-        charTypeSelect.value = config.char_type === null ? "null" : config.char_type;
-        hasAnimationCheckbox.checked = config.has_animation;
-        
-        // 设置层级单选按钮
-        document.querySelector(`input[name="layer"][value="${config.layer}"]`).checked = true;
-        
-        canSkipCheckbox.checked = config.can_skip;
-        needAcceptCheckbox.checked = config.need_accept;
-        waitCheckbox.checked = config.wait;
-        onTopCheckbox.checked = config.is_on_top_of_player;
-        
-        // 渲染效果标签
-        renderEffectTags();
-        
-        // 更新预览
-        updatePreview();
-        updateJSONOutput();
-    }
-    
-    // 渲染效果标签
-    function renderEffectTags() {
-        effectsTags.innerHTML = '';
-        effectButtons.innerHTML = '';
-        
-        Object.keys(effects).forEach(effectName =&gt; {
-            const effect = effects[effectName];
-            const color = effect.text_color || '#FFFFFF';
-            
-            // 创建效果标签
-            const tagElement = document.createElement('div');
-            tagElement.className = 'effect-tag';
-            tagElement.style.backgroundColor = color + '20';
-            tagElement.style.border = `1px solid ${color}`;
-            tagElement.dataset.effect = effectName;
-            
-            tagElement.innerHTML = `
-                &lt;div class="effect-color" style="background-color: ${color};"&gt;&lt;/div&gt;
-                &lt;span&gt;${effectName}: ${color}&lt;/span&gt;
-                &lt;div class="effect-actions"&gt;
-                    &lt;button class="effect-action-btn edit-effect" data-effect="${effectName}"&gt;
-                        &lt;i class="fas fa-edit"&gt;&lt;/i&gt;
-                    &lt;/button&gt;
-                    &lt;button class="effect-action-btn delete-effect" data-effect="${effectName}"&gt;
-                        &lt;i class="fas fa-trash"&gt;&lt;/i&gt;
-                    &lt;/button&gt;
-                &lt;/div&gt;
-            `;
-            
-            effectsTags.appendChild(tagElement);
-            
-            // 创建效果按钮
-            const buttonElement = document.createElement('button');
-            buttonElement.className = 'effect-tag-btn';
-            buttonElement.innerHTML = `&lt;${effectName}&gt;&lt;/${effectName}&gt;`;
-            buttonElement.style.borderColor = color;
-            buttonElement.style.color = color;
-            buttonElement.dataset.effect = effectName;
-            
-            buttonElement.addEventListener('click', function() {
-                insertEffectTag(effectName);
-            });
-            
-            effectButtons.appendChild(buttonElement);
-        });
-        
-        // 为编辑和删除按钮添加事件监听（使用事件委托）
-        effectsTags.addEventListener('click', function(e) {
-            const target = e.target;
-            const editBtn = target.closest('.edit-effect');
-            const deleteBtn = target.closest('.delete-effect');
-            
-            if (editBtn) {
-                e.stopPropagation();
-                const effectName = editBtn.dataset.effect;
-                openColorPicker(effectName);
-            }
-            
-            if (deleteBtn) {
-                e.stopPropagation();
-                const effectName = deleteBtn.dataset.effect;
-                deleteEffect(effectName);
-            }
-        });
-    }
-    
-    // 插入效果标签到文本
-    function insertEffectTag(effectName) {
-        const textarea = textsInput;
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const selectedText = textarea.value.substring(start, end);
-        const tag = `&lt;${effectName}&gt;${selectedText}&lt;/${effectName}&gt;`;
-        
-        // 插入标签
-        textarea.value = textarea.value.substring(0, start) + tag + textarea.value.substring(end);
-        
-        // 更新配置和预览
-        config.texts = textarea.value;
-        updatePreview();
-        updateJSONOutput();
-        
-        // 聚焦到文本区域
-        textarea.focus();
-        // 设置光标位置在标签后
-        const newCursorPos = start + tag.length;
-        textarea.setSelectionRange(newCursorPos, newCursorPos);
-    }
-    
-    // 打开颜色选择器
-    function openColorPicker(effectName = null) {
-        currentEffect = effectName;
-        
-        if (effectName) {
-            colorPickerTitle.textContent = '编辑文字效果';
-            effectNameInput.value = effectName;
-            const color = effects[effectName].text_color || '#FFFFFF';
-            colorHexInput.value = color;
-            colorPicker.value = color;
-        } else {
-            colorPickerTitle.textContent = '添加文字效果';
-            effectNameInput.value = '';
-            colorHexInput.value = '#FFFFFF';
-            colorPicker.value = '#FFFFFF';
-        }
-        
-        updateColorPreview();
-        colorPickerModal.style.display = 'flex';
-    }
-    
-    // 关闭颜色选择器
-    function closeColorPicker() {
-        colorPickerModal.style.display = 'none';
-        currentEffect = null;
-    }
-    
-    // 添加/更新效果
-    function saveEffect() {
-        const effectName = effectNameInput.value.trim();
-        let color = colorHexInput.value.trim();
-        
-        if (!effectName) {
-            showNotification('效果名称不能为空', 'error');
-            return;
-        }
-        
-        // 验证效果名称（仅允许英文）
-        if (!/^[a-zA-Z]+$/.test(effectName)) {
-            showNotification('效果名称只能包含英文字母', 'error');
-            return;
-        }
-        
-        // 如果颜色代码无效，使用白色
-        if (!color || !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
-            color = '#FFFFFF';
-            colorHexInput.value = color;
-        }
-        
-        // 更新效果
-        effects[effectName] = {
-            text_color: color
-        };
-        
-        // 更新配置
-        config.label_settings = effects;
-        
-        // 重新渲染效果标签
-        renderEffectTags();
-        updatePreview();
-        updateJSONOutput();
-        
-        closeColorPicker();
-        showNotification(`效果 "${effectName}" 已保存`);
-    }
-    
-    // 删除效果
-    function deleteEffect(effectName) {
-        delete effects[effectName];
-        config.label_settings = effects;
-        renderEffectTags();
-        updatePreview();
-        updateJSONOutput();
-        showNotification(`效果 "${effectName}" 已删除`);
-    }
-    
-    // 更新颜色预览
-    function updateColorPreview() {
-        colorPreview.style.backgroundColor = colorHexInput.value;
-    }
-    
-    // 解析文本，处理标签和特殊字符
-    function parseTextForGrid(text) {
-        const posX = parseInt(posXInput.value) || 0;
-        const posY = parseInt(posYInput.value) || 0;
-        
-        // 结果网格，使用Map来存储位置信息
-        const grid = new Map();
-        let maxRow = 0;
-        let maxCol = 0;
-        let charCount = 0;
-        
-        // 当前行和列（相对于文本起始位置）
-        let currentRow = 0;
-        let currentCol = 0;
-        
-        // 颜色栈，用于处理嵌套标签
-        const colorStack = ['#ffffff']; // 默认白色
-        
-        // 未闭合的标签栈
-        const openTagStack = [];
-        
-        let i = 0;
-        while (i &lt; text.length) {
-            // 检查是否遇到标签开始
-            if (text[i] === '&lt;') {
-                // 查找标签结束
-                const tagEnd = text.indexOf('&gt;', i);
-                if (tagEnd === -1) {
-                    // 没有找到闭合的&gt;，跳过
-                    i++;
-                    continue;
-                }
-                
-                const fullTag = text.substring(i, tagEnd + 1);
-                
-                // 检查是开标签还是闭标签
-                if (text[i + 1] === '/') {
-                    // 闭标签
-                    const tagName = fullTag.substring(2, fullTag.length - 1);
-                    
-                    // 从栈中移除对应的开标签
-                    const tagIndex = openTagStack.lastIndexOf(tagName);
-                    if (tagIndex !== -1) {
-                        // 移除这个标签及其之后的所有标签
-                        openTagStack.splice(tagIndex);
-                        colorStack.splice(tagIndex + 1, 1);
-                    }
-                } else {
-                    // 开标签
-                    const tagName = fullTag.substring(1, fullTag.length - 1);
-                    
-                    // 检查是否是有效的效果标签
-                    if (effects[tagName]) {
-                        // 将标签入栈
-                        openTagStack.push(tagName);
-                        colorStack.push(effects[tagName].text_color || '#ffffff');
-                    }
-                }
-                
-                i = tagEnd + 1;
-                continue;
-            }
-            
-            // 处理普通字符
-            const char = text[i];
-            
-            if (char === '\n') {
-                // 换行符
-                currentRow++;
-                currentCol = 0;
-            } else if (char === '|') {
-                // 忽略"|"符号
-                // 不增加字符计数
-            } else if (char === '＿') {
-                // 全角"＿"显示为空白但占位
-                const gridRow = posY + currentRow;
-                const gridCol = posX + currentCol;
-                
-                // 记录最大行列
-                if (gridRow &gt; maxRow) maxRow = gridRow;
-                if (gridCol &gt; maxCol) maxCol = gridCol;
-                
-                // 当前颜色
-                const currentColor = colorStack[colorStack.length - 1];
-                
-                // 存储到网格
-                const key = `${gridRow},${gridCol}`;
-                grid.set(key, {
-                    char: ' ', // 空格占位
-                    color: currentColor,
-                    isSpace: true
-                });
-                
-                charCount++;
-                currentCol++;
-            } else {
-                // 普通字符
-                const gridRow = posY + currentRow;
-                const gridCol = posX + currentCol;
-                
-                // 记录最大行列
-                if (gridRow &gt; maxRow) maxRow = gridRow;
-                if (gridCol &gt; maxCol) maxCol = gridCol;
-                
-                // 当前颜色
-                const currentColor = colorStack[colorStack.length - 1];
-                
-                // 存储到网格
-                const key = `${gridRow},${gridCol}`;
-                grid.set(key, {
-                    char: char,
-                    color: currentColor
-                });
-                
-                charCount++;
-                currentCol++;
-            }
-            
-            i++;
-        }
-        
-        return {
-            grid: grid,
-            maxRow: maxRow,
-            maxCol: maxCol,
-            charCount: charCount
-        };
-    }
-    
-    // 更新文本预览
-    function updatePreview() {
-        const text = config.texts;
-        const posX = parseInt(posXInput.value) || 0;
-        const posY = parseInt(posYInput.value) || 0;
-        
-        // 解析文本
-        const { grid, maxRow, maxCol, charCount } = parseTextForGrid(text);
-        
-        // 计算网格尺寸（最小32x18，根据内容自动扩展）
-        const cols = Math.max(32, maxCol + 1);
-        const rows = Math.max(18, maxRow + 1);
-        
-        // 更新网格信息显示
-        gridSizeInfo.textContent = `${cols}×${rows}`;
-        gridSizeInfo2.textContent = `网格尺寸: ${cols}列 × ${rows}行`;
-        characterCountInfo.textContent = `字符数: ${charCount}`;
-        
-        // 清空预览区域
-        textPreview.innerHTML = '';
-        
-        // 创建网格容器
-        const gridContainer = document.createElement('div');
-        gridContainer.className = 'grid-container';
-        
-        // 设置网格容器尺寸
-        const cellWidth = 20;
-        const cellHeight = 20;
-        const rowNumbersWidth = 30;
-        const colNumbersHeight = 20;
-        
-        gridContainer.style.width = `${rowNumbersWidth + cols * cellWidth + 1}px`;
-        gridContainer.style.height = `${colNumbersHeight + rows * cellHeight + 1}px`;
-        
-        // 创建行号
-        const rowNumbers = document.createElement('div');
-        rowNumbers.className = 'row-numbers';
-        rowNumbers.style.width = `${rowNumbersWidth}px`;
-        rowNumbers.style.height = `${colNumbersHeight + rows * cellHeight}px`;
-        
-        for (let r = 0; r &lt; rows; r++) {
-            const rowNumber = document.createElement('div');
-            rowNumber.className = 'row-number';
-            rowNumber.textContent = r;
-            rowNumber.style.height = `${cellHeight}px`;
-            rowNumbers.appendChild(rowNumber);
-        }
-        
-        // 创建列号
-        const columnNumbers = document.createElement('div');
-        columnNumbers.className = 'column-numbers';
-        columnNumbers.style.width = `${cols * cellWidth}px`;
-        columnNumbers.style.height = `${colNumbersHeight}px`;
-        columnNumbers.style.left = `${rowNumbersWidth}px`;
-        
-        for (let c = 0; c &lt; cols; c++) {
-            const columnNumber = document.createElement('div');
-            columnNumber.className = 'column-number';
-            columnNumber.textContent = c;
-            columnNumber.style.width = `${cellWidth}px`;
-            columnNumbers.appendChild(columnNumber);
-        }
-        
-        // 创建网格内容
-        const gridContent = document.createElement('div');
-        gridContent.className = 'grid-content';
-        gridContent.style.display = 'grid';
-        gridContent.style.gridTemplateColumns = `repeat(${cols}, ${cellWidth}px)`;
-        gridContent.style.gridTemplateRows = `repeat(${rows}, ${cellHeight}px)`;
-        gridContent.style.left = `${rowNumbersWidth}px`;
-        gridContent.style.top = `${colNumbersHeight}px`;
-        gridContent.style.position = 'absolute';
-        
-        // 填充网格
-        for (let r = 0; r &lt; rows; r++) {
-            for (let c = 0; c &lt; cols; c++) {
-                const cell = document.createElement('div');
-                cell.className = 'grid-cell';
-                
-                const key = `${r},${c}`;
-                if (grid.has(key)) {
-                    const cellData = grid.get(key);
-                    cell.innerHTML = `&lt;div class="cell-content" style="color: ${cellData.color};"&gt;${cellData.isSpace ? '&amp;nbsp;' : cellData.char}&lt;/div&gt;`;
-                    
-                    // 高亮显示有内容的位置
-                    if (!cellData.isSpace) {
-                        cell.style.backgroundColor = 'rgba(0, 100, 255, 0.1)';
-                    }
-                } else {
-                    cell.innerHTML = '&lt;div class="cell-content"&gt;&amp;nbsp;&lt;/div&gt;';
-                }
-                
-                gridContent.appendChild(cell);
-            }
-        }
-        
-        // 将元素添加到网格容器
-        gridContainer.appendChild(rowNumbers);
-        gridContainer.appendChild(columnNumbers);
-        gridContainer.appendChild(gridContent);
-        
-        // 添加到预览区域
-        textPreview.appendChild(gridContainer);
-    }
-    
-    // 更新JSON输出
-    function updateJSONOutput() {
-        // 创建config的副本，将texts中的换行符替换为"&amp;"
-        const jsonConfig = { ...config };
-        
-        // 将texts中的换行符替换为"&amp;"
-        if (jsonConfig.texts) {
-            jsonConfig.texts = jsonConfig.texts.replace(/\n/g, '&amp;');
-        }
-        
-        // 构建完整的JSON字符串
-        const jsonStr = JSON.stringify(jsonConfig, null, 2);
-        jsonOutput.textContent = `@[type_parallel] ${jsonStr}`;
-    }
-    
-    // 复制JSON到剪贴板
-    function copyToClipboard() {
-        // 创建config的副本，将texts中的换行符替换为"&amp;"
-        const jsonConfig = { ...config };
-        
-        // 将texts中的换行符替换为"&amp;"
-        if (jsonConfig.texts) {
-            jsonConfig.texts = jsonConfig.texts.replace(/\n/g, '&amp;');
-        }
-        
-        const jsonStr = `@[type_parallel] ${JSON.stringify(jsonConfig, null, 2)}`;
-        
-        navigator.clipboard.writeText(jsonStr)
-            .then(() =&gt; {
-                showNotification('黑魔法指令已复制到剪贴板！');
-            })
-            .catch(err =&gt; {
-                console.error('复制失败: ', err);
-                showNotification('复制失败，请手动复制', 'error');
-            });
-    }
-    
-    // 显示通知
-    function showNotification(message, type = 'success') {
-        notificationText.textContent = message;
-        notification.className = 'notification';
-        
-        if (type === 'error') {
-            notification.style.backgroundColor = '#c0392b';
-        } else {
-            notification.style.backgroundColor = '#5d4a9e';
-        }
-        
-        // 显示通知
-        setTimeout(() =&gt; {
-            notification.classList.add('show');
-        }, 10);
-        
-        // 3秒后隐藏
-        setTimeout(() =&gt; {
-            notification.classList.remove('show');
-        }, 3000);
-    }
-    
-    // 解析标签字符串
-    function parseTags(tagsStr) {
-        const tags = tagsStr.split(',')
-            .map(tag =&gt; tag.trim())
-            .filter(tag =&gt; tag)
-            .map(tag =&gt; {
-                // 移除引号
-                return tag.replace(/^["']|["']$/g, '');
-            });
-        
-        return tags.length &gt; 0 ? tags : ["label #1"];
-    }
-    
-    // 事件监听
-    // 文本内容变化
-    textsInput.addEventListener('input', function() {
-        config.texts = this.value;
-        updatePreview();
-        updateJSONOutput();
-    });
-    
-    // 固定于画面
-    fixedCheckbox.addEventListener('change', function() {
-        config.fixed = this.checked;
-        updateJSONOutput();
-    });
-    
-    // 位置坐标变化
-    posXInput.addEventListener('input', function() {
-        const x = parseInt(posXInput.value) || 0;
-        const y = parseInt(posYInput.value) || 0;
-        config.pos = [x, y];
-        updatePreview();
-        updateJSONOutput();
-    });
-    
-    posYInput.addEventListener('input', function() {
-        const x = parseInt(posXInput.value) || 0;
-        const y = parseInt(posYInput.value) || 0;
-        config.pos = [x, y];
-        updatePreview();
-        updateJSONOutput();
-    });
-    
-    // 标签变化
-    tagsInput.addEventListener('input', function() {
-        config.tags = parseTags(this.value);
-        updateJSONOutput();
-    });
-    
-    // 打字音效
-    hasSeCheckbox.addEventListener('change', function() {
-        config.has_se = this.checked;
-        updateJSONOutput();
-    });
-    
-    // 音效类型变化
-    charTypeSelect.addEventListener('change', function() {
-        const charType = charTypeSelect.value === "null" ? null : charTypeSelect.value;
-        config.char_type = charType;
-        updateJSONOutput();
-    });
-    
-    // 打字动画
-    hasAnimationCheckbox.addEventListener('change', function() {
-        config.has_animation = this.checked;
-        updateJSONOutput();
-    });
-    
-    // 层级
-    layerRadios.forEach(radio =&gt; {
-        radio.addEventListener('change', function() {
-            if (this.checked) {
-                config.layer = this.value;
-                updateJSONOutput();
-            }
-        });
-    });
-    
-    // 可以跳过
-    canSkipCheckbox.addEventListener('change', function() {
-        config.can_skip = this.checked;
-        updateJSONOutput();
-    });
-    
-    // 需要确认
-    needAcceptCheckbox.addEventListener('change', function() {
-        config.need_accept = this.checked;
-        updateJSONOutput();
-    });
-    
-    // 玩家需要等待
-    waitCheckbox.addEventListener('change', function() {
-        config.wait = this.checked;
-        updateJSONOutput();
-    });
-    
-    // 文字会遮住玩家
-    onTopCheckbox.addEventListener('change', function() {
-        config.is_on_top_of_player = this.checked;
-        updateJSONOutput();
-    });
-    
-    // 颜色选择器事件
-    addEffectBtn.addEventListener('click', () =&gt; openColorPicker());
-    cancelColorBtn.addEventListener('click', closeColorPicker);
-    confirmColorBtn.addEventListener('click', saveEffect);
-    
-    // 颜色输入变化
-    colorHexInput.addEventListener('input', function() {
-        colorPicker.value = this.value;
-        updateColorPreview();
-    });
-    
-    colorPicker.addEventListener('input', function() {
-        colorHexInput.value = this.value;
-        updateColorPreview();
-    });
-    
-    // 复制按钮
-    copyBtn.addEventListener('click', copyToClipboard);
-    
-    // 点击模态框外部关闭
-    colorPickerModal.addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeColorPicker();
-        }
-    });
-    
-    // 按ESC键关闭模态框
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' &amp;&amp; colorPickerModal.style.display === 'flex') {
-            closeColorPicker();
-        }
-    });
-    
-    // 初始化
-    initUI();
-&lt;/script&gt;
-</code></pre>
+<div class="style-list" id="styleList"></div>
+
+  </div>
 
 </div>
-</body></style></head></html><div style="break-before: page; page-break-before: always;"></div>
+
+<!-- Transfer Objects Toggle -->
+<div class="transfer-panel">
+  <button class="transfer-toggle" id="transferToggle" onclick="toggleTransferMenu()">转移物件 ▼</button>
+  
+<div class="transfer-menu" id="transferMenu">
+    <button class="btn btn-sm" style="width:100%" onclick="showTransferModal(&#39;create&#39;)">创建转移物件</button>
+    <button class="btn btn-sm" style="width:100%" onclick="showTransferModal(&#39;delete&#39;)">删除转移物件</button>
+    
+<div id="transferObjectList" style="max-height:200px;overflow-y:auto;margin-top:4px"></div>
+
+  </div>
+
+</div>
+
+<!-- Import Modal -->
+<div class="modal-overlay hidden" id="importModal">
+  
+<div class="modal-box">
+    
+<div class="modal-head">
+      导入黑魔法
+      <button class="modal-close" onclick="hideImportModal()">×</button>
+    </div>
+
+    
+<div class="modal-body">
+      <textarea class="modal-textarea" id="importText" placeholder="在此粘贴黑魔法代码...
+
+格式示例:
+# 备注名
+@[type] {&quot;texts&quot;:&quot;你好&quot;,&quot;pos&quot;:[0,0]}"></textarea>
+    </div>
+
+    
+<div class="modal-foot">
+      <button class="btn" onclick="hideImportModal()">取消</button>
+      <button class="btn btn-primary" onclick="confirmImport()">确认导入</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Style Create/Edit Modal -->
+<div class="modal-overlay hidden" id="styleModal">
+  
+<div class="modal-box" style="width:650px;">
+    
+<div class="modal-head">
+      <span id="styleModalTitle">创建样式</span>
+      <button class="modal-close" onclick="hideStyleModal()">×</button>
+    </div>
+
+    
+<div class="modal-body">
+      
+<div class="style-form-row">
+        <label>样式名称:</label>
+        <input type="text" id="styleNameInput" placeholder="不可重名" style="flex:1">
+      </div>
+
+      
+<div class="style-label" style="font-size:12px;color:#888;margin-bottom:6px">
+        效果是全局共享的，导出后自动加入label_settings
+      </div>
+
+      
+<div class="section-label">效果类型:</div>
+
+      
+<div class="style-effect-tabs">
+        
+<div class="style-effect-tab active" data-type="color" onclick="switchEffectType(&#39;color&#39;)">颜色</div>
+
+        
+<div class="style-effect-tab" data-type="sound" onclick="switchEffectType(&#39;sound&#39;)">音效</div>
+
+        
+<div class="style-effect-tab" data-type="tags" onclick="switchEffectType(&#39;tags&#39;)">标签</div>
+
+      </div>
+
+      
+<div id="effectColorArea">
+        
+<div class="style-form-row">
+          <label>颜色值:</label>
+          <input type="color" id="styleColorPicker" value="#ffffff" style="width:60px;height:32px;padding:0;border:none;cursor:pointer">
+        </div>
+
+      </div>
+
+      
+<div id="effectSoundArea" style="display:none">
+        
+<div class="sl-grid" id="styleSoundGrid"></div>
+
+      </div>
+
+      
+<div id="effectTagsArea" style="display:none">
+        
+<div class="style-form-row">
+          <label>Tags值:</label>
+          <input type="text" id="styleTagsInput" placeholder="输入标签" style="flex:1">
+        </div>
+
+      </div>
+
+      
+<div id="styleErrorMsg" style="color:#f44336;font-size:14px;margin-top:8px;display:none"></div>
+
+    </div>
+
+    
+<div class="modal-foot">
+      <button class="btn" onclick="hideStyleModal()">取消</button>
+      <button class="btn btn-primary" onclick="confirmStyleCreate()">确认</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Event Template Modal -->
+<div class="modal-overlay hidden" id="eventTemplateModal">
+  
+<div class="modal-box" style="width:500px;">
+    
+<div class="modal-head">
+      <span>选择事件模板</span>
+      <button class="modal-close" onclick="hideEventTemplateModal()">×</button>
+    </div>
+
+    
+<div class="modal-body">
+      
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;">
+        <button class="btn btn-primary" onclick="selectEventTemplate(&#39;wait&#39;)" style="padding:12px;font-size:13px;">
+          ⏱ 延迟固定时间<br><small style="color:#aaa;font-size:11px;">阻塞事件解析器</small>
+        </button>
+        <button class="btn btn-primary" onclick="selectEventTemplate(&#39;wait_random&#39;)" style="padding:12px;font-size:13px;">
+          🎲 延迟随机时间<br><small style="color:#aaa;font-size:11px;">随机阻塞</small>
+        </button>
+        <button class="btn btn-primary" onclick="selectEventTemplate(&#39;break&#39;)" style="padding:12px;font-size:13px;">
+          ⏹ 直接结束事件<br><small style="color:#aaa;font-size:11px;">立即停止</small>
+        </button>
+        <button class="btn btn-primary" onclick="selectEventTemplate(&#39;clear_typed&#39;)" style="padding:12px;font-size:13px;">
+          🧹 清除打字机<br><small style="color:#aaa;font-size:11px;">清除所有打字</small>
+        </button>
+        <button class="btn" onclick="selectEventTemplate(&#39;empty&#39;)" style="padding:12px;font-size:13px;grid-column:span 2;">
+          📄 空白事件<br><small style="color:#aaa;font-size:11px;">手动输入指令</small>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Transfer Object Modal -->
+<div class="modal-overlay hidden" id="transferModal">
+  
+<div class="modal-box" style="width:550px;">
+    
+<div class="modal-head">
+      <span id="transferModalTitle">创建转移物件</span>
+      <button class="modal-close" onclick="hideTransferModal()">×</button>
+    </div>
+
+    
+<div class="modal-body">
+      
+<div class="style-label" style="font-size:12px;color:#888;margin-bottom:8px" id="transferModalHint">
+        与样式不同，如果重名则为修改转移物件
+      </div>
+
+      
+<div class="style-form-row">
+        <label>名称:</label>
+        <input type="text" id="transferNameInput" style="flex:1">
+      </div>
+
+      
+<div class="style-form-row">
+        <label>颜色:</label>
+        <input type="color" id="transferColorPicker" value="#ffffff" style="width:60px;height:32px;padding:0;border:none;cursor:pointer">
+      </div>
+
+      
+<div class="style-form-row">
+        <label>字面内容:</label>
+        <textarea id="transferTextInput" rows="5" style="flex:1;background:#0a0a1a;color:#fff;border:1px solid #444;border-radius:3px;padding:6px;font-size:13px;resize:vertical" placeholder="每行一个字符/符号"></textarea>
+      </div>
+
+    </div>
+
+    
+<div class="modal-foot">
+      <button class="btn" onclick="hideTransferModal()">取消</button>
+      <button class="btn btn-primary" onclick="confirmTransferCreate()">确认</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="status-bar">
+  <span id="statusText">就绪 | 快捷键: Ctrl+Z撤销 Ctrl+Y重做 Ctrl+A全选 Ctrl+C/V/X复制粘贴 Delete删除 | 点击积木展开编辑</span>
+  <span>积木数: <strong id="blockCount">0</strong></span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.6/Sortable.min.js"></script>
+<script>
+// ==================== DATA MODEL ====================
+
+const SFX_TABLE = [null,'none','princess','dragon','snake','poet','giant_l','giant_r'];
+const SFX_CN = ['默认','无','公主','龙','蛇','诗人','左巨人','右巨人'];
+const LAYER_TABLE = ['front','mid','back'];
+const LAYER_CN = ['前景层','主要层','背景层'];
+
+const DEFAULT_TYPE_EVENT = {
+  type: "打字机", texts: "你好，世界！",
+  posX: 0, posY: 0, tags: "", fixed: false,
+  char_type: 0, has_animation: true, layer: 1,
+  can_skip: true, need_accept: true, wait: true,
+  is_dialog_end: false, is_on_top_of_player: false,
+  offsetX: 0, offsetY: 0, id: null, remark: ""
+};
+
+const DEFAULT_EVENT = { type: "普通事件", texts: "", id: null };
+
+// Global state
+let blockList = [];           // Array of event objects
+let eventIdList = [];         // Array of ids (parallel to blockList)
+let eventObjIndexMap = {};    // id -> index in blockList
+let selectedIds = [];         // Selected block IDs as strings
+let expandedId = null;       // Currently expanded block ID
+let expandedType = null;     // "打字机" or "普通事件"
+
+// Undo/Redo
+let undoStack = [];
+let redoStack = [];
+let idOccupiedList = [];
+let tempIdOccupiedList = [];
+
+// Clipboard
+let clipboard = [];
+
+// Styles: name -> value (color string, sound index int, or tag string)
+let styles = {};
+let styleYPos = 0;
+
+// Transfer objects (模板/定义): name -> { text, color }
+let transferObjects = {};
+
+// 转移物件实例表（运行时——每个名字至多一个实例）
+// name -> { pos: {x,y}, literal, color, tags }
+// 同一名字多次出现时原地覆盖位置，产生"漂移"效果
+let transferObjectInstances = {};
+
+// Camera offset
+let camOffsetX = 0;
+let camOffsetY = 0;
+
+// === 字符实体系统 ===
+// 每个实体是游戏运行时的第一公民，打字机是实体的生成器
+// 清除操作按 tags 清除实体，而不是按打字机清除
+let _entityIdCounter = 0;
+// 渲染层：存储字符实体对象 { id, literal, color, tags, x, y, showBg, fixed }
+let bgLayer = [], midLayer = [], fgLayer = [];
+
+// Animation state
+let isPlaying = false;
+let playingId = "";
+let playAnimTimer = null;
+let currentTween = null;
+
+// Refresh lock
+let refreshing = false;
+
+// Canvas & rendering
+const canvas = document.getElementById('previewCanvas');
+const ctx = canvas.getContext('2d');
+
+// Grid state
+let showGridLayer1 = true; // layer 1 = grid lines (图块)
+let showCoords = false;
+
+// SortableJS instance
+let sortableInstance = null;
+
+// ==================== UTILITIES ====================
+
+function genId() {
+  let id = Math.floor(Math.random() * 1000000);
+  while (eventIdList.includes(id) || idOccupiedList.includes(id) || tempIdOccupiedList.includes(id)) {
+    id = Math.floor(Math.random() * 1000000);
+  }
+  return id;
+}
+
+function hexToRgb(hex) {
+  if (!hex || typeof hex !== 'string') return { r: 255, g: 255, b: 255, a: 1 };
+  // Support 6-digit (#FFFFFF) and 8-digit (#FFFFFFcc) hex; ignore alpha
+  let m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/i);
+  if (!m) return { r: 255, g: 255, b: 255, a: 1 };
+  return { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16), a: 1 };
+}
+
+function parseBrackets(pairChar, str) {
+  const openCh = pairChar[0], closeCh = pairChar[1];
+  let stack = [], openCount = 0, results = [];
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    if (ch === openCh) {
+      if (stack.length === 0) stack.push(i);
+      else { stack.push(ch); openCount++; }
+    } else if (stack.length === 0) continue;
+    else if (ch === closeCh) {
+      if (openCount !== 0) { stack.push(ch); openCount--; i++; continue; }
+      results.push([]);
+      results[results.length - 1].push(stack.shift());
+      results[results.length - 1].push(stack.join(''));
+      stack = [];
+    } else stack.push(ch);
+  }
+  return results;
+}
+
+function gridToPixel(vx, vy) {
+  return { x: vx * 30, y: vy * 30 };
+}
+
+// ==================== UNDO SYSTEM ====================
+
+function saveUndo(command, val, cont = false) {
+  redoStack = [];
+  tempIdOccupiedList = [];
+  undoStack.push({ command, var: val, continue: cont });
+  if (command === 'delete') {
+    for (const item of val) idOccupiedList.push(item[0].id);
+  }
+  if (undoStack.length > 250) {
+    const removed = undoStack.shift();
+    if (removed.command === 'delete') {
+      for (const item of removed.var) {
+        const idx = idOccupiedList.indexOf(item[0].id);
+        if (idx >= 0) idOccupiedList.splice(idx, 1);
+      }
+    }
+  }
+}
+
+function doUndo() {
+  stopAnimation();
+  if (undoStack.length === 0) return;
+  const action = undoStack.pop();
+  const cmd = action.command;
+  const val = action.var;
+  
+  // ── Save inverse action to redo BEFORE performing undo ──
+  if (cmd === 'modifyParam') {
+    const currentVal = val[0][val[1]];
+    saveRedo('modifyParam', [val[0], val[1], currentVal]);
+  } else if (cmd === 'delete') {
+    // delete undo restores blocks → redo deletes them again
+    saveRedo('delete', val);
+  } else if (cmd === 'create') {
+    // create undo removes blocks → redo recreates them
+    const ids = Array.isArray(val) ? val : [val];
+    const redoData = [];
+    for (const id of ids) {
+      const idx = eventObjIndexMap[String(id)];
+      if (idx !== undefined) redoData.push({ idx, block: JSON.parse(JSON.stringify(blockList[idx])) });
+    }
+    saveRedo('create', redoData.length === 1 ? redoData[0] : redoData);
+  } else if (cmd === 'moveBlock') {
+    saveRedo('moveBlock', [JSON.parse(JSON.stringify(blockList)), [...eventIdList]]);
+  } else if (cmd === 'modifyRemark') {
+    const redoData = [];
+    for (const item of val) redoData.push([blockList[item[1]].remark, item[1]]);
+    saveRedo('modifyRemark', redoData);
+  }
+  
+  // ── Perform undo ──
+  if (cmd === 'modifyParam') {
+    val[0][val[1]] = val[2];
+    renderBlockList();
+  } else if (cmd === 'delete') {
+    let i = val.length - 1;
+    while (i >= 0) {
+      const item = val[i];
+      blockList.splice(item[1], 0, item[0]);
+      eventIdList.splice(item[1], 0, item[0].id);
+      const idx = idOccupiedList.indexOf(item[0].id);
+      if (idx >= 0) idOccupiedList.splice(idx, 1);
+      i--;
+    }
+    renderBlockList(true);
+  } else if (cmd === 'create') {
+    for (const id of Array.isArray(val) ? val : [val]) {
+      const idx = eventObjIndexMap[String(id)];
+      if (idx === undefined) continue;
+      delete eventObjIndexMap[String(id)];
+      blockList.splice(idx, 1);
+      eventIdList.splice(idx, 1);
+    }
+    renderBlockList(true);
+  } else if (cmd === 'moveBlock') {
+    // Restore from snapshot
+    blockList = JSON.parse(JSON.stringify(val[0]));
+    eventIdList = [...val[1]];
+    renderBlockList(true);
+  } else if (cmd === 'modifyRemark') {
+    for (const item of val) {
+      blockList[item[1]].remark = item[0];
+    }
+    renderBlockList(true);
+  }
+}
+
+function doRedo() {
+  stopAnimation();
+  if (redoStack.length === 0) return;
+  const action = redoStack.pop();
+  const cmd = action.command;
+  const val = action.var;
+  
+  // ── Save inverse action to undo BEFORE performing redo ──
+  // Push directly to avoid saveUndo clearing redoStack
+  if (cmd === 'modifyParam') {
+    const currentVal = val[0][val[1]];
+    undoStack.push({ command: 'modifyParam', var: [val[0], val[1], currentVal], continue: false });
+  } else if (cmd === 'delete') {
+    undoStack.push({ command: 'delete', var: val, continue: false });
+  } else if (cmd === 'create') {
+    const items = Array.isArray(val) ? val : [val];
+    const ids = [];
+    for (const item of items) { ids.push((item.block || item).id); }
+    undoStack.push({ command: 'create', var: ids.length === 1 ? ids[0] : ids, continue: false });
+  } else if (cmd === 'moveBlock') {
+    undoStack.push({ command: 'moveBlock', var: [JSON.parse(JSON.stringify(blockList)), [...eventIdList]], continue: false });
+  } else if (cmd === 'modifyRemark') {
+    const undoData = [];
+    for (const item of val) undoData.push([blockList[item[1]].remark, item[1]]);
+    undoStack.push({ command: 'modifyRemark', var: undoData, continue: false });
+  }
+  if (undoStack.length > 250) undoStack.shift();
+  
+  // ── Perform redo ──
+  if (cmd === 'modifyParam') {
+    val[0][val[1]] = val[2];
+    renderBlockList();
+  } else if (cmd === 'delete') {
+    let i = val.length - 1;
+    while (i >= 0) {
+      const item = val[i];
+      const idx = eventObjIndexMap[String(item[0].id)];
+      if (idx === undefined) { i--; continue; }
+      blockList.splice(idx, 1);
+      eventIdList.splice(idx, 1);
+      if (!idOccupiedList.includes(item[0].id)) idOccupiedList.push(item[0].id);
+      i--;
+    }
+    renderBlockList(true);
+  } else if (cmd === 'create') {
+    const items = Array.isArray(val) ? val : [val];
+    for (const item of items) {
+      const block = item.block || item;
+      const idx = (item.idx !== undefined) ? item.idx : blockList.length;
+      blockList.splice(idx, 0, block);
+      eventIdList.splice(idx, 0, block.id);
+      rebuildIndexMap();
+    }
+    renderBlockList(true);
+  } else if (cmd === 'moveBlock') {
+    blockList = JSON.parse(JSON.stringify(val[0]));
+    eventIdList = [...val[1]];
+    renderBlockList(true);
+  } else if (cmd === 'modifyRemark') {
+    for (const item of val) {
+      blockList[item[1]].remark = item[0];
+    }
+    renderBlockList(true);
+  }
+}
+
+function saveRedo(command, val, cont = false) {
+  redoStack.push({ command: command, var: val, continue: cont });
+  if (redoStack.length > 250) redoStack.shift();
+}
+
+// ==================== BLOCK LIST MANAGEMENT ====================
+
+function createTypewriterBlock() {
+  const block = JSON.parse(JSON.stringify(DEFAULT_TYPE_EVENT));
+  const id = genId();
+  block.id = id;
+  const remark = document.getElementById('newBlockRemark').value || '';
+  block.remark = remark;
+  document.getElementById('newBlockRemark').value = '';
+  
+  blockList.push(block);
+  eventIdList.push(id);
+  saveUndo('create', id, false);
+  rebuildIndexMap();
+  renderBlockList(true);
+  clearPreview();
+  updateStatus();
+}
+
+function showEventTemplateModal() {
+  document.getElementById('eventTemplateModal').classList.remove('hidden');
+}
+
+function hideEventTemplateModal() {
+  document.getElementById('eventTemplateModal').classList.add('hidden');
+}
+
+function selectEventTemplate(template) {
+  hideEventTemplateModal();
+  
+  const block = JSON.parse(JSON.stringify(DEFAULT_EVENT));
+  const id = genId();
+  block.id = id;
+  
+  // 根据模板设置 texts
+  switch(template) {
+    case 'wait':
+      block.texts = '@[wait] 60';
+      break;
+    case 'wait_random':
+      block.texts = '@[wait_random_in_range] {"value": [30,60]}';
+      break;
+    case 'break':
+      block.texts = '@[break]';
+      break;
+    case 'clear_typed':
+      block.texts = '@[clear_typed] ""';
+      break;
+    case 'empty':
+      block.texts = '';
+      break;
+  }
+  
+  blockList.push(block);
+  eventIdList.push(id);
+  saveUndo('create', id, false);
+  rebuildIndexMap();
+  renderBlockList(true);
+  updateStatus();
+  
+  // 自动展开新创建的积木
+  if (template === 'empty') {
+    toggleBlock(String(id));
+  }
+}
+
+function createEventBlock() {
+  showEventTemplateModal();
+}
+
+function renderBlockList(fullRebuild = false) {
+  refreshing = true;
+  const container = document.getElementById('blockList');
+  
+  if (fullRebuild) {
+    eventObjIndexMap = {};
+    clearSelection();
+    container.innerHTML = '';
+  }
+  
+  if (blockList.length === 0) {
+    if (sortableInstance) { sortableInstance.destroy(); sortableInstance = null; }
+    container.innerHTML = '<div style="color:#555;padding:40px;text-align:center;">暂无事件积木<br><br>点击上方按钮创建打字机或普通事件</div>';
+    refreshing = false;
+    updateStatus();
+    return;
+  }
+  
+  let html = '';
+  for (let i = 0; i < blockList.length; i++) {
+    const ev = blockList[i];
+    const idStr = String(ev.id);
+    
+    if (fullRebuild && !eventObjIndexMap.hasOwnProperty(idStr)) {
+      eventObjIndexMap[idStr] = i;
+    }
+    
+    const idx = eventObjIndexMap[idStr];
+    if (idx === undefined) continue;
+    
+    const isExpanded = expandedId === idStr;
+    
+    const isSelected = selectedIds.includes(idStr);
+    const selClass = isSelected ? 'selected highlighted' : '';
+    const expClass = isExpanded ? 'expanded' : '';
+    
+    if (ev.type === '打字机') {
+      html += buildTypewriterBlockHTML(ev, idStr, idx, isExpanded, selClass, expClass);
+    } else {
+      html += buildEventBlockHTML(ev, idStr, idx, isExpanded, selClass, expClass);
+    }
+  }
+  
+  container.innerHTML = html;
+  
+  // Initialize SortableJS after DOM rebuild
+  initSortable();
+  
+  refreshing = false;
+  updateStatus();
+  bindBlockEvents();
+  
+  // Re-render preview if something is selected or expanded
+  renderAvailablePreview();
+}
+
+function buildTypewriterBlockHTML(ev, idStr, idx, isExpanded, selClass, expClass) {
+  const remark = ev.remark ? `打字机 ${ev.remark}` : '打字机';
+  const sfxIdx = typeof ev.char_type === 'number' ? ev.char_type : SFX_TABLE.indexOf(ev.char_type);
+  const layerIdx = typeof ev.layer === 'number' ? ev.layer : LAYER_TABLE.indexOf(ev.layer);
+  
+  return `<div class="block-item ${selClass} ${expClass}" data-id="${idStr}" data-idx="${idx}" >
+  <div class="block-header" onclick="onBlockHeaderClick(event,'${idStr}','打字机')" onmouseenter="onBlockHover('${idStr}',true)" onmouseleave="onBlockHover('${idStr}',false)">
+    <div class="drag-handle"><div class="drag-handle-inner"></div></div>
+    <span class="block-title">${escapeHtml(remark)}</span>
+    <span class="expand-arrow">${isExpanded?'▲':'▼'}</span>
+  </div>
+  <div class="block-content">
+    <div class="tw-fields">
+      <div class="text-edit-area">
+        <textarea id="txt_${idStr}" oninput="onTextChanged('${idStr}')" placeholder="输入打字机文字... 支持&lt;样式&gt;标签和[转移物件]语法">${escapeHtml(ev.texts)}</textarea>
+        <div class="symbol-btns">
+          ${[
+            '，','。','︰','…','、','；','！','？','～','—','·','※',
+            '▲','▼','★','☆','◆','◇','→','←','↑','↓',
+            '＿','|','&',
+            '《》','（）','「」','｛｝','【】','〖〗','\u201c\u201d','\u2018\u2019','〈〉'
+          ].map(s=>`<button class="sym-btn${s.length===2?' pair':''}${['|','&','＿'].includes(s)?' sym-functional':''}" onclick="insertSymbol('${idStr}','${escapeHtml(s)}')">${escapeHtml(s)}</button>`).join('')}
+        </div>
+      </div>
+      <div class="params-area">
+        <div class="fields-grid">
+          <div class="field-row"><label>posX</label><input type="number" value="${ev.posX}" id="px_${idStr}" onchange="onParamChange('${idStr}','posX',this.value)"></div>
+          <div class="field-row"><label>posY</label><input type="number" value="${ev.posY}" id="py_${idStr}" onchange="onParamChange('${idStr}','posY',this.value)"></div>
+          <div class="field-row"><label>offsetX</label><input type="number" value="${ev.offsetX}" id="ox_${idStr}" onchange="onParamChange('${idStr}','offsetX',this.value)"></div>
+          <div class="field-row"><label>offsetY</label><input type="number" value="${ev.offsetY}" id="oy_${idStr}" onchange="onParamChange('${idStr}','offsetY',this.value)"></div>
+          <div class="field-row"><label>tags</label><input type="text" value="${ev.tags||''}" id="tg_${idStr}" onchange="onParamChange('${idStr}','tags',this.value)" placeholder="tags标签"></div>
+        </div>
+        
+        <div class="sound-layer-area">
+          <div class="section-label">音效选择:</div>
+          <div class="sl-grid" id="sfxgrid_${idStr}">
+            ${SFX_CN.map((name,i)=>`<button class="sl-btn ${i===sfxIdx?'active':''}" onclick="selectSfx('${idStr}',${i},this)">${name}</button>`).join('')}
+          </div>
+          <div class="section-label" style="margin-top:6px">图层选择:</div>
+          <div class="sl-grid" id="layergrid_${idStr}">
+            ${LAYER_CN.map((name,i)=>`<button class="sl-btn ${i===layerIdx?'active':''}" onclick="selectLayer('${idStr}',${i},this)">${name}</button>`).join('')}
+          </div>
+        </div>
+        
+        <div class="bool-toggles">
+          <button class="toggle-btn ${ev.fixed?'active':''}" onclick="toggleBool('${idStr}','fixed',this)">固定在屏幕</button>
+          <button class="toggle-btn ${ev.can_skip?'active':''}" onclick="toggleBool('${idStr}','can_skip',this)">对话可跳过</button>
+          <button class="toggle-btn ${ev.need_accept?'active':''}" onclick="toggleBool('${idStr}','need_accept',this)">需确认</button>
+          <button class="toggle-btn ${ev.wait?'active':''}" onclick="toggleBool('${idStr}','wait',this)">暂停游戏</button>
+          <button class="toggle-btn ${ev.has_animation?'active':''}" onclick="toggleBool('${idStr}','has_animation',this)">有动画</button>
+          <button class="toggle-btn ${ev.is_dialog_end?'active':''}" onclick="toggleBool('${idStr}','is_dialog_end',this)">最后一句</button>
+          <button class="toggle-btn ${ev.is_on_top_of_player?'active':''}" onclick="toggleBool('${idStr}','is_on_top_of_player',this)">玩家上方</button>
+        </div>
+        
+        <div class="action-btns">
+          <button class="btn btn-sm btn-primary" onclick="playTypewriterPreview('${idStr}',this)">▶ 播放预览</button>
+          <button class="btn btn-sm" onclick="exportSingleBlock('${idStr}')">单独导出</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`;
+}
+
+function buildEventBlockHTML(ev, idStr, idx, isExpanded, selClass, expClass) {
+  let label = '事件';
+  const txt = ev.texts || '';
+  if (txt.startsWith('@[wait]')) label = '延迟固定时间';
+  else if (txt.startsWith('@[wait_random_in_range]')) label = '延迟随机时间';
+  else if (txt.startsWith('@[clear_typed]')) label = '清除打字机';
+  else if (txt.startsWith('@[')) {
+    const f = txt.indexOf(']');
+    label = f >= 0 ? txt.substring(0, f + 1) : '事件';
+  }
+  
+  return `<div class="block-item ${selClass} ${expClass}" data-id="${idStr}" data-idx="${idx}" >
+  <div class="block-header" onclick="onBlockHeaderClick(event,'${idStr}','普通事件')" onmouseenter="onBlockHover('${idStr}',true)" onmouseleave="onBlockHover('${idStr}',false)">
+    <div class="drag-handle"><div class="drag-handle-inner"></div></div>
+    <span class="block-title">${escapeHtml(label)}</span>
+    <span class="expand-arrow">${isExpanded?'▲':'▼'}</span>
+  </div>
+  <div class="block-content">
+    <textarea class="event-textarea" id="etxt_${idStr}" oninput="onEventTextChanged('${idStr}')" placeholder="@[command] 或普通指令...">${escapeHtml(txt)}</textarea>
+  </div>
+</div>`;
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function bindBlockEvents() {
+  // Events are bound via inline handlers in HTML
+}
+
+// ==================== BLOCK INTERACTIONS ====================
+
+function onBlockHeaderClick(e, idStr, type) {
+  e.stopPropagation();
+  
+  // Ctrl+click = multi-select
+  if (e.ctrlKey) {
+    toggleSelection(idStr);
+    return;
+  }
+  // Shift+click = range select
+  if (e.shiftKey) {
+    rangeSelect(idStr);
+    return;
+  }
+  
+  // Normal click = expand/collapse
+  if (expandedId === idStr) {
+    collapseBlock(idStr);
+  } else {
+    expandBlock(idStr, type);
+  }
+}
+
+function onBlockHover(idStr, entering) {
+  const el = document.querySelector(`.block-item[data-id="${idStr}"]`);
+  if (!el) return;
+  if (selectedIds.includes(idStr)) return; // 选中状态不覆盖
+  if (entering) {
+    el.classList.add('highlighted');
+  } else {
+    el.classList.remove('highlighted');
+  }
+}
+
+function updateBlockListHeight() {
+  const container = document.getElementById('blockList');
+  let y = 0;
+  for (let i = 0; i < blockList.length; i++) {
+    const eid = String(blockList[i].id);
+    const ev = blockList[i];
+    const isExp = expandedId === eid;
+    y += (isExp ? 56 + getExpandOffset(ev.type) + 0 : 56 + 0);
+  }
+  container.style.height = y + 'px';
+}
+
+function expandBlock(idStr, type) {
+  clearSelection();
+  
+  // Only one expanded at a time
+  if (expandedId && expandedId !== idStr) {
+    const prevBlockEl = document.querySelector(`.block-item[data-id="${expandedId}"]`);
+    if (prevBlockEl) prevBlockEl.classList.remove('expanded');
+  }
+  
+  expandedId = idStr;
+  expandedType = type;
+  
+  const blockEl = document.querySelector(`.block-item[data-id="${idStr}"]`);
+  if (blockEl) blockEl.classList.add('expanded');
+  
+  // Render preview
+  renderPreviewForId(idStr);
+}
+
+function collapseBlock(idStr) {
+  expandedId = null;
+  expandedType = null;
+
+  const blockEl = document.querySelector(`.block-item[data-id="${idStr}"]`);
+  if (blockEl) blockEl.classList.remove('expanded');
+
+  clearPreview();
+}
+
+function collapseAllExcept(exceptId) {
+  document.querySelectorAll('.block-item.expanded').forEach(el => {
+    const id = el.dataset.id;
+    if (id !== exceptId) el.classList.remove('expanded');
+  });
+}
+
+// No longer needed with flow layout — keep for backward compat
+function updateBlockListHeight() {}
+
+// ==================== SELECTION ====================
+
+function toggleSelection(idStr) {
+  const idx = selectedIds.indexOf(idStr);
+  if (idx >= 0) selectedIds.splice(idx, 1);
+  else selectedIds.unshift(idStr);
+  highlightSelection();
+}
+
+function rangeSelect(idStr) {
+  if (selectedIds.length === 0) {
+    selectedIds.push(idStr);
+  } else if (selectedIds.length === 1) {
+    const firstIdx = eventObjIndexMap[selectedIds[0]];
+    const thisIdx = eventObjIndexMap[idStr];
+    const start = Math.min(firstIdx, thisIdx);
+    const end = Math.max(firstIdx, thisIdx);
+    selectedIds = [];
+    for (let i = start; i <= end; i++) {
+      selectedIds.push(String(eventIdList[i]));
+    }
+  } else {
+    const firstIdx = eventObjIndexMap[selectedIds[0]];
+    selectedIds = [selectedIds[0], idStr];
+    const thisIdx = eventObjIndexMap[idStr];
+    const start = Math.min(firstIdx, thisIdx);
+    const end = Math.max(firstIdx, thisIdx);
+    for (let i = start + 1; i < end; i++) {
+      selectedIds.push(String(eventIdList[i]));
+    }
+  }
+  highlightSelection();
+}
+
+function highlightSelection() {
+  // Clear all preview data once before re-rendering
+  clearPreview(false, '___PREVIEW___', true, true);
+  document.querySelectorAll('.block-item').forEach(el => {
+    const id = el.dataset.id;
+    if (selectedIds.includes(id)) {
+      el.classList.add('selected', 'highlighted');
+    } else {
+      el.classList.remove('selected', 'highlighted');
+      el.style.filter = '';
+    }
+  });
+  // Render preview for each selected (renderPreviewAdditive does NOT clear)
+  for (const id of selectedIds) renderPreviewForId(id);
+  updateStatus();
+}
+
+function clearSelection() {
+  selectedIds = [];
+  document.querySelectorAll('.block-item').forEach(el => {
+    el.classList.remove('selected', 'highlighted');
+    el.style.filter = '';
+  });
+}
+
+function selectAll() {
+  let count = 0;
+  for (const id in eventObjIndexMap) {
+    if (selectedIds.includes(id)) { count++; continue; }
+    selectedIds.push(id);
+  }
+  if (count === Object.keys(eventObjIndexMap).length) selectedIds = [];
+  highlightSelection();
+}
+
+function invertSelection() {
+  const newSel = [];
+  for (const id in eventObjIndexMap) {
+    if (!selectedIds.includes(id)) newSel.push(id);
+  }
+  selectedIds = newSel;
+  highlightSelection();
+}
+
+// ==================== PARAM CHANGES ====================
+
+function onTextChanged(idStr) {
+  if (refreshing) return;
+  const ta = document.getElementById(`txt_${idStr}`);
+  if (!ta) return;
+  const idx = eventObjIndexMap[idStr];
+  if (idx === undefined) return;
+  const oldVal = blockList[idx].texts;
+  saveUndo('modifyParam', [blockList[idx], 'texts', oldVal], false);
+  blockList[idx].texts = ta.value;
+  clearPreview(true);
+  renderPreviewForId(idStr);
+}
+
+function onEventTextChanged(idStr) {
+  if (refreshing) return;
+  const ta = document.getElementById(`etxt_${idStr}`);
+  if (!ta) return;
+  const idx = eventObjIndexMap[idStr];
+  if (idx === undefined) return;
+  const oldVal = blockList[idx].texts;
+  saveUndo('modifyParam', [blockList[idx], 'texts', oldVal], false);
+  blockList[idx].texts = ta.value;
+  // Update label
+  let label = '事件';
+  const txt = ta.value;
+  if (txt.startsWith('@[wait]')) label = '延迟固定时间';
+  else if (txt.startsWith('@[wait_random_in_range]')) label = '延迟随机时间';
+  else if (txt.startsWith('@[clear_typed]')) label = '清除打字机';
+  else if (txt.startsWith('@[')) {
+    const f = txt.indexOf(']');
+    label = f >= 0 ? txt.substring(0, f + 1) : '事件';
+  }
+  const titleEl = document.querySelector(`.block-item[data-id="${idStr}"] .block-title`);
+  if (titleEl) titleEl.textContent = label;
+}
+
+function onParamChange(idStr, param, newVal) {
+  if (refreshing) return;
+  const idx = eventObjIndexMap[idStr];
+  if (idx === undefined) return;
+  const parsedVal = ['posX','posY','offsetX','offsetY'].includes(param) ? parseInt(newVal) || 0 : newVal;
+  const oldVal = blockList[idx][param];
+  saveUndo('modifyParam', [blockList[idx], param, oldVal], false);
+  blockList[idx][param] = parsedVal;
+  clearPreview(true);
+  renderPreviewForId(idStr);
+}
+
+function selectSfx(idStr, sfxIdx, btnEl) {
+  const parent = btnEl.parentElement;
+  parent.querySelectorAll('.sl-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  onParamChange(idStr, 'char_type', sfxIdx);
+}
+
+function selectLayer(idStr, layerIdx, btnEl) {
+  const parent = btnEl.parentElement;
+  parent.querySelectorAll('.sl-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  onParamChange(idStr, 'layer', layerIdx);
+}
+
+function toggleBool(idStr, param, btnEl) {
+  const idx = eventObjIndexMap[idStr];
+  if (idx === undefined) return;
+  const newVal = !blockList[idx][param];
+  saveUndo('modifyParam', [blockList[idx], param, !newVal], false);
+  blockList[idx][param] = newVal;
+  btnEl.classList.toggle('active', newVal);
+}
+
+// === 符号表插入（配对符号自动括选） ===
+function insertSymbol(idStr, sym) {
+  const ta = document.getElementById('txt_' + idStr);
+  if (!ta) return;
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  const text = ta.value;
+  const sel = text.substring(start, end);
+  const before = text.substring(0, start), after = text.substring(end);
+
+  // 配对符号（2 字符）：选中时括住内容，无选中时插入空对
+  if (sym.length === 2) {
+    const L = sym[0], R = sym[1];
+    ta.value = before + L + sel + (sel ? R : '') + (sel ? '' : R) + after;
+    ta.focus();
+    ta.selectionStart = ta.selectionEnd = sel ? start + L.length : start + 1;
+  } else {
+    // 单字符符号：插入到光标位置
+    ta.value = before + sym + sel + after;
+    ta.focus();
+    ta.selectionStart = ta.selectionEnd = start + sym.length;
+  }
+  onTextChanged(idStr);
+}
+
+// ==================== DRAG REORDERING (SortableJS) ====================
+
+function rebuildIndexMap() {
+  eventObjIndexMap = {};
+  for (let i = 0; i < blockList.length; i++) {
+    eventObjIndexMap[String(blockList[i].id)] = i;
+  }
+}
+
+function initSortable() {
+  const listEl = document.getElementById('blockList');
+  if (!listEl) return;
+  
+  // Destroy previous instance
+  if (sortableInstance) sortableInstance.destroy();
+  
+  sortableInstance = new Sortable(listEl, {
+    handle: '.drag-handle',
+    animation: 150,
+    easing: 'cubic-bezier(0.2, 0, 0, 1)',
+    ghostClass: 'sortable-ghost',
+    dragClass: 'sortable-drag',
+    forceFallback: true,
+    fallbackClass: 'sortable-fallback',
+    
+    onStart: function(evt) {
+      document.body.style.userSelect = 'none';
+      // Save undo snapshot
+      window._dragSnapshot = [
+        JSON.parse(JSON.stringify(blockList)),
+        [...eventIdList]
+      ];
+    },
+    
+    onEnd: function(evt) {
+      document.body.style.userSelect = '';
+      
+      const oldIdx = evt.oldIndex;
+      const newIdx = evt.newIndex;
+      
+      if (oldIdx === newIdx) return;
+      
+      // Sync data arrays with DOM order
+      const movedBlock = blockList[oldIdx];
+      const movedId = eventIdList[oldIdx];
+      
+      blockList.splice(oldIdx, 1);
+      eventIdList.splice(oldIdx, 1);
+      blockList.splice(newIdx, 0, movedBlock);
+      eventIdList.splice(newIdx, 0, movedId);
+      
+      rebuildIndexMap();
+      updateDataIdxAttrs();
+      
+      // Save undo
+      if (window._dragSnapshot) {
+        saveUndo('moveBlock', window._dragSnapshot, false);
+        window._dragSnapshot = null;
+      }
+    }
+  });
+}
+
+function updateDataIdxAttrs() {
+  document.querySelectorAll('#blockList .block-item').forEach((el, i) => {
+    el.dataset.idx = i;
+  });
+}
+
+// ==================== DELETE / COPY / PASTE ====================
+
+function deleteSelected() {
+  if (selectedIds.length === 0) return;
+  stopAnimation();
+  
+  const indices = selectedIds.map(id => eventObjIndexMap[id]).filter(x => x !== undefined).sort((a,b)=>b-a);
+  if (indices.length === 0) return;
+  
+  const undoData = [];
+  for (const idx of indices) {
+    undoData.push([JSON.parse(JSON.stringify(blockList[idx])), idx]);
+    blockList.splice(idx, 1);
+    eventIdList.splice(idx, 1);
+  }
+  
+  saveUndo('delete', undoData, false);
+  clearSelection();
+  renderBlockList(true);
+  clearPreview();
+}
+
+function copyBlocks() {
+  clipboard = [];
+  if (selectedIds.length === 0) return;
+  for (let i = 0; i < blockList.length; i++) {
+    if (selectedIds.includes(String(blockList[i].id))) {
+      clipboard.push(JSON.parse(JSON.stringify(blockList[i])));
+    }
+  }
+  clearSelection();
+}
+
+function cutBlocks() {
+  copyBlocks();
+  deleteSelected();
+}
+
+function pasteBlocks() {
+  if (clipboard.length === 0) return;
+  clearSelection();
+  
+  let pastePos = -1;
+  if (selectedIds.length > 0) {
+    pastePos = eventIdList.indexOf(parseInt(selectedIds[selectedIds.length - 1]));
+  }
+  
+  const newIds = [];
+  for (const data of clipboard) {
+    const newData = JSON.parse(JSON.stringify(data));
+    const newId = genId();
+    newData.id = newId;
+    if (pastePos === -1) {
+      blockList.push(newData);
+      eventIdList.push(newId);
+    } else {
+      pastePos++;
+      blockList.splice(pastePos, 0, newData);
+      eventIdList.splice(pastePos, 0, newId);
+    }
+    newIds.push(String(newId));
+    saveUndo('create', newId, false);
+  }
+  
+  renderBlockList(pastePos === -1 ? false : true);
+  selectedIds = [...newIds];
+  highlightSelection();
+}
+
+function duplicateBlocks() {
+  if (selectedIds.length === 0) return;
+  const newIds = [];
+  for (const idStr of selectedIds) {
+    const idx = eventObjIndexMap[idStr];
+    if (idx === undefined) continue;
+    const pastePos = idx + 1;
+    const data = JSON.parse(JSON.stringify(blockList[idx]));
+    const newId = genId();
+    data.id = newId;
+    blockList.splice(pastePos, 0, data);
+    eventIdList.splice(pastePos, 0, newId);
+    newIds.push(String(newId));
+    saveUndo('create', newId, false);
+  }
+  renderBlockList(true);
+  selectedIds = newIds;
+  highlightSelection();
+}
+
+function changeSelectedRemark() {
+  if (selectedIds.length === 0) return;
+  const newVal = document.getElementById('changeRemarkInput').value;
+  const undoData = [];
+  for (const idStr of selectedIds) {
+    const idx = eventObjIndexMap[idStr];
+    if (idx === undefined || blockList[idx].type !== '打字机') continue;
+    undoData.push([blockList[idx].remark, idx]);
+    blockList[idx].remark = newVal;
+  }
+  saveUndo('modifyRemark', undoData, false);
+  document.getElementById('changeRemarkInput').value = '';
+  renderBlockList(true);
+}
+
+// ==================== CANVAS RENDERING ====================
+
+function clearPreview(clearAll = false, tags = '', byId = false, invert = false) {
+  if (clearAll) { bgLayer = []; midLayer = []; fgLayer = []; transferObjectInstances = {}; }
+  else {
+    removeLayerData(tags, byId, invert);
+    if (tags) clearTransferObjectInstances(tags);
+  }
+  renderCanvas();
+}
+
+function removeLayerData(tags, byId, invert) {
+  const remove = (arr) => {
+    let i = arr.length - 1;
+    while (i >= 0) {
+      const match = byId ? (arr[i].tags === blockList[eventObjIndexMap[tags]]?.tags) : (arr[i].tags === tags);
+      if (invert ? !match : match) arr.splice(i, 1);
+      i--;
+    }
+  };
+  remove(bgLayer); remove(midLayer); remove(fgLayer);
+}
+
+function callRender() {
+  renderCanvas();
+}
+
+// 字符实体创建 —— 全局唯一入口
+// x, y 为网格坐标（可非整数），渲染时 *30 转像素
+// tags 为空格分隔的标签字符串
+function createCharEntity(literal, gridX, gridY, layerNum, tags, showBg, fixed, colorHex) {
+  const entity = {
+    id: ++_entityIdCounter,
+    literal: String(literal),
+    color: hexToRgb(colorHex || '#FFFFFF'),
+    tags: tags || '',
+    x: gridX,
+    y: gridY,
+    showBg: showBg !== false,
+    fixed: !!fixed
+  };
+  if (layerNum === 0) bgLayer.push(entity);
+  else if (layerNum === 1) midLayer.push(entity);
+  else if (layerNum === 2) fgLayer.push(entity);
+  return entity;
+}
+
+// 按标签精确清除字符实体
+function clearEntitiesByTag(tag) {
+  for (const layer of [bgLayer, midLayer, fgLayer]) {
+    for (let i = layer.length - 1; i >= 0; i--) {
+      if (layer[i].tags.split(' ').includes(tag)) {
+        layer.splice(i, 1);
+      }
+    }
+  }
+}
+
+function renderAvailablePreview() {
+  // 播放事件组模式：不更新静态预览
+  if (playGroupState.active) return;
+  
+  if (selectedIds.length > 0) {
+    for (const id of selectedIds) renderPreviewForId(id);
+  } else if (expandedId !== null) {
+    renderPreviewForId(expandedId);
+  } else {
+    clearPreview(true);
+  }
+}
+
+function renderPreviewForId(idStr) {
+  stopAnimation();
+  // NOTE: Clearing is now done once in highlightSelection, not here,
+  // so multiple selected blocks can all render their preview.
+  // When called from playTypewriterPreview, we still want a clear first:
+  if (selectedIds.length === 0 && expandedId !== idStr) {
+    clearPreview(false, '___PREVIEW___', true, true);
+  }
+  
+  const idx = eventObjIndexMap[idStr];
+  if (idx === undefined) return;
+  const data = blockList[idx];
+  if (data.type !== '打字机') return;
+  
+  let posX = parseInt(data.posX) || 0;
+  let posY = parseInt(data.posY) || 0;
+  let offsetX = parseInt(data.offsetX) || 0;
+  let offsetY = parseInt(data.offsetY) || 0;
+  const texts = data.texts || '';
+  let tags = data.tags || '';
+  if (!tags) tags = 'default';
+  const fixed = !!data.fixed;
+  const layer = typeof data.layer === 'number' ? data.layer : LAYER_TABLE.indexOf(data.layer);
+  
+  let posX2 = posX, posY2 = posY;
+  const defaultColor = '#FFFFFF';
+  let char = '', showBg = true;
+  
+  // Parse style tags <>
+  const styleIndices = parseBrackets('<>', texts);
+  const noRenderIdx = [];
+  const styleColors = [];
+  const colorStartPositions = [];
+  
+  for (const si of styleIndices) {
+    const startPos = si[0], content = si[1];
+    for (let k = startPos; k < startPos + content.length + 2; k++) noRenderIdx.push(k);
+    if (content.startsWith('/')) {
+      const sName = content.substring(1);
+      if (sName && styles.hasOwnProperty(sName)) { styleColors.push([sName]); colorStartPositions.push(startPos); }
+    } else if (styles.hasOwnProperty(content)) {
+      const effect = styles[content];
+      if (typeof effect === 'string' && /^#[0-9a-f]{6}$/i.test(effect)) styleColors.push(effect);
+      else if (typeof effect === 'number') styleColors.push('#FFFFFF'); // sound
+      else if (typeof effect === 'string') {} // tags
+      colorStartPositions.push(startPos);
+    }
+  }
+  
+  // Parse [] brackets (transfer objects / special)
+  const bracketIndices = parseBrackets('[]', texts);
+  const specialRenderIdx = {};
+  for (const bi of bracketIndices) {
+    const startPos = bi[0], content = bi[1];
+    for (let k = startPos; k < startPos + content.length + 2; k++) noRenderIdx.push(k);
+    const objName = content.split('{')[0];
+    specialRenderIdx[startPos] = transferObjects[objName] ? objName : '*';
+  }
+  
+  // Parse {} brackets
+  const braceIndices = parseBrackets('{}', texts);
+  for (const bi of braceIndices) {
+    const startPos = bi[0], content = bi[1];
+    for (let k = startPos; k < startPos + content.length + 2; k++) noRenderIdx.push(k);
+  }
+  
+  // Render each character
+  let colorStack = [], colorI = 0;
+  for (let i = 0; i < texts.length; i++) {
+    showBg = true;
+    let color = defaultColor;
+    if (colorStack.length > 0) color = colorStack[colorStack.length - 1];
+    
+    if (colorStartPositions.includes(i)) {
+      if (Array.isArray(styleColors[colorI])) {
+        // End style - remove from stack
+        const rmColor = styles[styleColors[colorI][0]];
+        const stackIdx = colorStack.lastIndexOf(rmColor);
+        if (stackIdx >= 0) colorStack.splice(stackIdx, 1);
+        colorI++;
+      } else {
+        colorStack.push(styleColors[colorI]);
+        colorI++;
+      }
+    }
+    
+    char = texts[i];
+    if (char === '&' || char === '\n' || char === '\r') { posX2 = posX; posY2++; }
+    else if (String(i) in specialRenderIdx) {
+      const pixelPos = gridToPixel(posX2, posY2);
+      pixelPos.x -= camOffsetX * 30; pixelPos.y -= camOffsetY * 30;
+      if (specialRenderIdx[String(i)] === '*') {
+        createCharEntity('*', posX2 - camOffsetX, posY2 - camOffsetY, layer, '___PREVIEW___', showBg, fixed, '#FFFFFF');
+        posX2++;
+      } else {
+        updateTransferObjectInstance(specialRenderIdx[String(i)], { x: pixelPos.x + offsetX, y: pixelPos.y + offsetY }, '___PREVIEW___');
+        posX2++;
+      }
+    } else if (noRenderIdx.includes(i)) {}
+    else if (char === '|') {}
+    else if (char === '＿') { posX2++; }
+    else {
+      createCharEntity(char, posX2 + offsetX/30, posY2 + offsetY/30, layer, '___PREVIEW___', showBg, fixed, color);
+      posX2++;
+    }
+  }
+  callRender();
+}
+
+// Full render function for the canvas
+function renderCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Draw grid if enabled
+  if (showGridLayer1) drawGrid();
+  
+  // Draw layers in order: bg -> mid -> fg
+  renderLayer(bgLayer);
+  renderLayer(midLayer);
+  renderLayer(fgLayer);
+  
+  // Draw transfer objects
+  drawTransferObjects();
+  
+  // Draw accept marker if active (rendered as char entity via createCharEntity)
+  // No separate drawing needed - it's already in the layer
+}
+
+function drawGrid() {
+  if (!showGridLayer1) {
+    // When grid is hidden, clear canvas to black
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
+  
+  const ts = 30;
+  // Grid is FIXED (does not follow camera). Only typewriter preview moves with camera.
+  // Canvas is at (30,30) in wrapper; overlay starts at (30,0) and (0,30).
+  // Grid cell (0,0) is at canvas (0,0) = wrapper (30,30).
+  ctx.save();
+  // NO camera translate - grid stays fixed
+  ctx.translate(0, 0);
+  
+  // Draw grid lines
+  ctx.strokeStyle = 'rgba(80,80,120,0.6)';
+  ctx.lineWidth = 1;
+  for (let c = 0; c <= 32; c++) {
+    ctx.beginPath(); ctx.moveTo(c * ts, 0); ctx.lineTo(c * ts, 18 * ts); ctx.stroke();
+  }
+  for (let r = 0; r <= 18; r++) {
+    ctx.beginPath(); ctx.moveTo(0, r * ts); ctx.lineTo(32 * ts, r * ts); ctx.stroke();
+  }
+  
+  // Draw cell background
+  for (let c = 0; c < 32; c++) {
+    for (let r = 0; r < 18; r++) {
+      ctx.fillStyle = 'rgba(0,0,0,0.15)';
+      ctx.fillRect(c * ts + 1, r * ts + 1, ts - 2, ts - 2);
+    }
+  }
+  
+  // Draw "格" character in each cell - 80% of cell size (24px)
+  ctx.fillStyle = 'rgba(80,80,120,0.5)';
+  ctx.font = 'bold 24px "zpix", "Microsoft YaHei", SimHei, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (let c = 0; c < 32; c++) {
+    for (let r = 0; r < 18; r++) {
+      ctx.fillText('格', c * ts + ts/2, r * ts + ts/2);
+    }
+  }
+  
+  ctx.restore();
+}
+
+function renderLayer(layer) {
+  const fontSize = 28;
+  ctx.font = `bold ${fontSize}px "zpix", "Microsoft YaHei", SimHei, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  
+  for (const e of layer) {
+    let px = e.x * 30, py = e.y * 30;
+    if (!e.fixed) {
+      px -= camOffsetX * 30;
+      py -= camOffsetY * 30;
+    }
+    
+    if (e.showBg) {
+      ctx.fillStyle = 'rgba(0,0,0,0.85)';
+      ctx.fillRect(px, py, 30, 30);
+    }
+    
+    if (e.literal !== '*' && e.literal !== '＿') {
+      ctx.fillStyle = `rgb(${e.color.r},${e.color.g},${e.color.b})`;
+      ctx.fillText(e.literal, px + 15, py + 17);
+    } else if (e.literal === '*') {
+      // Special marker
+      ctx.fillStyle = 'rgba(255,200,0,0.5)';
+      ctx.fillRect(px + 2, py + 2, 26, 26);
+    }
+  }
+}
+
+// ==================== TRANSFER OBJECTS ====================
+
+// 更新转移物件实例位置（同名覆盖，产生"漂移"效果）
+function updateTransferObjectInstance(name, pos, tags) {
+  if (!transferObjects[name]) return;
+  const tpl = transferObjects[name];
+  transferObjectInstances[name] = {
+    pos: { x: pos.x, y: pos.y },
+    literal: tpl.text,
+    color: tpl.color,
+    tags: tags || ''
+  };
+}
+
+// 按标签清除转移物件实例
+function clearTransferObjectInstances(tag) {
+  if (!tag) { transferObjectInstances = {}; return; }
+  for (const name in transferObjectInstances) {
+    if (transferObjectInstances[name].tags.split(' ').includes(tag)) {
+      delete transferObjectInstances[name];
+    }
+  }
+}
+
+function drawTransferObjects() {
+  const fontSize = 28;
+  ctx.font = `bold ${fontSize}px "zpix", "Microsoft YaHei", SimHei, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  
+  for (const name in transferObjectInstances) {
+    const obj = transferObjectInstances[name];
+    const color = hexToRgb(obj.color);
+    const text = obj.literal || '';
+    
+    let px = 0, py = 0;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (ch === '＿') { px++; continue; }
+      if (ch === '\n') { px = 0; py++; continue; }
+      
+      // Apply camera offset
+      const bx = obj.pos.x + px * 30 - camOffsetX * 30, by = obj.pos.y + py * 30 - camOffsetY * 30;
+      ctx.fillStyle = 'rgba(0,0,0,0.85)';
+      ctx.fillRect(bx, by, 30, 30);
+      ctx.fillStyle = `rgb(${color.r},${color.g},${color.b})`;
+      ctx.fillText(ch, bx + 15, by + 17);
+      px++;
+    }
+  }
+}
+
+function clearTransferObjects(name = '') {
+  if (!name) transferObjectInstances = {};
+  else delete transferObjectInstances[name];
+  renderCanvas();
+}
+
+function toggleTransferMenu() {
+  const menu = document.getElementById('transferMenu');
+  menu.classList.toggle('show');
+  refreshTransferObjectList();
+}
+
+function showTransferModal(mode) {
+  document.getElementById('transferModalTitle').textContent = mode === 'create' ? '创建转移物件' : '删除转移物件';
+  document.getElementById('transferModalHint').textContent = mode === 'create'
+    ? '与样式不同，如果重名则为修改转移物件'
+    : '删除转移物件，名称为空则删除全部';
+  document.getElementById('transferNameInput').value = '';
+  document.getElementById('transferColorPicker').value = '#ffffff';
+  document.getElementById('transferTextInput').value = '';
+  
+  // Show/hide fields based on mode
+  document.getElementById('transferColorPicker').parentElement.parentElement.style.display = mode === 'create' ? '' : 'none';
+  document.getElementById('transferTextInput').parentElement.style.display = mode === 'create' ? '' : 'none';
+  
+  window._transferMode = mode;
+  document.getElementById('transferModal').classList.remove('hidden');
+}
+
+function hideTransferModal() {
+  document.getElementById('transferModal').classList.add('hidden');
+  document.getElementById('transferMenu').classList.remove('show');
+}
+
+function confirmTransferCreate() {
+  const name = document.getElementById('transferNameInput').value.trim();
+  
+  if (window._transferMode === 'delete') {
+    if (name) delete transferObjects[name];
+    else transferObjects = {};
+  } else {
+    if (!name) return;
+    const text = document.getElementById('transferTextInput').value;
+    const color = document.getElementById('transferColorPicker').value;
+    transferObjects[name] = { text, color };
+  }
+  
+  hideTransferModal();
+  refreshTransferObjectList();
+  renderCanvas();
+}
+
+function refreshTransferObjectList() {
+  const list = document.getElementById('transferObjectList');
+  const names = Object.keys(transferObjects);
+  if (names.length === 0) {
+    list.innerHTML = '<div style="color:#666;font-size:11px;padding:4px;">暂无转移物件</div>';
+  } else {
+    list.innerHTML = names.map(n =>
+      `<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 6px;background:#1a1a2e;border-radius:3px;margin-bottom:2px;font-size:11px">
+        <span>${n}</span>
+        <span style="cursor:pointer;color:#f44336" onclick="deleteTransferObj('${n}')">×</span>
+      </div>`
+    ).join('');
+  }
+}
+
+function deleteTransferObj(name) {
+  delete transferObjects[name];
+  refreshTransferObjectList();
+}
+
+// ==================== TYPING ANIMATION PREVIEW ====================
+
+function playTypewriterPreview(idStr, btnEl) {
+  // 播放事件组时不允许单独预览
+  if (playGroupState.active) return;
+  
+  if (playingId === idStr) {
+    // Stop
+    isPlaying = false;
+    playingId = '';
+    clearPreview(true);
+    clearTransferObjects();
+    renderPreviewForId(idStr);
+    if (btnEl) { btnEl.textContent = '▶ 播放预览'; btnEl.classList.remove('btn-danger'); btnEl.classList.add('btn-primary'); }
+    // Remove playing indicator
+    const blockEl = document.querySelector(`.block-item[data-id="${idStr}"]`);
+    if (blockEl) {
+      const ind = blockEl.querySelector('.playing-indicator');
+      if (ind) ind.remove();
+    }
+    return;
+  }
+  
+  if (playingId !== '') stopPlaying();
+  
+  playingId = idStr;
+  isPlaying = true;
+  if (btnEl) { btnEl.textContent = '■ 停止'; btnEl.classList.remove('btn-primary'); btnEl.classList.add('btn-danger'); }
+  
+  // Add playing indicator
+  const blockEl = document.querySelector(`.block-item[data-id="${idStr}"]`);
+  if (blockEl && !blockEl.querySelector('.playing-indicator')) {
+    const ind = document.createElement('div'); ind.className = 'playing-indicator'; ind.textContent = '▶ 播放中';
+    blockEl.querySelector('.block-header').appendChild(ind);
+  }
+  
+  runTypingAnimation(idStr);
+}
+
+function runTypingAnimation(idStr) {
+  const idx = eventObjIndexMap[idStr];
+  if (idx === undefined) return;
+  const data = blockList[idx];
+  if (data.type !== '打字机') return;
+  
+  let posX = parseInt(data.posX) || 0, posY = parseInt(data.posY) || 0;
+  let offsetX = parseInt(data.offsetX) || 0, offsetY = parseInt(data.offsetY) || 0;
+  const texts = data.texts || '';
+  let tags = data.tags || ''; if (!tags) tags = 'default';
+  const fixed = !!data.fixed;
+  const layer = typeof data.layer === 'number' ? data.layer : LAYER_TABLE.indexOf(data.layer);
+  const canSkip = data.can_skip !== false;
+  const hasAnim = data.has_animation !== false;
+  
+  let posX2 = posX, posY2 = posY;
+  const delay = hasAnim ? 70 : 0; // ms per character
+  
+  clearPreview(true);
+  
+  // Parse same as static preview
+  const styleIndices = parseBrackets('<>', texts);
+  const noRenderIdx = [];
+  const styleColors = [], colorStartPositions = [];
+  for (const si of styleIndices) {
+    const sp = si[0], cnt = si[1];
+    for (let k = sp; k < sp + cnt.length + 2; k++) noRenderIdx.push(k);
+    if (cnt.startsWith('/')) { if (styles[cnt.substring(1)] !== undefined) { styleColors.push([cnt.substring(1)]); colorStartPositions.push(sp); }}
+    else if (styles[cnt] !== undefined) { styleColors.push(styles[cnt]); colorStartPositions.push(sp); }
+  }
+  const bracketIdx = parseBrackets('[]', texts);
+  const specialIdx = {};
+  for (const bi of bracketIdx) {
+    const sp = bi[0], cnt = bi[1];
+    for (let k = sp; k < sp + cnt.length + 2; k++) noRenderIdx.push(k);
+    specialIdx[sp] = transferObjects[cnt.split('{')[0]] ? cnt.split('{')[0] : '*';
+  }
+  const braceIdx = parseBrackets('{}', texts);
+  for (const bi of braceIdx) {
+    const sp = bi[0], cnt = bi[1];
+    for (let k = sp; k < sp + cnt.length + 2; k++) noRenderIdx.push(k);
+  }
+  
+  let colorStack = [], colorI = 0, ci = 0;
+  
+  function step() {
+    if (!isPlaying || playingId !== idStr) { return; }
+    
+    while (ci < texts.length) {
+      if (!isPlaying || playingId !== idStr) return;
+      
+      const ch = texts[ci];
+      let showBg = true;
+      let color = '#FFFFFF';
+      if (colorStack.length) color = colorStack[colorStack.length - 1];
+      
+      if (colorStartPositions.includes(ci)) {
+        if (Array.isArray(styleColors[colorI])) {
+          const rmName = styleColors[colorI][0];
+          const rmColor = styles[rmName];
+          const si = colorStack.lastIndexOf(rmColor);
+          if (si >= 0) colorStack.splice(si, 1);
+        } else colorStack.push(styleColors[colorI]);
+        colorI++;
+      }
+      
+      if (ch === '&' || ch === '\n' || ch === '\r') { posX2 = posX; posY2++; ci++; continue; }
+      else if (String(ci) in specialIdx) {
+        const pPos = gridToPixel(posX2, posY2);
+        pPos.x -= camOffsetX * 30; pPos.y -= camOffsetY * 30;
+        if (specialIdx[String(ci)] === '*') createCharEntity('*', posX2 - camOffsetX, posY2 - camOffsetY, layer, tags, showBg, fixed, '#FFFFFF');
+        else updateTransferObjectInstance(specialIdx[String(ci)], { x: pPos.x + offsetX, y: pPos.y + offsetY }, tags);
+        posX2++; ci++;
+        callRender();
+        playAnimTimer = setTimeout(step, delay);
+        return;
+      } else if (noRenderIdx.includes(ci)) { ci++; continue; }
+      else if (ch === '|') { ci++; playAnimTimer = setTimeout(step, 100); return; }
+      else if (ch === '＿') { posX2++; ci++; continue; }
+      else {
+        createCharEntity(ch, posX2 + offsetX/30, posY2 + offsetY/30, layer, tags, showBg, fixed, color);
+        posX2++; ci++;
+        callRender();
+        playAnimTimer = setTimeout(step, delay);
+        return;
+      }
+    }
+    
+    // Finished - restore static preview
+    isPlaying = false;
+    playingId = '';
+    clearTransferObjects();
+    renderPreviewForId(idStr);
+    // Fix: select button by onclick attribute (class changes during play)
+    const blockEl = document.querySelector(`.block-item[data-id="${idStr}"]`);
+    if (blockEl) {
+      const btn = blockEl.querySelector('[onclick*="playTypewriterPreview"]');
+      if (btn) { btn.textContent = '▶ 播放预览'; btn.classList.remove('btn-danger'); btn.classList.add('btn-primary'); }
+      const ind = blockEl.querySelector('.playing-indicator');
+      if (ind) ind.remove();
+    }
+  }
+  
+  step();
+}
+
+function stopAnimation() {
+  if (playAnimTimer) { clearTimeout(playAnimTimer); playAnimTimer = null; }
+  isPlaying = false;
+  playingId = '';
+}
+
+function stopPlaying() {
+  stopAnimation();
+  clearPreview(true);
+  clearTransferObjects();
+}
+
+// ==================== BLACK MAGIC IMPORT/EXPORT ====================
+
+function dictToBlackMagic(dict) {
+  if (dict.type === '普通事件') return dict.texts;
+  
+  const bm = JSON.parse(JSON.stringify(dict));
+  bm.pos = [parseInt(bm.posX)||0, parseInt(bm.posY)||0];
+  bm.offset = [parseInt(bm.offsetX)||0, parseInt(bm.offsetY)||0];
+  bm.tags = [bm.tags || ''];
+  bm.char_type = SFX_TABLE[bm.char_type] ?? null;
+  bm.layer = LAYER_TABLE[bm.layer] ?? null;
+  bm.texts = (bm.texts||'').replace(/\n/g,'&').replace(/\r/g,'&');
+  delete bm.id; delete bm.type;
+  delete bm.posX; delete bm.posY; delete bm.offsetX; delete bm.offsetY;
+  if (bm.layer === 'mid') delete bm.layer;
+  if (bm.char_type === null) delete bm.char_type;
+  if (bm.offset && bm.offset[0]===0 && bm.offset[1]===0) delete bm.offset;
+  if (bm.fixed === false) delete bm.fixed;
+  if (bm.has_animation === true) delete bm.has_animation;
+  if (bm.can_skip === true) delete bm.can_skip;
+  if (bm.need_accept === true) delete bm.need_accept;
+  if (bm.wait === true) delete bm.wait;
+  if (bm.is_dialog_end === false) delete bm.is_dialog_end;
+  if (bm.is_on_top_of_player === false) delete bm.is_on_top_of_player;
+  if (bm.char_type === 'none') bm.has_se = false;
+  
+  // Extract styles
+  const styleParse = parseBrackets('<>', bm.texts);
+  const usedStyles = [];
+  for (const si of styleParse) {
+    if (styles.hasOwnProperty(si[1])) usedStyles.push(si[1]);
+  }
+  if (usedStyles.length > 0) {
+    const ls = {};
+    for (const sn of usedStyles) {
+      const sv = styles[sn];
+      if (typeof sv === 'string' && /^#[0-9a-f]{6}$/i.test(sv)) ls[sn] = { text_color: sv };
+      else if (typeof sv === 'number') ls[sn] = { char_type: SFX_TABLE[sv] };
+      else if (typeof sv === 'string') ls[sn] = { tags: sv };
+    }
+    if (Object.keys(ls).length) bm.label_settings = ls;
+  }
+  
+  return bm;
+}
+
+// === 字符实体格式化（内部使用） ===
+function _fmtKV(key, val, comma) {
+  const c = comma ? ',' : '';
+  if (key === 'label_settings') return '\t"' + key + '": ' + JSON.stringify(val) + c;
+  if (Array.isArray(val)) return '\t"' + key + '": [' + val.map(v => JSON.stringify(v)).join(', ') + ']' + c;
+  return '\t"' + key + '": ' + JSON.stringify(val) + c;
+}
+
+function formatBlackMagicJSON(bm) {
+  const keys = Object.keys(bm);
+  const lines = ['{'];
+  for (let i = 0; i < keys.length; i++) {
+    lines.push(_fmtKV(keys[i], bm[keys[i]], i < keys.length - 1));
+  }
+  lines.push('}');
+  return lines.join('\n');
+}
+
+// === 导出 ===
+
+function exportSingleBlock(idStr) {
+  const idx = eventObjIndexMap[idStr];
+  if (idx === undefined) return;
+  const ev = blockList[idx];
+  
+  if (ev.type === '普通事件') {
+    copyToClipboard(ev.texts);
+    alert('已复制到剪贴板！');
+    return;
+  }
+  
+  const bm = dictToBlackMagic(ev);
+  const remark = bm.remark || '';
+  delete bm.remark;
+  
+  let output = '@[type] ' + formatBlackMagicJSON(bm);
+  if (remark && remark !== '打字机 ') output = '#' + remark + '\n' + output;
+  
+  copyToClipboard(output);
+  alert('已复制到剪贴板！');
+}
+
+function exportBlackMagic() {
+  const lines = [];
+  for (const ev of blockList) {
+    if (ev.type === '普通事件') {
+      lines.push(ev.texts);
+    } else {
+      lines.push(dictToSingleBlackMagic(ev));
+    }
+  }
+  copyToClipboard(lines.join('\n'));
+  alert('已复制全部黑魔法到剪贴板！\n共 ' + blockList.length + ' 条指令');
+}
+
+function dictToSingleBlackMagic(ev) {
+  if (ev.type === '普通事件') return ev.texts;
+  
+  const bm = dictToBlackMagic(ev);
+  const remark = bm.remark || '';
+  delete bm.remark;
+  
+  let output = '@[type] ' + formatBlackMagicJSON(bm);
+  if (remark && remark !== '打字机 ') output = '#' + remark + '\n' + output;
+  return output;
+}
+
+function blackMagicToDict(text) {
+  if (!text.trim()) return null;
+  if (!(text.includes('{') && text.includes('}'))) {
+    const evt = JSON.parse(JSON.stringify(DEFAULT_EVENT));
+    evt.id = genId();
+    evt.texts = text.trim();
+    return evt;
+  }
+  
+  let comment = '';
+  const lines = text.split('\n');
+  if (lines[0].startsWith('#')) comment = lines[0].substring(1).trim();
+  
+  // Find the JSON part between {}
+  let jsonString = '';
+  const braceResult = parseBrackets('{}', text);
+  if (braceResult.length) jsonString = '{' + braceResult[0][1] + '}';
+  else return null;
+  
+  try {
+    var dict = JSON.parse(jsonString);
+  } catch(e) { return null; }
+  
+  let eventType = null;
+  let readLine = 0;
+  while (!lines[readLine].startsWith('@[')) { readLine++; if (readLine >= lines.length) return null; }
+  
+  if (lines[readLine].startsWith('@[type]') || lines[readLine].startsWith('@[type_parallel]')) {
+    eventType = '打字机';
+    dict.type = eventType;
+    dict.remark = lines[readLine].startsWith('@[type_parallel]') ? ('平行 ' + comment) : comment;
+  } else if (lines[readLine].startsWith('@[')) {
+    eventType = '普通事件';
+    const evt = JSON.parse(JSON.stringify(DEFAULT_EVENT)); evt.id = genId(); evt.texts = text.trim(); return evt;
+  } else return null;
+  
+  dict.id = genId();
+  
+  if (eventType === '打字机') {
+    if ('pos' in dict) { dict.posX = dict.pos[0]; dict.posY = dict.pos[1]; }
+    if ('offset' in dict) { dict.offsetX = dict.offset[0]; dict.offsetY = dict.offset[1]; }
+    if ('tags' in dict && Array(dict.tags)) dict.tags = dict.tags[0];
+    if ('char_type' in dict) { const ci = SFX_TABLE.indexOf(dict.char_type); dict.char_type = ci >= 0 ? ci : 0; }
+    if ('layer' in dict) { const li = LAYER_TABLE.indexOf(dict.layer); dict.layer = li >= 0 ? li : 1; }
+    if ('has_se' in dict) { if (dict.has_se === false) dict.char_type = 1; delete dict.has_se; }
+    
+    // Merge defaults
+    for (const key in DEFAULT_TYPE_EVENT) {
+      if (!(key in dict)) dict[key] = DEFAULT_TYPE_EVENT[key];
+    }
+  }
+  return dict;
+}
+
+function getBlackMagicGroups(text) {
+  const results = [];
+  let searchStart = 0;
+  const atCount = (text.match(/@\[/g) || []).length;
+  
+  for (let i = 0; i < atCount; i++) {
+    let commIdx = text.indexOf('#', searchStart);
+    let mainIdx = text.indexOf('@[', searchStart);
+    if (mainIdx === -1) break;
+    if (commIdx === -1) commIdx = Infinity;
+    // Handle # inside strings roughly
+    if (commIdx > 0 && text[commIdx-1] === '"') commIdx = text.indexOf('#', commIdx + 1);
+    
+    if (mainIdx < commIdx) { results.push(mainIdx); searchStart = mainIdx + 2; }
+    else { results.push(commIdx); searchStart = mainIdx + 2; }
+  }
+  
+  if (results.length <= 1) return text;
+  
+  const final = [];
+  for (let i = 0; i < results.length; i++) {
+    if (i === results.length - 1) final.push(text.substring(results[i]));
+    else final.push(text.substring(results[i], results[i + 1]));
+  }
+  return final.reverse();
+}
+
+// === 样式冲突检测 & 去重处理 ===
+// 传入一批 dict，扫描所有 label_settings，完成：
+//   1. 同批次同名不同色 → 报错返回 false
+//   2. 与现有 styles 冲突 → 自动更名（a→a_1）并替换文本中所有 <a></a>
+//   3. 同批次去重 → 同名同色只创建一个样式
+// 返回 true（成功）或 false（冲突）
+function _resolveLabelSettings(dicts) {
+  // Phase 1: 收集所有 label_settings，按名字聚合颜色
+  const nameColorMap = {};  // name → color string
+  for (const d of dicts) {
+    if (!d.label_settings) continue;
+    for (const sn in d.label_settings) {
+      const sd = d.label_settings[sn];
+      const sv = sd.text_color || null;
+      if (!sv) continue;
+      // 同一批次内同名不同色 → 不相同样式不能重名
+      if (nameColorMap.hasOwnProperty(sn) && nameColorMap[sn] !== sv) {
+        alert('不相同样式不能重名：样式名 "' + sn + '" 在同一批导入中被赋予了不同的颜色（' + nameColorMap[sn] + ' vs ' + sv + '），请检查后重试。');
+        return false;
+      }
+      nameColorMap[sn] = sv;
+    }
+  }
+
+  // Phase 2: 决定每个样式的最终名称 & 创建
+  // renameMap: 原始名 → 最终名（若一样则表示不需要替换）
+  const renameMap = {};
+  const createdInBatch = {};  // 本批次已创建的样式 → 避免重复创建
+
+  for (const sn in nameColorMap) {
+    const sv = nameColorMap[sn];
+
+    if (!styles.hasOwnProperty(sn)) {
+      // 无同名样式 → 直接创建
+      renameMap[sn] = sn;
+    } else if (styles[sn] === sv) {
+      // 有同名样式且颜色一致 → 复用，无需创建
+      renameMap[sn] = sn;
+    } else {
+      // 有同名样式但颜色不同 → 需要更名
+      let ni = 1, nn;
+      do { nn = sn + '_' + ni; ni++; }
+      while (styles.hasOwnProperty(nn) || createdInBatch.hasOwnProperty(nn));
+      renameMap[sn] = nn;
+    }
+  }
+
+  // Phase 3: 创建样式 + 替换文本中的标签
+  for (const d of dicts) {
+    if (!d.label_settings) continue;
+    for (const sn in d.label_settings) {
+      const sd = d.label_settings[sn];
+      const sv = sd.text_color || null;
+      if (!sv) continue;
+
+      const finalName = renameMap[sn];
+      if (!finalName) continue;
+
+      // 如果更名了，替换文本中所有标签引用
+      if (finalName !== sn && d.texts) {
+        d.texts = d.texts
+          .replace(new RegExp('<' + sn + '>', 'g'), '<' + finalName + '>')
+          .replace(new RegExp('</' + sn + '>', 'g'), '</' + finalName + '>');
+      }
+
+      // 本批次去重：同名同色只创建一次
+      if (!createdInBatch[finalName] && !styles.hasOwnProperty(finalName)) {
+        addStyle(finalName, sv);
+        createdInBatch[finalName] = true;
+      }
+    }
+    delete d.label_settings;
+  }
+
+  return true;
+}
+
+function importBlackMagicGroup(fullText) {
+  const groups = getBlackMagicGroups(fullText);
+  if (typeof groups === 'string') { importSingleBlack(groups); return; }
+
+  // Phase 1: 解析所有 dict（只做一次，避免重复 parse）
+  const dicts = [];
+  const undoIds = [];
+  for (const blockText of groups) {
+    const d = blackMagicToDict(blockText);
+    if (!d || typeof d !== 'object') continue;
+    dicts.push(d);
+    undoIds.push(d.id);
+  }
+  if (!dicts.length) return;
+
+  // Phase 2: 统一处理 label_settings（批量去重 + 冲突检测）
+  if (!_resolveLabelSettings(dicts)) return;  // 冲突 → 中断
+
+  // Phase 3: 插入
+  const insertPos = selectedIds.length > 0 ? (eventObjIndexMap[selectedIds[selectedIds.length - 1]] ?? -1) : -1;
+  if (insertPos === -1) {
+    for (const d of dicts) { blockList.push(d); eventIdList.push(d.id); }
+  } else {
+    let ip = insertPos;
+    for (const d of dicts) {
+      ip++;
+      blockList.splice(ip, 0, d);
+      eventIdList.splice(ip, 0, d.id);
+    }
+  }
+
+  renderBlockList(insertPos >= 0);
+  saveUndo('create', undoIds, false);
+}
+
+function importSingleBlack(fullText) {
+  const dicts = [blackMagicToDict(fullText)];
+  if (!dicts[0]) return;
+
+  // 统一走 _resolveLabelSettings（处理冲突检测 + 重命名 + 去重）
+  if (!_resolveLabelSettings(dicts)) return;
+
+  const dict = dicts[0];
+  const id = dict.id;
+  const insertPos = selectedIds.length > 0 ? (eventObjIndexMap[selectedIds[selectedIds.length - 1]] ?? -1) : -1;
+
+  if (insertPos === -1) { blockList.push(dict); eventIdList.push(id); renderBlockList(false); }
+  else { blockList.splice(insertPos + 1, 0, dict); eventIdList.splice(insertPos + 1, 0, id); renderBlockList(true); }
+
+  saveUndo('create', id, false);
+}
+
+let importOverwriteMode = false;
+
+function showImportModal(overwrite) {
+  importOverwriteMode = overwrite;
+  document.getElementById('importModal').classList.remove('hidden');
+  document.getElementById('importText').value = '';
+}
+
+function hideImportModal() {
+  document.getElementById('importModal').classList.add('hidden');
+}
+
+function confirmImport() {
+  const text = document.getElementById('importText').value;
+  if (importOverwriteMode) {
+    blockList = []; eventIdList = [];
+    styles = {}; styleYPos = 0; renderStyleList();
+    idOccupiedList = []; tempIdOccupiedList = [];
+    undoStack = []; redoStack = [];
+    renderBlockList(true);
+  }
+  importBlackMagicGroup(text);
+  hideImportModal();
+  renderStyleList();
+  renderAvailablePreview();
+  updateStatus();
+}
+
+// ==================== STYLE MANAGEMENT ====================
+
+function showStyleModal(mode) {
+  window._styleMode = mode || 'create';
+  document.getElementById('styleModalTitle').textContent = mode === 'modify' ? '修改样式' : '创建样式';
+  document.getElementById('styleNameInput').value = '';
+  document.getElementById('styleColorPicker').value = '#ffffff';
+  document.getElementById('styleTagsInput').value = '';
+  document.getElementById('styleErrorMsg').style.display = 'none';
+  switchEffectType('color');
+  document.getElementById('styleModal').classList.remove('hidden');
+  populateStyleSoundGrid();
+}
+
+function hideStyleModal() {
+  document.getElementById('styleModal').classList.add('hidden');
+}
+
+function switchEffectType(type) {
+  document.querySelectorAll('.style-effect-tab').forEach(t => t.classList.toggle('active', t.dataset.type === type));
+  document.getElementById('effectColorArea').style.display = type === 'color' ? '' : 'none';
+  document.getElementById('effectSoundArea').style.display = type === 'sound' ? '' : 'none';
+  document.getElementById('effectTagsArea').style.display = type === 'tags' ? '' : 'none';
+  window._styleEffectType = type;
+}
+
+function populateStyleSoundGrid() {
+  const grid = document.getElementById('styleSoundGrid');
+  grid.innerHTML = SFX_CN.map((n, i) => `<button class="sl-btn ${i===0?'active':''}" onclick="selectStyleSfx(${i},this)">${n}</button>`).join('');
+}
+
+let _styleCurrentSfx = 0;
+function selectStyleSfx(idx, btn) {
+  btn.parentElement.querySelectorAll('.sl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  _styleCurrentSfx = idx;
+}
+
+function confirmStyleCreate() {
+  const name = document.getElementById('styleNameInput').value.trim();
+  const errEl = document.getElementById('styleErrorMsg');
+  
+  let val;
+  if (window._styleEffectType === 'sound') val = _styleCurrentSfx;
+  else if (window._styleEffectType === 'color') val = document.getElementById('styleColorPicker').value;
+  else if (window._styleEffectType === 'tags') val = document.getElementById('styleTagsInput').value.trim();
+  else { return; }
+  
+  if (!name) { showStyleError('名称是空的！！！请不要尝试创建空名样式'); return; }
+  if (styles.hasOwnProperty(name) && name !== (window._styleModifyName||'')) { showStyleError('重名啦！！你设定的样式名称已存在。'); return; }
+  
+  if (window._styleMode === 'modify' && window._styleModifyName) {
+    removeStyle(window._styleModifyName);
+  }
+  
+  addStyle(name, val);
+  hideStyleModal();
+  clearPreview(true);
+  renderAvailablePreview();
+}
+
+function showStyleError(msg) {
+  const el = document.getElementById('styleErrorMsg');
+  el.textContent = msg; el.style.display = '';
+  el.style.animation = 'none'; void el.offsetWidth; el.style.animation = 'shake 0.5s';
+  setTimeout(() => { el.style.display = 'none'; }, 3000);
+}
+
+function addStyle(name, val) {
+  if (name in styles || val == null) return;
+  styles[name] = val;
+  styleYPos += 38;
+  renderStyleList();
+}
+
+function removeStyle(name) {
+  if (!(name in styles)) return;
+  delete styles[name];
+  styleYPos = Math.max(0, styleYPos - 38);
+  renderStyleList();
+}
+
+function modifyStyleFromUI(name) {
+  // Called when clicking modify on a style item
+  window._styleModifyName = name;
+  window._styleMode = 'modify';
+  document.getElementById('styleModalTitle').textContent = '修改样式';
+  document.getElementById('styleNameInput').value = name;
+  
+  const val = styles[name];
+  if (/^#[0-9a-f]{6}$/i.test(val)) { switchEffectType('color'); document.getElementById('styleColorPicker').value = val; }
+  else if (typeof val === 'number') { switchEffectType('sound'); _styleCurrentSfx = val; populateStyleSoundGrid(); }
+  else if (typeof val === 'string') { switchEffectType('tags'); document.getElementById('styleTagsInput').value = val; }
+  
+  document.getElementById('styleErrorMsg').style.display = 'none';
+  document.getElementById('styleModal').classList.remove('hidden');
+}
+
+function deleteStyleFromUI(name) {
+  removeStyle(name);
+  clearPreview(true);
+  renderAvailablePreview();
+  renderStyleList();
+}
+
+function renderStyleList() {
+  const list = document.getElementById('styleList');
+  const names = Object.keys(styles);
+  if (names.length === 0) {
+    list.innerHTML = '<div style="color:#555;font-size:11px;padding:10px;text-align:center">暂无样式<br><br>点击上方创建</div>';
+    return;
+  }
+  list.innerHTML = names.map(n => {
+    const v = styles[n];
+    let swatch = '';
+    if (/^#[0-9a-f]{6}$/i.test(v)) swatch = `<div class="style-color-swatch" style="background:${v}"></div>`;
+    else if (typeof v === 'number') swatch = `<span style="font-size:10px;color:#aaa">♪${SFX_CN[v]||''}</span>`;
+    else swatch = `<span style="font-size:10px;color:#aaa">#${v}</span>`;
+    let prefix = '';
+    if (typeof v === 'number') prefix = SFX_CN[v] + ' ';
+    else if (typeof v === 'string' && !/^#/.test(v)) prefix = v + ' ';
+    
+    return `<div class="style-item" onclick="onStyleClick('${n.replace(/'/g, "\\'")}')" ondblclick="event.stopPropagation();modifyStyleFromUI('${n.replace(/'/g, "\\'")}')">
+      ${swatch}<span class="style-name">${prefix}${n}</span>
+      <span class="style-modify" onclick="event.stopPropagation();modifyStyleFromUI('${n.replace(/'/g, "\\'")}')">改</span>
+      <span class="style-del" onclick="event.stopPropagation();deleteStyleFromUI('${n.replace(/'/g, "\\'")}')">删</span>
+    </div>`;
+  }).join('');
+}
+
+function insertStyleTag(name) {
+  // Insert <name>selected_text</name> into focused textarea
+  const focused = document.activeElement;
+  if (focused && (focused.tagName === 'TEXTAREA' || focused.tagName === 'INPUT')) {
+    const start = focused.selectionStart, end = focused.selectionEnd;
+    const text = focused.value;
+    focused.value = text.substring(0, start) + '<' + name + '>' + text.substring(start, end) + '</' + name + '>' + text.substring(end);
+    focused.selectionStart = focused.selectionEnd = start + name.length * 2 + 5;
+    focused.focus();
+  }
+}
+
+// ==================== CAMERA & GRID ====================
+
+function onCamChange() {
+  camOffsetX = (parseInt(document.getElementById('camX').value) || 0) - 16;
+  camOffsetY = (parseInt(document.getElementById('camY').value) || 0) - 9;
+  clearPreview(true);
+  renderAvailablePreview();
+  buildCoordOverlay();
+}
+
+function toggleGrid() {
+  showGridLayer1 = document.getElementById('chkShowGrid').checked;
+  // Update wrapper background: black when grid off, default when on
+  document.getElementById('canvasWrapper').style.background = showGridLayer1 ? '' : '#000';
+  renderCanvas();
+}
+
+function toggleGridBtn() {
+  const chk = document.getElementById('chkShowGrid');
+  chk.checked = !chk.checked;
+  document.getElementById('btnToggleGrid').classList.toggle('active', chk.checked);
+  // Update wrapper background
+  document.getElementById('canvasWrapper').style.background = chk.checked ? '' : '#000';
+  toggleGrid();
+}
+
+function toggleCoords() {
+  showCoords = document.getElementById('chkShowCoords').checked;
+  document.getElementById('coordOverlayH').style.display = showCoords ? '' : 'none';
+  document.getElementById('coordOverlayV').style.display = showCoords ? '' : 'none';
+  if (showCoords) buildCoordOverlay();
+}
+
+function toggleCoordsBtn() {
+  const chk = document.getElementById('chkShowCoords');
+  chk.checked = !chk.checked;
+  document.getElementById('btnToggleCoords').classList.toggle('active', chk.checked);
+  toggleCoords();
+}
+
+function buildCoordOverlay() {
+  const hContainer = document.getElementById('coordOverlayH');
+  const vContainer = document.getElementById('coordOverlayV');
+  hContainer.innerHTML = ''; vContainer.innerHTML = '';
+
+  // Horizontal: 32 columns (0-31) for 32-wide grid
+  for (let i = 0; i < 32; i++) {
+    const hCell = document.createElement('div'); hCell.className = 'coord-cell coord-overlay-h';
+    hCell.textContent = (i + (parseInt(document.getElementById('camX').value)||0) - 16);
+    hContainer.appendChild(hCell);
+  }
+
+  // Vertical: 18 rows (0-17) for 18-high grid
+  for (let i = 0; i < 18; i++) {
+    const vCell = document.createElement('div'); vCell.className = 'coord-cell';
+    vCell.textContent = (i + (parseInt(document.getElementById('camY').value)||0) - 9);
+    vContainer.appendChild(vCell);
+  }
+}
+
+// Initialize coordinate overlay once (hidden by default)
+document.getElementById('coordOverlayH').style.display = 'none';
+document.getElementById('coordOverlayV').style.display = 'none';
+// buildCoordOverlay() will be called when user enables coords
+
+
+// ==================== STYLE CLICK TO WRAP ====================
+function onStyleClick(name) {
+  // Insert <name> at cursor in active textarea, or wrap selection
+  const focused = document.activeElement;
+  if (focused && focused.id && focused.id.startsWith('txt_')) {
+    const start = focused.selectionStart;
+    const end = focused.selectionEnd;
+    const text = focused.value;
+    if (start !== end) {
+      // Wrap selected text
+      focused.value = text.substring(0, start) + '<' + name + '>' + text.substring(start, end) + '</' + name + '>' + text.substring(end);
+      focused.selectionStart = focused.selectionEnd = end + name.length * 2 + 5;
+    } else {
+      // Insert opening tag, position cursor after it
+      focused.value = text.substring(0, start) + '<' + name + '>' + text.substring(end);
+      focused.selectionStart = focused.selectionEnd = start + name.length + 2;
+    }
+    focused.focus();
+    const idStr = focused.id.replace('txt_', '');
+    onTextChanged(idStr);
+  } else if (expandedId && expandedType === '打字机') {
+    // No focused textarea, but a typewriter block is expanded - use its textarea
+    const ta = document.getElementById('txt_' + expandedId);
+    if (ta) {
+      ta.focus();
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      const text = ta.value;
+      if (start !== end) {
+        ta.value = text.substring(0, start) + '<' + name + '>' + text.substring(start, end) + '</' + name + '>' + text.substring(end);
+        ta.selectionStart = ta.selectionEnd = end + name.length * 2 + 5;
+      } else {
+        ta.value = text.substring(0, start) + '<' + name + '>' + text.substring(end);
+        ta.selectionStart = ta.selectionEnd = start + name.length + 2;
+      }
+      onTextChanged(expandedId);
+    }
+  }
+}
+// ==================== KEYBOARD SHORTCUTS ====================
+
+document.addEventListener('keydown', (e) => {
+  const tag = e.target.tagName;
+  if (tag === 'TEXTAREA' || tag === 'INPUT') return;
+  
+  // 播放事件组期间只允许空格键和 Ctrl+C
+  if (playGroupState.active) {
+    if (e.key === ' ') {
+      e.preventDefault();
+      // 优先：确认所有标识
+      if (playGroupState.acceptMarkers.length > 0) {
+        removeAllAcceptMarkers();
+        // 检查是否应该继续
+        checkPlaybackProgress();
+      } else {
+        // 跳过所有可跳过的打字动画
+        skipTypewriter();
+      }
+    }
+    // Ctrl+C 仍允许复制
+    if (!(e.ctrlKey && e.key === 'c')) return;
+  }
+  
+  if (e.key === 'Delete' || e.key === 'Backspace') { deleteSelected(); e.preventDefault(); }
+  else if (e.ctrlKey && e.key === 'z' && !e.shiftKey) { doUndo(); e.preventDefault(); }
+  else if ((e.ctrlKey && e.key === 'y' && !e.shiftKey) || (e.ctrlKey && e.shiftKey && e.key === 'Z')) { doRedo(); e.preventDefault(); }
+  else if (e.ctrlKey && e.key === 'a' && !e.shiftKey) { selectAll(); e.preventDefault(); }
+  else if (e.ctrlKey && e.key === 'i' && !e.shiftKey) { invertSelection(); e.preventDefault(); }
+  else if (e.ctrlKey && e.key === 'c' && !e.shiftKey) { copyBlocks(); e.preventDefault(); }
+  else if (e.ctrlKey && e.key === 'x' && !e.shiftKey) { cutBlocks(); e.preventDefault(); }
+  else if (e.ctrlKey && e.key === 'v' && !e.shiftKey) { pasteBlocks(); e.preventDefault(); }
+  else if (e.ctrlKey && e.key === 'd' && !e.shiftKey) { duplicateBlocks(); e.preventDefault(); }
+});
+
+// ==================== PLAY EVENT GROUP ====================
+//
+// 架构：字符实体系统
+// ─────────────────────────────
+// 所有显示的文字都是"字符实体"，存储在全局图层表 bgLayer/midLayer/fgLayer 中。
+// 每个实体声明：{ id, literal(字面), color(颜色), tags(标签), x, y(网格坐标), showBg, fixed }
+//
+// 打字机 = 字符实体生成器
+// ─────────────────────────────
+// 每个打字机积木启动一个独立生成器 (typingState)，按固定周期（50ms/字）产出实体。
+// 生成器维护自己的光标位置、样式栈、已解析文本队列。
+// wait=false 时不阻塞后续积木 → 多个生成器并行运行。
+//
+// 清除 = 按标签过滤实体
+// ─────────────────────────────
+// clear_typed 按 __PB__ 标签清除实体，不关心是哪个打字机生成的。
+// 清除只移除已生成的实体，生成器本身继续运行。这就是"清到一半只清已生成部分"的原因。
+
+// 播放状态
+let playGroupState = {
+  active: false,
+  currentIndex: -1,
+  typingStates: [],     // [{ id, active, textChars, currentCharIndex, skipRequested, canSkip, needAccept, isDialogEnd, blockId, cursorX, cursorY, startX, startY, _layer, _tags, _fixed, styleStack: [], timers: [] }]
+  acceptMarkers: [],    // [{ char, _entryIdx, _layerArr }]
+  timers: []            // 积木级定时器（事件指令等）
+};
+
+function playEventGroup() {
+  if (playGroupState.active) {
+    stopPlayingGroup();
+    return;
+  }
+  if (blockList.length === 0) return;
+  
+  playGroupState.active = true;
+  playGroupState.currentIndex = 0;
+  playGroupState.typingStates = [];
+  playGroupState.acceptMarkers = [];
+  document.getElementById('btnPlayGroup').textContent = '⏹ 停止播放';
+  document.getElementById('btnPlayGroup').classList.add('btn-danger');
+  document.getElementById('btnPlayGroup').classList.remove('btn-primary');
+  document.getElementById('btnClearPreview').disabled = true;
+  document.getElementById('statusText').textContent = '播放中 (Space跳过/确认) | 快捷键: Ctrl+Z撤销 Ctrl+Y重做';
+  
+  // 清除上次播放残留的 __PB__ 标记字符
+  clearPlaybackChars();
+  
+  playNextBlock();
+}
+
+function stopPlayingGroup() {
+  playGroupState.active = false;
+  playGroupState.currentIndex = -1;
+  
+  // 停止所有打字动画
+  for (const ts of playGroupState.typingStates) {
+    ts.active = false;
+    ts.timers.forEach(t => clearTimeout(t));
+    ts.timers = [];
+  }
+  playGroupState.typingStates = [];
+  playGroupState.acceptMarkers = [];
+  
+  // 清除所有定时器
+  playGroupState.timers.forEach(t => clearTimeout(t));
+  playGroupState.timers = [];
+  
+  document.getElementById('btnPlayGroup').textContent = '▶ 播放事件组';
+  document.getElementById('btnPlayGroup').classList.remove('btn-danger');
+  document.getElementById('btnPlayGroup').classList.add('btn-primary');
+  document.getElementById('btnClearPreview').disabled = false;
+  
+  // 移除播放高亮
+  document.querySelectorAll('.block-item.playing').forEach(el => el.classList.remove('playing'));
+  
+  // 精确清除播放期间渲染的字符
+  clearPlaybackChars();
+  
+  document.getElementById('statusText').textContent = '播放已停止 | 快捷键: Ctrl+Z撤销 Ctrl+Y重做 Ctrl+A全选';
+  
+  // 恢复静态预览
+  renderAvailablePreview();
+}
+
+function playNextBlock() {
+  if (!playGroupState.active) return;
+  
+  if (playGroupState.currentIndex >= blockList.length) {
+    // 所有积木已处理完毕——但可能还有打字动画在跑
+    if (playGroupState.typingStates.length === 0 && playGroupState.acceptMarkers.length === 0) {
+      stopPlayingGroup();
+      document.getElementById('statusText').textContent = '播放完成 | 快捷键: Ctrl+Z撤销 Ctrl+Y重做 Ctrl+A全选';
+    }
+    return;
+  }
+  
+  const block = blockList[playGroupState.currentIndex];
+  
+  // 高亮当前播放的积木
+  highlightPlayingBlock(block.id);
+  
+  if (block.type === '打字机') {
+    playTypewriterBlock(block);
+  } else if (block.type === '普通事件') {
+    playEventBlock(block);
+  } else {
+    // 未知类型，跳过
+    playGroupState.currentIndex++;
+    playNextBlock();
+  }
+}
+
+function highlightPlayingBlock(id) {
+  document.querySelectorAll('.block-item.playing').forEach(el => el.classList.remove('playing'));
+  const blockEl = document.querySelector(`.block-item[data-id="${id}"]`);
+  if (blockEl) {
+    blockEl.classList.add('playing');
+    blockEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// 解析打字机文本：预扫描样式标签边界，标注进入/退出，符用栈解决嵌套
+// 输出数组每项：{type:'char',char,...} 或 {type:'enter_style'|'exit_style',styleName}
+function parseTypewriterText(texts) {
+  const result = [];
+  
+  // ---- 第一遍：预扫描 <> [] {} 标签位置 ----
+  const noRenderSet = new Set();
+  const markers = {};        // pos → {type, styleName}
+  const transferMarkers = {}; // pos → objName|null
+  
+  // <> 样式标签
+  const styleIndices = parseBrackets('<>', texts);
+  for (const si of styleIndices) {
+    const startPos = si[0], content = si[1];
+    for (let k = startPos; k < startPos + content.length + 2; k++) noRenderSet.add(k);
+    if (content.startsWith('/')) {
+      const sName = content.substring(1);
+      if (sName && styles.hasOwnProperty(sName)) {
+        markers[startPos] = { type: 'exit_style', styleName: sName };
+      }
+    } else if (styles.hasOwnProperty(content)) {
+      markers[startPos] = { type: 'enter_style', styleName: content };
+    }
+  }
+  
+  // [] 转移物件 / 特殊渲染
+  const bracketIndices = parseBrackets('[]', texts);
+  for (const bi of bracketIndices) {
+    const startPos = bi[0], content = bi[1];
+    for (let k = startPos; k < startPos + content.length + 2; k++) noRenderSet.add(k);
+    const objName = content.split('{')[0];
+    transferMarkers[startPos] = transferObjects[objName] ? objName : null;
+  }
+  
+  // {} 花括号（参数等，不渲染）
+  const braceIndices = parseBrackets('{}', texts);
+  for (const bi of braceIndices) {
+    const startPos = bi[0], content = bi[1];
+    for (let k = startPos; k < startPos + content.length + 2; k++) noRenderSet.add(k);
+  }
+  
+  // ---- 第二遍：逐字遍历，插入标注和字符 ----
+  let i = 0;
+  while (i < texts.length) {
+    // 样式标注
+    if (markers[i]) {
+      result.push(markers[i]);
+      i++;
+      // 只跳过同一对 <> 内部的字符，遇到下一个标注位置就停
+      while (i < texts.length && noRenderSet.has(i) && !markers[i] && !transferMarkers.hasOwnProperty(i)) i++;
+      continue;
+    }
+    
+    // 转移物件标注
+    if (transferMarkers.hasOwnProperty(i)) {
+      const name = transferMarkers[i];
+      if (name) {
+        result.push({ type: 'char', char: '*', isTransfer: true, transferName: name });
+      }
+      i++;
+      // 只跳过同一对 [] 内部的字符，遇到下一个标注位置就停
+      while (i < texts.length && noRenderSet.has(i) && !markers[i] && !transferMarkers.hasOwnProperty(i)) i++;
+      continue;
+    }
+    
+    // 跳过非渲染位置
+    if (noRenderSet.has(i)) { i++; continue; }
+    
+    const ch = texts[i];
+    if (ch === '|')      { result.push({ type: 'char', char: '|', isPause: true }); i++; continue; }
+    if (ch === '&' || ch === '\n' || ch === '\r') { result.push({ type: 'char', char: '\n', isNewline: true }); i++; continue; }
+    if (ch === '＿')    { i++; continue; }  // 下划线占位跳过
+    
+    // 普通字符
+    result.push({ type: 'char', char: ch });
+    i++;
+  }
+  
+  return result;
+}
+
+function playTypewriterBlock(block) {
+  const texts = block.texts || '';
+  const canSkip = block.can_skip !== false;
+  const needAccept = block.need_accept === true;
+  const isDialogEnd = block.is_dialog_end === true;
+  const pauseGame = block.wait !== false;  // wait 默认 true → 暂停游戏
+  const hasAnimation = block.has_animation !== false;
+  
+  // 计算起始光标位置
+  const startX = (parseInt(block.posX) || 0) + (parseInt(block.offsetX) || 0);
+  const startY = (parseInt(block.posY) || 0) + (parseInt(block.offsetY) || 0);
+  const layer = typeof block.layer === 'number' ? block.layer : 1;
+  const tags = block.tags || 'default';
+  const fixed = !!block.fixed;
+  
+  // 解析文本
+  const parsedChars = parseTypewriterText(texts);
+  
+  // 创建独立 typing 状态
+  const typingState = {
+    id: block.id + '_' + Date.now() + Math.random(),
+    active: true,
+    text: texts,
+    textChars: parsedChars,
+    currentCharIndex: 0,
+    skipRequested: false,
+    canSkip: canSkip,
+    needAccept: needAccept,
+    isDialogEnd: isDialogEnd,
+    blockId: block.id,
+    cursorX: startX,
+    cursorY: startY,
+    startX: startX,
+    startY: startY,
+    _layer: layer,
+    _tags: tags,
+    _fixed: fixed,
+    styleStack: [],   // 独立样式栈
+    timers: [],        // 独立定时器
+    hasAnimation: hasAnimation
+  };
+  
+  playGroupState.typingStates.push(typingState);
+  
+  // 不再自动清屏——清理由 clear_typed 事件显式触发
+  // 每个打字机独立渲染到共享图层，字符自带 __PB__ 标记
+  
+  // 开始逐字动画
+  typewriterAnimationStep(typingState);
+  
+  // wait=false：不阻塞，立即进入下一个积木
+  if (!pauseGame) {
+    playGroupState.currentIndex++;
+    playNextBlock();
+  }
+  // wait=true 时，由 finishTypewriter 或用户确认后推进
+}
+
+function typewriterAnimationStep(ts) {
+  if (!ts.active) return;  // 已被停止
+  
+  const entries = ts.textChars;
+  
+  if (ts.currentCharIndex >= entries.length) {
+    finishTypewriter(ts);
+    return;
+  }
+  
+  // 跳过请求：瞬间渲染所有剩余内容
+  if (ts.skipRequested) {
+    while (ts.currentCharIndex < entries.length) {
+      processCharEntry(ts, entries[ts.currentCharIndex]);
+      ts.currentCharIndex++;
+    }
+    renderCanvas();
+    finishTypewriter(ts);
+    return;
+  }
+  
+  const entry = entries[ts.currentCharIndex];
+  
+  // 标注项（进入/退出样式）——不延时，立即处理
+  if (entry.type === 'enter_style' || entry.type === 'exit_style') {
+    applyStyleAnnotation(ts, entry);
+    ts.currentCharIndex++;
+    typewriterAnimationStep(ts);  // 递归立即处理下一个
+    return;
+  }
+  
+  // 可渲染条目 —— 字符作为实体写入全局表
+  processCharEntry(ts, entry);
+  ts.currentCharIndex++;
+  renderCanvas();
+  
+  // 打字周期：有动画 50ms/字，无动画 0ms（瞬间生成）
+  const cycleDelay = ts.hasAnimation ? 50 : 0;
+  const timer = setTimeout(() => typewriterAnimationStep(ts), cycleDelay);
+  ts.timers.push(timer);
+}
+
+// 应用样式标注（进入/退出样式标签）
+function applyStyleAnnotation(ts, entry) {
+  if (entry.type === 'enter_style') {
+    ts.styleStack.push({ name: entry.styleName, data: styles[entry.styleName] });
+  } else if (entry.type === 'exit_style') {
+    for (let i = ts.styleStack.length - 1; i >= 0; i--) {
+      if (ts.styleStack[i].name === entry.styleName) {
+        ts.styleStack.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
+// 从样式栈计算当前颜色和标签列表
+function getCurrentStyleState(ts) {
+  let color = '#FFFFFF';
+  const tagList = [];
+  for (const entry of ts.styleStack) {
+    const data = entry.data;
+    if (typeof data === 'string' && /^#[0-9a-f]{6}$/i.test(data)) {
+      color = data;
+    } else if (typeof data === 'string' && data.length > 0 && !data.startsWith('#')) {
+      tagList.push(data);
+    }
+    // number (音效) 忽略
+  }
+  return { color, tagList };
+}
+
+// 处理单条解析结果（字符、暂停、换行、转移物件）
+function processCharEntry(ts, entry) {
+  const layer = ts._layer;
+  const baseTags = ts._tags;
+  const fixed = ts._fixed;
+  
+  if (entry.isPause) return;
+  
+  if (entry.isNewline) {
+    ts.cursorX = ts.startX;
+    ts.cursorY++;
+    return;
+  }
+  
+  if (entry.isTransfer) {
+    const name = entry.transferName;
+    if (transferObjects[name]) {
+      const pixelPos = gridToPixel(ts.cursorX, ts.cursorY);
+      pixelPos.x -= camOffsetX * 30; pixelPos.y -= camOffsetY * 30;
+      const allTags = ['__PB__', baseTags].filter(Boolean).join(' ') || '__PB__';
+      updateTransferObjectInstance(name, pixelPos, allTags);
+    }
+    ts.cursorX++;
+    return;
+  }
+  
+  // 普通字符 —— 创建字符实体，打上 __PB__ 标签
+  const styleState = getCurrentStyleState(ts);
+  const color = styleState.color;
+  const allTags = ['__PB__', baseTags, ...styleState.tagList].filter(Boolean).join(' ') || '__PB__ default';
+  
+  createCharEntity(entry.char, ts.cursorX, ts.cursorY, layer, allTags, true, fixed, color);
+  ts.cursorX++;
+}
+
+// === 确认标识（作为字符实体渲染）===
+
+function addAcceptMarker(ts) {
+  const isDialogEnd = ts.isDialogEnd;
+  const char = isDialogEnd ? '▼' : '▽';
+  
+  const styleState = getCurrentStyleState(ts);
+  const allTags = ['__PB__', ts._tags, ...styleState.tagList].filter(Boolean).join(' ') || '__PB__ default';
+  
+  const entity = createCharEntity(char, ts.cursorX, ts.cursorY, ts._layer, allTags, true, ts._fixed, styleState.color || '#FFFFFF');
+  
+  playGroupState.acceptMarkers.push({ char, entityId: entity.id });
+  renderCanvas();
+}
+
+function removeAllAcceptMarkers() {
+  for (const am of playGroupState.acceptMarkers) {
+    for (const layer of [bgLayer, midLayer, fgLayer]) {
+      const idx = layer.findIndex(e => e.id === am.entityId);
+      if (idx >= 0) { layer.splice(idx, 1); break; }
+    }
+  }
+  playGroupState.acceptMarkers = [];
+  renderCanvas();
+}
+
+// 精确清除所有播放期间渲染的字符实体（按 __PB__ 标签）
+function clearPlaybackChars() {
+  clearEntitiesByTag('__PB__');
+  clearTransferObjectInstances('__PB__');
+  playGroupState.acceptMarkers = [];
+  renderCanvas();
+}
+
+// === 打字完成逻辑 ===
+
+function finishTypewriter(ts) {
+  ts.active = false;
+  // 清理该 typing 的定时器
+  ts.timers.forEach(t => clearTimeout(t));
+  ts.timers = [];
+  
+  if (ts.needAccept) {
+    // 需要确认：渲染标识
+    addAcceptMarker(ts);
+    // 检查是否应该推进（wait=true 模式且这是唯一活跃打字机）
+    checkPlaybackProgress();
+  } else {
+    // 不需确认：移除该 typing 状态
+    removeTypingState(ts);
+    checkPlaybackProgress();
+  }
+}
+
+function removeTypingState(ts) {
+  const idx = playGroupState.typingStates.indexOf(ts);
+  if (idx >= 0) playGroupState.typingStates.splice(idx, 1);
+}
+
+// 检查播放是否应该推进
+function checkPlaybackProgress() {
+  if (!playGroupState.active) return;
+  
+  const hasActive = playGroupState.typingStates.some(s => s.active);
+  const hasMarkers = playGroupState.acceptMarkers.length > 0;
+  
+  if (!hasActive && !hasMarkers) {
+    // 清理所有已完成的 typing 状态
+    playGroupState.typingStates = [];
+    
+    // 所有打字完成且无确认标识 → 继续播放或结束
+    if (playGroupState.currentIndex < blockList.length) {
+      playGroupState.currentIndex++;
+      playNextBlock();
+    } else {
+      // 所有积木处理完毕
+      stopPlayingGroup();
+      document.getElementById('statusText').textContent = '播放完成 | 快捷键: Ctrl+Z撤销 Ctrl+Y重做 Ctrl+A全选';
+    }
+  }
+  // hasActive=true 或 hasMarkers=true → 等待
+}
+
+function skipTypewriter() {
+  for (const ts of playGroupState.typingStates) {
+    if (ts.active && ts.canSkip && !ts.skipRequested) {
+      ts.skipRequested = true;
+    }
+  }
+}
+
+function playEventBlock(block) {
+  const texts = block.texts || '';
+  
+  // 解析指令：@[指令名] 参数
+  const match = texts.match(/^@\[(\w+)\]\s*([\s\S]*)$/);
+  if (!match) {
+    // 不是有效指令，跳过
+    playGroupState.currentIndex++;
+    playNextBlock();
+    return;
+  }
+  
+  const cmd = match[1];
+  const param = match[2].trim();
+  
+  executeEventCommand(cmd, param);
+}
+
+function executeEventCommand(cmd, param) {
+  if (!playGroupState.active) return;
+  
+  switch(cmd) {
+    case 'wait':
+      // 延迟固定时间（帧）
+      const frames = parseInt(param) || 60;
+      const delay = Math.max(frames * 16, 100); // 1帧 ≈ 16ms，最少100ms
+      const timer1 = setTimeout(() => {
+        if (playGroupState.active) {
+          playGroupState.currentIndex++;
+          playNextBlock();
+        }
+      }, delay);
+      playGroupState.timers.push(timer1);
+      break;
+      
+    case 'wait_random_in_range':
+      // 延迟随机时间
+      try {
+        const data = JSON.parse(param);
+        const min = data.value?.[0] || 30;
+        const max = data.value?.[1] || 60;
+        const randFrames = Math.floor(Math.random() * (max - min + 1)) + min;
+        const randDelay = Math.max(randFrames * 16, 100);
+        const timer2 = setTimeout(() => {
+          if (playGroupState.active) {
+            playGroupState.currentIndex++;
+            playNextBlock();
+          }
+        }, randDelay);
+        playGroupState.timers.push(timer2);
+      } catch(e) {
+        // 参数解析失败，跳过
+        playGroupState.currentIndex++;
+        playNextBlock();
+      }
+      break;
+      
+    case 'break':
+      // 直接结束事件
+      stopPlayingGroup();
+      break;
+      
+    case 'clear_typed':
+      // 精确清除所有播放期间渲染的字符（__PB__ 标记），不中断正在进行的打字动画
+      clearPlaybackChars();
+      playGroupState.currentIndex++;
+      playNextBlock();
+      break;
+      
+    default:
+      // 其他指令（没有影响显示效果的跳过）
+      playGroupState.currentIndex++;
+      playNextBlock();
+      break;
+  }
+}
+
+// ==================== PLAY EVENT GROUP (basic stub) ====================
+
+function refreshList() {
+  renderBlockList(true);
+  renderStyleList();
+}
+
+// ==================== UTILITY ====================
+
+function copyToClipboard(text) {
+  if (navigator.clipboard) navigator.clipboard.writeText(text);
+  else {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed';ta.left='-9999px';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+}
+
+function updateStatus() {
+  document.getElementById('blockCount').textContent = blockList.length;
+}
+
+// ==================== INITIALIZATION ====================
+
+renderBlockList(true);
+renderStyleList();
+renderCanvas();
+
+// Add shake animation for error messages
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = `
+@keyframes shake {
+  0%,100%{transform:translateX(0)} 10%{transform:translateX(-8px)} 
+  20%{transform:translateX(8px)} 30%{transform:translateX(-6px)} 40%{transform:translateX(6px)}
+  50%{transform:translateX(-4px)} 60%{transform:translateX(4px)} 70%{transform:translateX(-2px)}
+  80%{transform:translateX(2px)} 90%{transform:translateX(-1px)}
+}`;
+document.head.appendChild(shakeStyle);
+
+console.log('✅ 打字机事件编辑器已加载完成');
+console.log('快捷键: Ctrl+Z撤销 | Ctrl+Y / Ctrl+Shift+Z重做 | Ctrl+A全选 | C/V/X复制粘贴 | Delete删除');
+</script>
+</body>
+
+</style></head></html><div style="break-before: page; page-break-before: always;"></div>
 <h1 id="文字游戏世界场景制作工具"><a href="#文字游戏世界场景制作工具" class="header">文字游戏世界场景制作工具</a></h1>
 
 <html lang="zh-CN">
@@ -6412,11 +8372,11 @@ $一堆数字0-9:{"frame_count":10,"path":"res://Sprites/number/number.png","tim
 
         <script src="elasticlunr-ef4e11c1.min.js"></script>
         <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
         <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="book-c22b7243.js"></script>
 
         <!-- Custom JS scripts -->
         <script src="src/js/wgw-theme-dfc98162.js"></script>
