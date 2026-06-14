@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>打字机事件编辑器 - 魔法书</title>
+<title>打字机事件编辑器 v7 - 魔法书</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -16,6 +16,9 @@ body {
   flex-direction: column;
 }
 
+/* === Buttons (global) === */
+button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
+
 /* === Top Bar === */
 .top-bar {
   background: linear-gradient(135deg, #9c27b0, #6a1b9a);
@@ -27,6 +30,7 @@ body {
 }
 .top-bar h1 { font-size: 18px; color: #fff; }
 .btn {
+  font-family: 'zpix', 'Microsoft YaHei', sans-serif;
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.3);
   color: #fff; padding: 5px 12px;
@@ -217,6 +221,7 @@ body {
   gap: 3px;
 }
 .sym-btn {
+  font-family: 'zpix', 'Microsoft YaHei', sans-serif;
   padding: 4px 2px; font-size: 13px;
   background: #1a1a3a; border: 1px solid #333;
   color: #ddd; border-radius: 3px; cursor: pointer;
@@ -433,9 +438,7 @@ body {
   <!-- Left: Preview Canvas -->
   <div class="preview-panel">
     <div class="preview-header">
-      <label><input type="checkbox" id="chkShowGrid" checked onchange="toggleGrid()"> 显示网格</label>
-      <label><input type="checkbox" id="chkShowCoords" onchange="toggleCoords()"> 行列标识</label>
-      <span style="margin-left:auto">相机X:</span>
+      <span style="margin-left:0">相机X:</span>
       <input type="number" id="camX" value="16" onchange="onCamChange()">
       <span>相机Y:</span>
       <input type="number" id="camY" value="9" onchange="onCamChange()">
@@ -447,7 +450,7 @@ body {
       <div class="coord-overlay-v" id="coordOverlayV"></div>
     </div>
     <div style="padding:6px 12px;background:#16213e;display:flex;gap:6px;border-top:1px solid #333;font-size:12px">
-      <button class="btn btn-toggle" id="btnToggleGrid" onclick="toggleGridBtn()">显示网格</button>
+      <button class="btn btn-toggle active" id="btnToggleGrid" onclick="toggleGridBtn()">显示网格</button>
       <button class="btn btn-toggle" id="btnToggleCoords" onclick="toggleCoordsBtn()">显示行列标识</button>
       <input class="remark-input" id="newBlockRemark" placeholder="填写打字机备注">
       <button class="btn btn-primary" onclick="createTypewriterBlock()">创建打字</button>
@@ -634,7 +637,7 @@ const DEFAULT_TYPE_EVENT = {
   char_type: 0, has_animation: true, layer: 1,
   can_skip: true, need_accept: true, wait: true,
   is_dialog_end: false, is_on_top_of_player: false,
-  offsetX: 0, offsetY: 0, id: null, remark: ""
+  offsetX: 0, offsetY: 0, id: null, remark: "", refTexts: []
 };
 
 const DEFAULT_EVENT = { type: "普通事件", texts: "", id: null };
@@ -1139,6 +1142,7 @@ function onBlockHeaderClick(e, idStr, type) {
   }
   
   // Normal click = expand/collapse
+  if (playGroupState.active) return;
   if (expandedId === idStr) {
     collapseBlock(idStr);
   } else {
@@ -1795,7 +1799,7 @@ function drawGrid() {
   ctx.textBaseline = 'middle';
   for (let c = 0; c < 32; c++) {
     for (let r = 0; r < 18; r++) {
-      ctx.fillText('格', c * ts + ts/2, r * ts + ts/2);
+      ctx.fillText('格', c * ts + ts/2 + 2, r * ts + ts/2 - 1);
     }
   }
   
@@ -1822,7 +1826,7 @@ function renderLayer(layer) {
     
     if (e.literal !== '*' && e.literal !== '＿') {
       ctx.fillStyle = `rgb(${e.color.r},${e.color.g},${e.color.b})`;
-      ctx.fillText(e.literal, px + 15, py + 17);
+      ctx.fillText(e.literal, px + 15, py + 15);
     } else if (e.literal === '*') {
       // Special marker
       ctx.fillStyle = 'rgba(255,200,0,0.5)';
@@ -1877,7 +1881,7 @@ function drawTransferObjects() {
       ctx.fillStyle = 'rgba(0,0,0,0.85)';
       ctx.fillRect(bx, by, 30, 30);
       ctx.fillStyle = `rgb(${color.r},${color.g},${color.b})`;
-      ctx.fillText(ch, bx + 15, by + 17);
+      ctx.fillText(ch, bx + 15, by + 15);
       px++;
     }
   }
@@ -2121,14 +2125,27 @@ function dictToBlackMagic(dict) {
   bm.pos = [parseInt(bm.posX)||0, parseInt(bm.posY)||0];
   bm.offset = [parseInt(bm.offsetX)||0, parseInt(bm.offsetY)||0];
   bm.tags = [bm.tags || ''];
-  bm.char_type = SFX_TABLE[bm.char_type] ?? null;
+  bm.refTexts = Array.isArray(bm.refTexts) ? bm.refTexts : [];
+  // char_type / has_se 映射
+  const charTypeStr = SFX_TABLE[bm.char_type] ?? null;
+  if (charTypeStr === 'none' || charTypeStr === null) {
+    bm.has_se = false;
+    delete bm.char_type;
+  } else if (SFX_TABLE.indexOf(charTypeStr) === 0) {
+    // 默认音效 → has_se=true, char_type 省略
+    bm.has_se = true;
+    delete bm.char_type;
+  } else {
+    bm.has_se = true;
+    bm.char_type = charTypeStr;
+  }
   bm.layer = LAYER_TABLE[bm.layer] ?? null;
   bm.texts = (bm.texts||'').replace(/\n/g,'&').replace(/\r/g,'&');
   delete bm.id; delete bm.type;
   delete bm.posX; delete bm.posY; delete bm.offsetX; delete bm.offsetY;
   if (bm.layer === 'mid') delete bm.layer;
-  if (bm.char_type === null) delete bm.char_type;
   if (bm.offset && bm.offset[0]===0 && bm.offset[1]===0) delete bm.offset;
+  if (bm.refTexts && Array.isArray(bm.refTexts) && bm.refTexts.length === 0) delete bm.refTexts;
   if (bm.fixed === false) delete bm.fixed;
   if (bm.has_animation === true) delete bm.has_animation;
   if (bm.can_skip === true) delete bm.can_skip;
@@ -2136,7 +2153,6 @@ function dictToBlackMagic(dict) {
   if (bm.wait === true) delete bm.wait;
   if (bm.is_dialog_end === false) delete bm.is_dialog_end;
   if (bm.is_on_top_of_player === false) delete bm.is_on_top_of_player;
-  if (bm.char_type === 'none') bm.has_se = false;
   
   // Extract styles
   const styleParse = parseBrackets('<>', bm.texts);
@@ -2270,6 +2286,9 @@ function blackMagicToDict(text) {
     if ('char_type' in dict) { const ci = SFX_TABLE.indexOf(dict.char_type); dict.char_type = ci >= 0 ? ci : 0; }
     if ('layer' in dict) { const li = LAYER_TABLE.indexOf(dict.layer); dict.layer = li >= 0 ? li : 1; }
     if ('has_se' in dict) { if (dict.has_se === false) dict.char_type = 1; delete dict.has_se; }
+    // 显式标准化布尔键
+    const boolKeys = ['fixed', 'has_animation', 'can_skip', 'need_accept', 'wait', 'is_dialog_end', 'is_on_top_of_player'];
+    for (const k of boolKeys) { if (k in dict) dict[k] = !!dict[k]; }
     
     // Merge defaults
     for (const key in DEFAULT_TYPE_EVENT) {
@@ -2303,7 +2322,7 @@ function getBlackMagicGroups(text) {
     if (i === results.length - 1) final.push(text.substring(results[i]));
     else final.push(text.substring(results[i], results[i + 1]));
   }
-  return final.reverse();
+  return final;
 }
 
 // === 样式冲突检测 & 去重处理 ===
@@ -2313,39 +2332,49 @@ function getBlackMagicGroups(text) {
 //   3. 同批次去重 → 同名同色只创建一个样式
 // 返回 true（成功）或 false（冲突）
 function _resolveLabelSettings(dicts) {
-  // Phase 1: 收集所有 label_settings，按名字聚合颜色
-  const nameColorMap = {};  // name → color string
+  // 辅助：从 label_settings 条目解析出 styles[name] 对应值
+  function _resolveStyleValue(sd) {
+    if (sd.text_color) return sd.text_color;           // 颜色样式 → "#ff0000"
+    if (sd.char_type !== undefined) {                    // 音效样式 → 索引号
+      const idx = SFX_TABLE.indexOf(sd.char_type);
+      return idx >= 0 ? idx : null;
+    }
+    if (sd.tags !== undefined) return sd.tags;           // 标签样式 → 字符串
+    return null;
+  }
+
+  // Phase 1: 收集所有 label_settings，按名字聚合样式值
+  const nameValueMap = {};  // name → styles[name]
   for (const d of dicts) {
     if (!d.label_settings) continue;
     for (const sn in d.label_settings) {
       const sd = d.label_settings[sn];
-      const sv = sd.text_color || null;
-      if (!sv) continue;
-      // 同一批次内同名不同色 → 不相同样式不能重名
-      if (nameColorMap.hasOwnProperty(sn) && nameColorMap[sn] !== sv) {
-        alert('不相同样式不能重名：样式名 "' + sn + '" 在同一批导入中被赋予了不同的颜色（' + nameColorMap[sn] + ' vs ' + sv + '），请检查后重试。');
+      const sv = _resolveStyleValue(sd);
+      if (sv === null) continue;
+      // 同一批次内同名不同值 → 不相同样式不能重名
+      if (nameValueMap.hasOwnProperty(sn) && nameValueMap[sn] !== sv) {
+        alert('不相同样式不能重名：样式名 "' + sn + '" 在同一批导入中被赋予了不同的值，请检查后重试。');
         return false;
       }
-      nameColorMap[sn] = sv;
+      nameValueMap[sn] = sv;
     }
   }
 
   // Phase 2: 决定每个样式的最终名称 & 创建
-  // renameMap: 原始名 → 最终名（若一样则表示不需要替换）
-  const renameMap = {};
-  const createdInBatch = {};  // 本批次已创建的样式 → 避免重复创建
+  const renameMap = {};          // 原始名 → 最终名
+  const createdInBatch = {};     // 本批次去重
 
-  for (const sn in nameColorMap) {
-    const sv = nameColorMap[sn];
+  for (const sn in nameValueMap) {
+    const sv = nameValueMap[sn];
 
     if (!styles.hasOwnProperty(sn)) {
       // 无同名样式 → 直接创建
       renameMap[sn] = sn;
     } else if (styles[sn] === sv) {
-      // 有同名样式且颜色一致 → 复用，无需创建
+      // 有同名样式且值一致 → 复用
       renameMap[sn] = sn;
     } else {
-      // 有同名样式但颜色不同 → 需要更名
+      // 有同名样式但值不同 → 需要更名
       let ni = 1, nn;
       do { nn = sn + '_' + ni; ni++; }
       while (styles.hasOwnProperty(nn) || createdInBatch.hasOwnProperty(nn));
@@ -2358,8 +2387,8 @@ function _resolveLabelSettings(dicts) {
     if (!d.label_settings) continue;
     for (const sn in d.label_settings) {
       const sd = d.label_settings[sn];
-      const sv = sd.text_color || null;
-      if (!sv) continue;
+      const sv = _resolveStyleValue(sd);
+      if (sv === null) continue;
 
       const finalName = renameMap[sn];
       if (!finalName) continue;
@@ -2371,7 +2400,7 @@ function _resolveLabelSettings(dicts) {
           .replace(new RegExp('</' + sn + '>', 'g'), '</' + finalName + '>');
       }
 
-      // 本批次去重：同名同色只创建一次
+      // 本批次去重：同名同值只创建一次
       if (!createdInBatch[finalName] && !styles.hasOwnProperty(finalName)) {
         addStyle(finalName, sv);
         createdInBatch[finalName] = true;
@@ -2454,10 +2483,10 @@ function confirmImport() {
     styles = {}; styleYPos = 0; renderStyleList();
     idOccupiedList = []; tempIdOccupiedList = [];
     undoStack = []; redoStack = [];
-    renderBlockList(true);
   }
   importBlackMagicGroup(text);
   hideImportModal();
+  renderBlockList(true);
   renderStyleList();
   renderAvailablePreview();
   updateStatus();
@@ -2615,34 +2644,19 @@ function onCamChange() {
   buildCoordOverlay();
 }
 
-function toggleGrid() {
-  showGridLayer1 = document.getElementById('chkShowGrid').checked;
-  // Update wrapper background: black when grid off, default when on
+function toggleGridBtn() {
+  showGridLayer1 = !showGridLayer1;
+  document.getElementById('btnToggleGrid').classList.toggle('active', showGridLayer1);
   document.getElementById('canvasWrapper').style.background = showGridLayer1 ? '' : '#000';
   renderCanvas();
 }
 
-function toggleGridBtn() {
-  const chk = document.getElementById('chkShowGrid');
-  chk.checked = !chk.checked;
-  document.getElementById('btnToggleGrid').classList.toggle('active', chk.checked);
-  // Update wrapper background
-  document.getElementById('canvasWrapper').style.background = chk.checked ? '' : '#000';
-  toggleGrid();
-}
-
-function toggleCoords() {
-  showCoords = document.getElementById('chkShowCoords').checked;
+function toggleCoordsBtn() {
+  showCoords = !showCoords;
+  document.getElementById('btnToggleCoords').classList.toggle('active', showCoords);
   document.getElementById('coordOverlayH').style.display = showCoords ? '' : 'none';
   document.getElementById('coordOverlayV').style.display = showCoords ? '' : 'none';
   if (showCoords) buildCoordOverlay();
-}
-
-function toggleCoordsBtn() {
-  const chk = document.getElementById('chkShowCoords');
-  chk.checked = !chk.checked;
-  document.getElementById('btnToggleCoords').classList.toggle('active', chk.checked);
-  toggleCoords();
 }
 
 function buildCoordOverlay() {
@@ -2789,8 +2803,13 @@ function playEventGroup() {
   document.getElementById('btnClearPreview').disabled = true;
   document.getElementById('statusText').textContent = '播放中 (Space跳过/确认) | 快捷键: Ctrl+Z撤销 Ctrl+Y重做';
   
-  // 清除上次播放残留的 __PB__ 标记字符
+  // 清除预览 + 上次播放残留
+  clearPreview(true);
   clearPlaybackChars();
+  
+  // 收起展开的积木 + 禁止拖拽排序
+  if (expandedId) collapseBlock(expandedId);
+  if (sortableInstance) sortableInstance.option('disabled', true);
   
   playNextBlock();
 }
@@ -2827,6 +2846,9 @@ function stopPlayingGroup() {
   
   // 恢复静态预览
   renderAvailablePreview();
+  
+  // 恢复积木拖拽排序
+  if (sortableInstance) sortableInstance.option('disabled', false);
 }
 
 function playNextBlock() {

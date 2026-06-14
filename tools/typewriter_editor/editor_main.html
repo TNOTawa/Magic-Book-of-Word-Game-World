@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打字机事件编辑器 v7 - 魔法书</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1a1a2e;overflow:hidden;height:100vh}
+.loading-overlay{
+  position:fixed;inset:0;z-index:99999;
+  background:#1a1a2e;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  transition:opacity 0.35s ease;
+}
+.loading-overlay.hidden{opacity:0;pointer-events:none}
+.loading-icon{font-size:40px;margin-bottom:16px;animation:bounce 0.8s ease infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.loading-title{
+  font-family:'zpix','Microsoft YaHei',sans-serif;
+  font-size:14px;color:#9c27b0;margin-bottom:8px;letter-spacing:3px;
+}
+.loading-bar-wrap{
+  width:280px;height:6px;background:rgba(255,255,255,0.08);
+  border-radius:3px;overflow:hidden;margin-top:16px;
+}
+.loading-bar-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#9c27b0,#e040fb,#7c4dff,#e040fb,#9c27b0);
+  background-size:200% 100%;border-radius:3px;
+  transition:width 0.2s ease;
+  animation:shimmer 1.6s linear infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.loading-bar-fill.done{animation:none;background:linear-gradient(90deg,#4CAF50,#81C784)}
+.loading-pct{font-size:12px;color:rgba(255,255,255,0.4);margin-top:8px;font-family:monospace}
+.loading-hint{font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;font-family:'zpix','Microsoft YaHei',sans-serif}
+#appFrame{position:fixed;inset:0;width:100%;height:100%;border:none;opacity:0;transition:opacity 0.25s ease}
+#appFrame.visible{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-icon">📖</div>
+  <div class="loading-title">魔 法 书 载 入 中</div>
+  <div class="loading-bar-wrap">
+    <div class="loading-bar-fill" id="loadingBar"></div>
+  </div>
+  <div class="loading-pct" id="loadingPct">0%</div>
+  <div class="loading-hint" id="loadingHint">正在连接...</div>
+</div>
+
+<iframe id="appFrame"></iframe>
+
+<script>
+(function(){
+  var bar = document.getElementById('loadingBar');
+  var pctEl = document.getElementById('loadingPct');
+  var hintEl = document.getElementById('loadingHint');
+  var overlay = document.getElementById('loadingOverlay');
+  var frame = document.getElementById('appFrame');
+
+  // 阶段信息
+  var stages = [
+    [5,  '正在连接...'],
+    [30, '正在下载编辑器...'],
+    [95, '正在初始化...']
+  ];
+  var currentStage = 0;
+  var displayPct = 0;
+
+  function updateDisplay() {
+    bar.style.width = displayPct + '%';
+    pctEl.textContent = displayPct + '%';
+  }
+
+  // 显示进度动画（每 50ms 追一次目标值）
+  var targetPct = 0;
+  var animTimer = setInterval(function(){
+    if (displayPct < targetPct) {
+      displayPct += Math.max(1, Math.ceil((targetPct - displayPct) * 0.2));
+      updateDisplay();
+    }
+  }, 50);
+
+  function setStage(idx) {
+    if (idx < stages.length) {
+      targetPct = stages[idx][0];
+      hintEl.textContent = stages[idx][1];
+    }
+  }
+
+  setStage(0);
+
+  // ===== 真实下载进度 =====
+  fetch('editor-v7.html')
+    .then(function(response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      
+      setStage(1);
+
+      var contentLength = response.headers.get('Content-Length');
+      var total = contentLength ? parseInt(contentLength, 10) : null;
+      var loaded = 0;
+
+      var reader = response.body.getReader();
+      var chunks = [];
+
+      function pump() {
+        return reader.read().then(function(result) {
+          if (result.done) {
+            // 下载完成
+            targetPct = 92;
+            hintEl.textContent = '正在初始化编辑器...';
+            
+            var blob = new Blob(chunks, { type: 'text/html' });
+            var url = URL.createObjectURL(blob);
+            
+            frame.src = url;
+            frame.onload = function() {
+              // iframe 内容就绪
+              targetPct = 100;
+              bar.classList.add('done');
+              hintEl.textContent = '就绪！';
+              
+              setTimeout(function(){
+                frame.classList.add('visible');
+                overlay.classList.add('hidden');
+                // 移除遮罩
+                setTimeout(function(){
+                  if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                }, 400);
+              }, 300);
+            };
+            return;
+          }
+
+          chunks.push(result.value);
+          loaded += result.value.length;
+
+          if (total) {
+            // 真实进度：30% - 90% 映射到下载进度
+            targetPct = 30 + Math.round((loaded / total) * 62);
+          } else {
+            // 没有 Content-Length，模拟递增
+            targetPct = Math.min(90, 30 + Math.floor(loaded / 1024));
+          }
+          
+          return pump();
+        });
+      }
+
+      return pump();
+    })
+    .catch(function(err) {
+      clearInterval(animTimer);
+      hintEl.textContent = '加载失败: ' + err.message;
+      hintEl.style.color = '#f44336';
+      pctEl.textContent = '⚠';
+      pctEl.style.color = '#f44336';
+    });
+})();
+</script>
+</body>
+</html>
