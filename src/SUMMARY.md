@@ -49,5 +49,5 @@
 # 🔧 实用工具
 
 - [黑魔法提取器](tools/command_extractor.html)
-- [黑魔法打字机编辑器](tools/typer_editor.html)
+- [黑魔法打字机编辑器](tools/typewriter-editor-v6.html)
 - [文字游戏世界场景制作工具](tools/scene_builder.html)
