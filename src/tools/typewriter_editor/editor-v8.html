@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>打字机事件编辑器 v7 - 魔法书</title>
+<title>打字机事件编辑器 v8 - 魔法书</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -404,6 +404,37 @@ button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
 }
 .block-item.new-block { animation: slideIn 0.2s ease-out; }
 
+/* Toast notification (bottom-left) */
+.toast-container {
+  position: fixed; bottom: 16px; left: 16px; z-index: 9999;
+  display: flex; flex-direction: column-reverse; gap: 8px;
+  pointer-events: none;
+}
+.toast-msg {
+  background: #1a1a2e; color: #e0e0e0;
+  padding: 8px 16px; border-radius: 6px;
+  font-size: 13px; border: 1px solid #333;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  animation: toastIn 0.25s ease-out;
+  pointer-events: auto;
+  max-width: 360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.toast-msg.toast-fade {
+  animation: toastOut 0.4s ease-in forwards;
+}
+@keyframes toastOut {
+  from { opacity: 1; } to { opacity: 0; transform: translateY(-8px); }
+}
+
+/* Disabled button */
+.btn:disabled {
+  opacity: 0.35; cursor: default; pointer-events: none;
+}
+
 /* Playing indicator */
 .playing-indicator {
   position: absolute; top: 8px; right: 8px;
@@ -437,21 +468,25 @@ button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
 <div class="main-area">
   <!-- Left: Preview Canvas -->
   <div class="preview-panel">
-    <div class="preview-header">
+    <div class="preview-header" style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#16213e;border-bottom:1px solid #333;font-size:12px;flex-wrap:wrap">
       <span style="margin-left:0">相机X:</span>
-      <input type="number" id="camX" value="16" onchange="onCamChange()">
+      <input type="number" id="camX" value="16" onchange="onCamChange()" style="width:54px;padding:3px 6px;border-radius:3px;border:1px solid #444;background:#0a0a1a;color:#fff;font-size:12px">
       <span>相机Y:</span>
-      <input type="number" id="camY" value="9" onchange="onCamChange()">
-      <button class="btn btn-sm" id="btnClearPreview" onclick="clearPreview(true);renderAvailablePreview();" title="清除所有预览字符和转移物件">🧹 清除预览</button>
+      <input type="number" id="camY" value="9" onchange="onCamChange()" style="width:54px;padding:3px 6px;border-radius:3px;border:1px solid #444;background:#0a0a1a;color:#fff;font-size:12px">
+      <button class="btn btn-sm" id="btnClearPreview" onclick="clearPreview(true);renderAvailablePreview();" title="清除所有预览字符和转移物件" style="margin-left:8px">🧹 清除预览</button>
+      <div style="width:1px;height:20px;background:#333;margin:0 4px"></div>
+      <button class="btn btn-toggle active" id="btnToggleGrid" onclick="toggleGridBtn()">显示网格</button>
+      <button class="btn btn-toggle" id="btnToggleCoords" onclick="toggleCoordsBtn()">显示行列标识</button>
+      <button class="btn btn-toggle active" id="btnToggleBack" onclick="toggleLayerBack()">后景</button>
+      <button class="btn btn-toggle active" id="btnToggleMid" onclick="toggleLayerMid()">中景</button>
+      <button class="btn btn-toggle active" id="btnToggleFront" onclick="toggleLayerFront()">前景</button>
     </div>
     <div class="canvas-wrapper" id="canvasWrapper">
       <canvas id="previewCanvas" width="960" height="540"></canvas>
       <div class="coord-overlay" id="coordOverlayH"></div>
       <div class="coord-overlay-v" id="coordOverlayV"></div>
     </div>
-    <div style="padding:6px 12px;background:#16213e;display:flex;gap:6px;border-top:1px solid #333;font-size:12px">
-      <button class="btn btn-toggle active" id="btnToggleGrid" onclick="toggleGridBtn()">显示网格</button>
-      <button class="btn btn-toggle" id="btnToggleCoords" onclick="toggleCoordsBtn()">显示行列标识</button>
+    <div style="padding:6px 12px;background:#16213e;display:flex;gap:6px;border-top:1px solid #333;font-size:12px;justify-content:flex-end">
       <input class="remark-input" id="newBlockRemark" placeholder="填写打字机备注">
       <button class="btn btn-primary" onclick="createTypewriterBlock()">创建打字</button>
       <button class="btn" onclick="createEventBlock()">创建普通事件</button>
@@ -609,6 +644,21 @@ button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
         <label>字面内容:</label>
         <textarea id="transferTextInput" rows="5" style="flex:1;background:#0a0a1a;color:#fff;border:1px solid #444;border-radius:3px;padding:6px;font-size:13px;resize:vertical" placeholder="每行一个字符/符号"></textarea>
       </div>
+      <div class="style-form-row">
+        <label>图层:</label>
+        <div style="display:flex;gap:10px;align-items:center">
+          <label style="font-size:12px;cursor:pointer;color:#aaa">
+            <input type="radio" name="transferLayer" value="2" onchange="document.getElementById('transferLayerInput').value=this.value"> 后景
+          </label>
+          <label style="font-size:12px;cursor:pointer;color:#aaa">
+            <input type="radio" name="transferLayer" value="1" checked onchange="document.getElementById('transferLayerInput').value=this.value"> 中景
+          </label>
+          <label style="font-size:12px;cursor:pointer;color:#aaa">
+            <input type="radio" name="transferLayer" value="0" onchange="document.getElementById('transferLayerInput').value=this.value"> 前景
+          </label>
+        </div>
+        <input type="hidden" id="transferLayerInput" value="1">
+      </div>
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="hideTransferModal()">取消</button>
@@ -699,6 +749,9 @@ const ctx = canvas.getContext('2d');
 let showGridLayer1 = true; // layer 1 = grid lines (图块)
 let showCoords = false;
 
+// Layer visibility (前景/中景/后景)
+let showLayerFront = true, showLayerMid = true, showLayerBack = true;
+
 // SortableJS instance
 let sortableInstance = null;
 
@@ -778,6 +831,7 @@ function saveUndo(command, val, cont = false) {
       }
     }
   }
+  updateUndoRedoBtns();
 }
 
 function doUndo() {
@@ -846,6 +900,11 @@ function doUndo() {
     }
     renderBlockList(true);
   }
+
+  // Toast + button state
+  const undoMsgs = { modifyParam:'修改参数', delete:'删除积木', create:'创建积木', moveBlock:'移动积木', modifyRemark:'修改备注' };
+  showToast('↩ 撤销：' + (undoMsgs[cmd] || cmd));
+  updateUndoRedoBtns();
 }
 
 function doRedo() {
@@ -912,11 +971,32 @@ function doRedo() {
     }
     renderBlockList(true);
   }
+
+  // Toast + button state
+  const redoMsgs = { modifyParam:'修改参数', delete:'删除积木', create:'创建积木', moveBlock:'移动积木', modifyRemark:'修改备注' };
+  showToast('↪ 重做：' + (redoMsgs[cmd] || cmd));
+  updateUndoRedoBtns();
 }
 
 function saveRedo(command, val, cont = false) {
   redoStack.push({ command: command, var: val, continue: cont });
   if (redoStack.length > 250) redoStack.shift();
+  updateUndoRedoBtns();
+}
+
+function updateUndoRedoBtns() {
+  document.getElementById('btnUndo').disabled = (undoStack.length === 0);
+  document.getElementById('btnRedo').disabled = (redoStack.length === 0);
+}
+
+function showToast(msg) {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast-msg';
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => { if (el.parentNode) el.classList.add('toast-fade'); }, 2000);
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 2500);
 }
 
 // ==================== BLOCK LIST MANAGEMENT ====================
@@ -1763,13 +1843,20 @@ function renderCanvas() {
   // Draw grid if enabled
   if (showGridLayer1) drawGrid();
   
-  // Draw layers in order: bg -> mid -> fg
-  renderLayer(bgLayer);
-  renderLayer(midLayer);
-  renderLayer(fgLayer);
-  
-  // Draw transfer objects
-  drawTransferObjects();
+  // 按"后→中→前"顺序，每图层内先绘制转移物件再绘制字符
+  // 这样同位置字符会覆盖转移物件，符合游戏视觉效果
+  if (showLayerBack) {
+    drawTransferObjectsByLayer(2);
+    renderLayer(bgLayer, 2);
+  }
+  if (showLayerMid) {
+    drawTransferObjectsByLayer(1);
+    renderLayer(midLayer, 1);
+  }
+  if (showLayerFront) {
+    drawTransferObjectsByLayer(0);
+    renderLayer(fgLayer, 0);
+  }
   
   // Draw accept marker if active (rendered as char entity via createCharEntity)
   // No separate drawing needed - it's already in the layer
@@ -1822,29 +1909,31 @@ function drawGrid() {
   ctx.restore();
 }
 
-function renderLayer(layer) {
+function renderLayer(layer, layerIdx) {
+  // layerIdx: 0=前景, 1=中景, 2=后景
+  // 只影响渲染顺序（由 renderCanvas 控制调用顺序），不影响相机跟随
+  // 各层字符均以相同速率跟随相机移动，颜色/透明度保持原样
   const fontSize = 28;
   ctx.font = `bold ${fontSize}px "zpix", "Microsoft YaHei", SimHei, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  
+
   for (const e of layer) {
     let px = e.x * 30, py = e.y * 30;
     if (!e.fixed) {
       px -= camOffsetX * 30;
       py -= camOffsetY * 30;
     }
-    
+
     if (e.showBg) {
       ctx.fillStyle = 'rgba(0,0,0,0.85)';
       ctx.fillRect(px, py, 30, 30);
     }
-    
+
     if (e.literal !== '*' && e.literal !== '＿') {
       ctx.fillStyle = `rgb(${e.color.r},${e.color.g},${e.color.b})`;
-      ctx.fillText(e.literal, px + 15, py + 15);
+      ctx.fillText(e.literal, px + 17, py + 15);
     } else if (e.literal === '*') {
-      // Special marker
       ctx.fillStyle = 'rgba(255,200,0,0.5)';
       ctx.fillRect(px + 2, py + 2, 26, 26);
     }
@@ -1861,7 +1950,8 @@ function updateTransferObjectInstance(name, pos, tags) {
     pos: { x: pos.x, y: pos.y },
     literal: tpl.text,
     color: tpl.color,
-    tags: tags || ''
+    tags: tags || '',
+    layer: tpl.layer ?? 1
   };
 }
 
@@ -1875,32 +1965,44 @@ function clearTransferObjectInstances(tag) {
   }
 }
 
-function drawTransferObjects() {
+function drawTransferObjectsByLayer(layerIdx) {
+  // layerIdx: 0=前景, 1=中景, 2=后景
+  // 只绘制指定图层的转移物件实例
   const fontSize = 28;
   ctx.font = `bold ${fontSize}px "zpix", "Microsoft YaHei", SimHei, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  
+
   for (const name in transferObjectInstances) {
     const obj = transferObjectInstances[name];
+    const objLayer = obj.layer ?? 1;
+    if (objLayer !== layerIdx) continue;
+
     const color = hexToRgb(obj.color);
     const text = obj.literal || '';
-    
+
     let px = 0, py = 0;
     for (let i = 0; i < text.length; i++) {
       const ch = text[i];
       if (ch === '＿') { px++; continue; }
       if (ch === '\n') { px = 0; py++; continue; }
-      
-      // Apply camera offset
-      const bx = obj.pos.x + px * 30 - camOffsetX * 30, by = obj.pos.y + py * 30 - camOffsetY * 30;
+
+      const bx = obj.pos.x + px * 30 - camOffsetX * 30,
+            by = obj.pos.y + py * 30 - camOffsetY * 30;
       ctx.fillStyle = 'rgba(0,0,0,0.85)';
       ctx.fillRect(bx, by, 30, 30);
       ctx.fillStyle = `rgb(${color.r},${color.g},${color.b})`;
-      ctx.fillText(ch, bx + 15, by + 15);
+      ctx.fillText(ch, bx + 17, by + 15);
       px++;
     }
   }
+}
+
+function drawAllTransferObjects() {
+  // 按"后→中→前"顺序绘制（与字符渲染顺序一致）
+  if (showLayerBack) drawTransferObjectsByLayer(2);
+  if (showLayerMid) drawTransferObjectsByLayer(1);
+  if (showLayerFront) drawTransferObjectsByLayer(0);
 }
 
 function clearTransferObjects(name = '') {
@@ -1923,12 +2025,35 @@ function showTransferModal(mode) {
   document.getElementById('transferNameInput').value = '';
   document.getElementById('transferColorPicker').value = '#ffffff';
   document.getElementById('transferTextInput').value = '';
-  
+  document.getElementById('transferLayerInput').value = '1';
+  // 重置图层 radio 选中中景
+  const _radios = document.querySelectorAll('input[name="transferLayer"]');
+  for (const _r of _radios) _r.checked = (_r.value === '1');
+
   // Show/hide fields based on mode
   document.getElementById('transferColorPicker').parentElement.parentElement.style.display = mode === 'create' ? '' : 'none';
   document.getElementById('transferTextInput').parentElement.style.display = mode === 'create' ? '' : 'none';
   
   window._transferMode = mode;
+  document.getElementById('transferModal').classList.remove('hidden');
+}
+
+function editTransferObj(name) {
+  const tpl = transferObjects[name];
+  if (!tpl) return;
+  window._transferMode = 'create'; // 复用创建确认逻辑
+  document.getElementById('transferModalTitle').textContent = '编辑转移物件';
+  document.getElementById('transferModalHint').textContent = '修改转移物件的属性';
+  document.getElementById('transferNameInput').value = name;
+  document.getElementById('transferColorPicker').value = tpl.color || '#ffffff';
+  document.getElementById('transferTextInput').value = tpl.text || '';
+  document.getElementById('transferLayerInput').value = String(tpl.layer ?? 1);
+  // 设置 radio 选中状态
+  const _radios = document.querySelectorAll('input[name="transferLayer"]');
+  for (const _r of _radios) _r.checked = (parseInt(_r.value) === (tpl.layer ?? 1));
+  // 显示所有字段
+  document.getElementById('transferColorPicker').parentElement.parentElement.style.display = '';
+  document.getElementById('transferTextInput').parentElement.style.display = '';
   document.getElementById('transferModal').classList.remove('hidden');
 }
 
@@ -1943,12 +2068,13 @@ function confirmTransferCreate() {
   if (window._transferMode === 'delete') {
     if (name) delete transferObjects[name];
     else transferObjects = {};
-  } else {
-    if (!name) return;
-    const text = document.getElementById('transferTextInput').value;
-    const color = document.getElementById('transferColorPicker').value;
-    transferObjects[name] = { text, color };
-  }
+    } else {
+      if (!name) return;
+      const text = document.getElementById('transferTextInput').value;
+      const color = document.getElementById('transferColorPicker').value;
+      const layer = parseInt(document.getElementById('transferLayerInput').value) || 1;
+      transferObjects[name] = { text, color, layer };
+    }
   
   hideTransferModal();
   refreshTransferObjectList();
@@ -1963,8 +2089,11 @@ function refreshTransferObjectList() {
   } else {
     list.innerHTML = names.map(n =>
       `<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 6px;background:#1a1a2e;border-radius:3px;margin-bottom:2px;font-size:11px">
-        <span>${n}</span>
-        <span style="cursor:pointer;color:#f44336" onclick="deleteTransferObj('${n}')">×</span>
+        <span style="cursor:pointer" onclick="editTransferObj('${n}')">${n}</span>
+        <span>
+          <span style="cursor:pointer;color:#64b5f6;font-size:11px;margin-right:6px" onclick="editTransferObj('${n}')">编辑</span>
+          <span style="cursor:pointer;color:#f44336" onclick="deleteTransferObj('${n}')">×</span>
+        </span>
       </div>`
     ).join('');
   }
@@ -2751,6 +2880,22 @@ function toggleCoordsBtn() {
   if (showCoords) buildCoordOverlay();
 }
 
+function toggleLayerFront() {
+  showLayerFront = !showLayerFront;
+  document.getElementById('btnToggleFront').classList.toggle('active', showLayerFront);
+  renderCanvas();
+}
+function toggleLayerMid() {
+  showLayerMid = !showLayerMid;
+  document.getElementById('btnToggleMid').classList.toggle('active', showLayerMid);
+  renderCanvas();
+}
+function toggleLayerBack() {
+  showLayerBack = !showLayerBack;
+  document.getElementById('btnToggleBack').classList.toggle('active', showLayerBack);
+  renderCanvas();
+}
+
 function buildCoordOverlay() {
   const hContainer = document.getElementById('coordOverlayH');
   const vContainer = document.getElementById('coordOverlayV');
@@ -3434,6 +3579,8 @@ document.head.appendChild(shakeStyle);
 
 console.log('✅ 打字机事件编辑器已加载完成');
 console.log('快捷键: Ctrl+Z撤销 | Ctrl+Y / Ctrl+Shift+Z重做 | Ctrl+A全选 | C/V/X复制粘贴 | Delete删除');
+updateUndoRedoBtns();
 </script>
+<div id="toastContainer" class="toast-container"></div>
 </body>
 </html>
