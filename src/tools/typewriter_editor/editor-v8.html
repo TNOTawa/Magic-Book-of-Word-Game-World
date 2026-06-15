@@ -1697,9 +1697,9 @@ function createCharEntity(literal, gridX, gridY, layerNum, tags, showBg, fixed, 
     showBg: showBg !== false,
     fixed: !!fixed
   };
-  if (layerNum === 0) bgLayer.push(entity);
+  if (layerNum === 0) fgLayer.push(entity);
   else if (layerNum === 1) midLayer.push(entity);
-  else if (layerNum === 2) fgLayer.push(entity);
+  else if (layerNum === 2) bgLayer.push(entity);
   return entity;
 }
 
@@ -1843,19 +1843,20 @@ function renderCanvas() {
   // Draw grid if enabled
   if (showGridLayer1) drawGrid();
   
-  // 按"后→中→前"顺序，每图层内先绘制转移物件再绘制字符
-  // 这样同位置字符会覆盖转移物件，符合游戏视觉效果
+  // 渲染顺序（后画的覆盖先画的）：
+  // 后景字符 → 后景转移物件 → 中景字符 → 中景转移物件 → 前景字符 → 前景转移物件
+  // 同层内转移物件在后，显示在字符上方
   if (showLayerBack) {
-    drawTransferObjectsByLayer(2);
     renderLayer(bgLayer, 2);
+    drawTransferObjectsByLayer(2);
   }
   if (showLayerMid) {
-    drawTransferObjectsByLayer(1);
     renderLayer(midLayer, 1);
+    drawTransferObjectsByLayer(1);
   }
   if (showLayerFront) {
-    drawTransferObjectsByLayer(0);
     renderLayer(fgLayer, 0);
+    drawTransferObjectsByLayer(0);
   }
   
   // Draw accept marker if active (rendered as char entity via createCharEntity)
