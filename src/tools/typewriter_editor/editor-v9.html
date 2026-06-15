@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>打字机事件编辑器 v8 - 魔法书</title>
+<title>打字机事件编辑器 v9 - 魔法书</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -88,12 +88,12 @@ button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
 /* Grid coordinates overlay */
 .coord-overlay {
   position: absolute; top: 0; left: 30px;
-  display: flex;
+  display: flex; pointer-events: none;
 }
 .coord-overlay-h { display: flex; }
 .coord-overlay-v {
   position: absolute; top: 30px; left: 0;
-  display: flex; flex-direction: column;
+  display: flex; flex-direction: column; pointer-events: none;
 }
 .coord-cell {
   width: 30px; height: 30px;
@@ -430,6 +430,20 @@ button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
   from { opacity: 1; } to { opacity: 0; transform: translateY(-8px); }
 }
 
+/* Drag overlay for preview characters */
+.drag-overlay {
+  position: absolute; pointer-events: none; z-index: 100;
+  border: 2px dashed #4fc3f7; border-radius: 2px;
+  background: rgba(79,195,247,0.08);
+  display: none;
+}
+.drag-overlay.active { display: block; }
+.drag-overlay.ready { pointer-events: auto; }
+
+/* hover feedback on preview chars */
+.char-highlight-hover  { background: rgba(129,212,250,0.20) !important; }
+.char-highlight-drag   { background: rgba(79,195,247,0.35) !important; }
+
 /* Disabled button */
 .btn:disabled {
   opacity: 0.35; cursor: default; pointer-events: none;
@@ -483,6 +497,7 @@ button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
     </div>
     <div class="canvas-wrapper" id="canvasWrapper">
       <canvas id="previewCanvas" width="960" height="540"></canvas>
+      <div class="drag-overlay" id="dragOverlay"></div>
       <div class="coord-overlay" id="coordOverlayH"></div>
       <div class="coord-overlay-v" id="coordOverlayV"></div>
     </div>
@@ -673,6 +688,7 @@ button { font-family: 'zpix', 'Microsoft YaHei', sans-serif; }
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.6/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.27/dist/interact.min.js"></script>
 <script>
 // ==================== DATA MODEL ====================
 
@@ -751,6 +767,13 @@ let showCoords = false;
 
 // Layer visibility (前景/中景/后景)
 let showLayerFront = true, showLayerMid = true, showLayerBack = true;
+
+// Drag state for preview characters
+let hoveredBlockId = null;   // block ID currently hovered
+let draggedBlockId = null;   // block ID being dragged
+let dragStartBlockPos = null; // original posX/posY of dragged block
+let dragStartMouse = null;    // mouse position at drag start
+let isDraggingPreview = false;
 
 // SortableJS instance
 let sortableInstance = null;
@@ -1284,7 +1307,8 @@ function expandBlock(idStr, type) {
   const blockEl = document.querySelector(`.block-item[data-id="${idStr}"]`);
   if (blockEl) blockEl.classList.add('expanded');
   
-  // Render preview
+  // Clear preview then render expanded block
+  clearPreview(true);
   renderPreviewForId(idStr);
 }
 
@@ -1295,7 +1319,8 @@ function collapseBlock(idStr) {
   const blockEl = document.querySelector(`.block-item[data-id="${idStr}"]`);
   if (blockEl) blockEl.classList.remove('expanded');
 
-  clearPreview();
+  clearPreview(true);
+  renderAvailablePreview();
 }
 
 function collapseAllExcept(exceptId) {
@@ -1659,6 +1684,13 @@ function changeSelectedRemark() {
 // ==================== CANVAS RENDERING ====================
 
 function clearPreview(clearAll = false, tags = '', byId = false, invert = false) {
+  // Reset drag/hover state
+  draggedBlockId = null; hoveredBlockId = null;
+  isDraggingPreview = false;
+  dragStartMouse = null; dragStartBlockPos = null;
+  const overlay = document.getElementById('dragOverlay');
+  if (overlay) overlay.classList.remove('active', 'ready');
+
   if (clearAll) { bgLayer = []; midLayer = []; fgLayer = []; transferObjectInstances = {}; }
   else {
     removeLayerData(tags, byId, invert);
@@ -1686,7 +1718,7 @@ function callRender() {
 // 字符实体创建 —— 全局唯一入口
 // x, y 为网格坐标（可非整数），渲染时 *30 转像素
 // tags 为空格分隔的标签字符串
-function createCharEntity(literal, gridX, gridY, layerNum, tags, showBg, fixed, colorHex) {
+function createCharEntity(literal, gridX, gridY, layerNum, tags, showBg, fixed, colorHex, blockId) {
   const entity = {
     id: ++_entityIdCounter,
     literal: String(literal),
@@ -1695,7 +1727,8 @@ function createCharEntity(literal, gridX, gridY, layerNum, tags, showBg, fixed, 
     x: gridX,
     y: gridY,
     showBg: showBg !== false,
-    fixed: !!fixed
+    fixed: !!fixed,
+    blockId: blockId || ''
   };
   if (layerNum === 0) fgLayer.push(entity);
   else if (layerNum === 1) midLayer.push(entity);
@@ -1819,7 +1852,7 @@ function renderPreviewForId(idStr) {
       const pixelPos = gridToPixel(posX2, posY2);
       pixelPos.x -= camOffsetX * 30; pixelPos.y -= camOffsetY * 30;
       if (specialRenderIdx[String(i)] === '*') {
-        createCharEntity('*', posX2 - camOffsetX, posY2 - camOffsetY, layer, '___PREVIEW___', showBg, fixed, '#FFFFFF');
+        createCharEntity('*', posX2 - camOffsetX, posY2 - camOffsetY, layer, '___PREVIEW___', showBg, fixed, '#FFFFFF', idStr);
         posX2++;
       } else {
         updateTransferObjectInstance(specialRenderIdx[String(i)], { x: pixelPos.x + offsetX, y: pixelPos.y + offsetY }, '___PREVIEW___');
@@ -1829,7 +1862,7 @@ function renderPreviewForId(idStr) {
     else if (char === '|') {}
     else if (char === '＿') { posX2++; }
     else {
-      createCharEntity(char, posX2 + offsetX/30, posY2 + offsetY/30, layer, '___PREVIEW___', showBg, fixed, color);
+      createCharEntity(char, posX2 + offsetX/30, posY2 + offsetY/30, layer, '___PREVIEW___', showBg, fixed, color, idStr);
       posX2++;
     }
   }
@@ -1861,6 +1894,186 @@ function renderCanvas() {
   
   // Draw accept marker if active (rendered as char entity via createCharEntity)
   // No separate drawing needed - it's already in the layer
+}
+
+// ───── Preview character drag ─────
+
+// Find the block ID of the preview character at canvas pixel (mx, my)
+// Returns blockId string or null
+function findBlockAtPixel(mx, my) {
+  // Convert pixel to grid coords (accounting for camera offset)
+  const ts = 30;
+  const gx = (mx + camOffsetX * ts) / ts;
+  const gy = (my + camOffsetY * ts) / ts;
+  // Search all layers (fgLayer is drawn last, so search first for topmost)
+  for (const layer of [fgLayer, midLayer, bgLayer]) {
+    for (let i = layer.length - 1; i >= 0; i--) {
+      const e = layer[i];
+      if (!e.blockId) continue;
+      // Check if pixel falls within this character's cell
+      if (gx >= e.x - 0.4 && gx <= e.x + 0.6 && gy >= e.y - 0.4 && gy <= e.y + 0.6) {
+        return e.blockId;
+      }
+    }
+  }
+  return null;
+}
+
+// Get bounding box of all characters for a given blockId (in grid coords)
+function getBlockBounds(blockId) {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const layer of [fgLayer, midLayer, bgLayer]) {
+    for (const e of layer) {
+      if (e.blockId !== blockId) continue;
+      if (e.x < minX) minX = e.x;
+      if (e.y < minY) minY = e.y;
+      if (e.x > maxX) maxX = e.x;
+      if (e.y > maxY) maxY = e.y;
+    }
+  }
+  if (!isFinite(minX)) return null;
+  return { minX, minY, maxX, maxY };
+}
+
+// Update drag overlay position based on current mouse
+function updateDragOverlay(mx, my) {
+  if (!dragStartBlockPos || !dragStartMouse || !draggedBlockId) return;
+  // Safety: verify block still exists
+  const idx = eventObjIndexMap[draggedBlockId];
+  if (idx === undefined) return;
+  const data = blockList[idx];
+  const ts = 30;
+  const dx = Math.round((mx - dragStartMouse.x) / ts);
+  const dy = Math.round((my - dragStartMouse.y) / ts);
+  const newPosX = dragStartBlockPos.x + dx;
+  const newPosY = dragStartBlockPos.y + dy;
+
+  // Get the block's character count for width
+  const texts = data.texts || '';
+  const lines = texts.split(/[&\n\r]/);
+  const maxLen = Math.max(...lines.map(l => l.replace(/<[^>]*>/g,'').replace(/[|＿\{\}\[\]]/g,'').length), 0);
+  const lineCount = lines.length;
+
+  const overlay = document.getElementById('dragOverlay');
+  const wrapper = document.getElementById('canvasWrapper');
+  const wrapperRect = wrapper.getBoundingClientRect();
+  const canvasRect = canvas.getBoundingClientRect();
+  const offsetLeft = canvasRect.left - wrapperRect.left;
+  const offsetTop = canvasRect.top - wrapperRect.top;
+  const tsCanvas = 30;
+
+  // Position overlay relative to canvasWrapper, matching canvas grid
+  overlay.style.left = (newPosX * tsCanvas + offsetLeft) + 'px';
+  overlay.style.top = (newPosY * tsCanvas + offsetTop) + 'px';
+  overlay.style.width = (maxLen * tsCanvas) + 'px';
+  overlay.style.height = (lineCount * tsCanvas) + 'px';
+}
+
+function onCanvasMouseDown(e) {
+  if (isPlaying || playGroupState.active) return;
+  const wrapper = document.getElementById('canvasWrapper');
+  const rect = wrapper.getBoundingClientRect();
+  const mx = e.clientX - rect.left - 30;
+  const my = e.clientY - rect.top - 30;
+  const blockId = findBlockAtPixel(mx, my);
+  if (!blockId) return;
+
+  const idx = eventObjIndexMap[blockId];
+  if (idx === undefined) return;
+  const data = blockList[idx];
+  if (data.type !== '打字机') return;
+
+  // Start drag
+  draggedBlockId = blockId;
+  hoveredBlockId = null;
+  dragStartMouse = { x: mx, y: my };
+  dragStartBlockPos = { x: parseInt(data.posX) || 0, y: parseInt(data.posY) || 0 };
+  isDraggingPreview = false;
+
+  const overlay = document.getElementById('dragOverlay');
+  overlay.classList.add('active');
+  updateDragOverlay(mx, my);
+  renderCanvas();
+  e.preventDefault();
+}
+
+function onCanvasMouseMove(e) {
+  if (isPlaying || playGroupState.active) return;
+  const wrapper = document.getElementById('canvasWrapper');
+  const rect = wrapper.getBoundingClientRect();
+  const mx = e.clientX - rect.left - 30;
+  const my = e.clientY - rect.top - 30;
+
+  if (draggedBlockId) {
+    // Dragging
+    canvasWrapper.style.cursor = 'grabbing';
+    if (!isDraggingPreview) {
+      const dx = mx - (dragStartMouse ? dragStartMouse.x : mx);
+      const dy = my - (dragStartMouse ? dragStartMouse.y : my);
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) isDraggingPreview = true;
+    }
+    if (isDraggingPreview) {
+      updateDragOverlay(mx, my);
+    }
+    return;
+  }
+
+  // Hover detection
+  const blockId = findBlockAtPixel(mx, my);
+  canvasWrapper.style.cursor = blockId ? 'grab' : '';
+  if (blockId !== hoveredBlockId) {
+    hoveredBlockId = blockId;
+    renderCanvas();
+  }
+}
+
+function onCanvasMouseUp(e) {
+  if (!draggedBlockId) return;
+  const overlay = document.getElementById('dragOverlay');
+  overlay.classList.remove('active', 'ready');
+  canvasWrapper.style.cursor = '';
+
+  if (isDraggingPreview) {
+    const wrapper = document.getElementById('canvasWrapper');
+    const rect = wrapper.getBoundingClientRect();
+    const mx = e.clientX - rect.left - 30;
+    const my = e.clientY - rect.top - 30;
+    const ts = 30;
+    const dx = Math.round((mx - (dragStartMouse ? dragStartMouse.x : mx)) / ts);
+    const dy = Math.round((my - (dragStartMouse ? dragStartMouse.y : my)) / ts);
+    const newPosX = dragStartBlockPos ? (dragStartBlockPos.x + dx) : 0;
+    const newPosY = dragStartBlockPos ? (dragStartBlockPos.y + dy) : 0;
+
+    // Update block position
+    const idx = eventObjIndexMap[draggedBlockId];
+    if (idx !== undefined) {
+      // Save old values for undo
+      const oldX = parseInt(blockList[idx].posX) || 0;
+      const oldY = parseInt(blockList[idx].posY) || 0;
+      if (oldX !== newPosX) saveUndo('modifyParam', [blockList[idx], 'posX', oldX]);
+      if (oldY !== newPosY) saveUndo('modifyParam', [blockList[idx], 'posY', oldY]);
+      blockList[idx].posX = newPosX;
+      blockList[idx].posY = newPosY;
+      renderBlockList(true);
+      // Re-render preview at new position
+      clearPreview(false, '___PREVIEW___', true, true);
+      renderAvailablePreview();
+    }
+  }
+
+  draggedBlockId = null;
+  dragStartMouse = null;
+  dragStartBlockPos = null;
+  isDraggingPreview = false;
+  renderCanvas();
+}
+
+function onCanvasMouseLeave() {
+  canvasWrapper.style.cursor = '';
+  if (!draggedBlockId && hoveredBlockId) {
+    hoveredBlockId = null;
+    renderCanvas();
+  }
 }
 
 function drawGrid() {
@@ -1926,8 +2139,17 @@ function renderLayer(layer, layerIdx) {
       py -= camOffsetY * 30;
     }
 
+    // Drag / hover highlight
+    const isDrag = e.blockId && e.blockId === draggedBlockId;
+    const isHover = !isDrag && e.blockId && e.blockId === hoveredBlockId;
+
     if (e.showBg) {
-      ctx.fillStyle = 'rgba(0,0,0,0.85)';
+      if (isDrag) ctx.fillStyle = 'rgba(79,195,247,0.35)';
+      else if (isHover) ctx.fillStyle = 'rgba(129,212,250,0.20)';
+      else ctx.fillStyle = 'rgba(0,0,0,0.85)';
+      ctx.fillRect(px, py, 30, 30);
+    } else if (isDrag || isHover) {
+      ctx.fillStyle = isDrag ? 'rgba(79,195,247,0.25)' : 'rgba(129,212,250,0.12)';
       ctx.fillRect(px, py, 30, 30);
     }
 
@@ -3581,6 +3803,25 @@ document.head.appendChild(shakeStyle);
 console.log('✅ 打字机事件编辑器已加载完成');
 console.log('快捷键: Ctrl+Z撤销 | Ctrl+Y / Ctrl+Shift+Z重做 | Ctrl+A全选 | C/V/X复制粘贴 | Delete删除');
 updateUndoRedoBtns();
+
+// Drag event listeners on canvasWrapper (full preview area)
+const canvasWrapper = document.getElementById('canvasWrapper');
+canvasWrapper.addEventListener('mousedown', onCanvasMouseDown);
+canvasWrapper.addEventListener('mousemove', onCanvasMouseMove);
+canvasWrapper.addEventListener('mouseleave', onCanvasMouseLeave);
+// Catch mouseup anywhere to finish drag even if cursor leaves wrapper
+window.addEventListener('mouseup', onCanvasMouseUp);
+// Track mouse globally during drag so overlay follows cursor outside wrapper
+window.addEventListener('mousemove', (e) => {
+  if (!draggedBlockId || !isDraggingPreview) return;
+  const wrapperRect = canvasWrapper.getBoundingClientRect();
+  const mx = e.clientX - wrapperRect.left - 30;
+  const my = e.clientY - wrapperRect.top - 30;
+  updateDragOverlay(mx, my);
+});
+// Block text selection during drag
+canvasWrapper.addEventListener('selectstart', (e) => { if (draggedBlockId) e.preventDefault(); });
+canvasWrapper.addEventListener('dragstart', (e) => { if (draggedBlockId) e.preventDefault(); });
 </script>
 <div id="toastContainer" class="toast-container"></div>
 </body>
