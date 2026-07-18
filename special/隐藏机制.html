@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>移动 - 《文字游戏世界》魔法书</title>
+        <title>隐藏机制 - 《文字游戏世界》魔法书</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
-        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
-        <link rel="stylesheet" href="../../css/general-e96d0476.css">
-        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
-        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../../src/css/custom-5da1d423.css">
+        <link rel="stylesheet" href="../src/css/custom-5da1d423.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../../";
+            const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../../searchindex-06290bd7.js";
+            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-00420b56.js"></script>
+        <script src="../toc-00420b56.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">《文字游戏世界》魔法书</h1>
 
                     <div class="right-buttons">
-                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
@@ -175,158 +175,60 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="移动"><a class="header" href="#移动">移动</a></h2>
-<h3 id="开始移动"><a class="header" href="#开始移动">开始移动</a></h3>
-<pre><code>@[move_route] {
-
-    "target": "物件名称",
-    "wait": true
-
-}
-</code></pre>
-<p>补充说明：
-<code>"wait"</code>|<code>boolean</code>|是否阻塞式执行。若为<code>true</code>，则脚本会暂停，直到移动动作完成。</p>
-<p>为指定角色执行一个或多个移动/控制指令，并可选择是否阻塞后续脚本执行。需要与<code>@[end_move_route]</code>配合使用。
-<code>@[move_route]</code>本身不直接执行动作，而是包裹一组移动指令。</p>
-<h3 id="停止移动"><a class="header" href="#停止移动">停止移动</a></h3>
-<pre><code>
-@[end_move_route]
-
-</code></pre>
-<h3 id="移动控制指令"><a class="header" href="#移动控制指令">移动控制指令</a></h3>
-<p>以下指令可以在 <code>@[move_route]</code> 和 <code>@[end_move_route]</code> 之间使用，控制物件的移动行为。</p>
-<div class="table-wrapper">
-<table>
-<thead>
-<tr><th>指令</th><th>参数</th><th>说明</th><th>示例</th></tr>
-</thead>
-<tbody>
-<tr><td><code>@[set_through]</code></td><td><code>true</code> / <code>false</code></td><td>设置穿透状态，当为 <code>true</code> 时物件移动不会产生碰撞</td><td><code>@[set_through] true</code></td></tr>
-<tr><td><code>@[move_up]</code></td><td>无</td><td>向上移动一格</td><td><code>@[move_up]</code></td></tr>
-<tr><td><code>@[move_down]</code></td><td>无</td><td>向下移动一格</td><td><code>@[move_down]</code></td></tr>
-<tr><td><code>@[move_left]</code></td><td>无</td><td>向左移动一格</td><td><code>@[move_left]</code></td></tr>
-<tr><td><code>@[move_right]</code></td><td>无</td><td>向右移动一格</td><td><code>@[move_right]</code></td></tr>
-<tr><td><code>@[move_straight]</code></td><td><code>2</code> / <code>4</code> / <code>6</code> / <code>8</code></td><td>按方向码直线移动一格（<code>2=↓, 4=←, 6=→, 8=↑</code>）</td><td><code>@[move_straight] 2</code></td></tr>
-<tr><td><code>@[move_random]</code></td><td>无</td><td>随机方向移动一格</td><td><code>@[move_random]</code></td></tr>
-<tr><td><code>@[move_toward_player]</code></td><td>无</td><td>向玩家方向移动一格</td><td><code>@[move_toward_player]</code></td></tr>
-<tr><td><code>@[move_toward_event]</code></td><td><code>"目标物件名称"</code></td><td>向指定物件移动一格</td><td><code>@[move_toward_event] "目标"</code></td></tr>
-<tr><td><code>@[jump]</code></td><td><code>[x, y]</code>（相对坐标）</td><td>向相对坐标跳跃，<code>x</code> 和 <code>y</code> 为整数</td><td><code>@[jump] [1,0]</code>（向右一格）</td></tr>
-<tr><td><code>@[jump_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>跳跃到地图上的指定坐标</td><td><code>@[jump_to_point] [15,8]</code></td></tr>
-<tr><td><code>@[jump_random]</code></td><td>无</td><td>随机跳跃到上下左右一格</td><td><code>@[jump_random]</code></td></tr>
-<tr><td><code>@[move_to_event]</code></td><td><code>"目标物件名称"</code></td><td>直接移动到指定物件的位置</td><td><code>@[move_to_event] "目标"</code></td></tr>
-<tr><td><code>@[move_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>移动到地图上的指定坐标</td><td><code>@[move_to_point] [15,8]</code></td></tr>
-<tr><td><code>@[move_straight_to_point]</code></td><td><code>[x, y]</code>（绝对坐标）</td><td>直线移动到目标点，不会拐弯（即使碰到墙也不会绕路）</td><td><code>@[move_straight_to_point] [15,8]</code></td></tr>
-</tbody>
-</table>
-</div>
-<p><strong>额外的，这些虽然不是移动指令，但也可以加在这之间使用。</strong></p>
-<div class="table-wrapper">
-<table>
-<thead>
-<tr><th>指令</th><th>参数</th><th>说明</th><th>示例</th></tr>
-</thead>
-<tbody>
-<tr><td><code>@[set_move_speed]</code></td><td>整数</td><td>设置物件移动速度</td><td><code>@[set_move_speed] 1</code></td></tr>
-<tr><td><code>@[wait]</code></td><td>数字</td><td>等待指定时长（若 <code>"wait": false</code> 则不会阻塞）</td><td><code>@[wait] 30</code></td></tr>
-<tr><td><code>@[wait_random_in_range]</code></td><td><code>[min, max]</code></td><td>随机等待一个时长区间（若 <code>"wait": false</code> 则不会阻塞）</td><td><code>@[wait_random_in_range] [1,10]</code></td></tr>
-<tr><td><code>@[set_switch]</code></td><td><code>["name", "value"]</code></td><td>设置开关值</td><td><code>@[set_switch] ["开关A", true]</code></td></tr>
-<tr><td><code>@[set_variable]</code></td><td><code>["name", "value"]</code></td><td>设置变量值</td><td><code>@[set_variable] ["变量B", 114514]</code></td></tr>
-<tr><td><code>@[toggle_switch]</code></td><td><code>{"switchId": null}</code></td><td>切换指定开关状态</td><td><code>@[toggle_switch] {"switchId": null}</code></td></tr>
-<tr><td><code>@[add_variable]</code></td><td><code>{"varId": null, "varValue": 0}</code></td><td>给变量增加数值</td><td><code>@[add_variable] {"varId": null, "varValue": 1}</code></td></tr>
-<tr><td><code>@[play_se]</code></td><td><code>{"path":"...","db":0,"pan":0}</code></td><td>播放音效</td><td><code>@[play_se] {"path":"res://Sounds/...","db":0,"pan":0}</code></td></tr>
-<tr><td><code>@[queue_free]</code></td><td>无</td><td>销毁当前物件</td><td><code>@[queue_free]</code></td></tr>
-<tr><td><code>@[set_visible]</code></td><td><code>true</code> / <code>false</code></td><td>设置该物件是否可见</td><td><code>@[set_visible] false</code></td></tr>
-<tr><td><code>@[fade_to]</code></td><td><code>{"opacity":1,"time_sec":1}</code></td><td>淡入淡出到指定透明度</td><td><code>@[fade_to] {"opacity":1,"time_sec":1}</code></td></tr>
-<tr><td><code>@[set_dead_zone]</code></td><td><code>[x1, y1, x2, y2]</code> 或不填</td><td>设置死区；不指定参数可视为取消</td><td><code>@[set_dead_zone] [0,0,31,17]</code></td></tr>
-<tr><td><code>@[set_move_zone]</code></td><td><code>[x1, y1, x2, y2]</code> 或不填</td><td>设置移动区域；不指定参数可视为取消</td><td><code>@[set_move_zone] [14,7,17,10]</code></td></tr>
-<tr><td><code>@[set_z_index]</code></td><td>数字</td><td>设置物件显示优先级</td><td><code>@[set_z_index] 1</code></td></tr>
-<tr><td><code>@[set_can_pass_group]</code></td><td><code>"组名"</code></td><td>允许该物件可通过包含在组里的物件</td><td><code>@[set_can_pass_group] "组A"</code></td></tr>
-</tbody>
-</table>
-</div>
-<p>示例：用黑魔法来让物件<code>↑↑↓↓←→←→</code>。</p>
-<pre><code>@[move_route] {"target": "物件A","wait": true}
-@[move_up]
-@[move_up]
-@[move_down]
-@[move_down]
-@[move_left]
-@[move_right]
-@[move_left]
-@[move_right]
-@[end_move_route]
-</code></pre>
-<p>通过这个能让黑魔法编辑移动更为便捷，不需要为每个移动指令都单独指定物件。</p>
-<h3 id="循环移动路径"><a class="header" href="#循环移动路径">循环移动路径</a></h3>
-<p>用于为物件设置一个循环执行的移动路线，物件会自动重复执行指定的移动指令序列。</p>
-<pre><code>@[set_event_loop_move_route] {
-
-    "target": "物件名称",
-    "loop_move_route": "[...]"
-
-}
-</code></pre>
-<p>参数说明：</p>
+                        <h1 id="隐藏机制"><a class="header" href="#隐藏机制">隐藏机制</a></h1>
+<blockquote>
+<p>由艺素馒头编写</p>
+</blockquote>
+<h2 id="目录"><a class="header" href="#目录">目录</a></h2>
 <ul>
-<li><code>target</code>：目标物件的名称。</li>
-<li><code>loop_move_route</code>：一个 JSON 数组，包含一系列移动指令对象。每个指令对象格式为 <code>{"command":"指令名称", "parameters":[参数]}</code>。</li>
+<li><a href="#物件调用">物件调用</a></li>
+<li><a href="#物件移动循环">物件移动循环</a></li>
 </ul>
-<p>支持的指令与“移动控制指令”相同，例如 <code>move_up</code>、<code>move_random</code> 等，还可以使用 <code>set_move_zone</code> 来限定移动范围。</p>
-<p>示例：</p>
-<ol>
-<li><strong>简单矩形循环</strong>：让物件按上→右→下→左的顺序循环移动。</li>
-</ol>
+<h2 id="物件调用"><a class="header" href="#物件调用">物件调用</a></h2>
+<h3 id="底层原理废话"><a class="header" href="#底层原理废话">底层原理（废话）</a></h3>
+<p>我们都知道，使用“触发物件”积木可以调用其他物件，<br>
+但实际上，“触发物件”这条指令在游戏文件里从未被发现，<br>
+这是因为“触发物件”实际上是一条伪指令，背后是两条@[set_switch]，<br>
+为什么？经过我们的研究，实际上游戏里的“被物件触发”模式也是不存在的，<br>
+游戏里的“被物件触发”实际上只是添加了一个存在条件，其实底子还是“游戏开始后触发”<br>
+只不过因为存在条件的原因，物件只有在真正存在时才会执行指令，这也是为什么“被物件触发”不会显示了<br>
+所以，我们在黑魔法里调用一个物件其实很简单</p>
+<h3 id="人话"><a class="header" href="#人话">人话</a></h3>
+<p>“被物件触发”模式为物件添加了一个“s:switch_name_物件名称==true”，只有“switch_name_物件名称”变量等于true时物件才能存在
+所以你可以使用@[set_switch] [“switch_name_计数器”,true]来调用物件
+另外你还需要在调用前执行@[set_switch] [“switch_name_计数器”,false]来重置状态
+否则就只能调用一次了</p>
+<h3 id="完整触发物件指令"><a class="header" href="#完整触发物件指令">完整“触发物件”指令</a></h3>
+<pre><code>@[set_switch] ["switch_name_物件名称",false]
+@[set_switch] ["switch_name_物件名称",true]
+</code></pre>
+<h2 id="物件移动循环"><a class="header" href="#物件移动循环">物件移动循环</a></h2>
+<h3 id="循环"><a class="header" href="#循环">循环</a></h3>
+<p>游戏里正常是没有循环的，但是提供了一个另外的方法来实现循环
+那就是@[set_event_loop_move_route]，通过使用这条指令，我们可以实现无阻塞循环</p>
+<h3 id="完整循环指令"><a class="header" href="#完整循环指令">完整循环指令</a></h3>
+<p>注意这条指令的第二个参数是一个json字符串而不是字典，所以需要在最外面加上双引号
+内部的所有双引号也要在前面加上转义符变成\“</p>
 <pre><code>@[set_event_loop_move_route] {
-
-    "target": "物件A",
+    "target": "循环",
     "loop_move_route": "[
-{\"command\":\"move_up\"},
-{\"command\":\"move_right\"},
-{\"command\":\"move_down\"},
-{\"command\":\"move_left\"}
-]"
-
+        {\"command\":\"set_switch\", \"parameters\":[\"switch_name_循环\",false]},
+        {\"command\":\"set_switch\", \"parameters\":[\"switch_name_循环\",true]},
+        {\"command\":\"wait\", \"parameters\":1}
+    ]"
 }
 </code></pre>
-<ol start="2">
-<li><strong>范围内随机移动</strong>：将物件的移动范围限定在指定矩形区域内，然后执行随机移动。</li>
-</ol>
-<pre><code>@[set_event_loop_move_route] {
-
-    "target": "物件A",
-    "loop_move_route": "[
-{\"command\":\"set_move_zone\", \"parameters\":[14, 7, 17, 10]},
-{\"command\":\"move_random\"}
-]"
-
-}
-</code></pre>
-<p>其中 <code>set_move_zone</code> 的参数为 <code>[左上角x, 左上角y, 右下角x, 右下角y]</code>，坐标单位为格子。</p>
-<ol start="3">
-<li><strong>停止循环路径</strong>：将移动范围设置为全地图（或足够大的区域），使物件可以自由移动（实际上相当于取消限定范围）。</li>
-</ol>
-<pre><code>@[set_event_loop_move_route] {
-
-    "target": "物件A",
-    "loop_move_route": "[{\"command\":\"set_move_zone\", \"parameters\":[0,0,31,17]}]"
-
-}
-</code></pre>
-<p>注意：</p>
-<ul>
-<li>循环移动路径会一直重复执行，直到被新的 <code>set_event_loop_move_route</code> 覆盖或物件被移除。</li>
-<li>该指令不需要放在 <code>@[move_route]</code> 和 <code>@[end_move_route]</code> 之间，它是一个独立的事件。</li>
-</ul>
+<p>这样就能用一个物件做循环了，想停止只需要再用@[set_event_loop_move_route]覆盖一遍就行了</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../events/特殊指令/强制删字.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../special/隐藏动画路径索引.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../../events/特殊指令/位移补间动画.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tools/command_extractor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -336,11 +238,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../events/特殊指令/强制删字.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../special/隐藏动画路径索引.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../../events/特殊指令/位移补间动画.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tools/command_extractor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -360,16 +262,16 @@
         </script>
 
 
-        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
-        <script src="../../mark-09e88c2c.min.js"></script>
-        <script src="../../searcher-09f2665d.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
 
-        <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-abc7f01d.js"></script>
-        <script src="../../book-609e4cb8.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../src/js/wgw-theme-dfc98162.js"></script>
+        <script src="../src/js/wgw-theme-dfc98162.js"></script>
 
 
 

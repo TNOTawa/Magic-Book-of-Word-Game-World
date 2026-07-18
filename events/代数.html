@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-6e16688f.js";
+            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-168d83a0.js"></script>
+        <script src="../toc-00420b56.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,52 +176,32 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="代数"><a class="header" href="#代数">代数</a></h1>
-<p><strong>注：需要代入ID的指令不建议单独使用，最好用<a href="https://tnotawa.github.io/wordgameworld-black-magic-extract/">黑魔法提取器</a>提取再使用</strong></p>
+<p><strong><del>注：需要代入ID的指令不建议单独使用，最好用<a href="https://tnotawa.github.io/wordgameworld-black-magic-extract/">黑魔法提取器</a>提取再使用</del></strong></p>
+<p><strong>黑魔法里所有的代数指令实际上都是数组传参，不是使用字典的，之前文档存在部分错误，已修复</strong></p>
 <h2 id="设定开关"><a class="header" href="#设定开关">设定开关</a></h2>
-<pre><code>@[set_switch] [
-
-    "name",
-    "value"
-
-]
+<pre><code>@[set_switch] ["var_name","value"]
 </code></pre>
 <h2 id="反转开关"><a class="header" href="#反转开关">反转开关</a></h2>
-<pre><code>@[toggle_switch] {
-
-	"switchId": null
-
-}
+<pre><code>@[toggle_switch] ["var_name"]
 </code></pre>
 <h2 id="设定变量"><a class="header" href="#设定变量">设定变量</a></h2>
-<pre><code>@[set_variable] [
-
-    "name",
-    "value"
-
-]
+<pre><code>@[set_variable] ["var_name","value"]
 </code></pre>
 <h2 id="増减変量"><a class="header" href="#増减変量">増减変量</a></h2>
-<pre><code>@[add_variable] {
-  
-    "varId": null,
-    "varValue": 0
-  
-}
+<pre><code>@[add_variable] ["var_name","addnum"]
 </code></pre>
 <h2 id="储存物件位置"><a class="header" href="#储存物件位置">储存物件位置</a></h2>
 <pre><code>@[save_event_pos] {
-  
     "target": null,
     "x": null,
     "y": null
-  
 }
 </code></pre>
 <p>官方示例：</p>
 <pre><code>@[save_event_pos] {
-"target":"魔法傀儡",
-"x":"傀儡x",
-"y":"傀儡y"
+    "target":"魔法傀儡",
+    "x":"傀儡x",
+    "y":"傀儡y"
 }
 </code></pre>
 

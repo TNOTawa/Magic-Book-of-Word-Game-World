@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-6e16688f.js";
+            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-168d83a0.js"></script>
+        <script src="../toc-00420b56.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,45 +178,35 @@
                         <h1 id="提示"><a class="header" href="#提示">提示</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="叮"><a class="header" href="#叮">叮！</a></h2>
-<pre><code>
-@[event_end_hint]
-
+<pre><code>@[event_end_hint]
 </code></pre>
 <h2 id="物件呼吸灯"><a class="header" href="#物件呼吸灯">物件呼吸灯</a></h2>
 <pre><code>@[add_loop_light] {
-  
-    "target": null
-  
+    "target": "物件名称"
 }
 </code></pre>
 <h2 id="停止物件呼吸灯"><a class="header" href="#停止物件呼吸灯">停止物件呼吸灯</a></h2>
 <pre><code>@[remove_loop_light] {
-  
-    "target": null
-  
+    "target": "物件名称"
 }
 </code></pre>
 <h2 id="强调位置"><a class="header" href="#强调位置">强调位置</a></h2>
 <pre><code>@[highlight] {
-  
     "pos": [
       0,
       0
     ],
     "text_count": 1,
     "is_h": true
-  
 }
 </code></pre>
 <h2 id="改变选单提示"><a class="header" href="#改变选单提示">改变选单提示</a></h2>
 <pre><code>@[set_editor_project_info] {
-  
     "title": "",
     "description": "",
     "hint_1": "",
     "hint_2": "",
     "hint_3": ""
-  
 }
 </code></pre>
 

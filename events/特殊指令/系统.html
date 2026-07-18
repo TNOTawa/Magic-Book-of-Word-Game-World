@@ -36,10 +36,10 @@
             const path_to_root = "../../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../../searchindex-6e16688f.js";
+            window.path_to_searchindex_js = "../../searchindex-06290bd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-168d83a0.js"></script>
+        <script src="../../toc-00420b56.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -191,6 +191,20 @@
 <h3 id="清除成就完成状态"><a class="header" href="#清除成就完成状态">清除成就完成状态</a></h3>
 <p>将指定成就状态清除为未完成。</p>
 <pre><code>@[clear_achievement]
+</code></pre>
+<h3 id="终止"><a class="header" href="#终止">终止</a></h3>
+<p>一条指令让游戏陷入无限等待，至少还可以从右上角X退出</p>
+<pre><code>@[ending]
+</code></pre>
+<h3 id="无条件外部连结"><a class="header" href="#无条件外部连结">无条件外部连结</a></h3>
+<p>无条件打开url，不需要用户确认</p>
+<pre><code>@[open_url] ""
+</code></pre>
+<h3 id="切换世界"><a class="header" href="#切换世界">切换世界</a></h3>
+<p>从当前世界直接跳到另一个世界里去，中间自动淡入，参数是世界id<br>
+<strong>世界id可以在文件目录“Word Game World\resources\resources\bundled-worlds-index.json“找到</strong></p>
+<p>id格式通常是99cc3e6d-8412-4768-b430-213e67aa4755这么一串uuid</p>
+<pre><code>@[editor_world_transport] ""
 </code></pre>
 
                     </main>

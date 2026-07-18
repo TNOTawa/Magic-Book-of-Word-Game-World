@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-6e16688f.js";
+            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-168d83a0.js"></script>
+        <script src="../toc-00420b56.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,14 +176,23 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="打字机"><a class="header" href="#打字机">打字机</a></h1>
+<h2 id="最小化打字模板"><a class="header" href="#最小化打字模板">最小化打字模板</a></h2>
+<p>能构成一个完整打字指令的模板只需要这3个参数</p>
+<pre><code>@[type_parallel] {
+    "texts": "你好，世界！",
+    "pos": [0, 0],
+    "tags": [""]
+}
+</code></pre>
 <h2 id="打字"><a class="header" href="#打字">打字</a></h2>
 <p>全参数默认模板（纯 JSON）：</p>
 <pre><code>@[type_parallel] {
     "texts": "你好，世界！",
     "fixed": false,
     "pos": [0, 0],
-    "tags": [],
+    "tags": [""],
     "has_se": true,
+    "text_color": "#ffffff",
     "char_type": null,
     "has_animation": true,
     "layer": 1,
@@ -194,7 +203,7 @@
     "refTexts": [],
     "is_on_top_of_player": true,
     "offset": [0, 0],
-    "label_settings": {}
+    "label_settings": {"c": {"text_color": "#ffffff"}}
 }
 </code></pre>
 <p>带注释的版本：</p>
@@ -202,8 +211,9 @@
     "texts": "你好，世界！",    # 打字内容（支持 &lt;标签&gt;文本&lt;/标签&gt; 与 字{参数对象} 写法）
     "fixed": false,    # 是否使用屏幕坐标（false为地图坐标）
     "pos": [0, 0],    # 打字位置 [x, y]
-    "tags": [],    # 标签/组列表（可用于后续 fade_group、dissolve_group 等组操作）
+    "tags": [""],    # 标签/组列表（可用于后续 fade_group、dissolve_group 等组操作）
     "has_se": true,    # 是否播放打字音效
+    "text_color": "#ffffff",    # 打字颜色
     "char_type": null,    # 打字机音效类型（null为默认）
     "has_animation": true,    # 是否显示打字动画
     "layer": 1,    # 图层：0=背景，1=主要，2=前景
@@ -214,7 +224,7 @@
     "refTexts": [],    # 参考文本列表（用于成句检测）
     "is_on_top_of_player": true,    # 主要图层时是否显示在玩家上方
     "offset": [0, 0],    # 位置微调偏移 [x, y]
-    "label_settings": {}    # 标签独立样式设置
+    "label_settings": {"c": {"text_color": "#ffffff"}}    # 标签独立样式设置
 }
 </code></pre>
 <p>缩写:<code>@[type]</code>
@@ -252,6 +262,8 @@
 <li><code>text_color</code>：文字颜色（十六进制 RGBA，如 <code>"#ffff00ff"</code>）</li>
 <li><code>tags</code>：该片段独有的标签列表</li>
 <li><code>char_type</code>：该片段使用的打字机音效（见下方 <code>char_type</code> 可选值）</li>
+<li>理论支持修改打字机里的所有全局参数</li>
+<li>据此反推出打字机也有一个<code>text_color</code>参数可以直接修改所有字的颜色</li>
 </ul>
 <p>示例：</p>
 <pre><code>"label_settings": {

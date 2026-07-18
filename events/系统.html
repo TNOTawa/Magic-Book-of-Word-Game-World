@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-6e16688f.js";
+            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-168d83a0.js"></script>
+        <script src="../toc-00420b56.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,23 +178,16 @@
                         <h1 id="系统"><a class="header" href="#系统">系统</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="延迟固定时间"><a class="header" href="#延迟固定时间">延迟固定时间</a></h2>
-<pre><code>
-@[wait] 50
-
+<pre><code>@[wait] 60
 </code></pre>
-<p>注：单位为 0.02s</p>
+<p>注：单位为 帧</p>
 <p>如需要无阻塞延迟，参见<a href="../special/打字机的高级用法.html">打字机的高级用法</a>中的<code>利用延迟符号实现无阻塞延迟</code></p>
 <h2 id="延迟随机时间"><a class="header" href="#延迟随机时间">延迟随机时间</a></h2>
 <pre><code>@[wait_random_in_range] {
-  
-    "value": [
-      0,
-      0
-    ],
+    "value": [0, 0],
     "option": {
       "expend": true
     }
-  
 }
 </code></pre>
 <h2 id="直接结束事件"><a class="header" href="#直接结束事件">直接结束事件</a></h2>
@@ -205,47 +198,33 @@
 </code></pre>
 <h2 id="游戏读挡"><a class="header" href="#游戏读挡">游戏读挡</a></h2>
 <pre><code>@[editor_load] {
-  
     "trans_ani": "fade"
-  
 }
 </code></pre>
 <h2 id="玩家死亡"><a class="header" href="#玩家死亡">玩家死亡</a></h2>
 <pre><code>@[kill_player] {
-  
-    "death_sentence": ""
-  
+    "death_sentence": "死了"
 }
 </code></pre>
 <h2 id="切换地图"><a class="header" href="#切换地图">切换地图</a></h2>
 <pre><code>@[change_editor_map] {
-  
     "name": "",
     "fade": true
-  
 }
 </code></pre>
 <h2 id="外部连结"><a class="header" href="#外部连结">外部连结</a></h2>
 <pre><code>@[editor_open_url] {
-  
     "url": ""
-  
 }
 </code></pre>
 <h2 id="结束游戏"><a class="header" href="#结束游戏">结束游戏</a></h2>
 <pre><code>@[editor_end_game] {
-  
     "texts": "游戏结束，感谢您的游玩",
-    "pos": [
-      10,
-      8
-    ]
-  
+    "pos": [10, 8]
 }
 </code></pre>
 <h2 id="黑魔法"><a class="header" href="#黑魔法">黑魔法</a></h2>
 <pre><code>@[#raw_commend] {
-
     "value": ""
 }
 </code></pre>

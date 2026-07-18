@@ -36,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-6e16688f.js";
+            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-168d83a0.js"></script>
+        <script src="../toc-00420b56.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,28 +178,24 @@
                         <h1 id="游戏机制"><a class="header" href="#游戏机制">游戏机制</a></h1>
 <p><em>该页面展示的黑魔法均为在游戏内插入后的默认参数</em></p>
 <h2 id="宣告拆字规则"><a class="header" href="#宣告拆字规则">宣告拆字规则</a></h2>
+<p>如果是运行时创建的物件，它们都会被统一加进new_splited_event这个组里<br>
+你可以操作new_splited_event删除这些没有名字的物件</p>
+<p><strong>虽然这里"from"参数是数组，但实际只会拿取第一个元素</strong></p>
+<p>(你当然也可以直接写成字符串，但不知道为什么这样就不能用$指定现有物件了)</p>
 <pre><code>@[append_split_rule] {
-  
-    "from": [
-      null
-    ],
-    "to": [
-      null,
-      null
-    ]
-  
+    "from": ["原料物件"],
+    "to": ["产出物件1", "产出物件2"]
 }
 </code></pre>
 <p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
 <h2 id="宜告组字规则"><a class="header" href="#宜告组字规则">宜告组字规则</a></h2>
+<p>如果是运行时创建的物件，它们都会被统一加进new_merged_event这个组里<br>
+你可以操作new_merged_event删除这些没有名字的物件</p>
+<p><strong>虽然这里"to"参数是数组，但实际只会拿取第一个元素</strong></p>
+<p>(你当然也可以直接写成字符串，但不知道为什么这样就不能用$指定现有物件了)</p>
 <pre><code>@[append_merge_rule] {
-  
-    "from": [
-      null,
-      null
-    ],
-    "to": null
-  
+    "from": ["原料物件1", "原料物件2"],
+    "to": ["产出物件"]
 }
 </code></pre>
 <p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
@@ -210,11 +206,31 @@
     "has_hint": false,
     "has_animation": true,
     "memory": [],
+    "except": "",
     "progress": 0,
     "level": 5
   
 }
 </code></pre>
+<h3 id="宣告成句规则的隐藏机制"><a class="header" href="#宣告成句规则的隐藏机制">宣告成句规则的隐藏机制</a></h3>
+<p>“text“字段可以写全角大写的星号“＊”来告诉游戏这个地方如果有任何东西都成立，包括空位。<br>
+“except“字段可以限制成句忽略哪些字符（这些字符不能触发成句）<br>
+以下示例禁止空位、我、门触发成句，接下来游戏将不会让“＊”算入这些字。<br>
+如果有“except“但没有“＊”，成句会创建失败，所以是必须有“＊”才能使用“except“的。</p>
+<pre><code>"except": "＿我门"
+</code></pre>
+<p>“memory“参数可以获取某个字符位置的物件名称至变量。<br>
+参考结构：“memory”: [[“变量_1”, 2],[“变量_2”, 10]]<br>
+如果该字符位置啥都没有，那么就不会记录变量（保持原样）</p>
+<pre><code>"memory": [
+  ["变量_1", 2],
+  ["变量_2", 10]
+]
+</code></pre>
+<p>实际行为是：<br>
+当成句发生时<br>
+将变量_1赋值为第3个字符位置的物件名称（索引从0开始）<br>
+将变量_2赋值为第11个字符位置的物件名称（索引从0开始）</p>
 <h2 id="取消成句规则"><a class="header" href="#取消成句规则">取消成句规则</a></h2>
 <pre><code>@[delete_sentence_rule] {
   
