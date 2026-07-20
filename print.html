@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "searchindex-06290bd7.js";
+            window.path_to_searchindex_js = "searchindex-ed699e10.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-00420b56.js"></script>
@@ -542,15 +542,14 @@
 <p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
 <h2 id="宣告成句规则"><a class="header" href="#宣告成句规则">宣告成句规则</a></h2>
 <pre><code>@[append_sentence_rule] {
-  
     "text": "成句",
+    "switch": "开关名称",
     "has_hint": false,
     "has_animation": true,
     "memory": [],
     "except": "",
     "progress": 0,
     "level": 5
-  
 }
 </code></pre>
 <h3 id="宣告成句规则的隐藏机制"><a class="header" href="#宣告成句规则的隐藏机制">宣告成句规则的隐藏机制</a></h3>
@@ -574,9 +573,7 @@
 将变量_2赋值为第11个字符位置的物件名称（索引从0开始）</p>
 <h2 id="取消成句规则"><a class="header" href="#取消成句规则">取消成句规则</a></h2>
 <pre><code>@[delete_sentence_rule] {
-  
     "text": "成句"
-  
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -871,7 +868,8 @@
 </code></pre>
 <p>希望有大佬测试并补充。</p>
 <h2 id="随机条件-if_random"><a class="header" href="#随机条件-if_random">随机条件 <code>#if_random</code></a></h2>
-<p>随机决定是否执行后续指令。</p>
+<p>随机决定是否执行后续指令。
+<strong>该指令存在问题，无法正常使用</strong></p>
 <pre><code>@[if_random]
 </code></pre>
 <p><strong>使用示例：</strong></p>
@@ -880,7 +878,8 @@
 @[end_if]
 </code></pre>
 <h2 id="否则执行-else"><a class="header" href="#否则执行-else">否则执行 <code>#else</code></a></h2>
-<p>当 <code>#if</code> 条件不满足时执行的指令序列。</p>
+<p>当 <code>#if</code> 条件不满足时执行的指令序列。
+<strong>请不要使用这条指令，通过解包底层源码发现else指令存在嵌套层级错误，这会导致原本不应该跳过的指令被跳过</strong></p>
 <pre><code>@[else]
 </code></pre>
 <h2 id="结束条件-end_if"><a class="header" href="#结束条件-end_if">结束条件 <code>#end_if</code></a></h2>
@@ -2577,7 +2576,7 @@ $一堆数字0-9:{"frame_count":10,"path":"res://Sprites/number/number.png","tim
 <p>注意这条指令的第二个参数是一个json字符串而不是字典，所以需要在最外面加上双引号
 内部的所有双引号也要在前面加上转义符变成\“</p>
 <pre><code>@[set_event_loop_move_route] {
-    "target": "循环",
+    "target": "触发循环",
     "loop_move_route": "[
         {\"command\":\"set_switch\", \"parameters\":[\"switch_name_循环\",false]},
         {\"command\":\"set_switch\", \"parameters\":[\"switch_name_循环\",true]},
@@ -2585,7 +2584,8 @@ $一堆数字0-9:{"frame_count":10,"path":"res://Sprites/number/number.png","tim
     ]"
 }
 </code></pre>
-<p>这样就能用一个物件做循环了，想停止只需要再用@[set_event_loop_move_route]覆盖一遍就行了</p>
+<p>这样就能做循环了，想停止只需要再用@[set_event_loop_move_route]覆盖一遍就行了<br>
+<strong>注意触发循环的物件不能和循环逻辑物件是同一个，而且不能把触发循环物件放在地图外面</strong></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="黑魔法提取器"><a href="#黑魔法提取器" class="header">黑魔法提取器</a></h1>
 

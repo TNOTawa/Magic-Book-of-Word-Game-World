@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
+            window.path_to_searchindex_js = "../searchindex-ed699e10.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-00420b56.js"></script>
@@ -201,15 +201,14 @@
 <p>注：指定字面：<code>"字面"</code>，指定名字：<code>"$名字"</code></p>
 <h2 id="宣告成句规则"><a class="header" href="#宣告成句规则">宣告成句规则</a></h2>
 <pre><code>@[append_sentence_rule] {
-  
     "text": "成句",
+    "switch": "开关名称",
     "has_hint": false,
     "has_animation": true,
     "memory": [],
     "except": "",
     "progress": 0,
     "level": 5
-  
 }
 </code></pre>
 <h3 id="宣告成句规则的隐藏机制"><a class="header" href="#宣告成句规则的隐藏机制">宣告成句规则的隐藏机制</a></h3>
@@ -233,9 +232,7 @@
 将变量_2赋值为第11个字符位置的物件名称（索引从0开始）</p>
 <h2 id="取消成句规则"><a class="header" href="#取消成句规则">取消成句规则</a></h2>
 <pre><code>@[delete_sentence_rule] {
-  
     "text": "成句"
-  
 }
 </code></pre>
 

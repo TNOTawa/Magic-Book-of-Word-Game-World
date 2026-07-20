@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
+            window.path_to_searchindex_js = "../searchindex-ed699e10.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-00420b56.js"></script>
@@ -210,7 +210,7 @@
 <p>注意这条指令的第二个参数是一个json字符串而不是字典，所以需要在最外面加上双引号
 内部的所有双引号也要在前面加上转义符变成\“</p>
 <pre><code>@[set_event_loop_move_route] {
-    "target": "循环",
+    "target": "触发循环",
     "loop_move_route": "[
         {\"command\":\"set_switch\", \"parameters\":[\"switch_name_循环\",false]},
         {\"command\":\"set_switch\", \"parameters\":[\"switch_name_循环\",true]},
@@ -218,7 +218,8 @@
     ]"
 }
 </code></pre>
-<p>这样就能用一个物件做循环了，想停止只需要再用@[set_event_loop_move_route]覆盖一遍就行了</p>
+<p>这样就能做循环了，想停止只需要再用@[set_event_loop_move_route]覆盖一遍就行了<br>
+<strong>注意触发循环的物件不能和循环逻辑物件是同一个，而且不能把触发循环物件放在地图外面</strong></p>
 
                     </main>
 

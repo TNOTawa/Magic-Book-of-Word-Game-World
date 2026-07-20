@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "wgw-theme";
             const default_dark_theme = "wgw-theme";
-            window.path_to_searchindex_js = "../searchindex-06290bd7.js";
+            window.path_to_searchindex_js = "../searchindex-ed699e10.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-00420b56.js"></script>
@@ -291,7 +291,8 @@
 </code></pre>
 <p>希望有大佬测试并补充。</p>
 <h2 id="随机条件-if_random"><a class="header" href="#随机条件-if_random">随机条件 <code>#if_random</code></a></h2>
-<p>随机决定是否执行后续指令。</p>
+<p>随机决定是否执行后续指令。
+<strong>该指令存在问题，无法正常使用</strong></p>
 <pre><code>@[if_random]
 </code></pre>
 <p><strong>使用示例：</strong></p>
@@ -300,7 +301,8 @@
 @[end_if]
 </code></pre>
 <h2 id="否则执行-else"><a class="header" href="#否则执行-else">否则执行 <code>#else</code></a></h2>
-<p>当 <code>#if</code> 条件不满足时执行的指令序列。</p>
+<p>当 <code>#if</code> 条件不满足时执行的指令序列。
+<strong>请不要使用这条指令，通过解包底层源码发现else指令存在嵌套层级错误，这会导致原本不应该跳过的指令被跳过</strong></p>
 <pre><code>@[else]
 </code></pre>
 <h2 id="结束条件-end_if"><a class="header" href="#结束条件-end_if">结束条件 <code>#end_if</code></a></h2>
